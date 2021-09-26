@@ -1,5 +1,4 @@
 import React,{useState} from 'react'
-import {Link ,BrowserRouter as Router, Route,Switch} from 'react-router-dom'
 
 
 
@@ -11,7 +10,7 @@ const SignIn = () => {
     const loginuser= async (e)=>{
         e.preventDefault();
 
-        const res= await fetch('/login',{
+        const res= await fetch('/signin',{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
@@ -34,7 +33,6 @@ const SignIn = () => {
 
 
     return (
-        <Router>
         <div >
             <div className="container">
             <h1 className="mb-5">LOGIN</h1>
@@ -49,11 +47,11 @@ const SignIn = () => {
                 </div>
                 <button type="submit" className="btn btn-primary" onClick={loginuser}>LOGIN</button>
             </form>
-            <Link to="/">
-            create a new account. SignUp</Link>
+            
+            <p>create a new account. SignUp</p>
         </div>
         </div>
-        </Router>
+
     )
 }
 

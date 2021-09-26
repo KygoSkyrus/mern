@@ -6,11 +6,9 @@ const jwt=require('jsonwebtoken');
 const User=require('../models/user');
 
 
-//routes
-router.get('/', (req, res) => {
-    console.log('this is home in console');
-    res.send("this is home with response")
-})
+
+/*************routes***************/
+
 
 //signup 
 router.post('/signup', async (req, res) => {
@@ -65,7 +63,7 @@ router.post('/signin', async (req, res) => {
             console.log(token);
 
             res.cookie('jwt',token,{
-                expires:new Date(Date.now() +360000),
+                expires:new Date(Date.now() +3600000),
                 httpOnly:true
             });//not working
 
