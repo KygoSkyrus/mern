@@ -1,31 +1,44 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
+import SignUp from './SignUp';
 
-
+/*
+const style = {
+    width: "500px",
+    height: "400px",
+    position: "fixed",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%,-50%)",
+    background: "white",
+    boxShadow: "0 0 20px",
+    borderRadius: "4px",
+}
+*/
 
 const SignIn = () => {
 
     const [email, setemail] = useState('');
     const [password, setpassword] = useState('');
 
-    const loginuser= async (e)=>{
+    const loginuser = async (e) => {
         e.preventDefault();
 
-        const res= await fetch('/signin',{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
+        const res = await fetch('/signin', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                email,password
+                email, password
             })
         });
 
         const data = await res.json();
 
-        if(data.status === 400 || !data){
+        if (data.status === 400 || !data) {
             window.alert("invalid credentials");
             console.log("invalid credentials");
-        }else{
+        } else {
             window.alert("login success");
             console.log("login success");
         }
@@ -33,25 +46,55 @@ const SignIn = () => {
 
 
     return (
-        <div >
-            <div className="container">
-            <h1 className="mb-5">LOGIN</h1>
-            <form method="POST">
-                <div className="mb-3">
-                    <label htmlFor="email" className="form-label">Email address</label>
-                    <input type="email" className="form-control" name="email" id="email" aria-describedby="emailHelp" value={email} onChange={(e)=>setemail(e.target.value)}/>
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="password" className="form-label">Password</label>
-                    <input type="password" className="form-control" id="password" name="password" value={password} onChange={(e)=>setpassword(e.target.value)}/>
-                </div>
-                <button type="submit" className="btn btn-primary" onClick={loginuser}>LOGIN</button>
-            </form>
-            
-            <p>create a new account. SignUp</p>
-        </div>
-        </div>
+        <>
+            <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalToggleLabel">SIGN In</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
 
+                        <div class="modal-body">
+
+                            <div className=" p-5" >
+                                <form method="POST">
+                                    <div className="mb-3">
+                                        <input type="email" className="form-control" name="email" id="email" placeholder="Email address*" aria-describedby="emailHelp" value={email} onChange={(e) => setemail(e.target.value)} />
+                                    </div>
+                                    <div className="mb-3">
+                                        <input type="password" className="form-control" id="password" name="password" placeholder="Password*" value={password} onChange={(e) => setpassword(e.target.value)} />
+                                    </div>
+                                    <button type="submit" className="btn btn-primary" onClick={loginuser}>SIGN IN</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <a data-bs-target="#exampleModalToggle2" href="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">New to Shopp-itt? create new account</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalToggleLabel2">New Account</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <SignUp />
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#exampleModalToggle" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Already have an account? SignIn</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
     )
 }
 
