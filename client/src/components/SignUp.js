@@ -36,12 +36,14 @@ const SignUp = () => {
 
         const data = await res.json();
 
-        if (data.status === 422 || !data) {
-            window.alert("invalid registration");
-            console.log("invalid registration");
-        } else {
-            window.alert(" registration success");
-            console.log("registration success");
+        if (data.error==="fill all details" || !data) {
+            window.alert("fill all details");
+            console.log("fill all details");
+        } else if(data.error==="email already exists"){
+            window.alert("email already exists");
+        }else{
+            window.alert("account created successfully");
+            console.log("account created successfully");
         }
 
     }

@@ -5,7 +5,7 @@ import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
 import Cart from './components/Cart';
 import Orders from './components/Orders';
-import Item from './components/Item';
+import Items from './components/Items';
 
 
 
@@ -63,7 +63,7 @@ function App() {
     
         {/*****************items ******************/}
 
-        <Item/>
+        <Items/>
 
        
 

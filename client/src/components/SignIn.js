@@ -1,19 +1,6 @@
 import React, { useState } from 'react'
 import SignUp from './SignUp';
 
-/*
-const style = {
-    width: "500px",
-    height: "400px",
-    position: "fixed",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%,-50%)",
-    background: "white",
-    boxShadow: "0 0 20px",
-    borderRadius: "4px",
-}
-*/
 
 const SignIn = () => {
 
@@ -35,10 +22,16 @@ const SignIn = () => {
 
         const data = await res.json();
 
-        if (data.status === 400 || !data) {
+console.log(data);
+        if(data.error==="account doesn't exists"){
+            window.alert("account doesn't exists");
+        }else if(data.error==="fill all details"){
+            window.alert("fill all details");
+        }else if(data.error==="invalid credentials"){
             window.alert("invalid credentials");
-            console.log("invalid credentials");
-        } else {
+        }else if(data.message==="user logged in successfully"){
+            window.alert("user logged in successfully");
+        }else{
             window.alert("login success");
             console.log("login success");
         }
@@ -99,3 +92,18 @@ const SignIn = () => {
 }
 
 export default SignIn
+
+
+/*
+const style = {
+    width: "500px",
+    height: "400px",
+    position: "fixed",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%,-50%)",
+    background: "white",
+    boxShadow: "0 0 20px",
+    borderRadius: "4px",
+}
+*/

@@ -16,7 +16,8 @@ router.post('/signup', async (req, res) => {
     const { firstName, lastName, email, password} = req.body;
 
     console.log( firstName, lastName, email, password);
-    if (!firstName || !lastName || !email || !password ) {
+
+    if (!firstName || !lastName || !email || !password ){
         return res.status(422).json({ error: "fill all details" });
     }
  
@@ -68,12 +69,12 @@ router.post('/signin', async (req, res) => {
             });//not working
 
             if (!isMatch) {
-                res.json({ error: "invalid credentials" });
+                res.status(400).json({ error: "invalid credentials" });
             } else {
-                res.json({ message: "user logged in successfully" });
+                res.status(400).json({ message: "user logged in successfully" });
             }
         } else {
-            res.json({ error: "invalid or it should say that user doesnt exist--register first" });
+            res.status(200).json({ error: "account doesn't exists" });
         }
 
     } catch (err) {
