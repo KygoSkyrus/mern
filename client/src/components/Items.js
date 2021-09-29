@@ -17,179 +17,49 @@ import yogamat from './images/yogamat.jpg'
 import redshoes from './images/redshoes.jpg'
 
 
- const abc=[
-     {id:1,name:'dog',desc:"abcscvsgsgs"},
-   {id:2,name:'cat',desc:"4454444454"},
- ];
-  
+const products = [
+  { id: 1, name: 'Blue T-shirt', src: tshirt, desc: "abcscvsgsgs" },
+  { id: 2, name: 'Watch', src: watch, desc: "abcscvsgsgs" },
+  { id: 3, name: 'Scarf', src: scarf, desc: "abcscvsgsgs" },
+  { id: 4, name: 'Leather Backpack', src: backpack, desc: "abcscvsgsgs" },
+  { id: 5, name: 'Perfume', src: perfume, desc: "abcscvsgsgs" },
+  { id: 6, name: 'Denim Jacket', src: jeanjacket, desc: "abcscvsgsgs" },
+  { id: 7, name: 'Fitness tracker', src: fitnesstracker, desc: "abcscvsgsgs" },
+  { id: 8, name: 'Black Sneakers', src: blackSneakers, desc: "abcscvsgsgs" },
+  { id: 9, name: 'Binoculars', src: binoculars, desc: "abcscvsgsgs" },
+  { id: 10, name: 'Camera', src: camera, desc: "abcscvsgsgs" },
+  { id: 11, name: 'Bracelet', src: bracelet, desc: "abcscvsgsgs" },
+  { id: 12, name: 'Red shoes', src: redshoes, desc: "abcscvsgsgs" },
+  { id: 13, name: 'Pink Purse', src: pinkpurse, desc: "abcscvsgsgs" },
+  { id: 14, name: 'Headphones', src: headphones, desc: "abcscvsgsgs" },
+  { id: 15, name: 'Yoga mat', src: yogamat, desc: "abcscvsgsgs" }
+];
 
 
-const Item =(src,name,desc)=>{
-  return(
-    <div class="col">
-          <div class="card h-100">
-            <img src={backpack} class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h5 class="card-title">{`${name}`}</h5>
-              <p class="card-text">{desc}</p>
-            </div>
-          </div>
-        </div>
+
+const Item = ({ product }) => {
+  return (
+    <div class="card h-100">
+      <img src={product.src} class="card-img-top" alt="..." />
+      <div class="card-body">
+        <h5 class="card-title">{product.name}</h5>
+        <p class="card-text">{product.desc}</p>
+      </div>
+    </div>
   )
 }
 
-
 const Items = () => {
-
-
-
-    return (
-        <div class="row row-cols-2 row-cols-md-4 g-4 m-3">
-<Item/>
-        <div class="col">
-          <div class="card h-100">
-            <img src={watch} class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h5 class="card-title">Wrist watch</h5>
-              <p class="card-text">Elegant leather wrist watche for men and women</p>
-            </div>
-          </div>
+  return (
+    <div class="row row-cols-2 row-cols-md-4 g-4 m-3">
+      {products.map((product) => (
+        <div class="col" key={product.id}>
+          <Item product={product} />
         </div>
-
-        <div class="col">
-          <div class="card h-100">
-            <img src={tshirt} class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h5 class="card-title">Blue t-shirt</h5>
-              <p class="card-text">lightweight cotton t-shirt</p>
-            </div>
-          </div>
-        </div>
-
-
-
-
-
-        <div class="col">
-          <div class="card h-100">
-            <img src={redshoes} class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100">
-            <img src={scarf} class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100">
-            <img src={headphones} class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">This is a short card.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100">
-            <img src={pinkpurse} class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100">
-            <img src={binoculars} class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100">
-            <img src={fitnesstracker} class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">This is a short card.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100">
-            <img src={yogamat} class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100">
-            <img src={jeanjacket} class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100">
-            <img src={camera} class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100">
-            <img src={perfume} class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100">
-            <img src={bracelet} class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100">
-            <img src={blackSneakers} class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100">
-            <img src={backpack} class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    )
+      ))}
+    </div>
+  )
 }
+
 
 export default Items
