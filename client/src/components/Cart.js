@@ -1,9 +1,16 @@
-import React from 'react'
+import React,{useState} from 'react'
+//import Items from './Items'
 
-const Cart = () => {
+
+const Cart = (props) => {
+console.log(props);
+  
     return (
         <div>
-            <h1>Your cart</h1>
+            <h2>cart</h2>
+
+
+
         </div>
     )
 }

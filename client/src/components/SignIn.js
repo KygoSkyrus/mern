@@ -40,7 +40,7 @@ console.log(data);
 
     return (
         <>
-            <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+            <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -58,7 +58,7 @@ console.log(data);
                                     <div className="mb-3">
                                         <input type="password" className="form-control" id="password" name="password" placeholder="Password*" value={password} onChange={(e) => setpassword(e.target.value)} />
                                     </div>
-                                    <button type="submit" className="btn btn-primary" onClick={loginuser}>SIGN IN</button>
+                                    <button type="submit" className="btn btn-outline-primary w-100" onClick={loginuser}>SIGN IN</button>
                                 </form>
                             </div>
                         </div>
@@ -71,7 +71,7 @@ console.log(data);
             </div>
 
 
-            <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+            <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabIndex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">

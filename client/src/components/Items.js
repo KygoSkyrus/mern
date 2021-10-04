@@ -1,4 +1,5 @@
-import React from 'react'
+import React,{useState} from 'react'
+//import {Toast,Row,Col,Button} from 'react-bootstrap'
 
 import tshirt from './images/bluetshirt.jpg';
 import watch from './images/watch.jpg'
@@ -35,29 +36,41 @@ const products = [
   { id: 15, name: 'Yoga mat', src: yogamat, desc: "abcscvsgsgs" }
 ];
 
-
+function abc(a){
+  alert(`${a}, added to cart`);
+}
 
 const Item = ({ product }) => {
+
   return (
-    <div class="card h-100">
-      <img src={product.src} class="card-img-top" alt="..." />
-      <div class="card-body">
-        <h5 class="card-title">{product.name}</h5>
-        <p class="card-text">{product.desc}</p>
+    <>
+    <div className="card h-100">
+      <img src={product.src} className="card-img-top" alt="..." />
+      <div className="card-body">
+        <h5 className="card-title">{product.name}</h5>
+        <p className="card-text">{product.desc}</p>
       </div>
+      <button onClick={()=>abc(product.name)} className="btn btn-outline-warning"  >
+        <i className="fas fa-shopping-cart"></i>
+      </button>
     </div>
+    </>
   )
 }
 
 const Items = () => {
+
+
   return (
-    <div class="row row-cols-2 row-cols-md-4 g-4 m-3">
+    <>
+    <div className="row row-cols-2 row-cols-md-4 g-4 m-3">
       {products.map((product) => (
-        <div class="col" key={product.id}>
+        <div className="col" key={product.id}>
           <Item product={product} />
         </div>
       ))}
     </div>
+    </>
   )
 }
 

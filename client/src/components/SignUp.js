@@ -68,7 +68,7 @@ const SignUp = () => {
                         <input type="password" className="form-control"
                             placeholder="Password*" id="password" name="password" value={user.password} onChange={handleInputs} />
                     </div>
-                    <button type="submit" onClick={handleClick} className="btn btn-primary">Create</button>
+                    <button type="submit" onClick={handleClick} className="btn btn-outline-primary w-100">Create</button>
                 </form>
             </div>
         </>
