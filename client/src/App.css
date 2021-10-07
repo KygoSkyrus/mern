@@ -28,6 +28,39 @@
   color: #61dafb;
 }
 
+/*cart.css*/
+.cart-item{
+  float: left;
+  border: 1px solid black;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cart-item img{
+  width: 100px;
+}
+.cart-item i{
+  color: red;
+}
+.pic-name{
+  width: fit-content;
+  display: flex;
+  align-items: center;
+}
+.pic-name h5{
+  margin-left: 10px;
+}
+
+.place-order{ 
+  width: 25%;
+
+  background-color: rgb(226, 226, 226);
+  margin-left: 10px;
+  border-radius: 4px;
+}
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

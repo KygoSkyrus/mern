@@ -1,6 +1,10 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-const Navbar = () => {
+
+const Navbar = (props) => {
+
+
+
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light" >
         <div className="container-fluid">
@@ -32,7 +36,7 @@ const Navbar = () => {
 
               <li className="nav-item">
                 <Link to="/cart" className="nav-link">
-                  Cart
+                  Cart <span class="w3-badge w3-red w3-round">{props.data}</span> 
                 </Link>
               </li>
               <li className="nav-item">
