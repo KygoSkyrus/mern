@@ -13,11 +13,11 @@ app.use(require('./routes/route'));
 
 
 //stripe
+/*
 const YOUR_DOMAIN = 'http://localhost:3000/checkout';
 
 app.post('/create-checkout-session', async (req, res) => {
-  const {amount}=req.body;
-console.log(req.body.totalPrice);
+ 
 
   const session = await stripe.checkout.sessions.create({
     customer_email: 'jsdskdsjksdksd@gmail.com',
@@ -46,12 +46,66 @@ console.log(req.body.totalPrice);
   //receipt_email: 'kygoskyrus@gmail.com',
 });
 
-
   res.redirect(303, session.url)
 });
+*/
 
+app.post("/create-checkout-session", async (req, res) => {
+ // const { items } = req.body;
+ // console.log(items[0].id);
+//'price_1JhxgtSJDEVNzqXlOOdcWm3p',
+const product = await stripe.products.create({
+  name: 'Gold Special',
+});
+const price = await stripe.prices.create({
+  unit_amount: 200,
+  currency: 'inr',
+  product: product.id,
+});
 
+console.log(product);
+console.log(price);
 
+  const session = await stripe.checkout.sessions.create({
+    customer_email: 'jsdskdsjksdksd@gmail.com',
+    billing_address_collection: 'auto',
+    shipping_address_collection: {
+      allowed_countries: ['US', 'CA'],
+    },
+    line_items: [
+      {
+        price : price.id,
+        quantity: 1,
+      },
+    ],
+    payment_method_types: [
+      'card',
+    ],
+    mode: 'payment',
+    success_url: `http://localhost:3000/success`,
+    cancel_url: `http://localhost:3000/failed`,
+  });
+ res.redirect(303, session.url)
+
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: 454,
+    currency: "inr"
+  });
+  res.send({
+    clientSecret: paymentIntent.client_secret
+  });
+  
+});
+/*
+
+const calculateOrderAmount = items => {
+  // Replace this constant with a calculation of the order's amount
+  // Calculate the order total on the server to prevent
+  // people from directly manipulating the amount on the client
+
+  return 1400;
+};
+*/
 
 
 const db = process.env.dbURI;
