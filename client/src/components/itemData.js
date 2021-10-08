@@ -17,10 +17,10 @@ import redshoes from './images/redshoes.jpg'
 
 const itemData = {
     items: [
-        { id: 1, name: 'Blue T-shirt', src: tshirt, price: 5.99, desc: "Pure cotton t-shirt for men" },
+        { id: 1, name: 'Blue T-shirt', src: tshirt, price: 5.99 , desc: "Pure cotton t-shirt for men" },
         { id: 2, name: 'Watch', src: watch, price: 10.49, desc: "Brown leather watch for men and women" },
         { id: 3, name: 'Scarf', src: scarf, price: 7.89, desc: "Check scarf " },
-        { id: 4, name: 'Leather Backpack', src: backpack, price: 20.45, desc: "Laptop bag with multiple comartments" },
+        { id: 4, name: 'Backpack', src: backpack, price: 20.45, desc: "Laptop bag with multiple comartments" },
         { id: 5, name: 'Perfume', src: perfume, price: 25.99, desc: "Long lasting perfume for women" },
         { id: 6, name: 'Denim Jacket', src: jeanjacket, price: 12.99, desc: "Sky-blue colour Jean jacket" },
         { id: 7, name: 'Fitness tracker', src: fitnesstracker, price: 22.99, desc: "Multifunctional digital fitness tracker band" },

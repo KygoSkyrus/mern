@@ -9,15 +9,11 @@ import Cart from './components/Cart';
 import Orders from './components/Orders';
 import itemData from './components/itemData';
 import Items from './components/Items';
-
+import Status from './components/Status';
 
 
 
 function App() {
-//console.log(itemData);
-
-//const [cartItems, setcartItems] = useState([]);
-
 
 
   const [data, setdata] = useState([]);
@@ -73,6 +69,13 @@ function App() {
           <Orders />
         </Route>
 
+        <Route path="/failed" component={Status}>
+          <Status status={"failed"}/>
+        </Route>
+
+        <Route path="/success" component={Status}>
+          <Status status={"success"}/>
+        </Route>
 
       </div>
     </Router>

@@ -2,35 +2,12 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
 
 /*cart.css*/
+.def{
+  width: 75%;
+}
 .cart-item{
-  float: left;
   border: 1px solid black;
   border-radius: 4px;
   display: flex;
@@ -40,32 +17,72 @@
 .cart-item img{
   width: 100px;
 }
-.cart-item i{
-  color: red;
-}
 .pic-name{
-  width: fit-content;
+  width: 250px;
   display: flex;
   align-items: center;
 }
 .pic-name h5{
   margin-left: 10px;
 }
+.price{
+  width: 60px;
+}
+.qty{
+  width: 35px;
+  height: 35px;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+.plus-minus{
+  width: 35px;
+  height: 35px;
+  background-color: inherit;
+  border: 1px solid black;
+}
+.plus-minus:nth-child(1){
+  border-radius: 4px 0 0 4px;
+  color: green;
+}
+.plus-minus:nth-child(3){
+  border-radius: 0  4px 4px 0;
+  color: red ;
+}
+.trash{
+  color: red;
+}
 
 .place-order{ 
-  width: 25%;
-
+  width: 300px;
   background-color: rgb(226, 226, 226);
   margin-left: 10px;
   border-radius: 4px;
 }
 
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+/* status.js*/
+.status{
+  width: 100%;
+  position: absolute;
+  top: 30%;
 }
+
+
+
+@media (max-width:991px) {
+  .abc{
+    flex-direction: column;
+  }
+  .def{
+    width: 100%;
+  }
+  .place-order{
+    width: 100%;
+    margin-left: 0;
+  }
+
+}
+
+
+
