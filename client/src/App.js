@@ -31,7 +31,7 @@ function App() {
               <Toast onClose={() => setShow(false)} show={show} delay={3000} autohide bg="danger">
                 <Toast.Header>
                   <img
-                    src="holder.js/20x20?text=%20"
+                    src=""
                     className="rounded me-2"
                     alt=""
                   />

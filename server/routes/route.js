@@ -124,26 +124,40 @@ router.post('/checkout', async (req, res) => {
 });
 
 
-
+/*
 router.get('/exist', (req, res) => {
 
     let token = req.cookies.jwt;
-    //console.log('Cookies: ', token);
+    console.log('Cookies: ', token);
     if (token) {
         res.status(200).json({ message: "exist" });
     } else {
         res.status(400).json({ error: "not exists" });
-        //    res.redirect('/signin');
+    }
+    res.status(200).json({ message: "exist" });
+});
+*/
+router.post('/exist', async (req, res) => {
+
+    try {
+        let token = req.cookies.jwt;
+        //console.log("token:", token);
+        if (token) {
+            res.send(JSON.stringify(true));
+        } else {
+            res.send(JSON.stringify(false));
+        }
+    } catch (err) {
+        console.log(req.body);
     }
 
 });
 
-router.post('/getEmail', async (req, res) => {
-    
+router.post('/getemail', async (req, res) => {
 
     try {
         let email = req.cookies.email;
-        console.log("email:", email);
+        //console.log("email:", email);
         res.send(JSON.stringify(email));
     } catch (err) {
         console.log(req.body);

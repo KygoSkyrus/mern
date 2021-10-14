@@ -17,21 +17,21 @@ import redshoes from './images/redshoes.jpg'
 
 const itemData = {
     items: [
-        { id: 1, name: 'Blue T-shirt', src: tshirt, price: 5.99 , desc: "Pure cotton t-shirt for men" },
-        { id: 2, name: 'Watch', src: watch, price: 10.49, desc: "Brown leather watch for men and women" },
-        { id: 3, name: 'Scarf', src: scarf, price: 7.89, desc: "Check scarf " },
-        { id: 4, name: 'Backpack', src: backpack, price: 20.45, desc: "Laptop bag with multiple comartments" },
-        { id: 5, name: 'Perfume', src: perfume, price: 25.99, desc: "Long lasting perfume for women" },
-        { id: 6, name: 'Denim Jacket', src: jeanjacket, price: 12.99, desc: "Sky-blue colour Jean jacket" },
-        { id: 7, name: 'Fitness tracker', src: fitnesstracker, price: 22.99, desc: "Multifunctional digital fitness tracker band" },
-        { id: 8, name: 'Black Sneakers', src: blackSneakers, price: 14.60, desc: "Lightweight black sneakers" },
-        { id: 9, name: 'Binoculars', src: binoculars, price: 35.89, desc: "50x zoom binoculars " },
-        { id: 10, name: 'Camera', src: camera, price: 49.99, desc: "Bestselling camera of the season" },
-        { id: 11, name: 'Bracelet', src: bracelet, price: 4.99, desc: "abcscvsgsgs" },
-        { id: 12, name: 'Red shoes', src: redshoes, price: 15.99, desc: "abcscvsgsgs" },
-        { id: 13, name: 'Pink Purse', src: pinkpurse, price: 40.50, desc: "abcscvsgsgs" },
-        { id: 14, name: 'Headphones', src: headphones, price: 29.99, desc: "abcscvsgsgs" },
-        { id: 15, name: 'Yoga mat', src: yogamat, price: 7.99, desc: "abcscvsgsgs" }
+        { id: 1, name: 'T-shirt', src: tshirt, price: 350 , desc: "Pure cotton blue t-shirt for men" },
+        { id: 2, name: 'Watch', src: watch, price: 7000, desc: "Brown leather watch for men and women" },
+        { id: 3, name: 'Scarf', src: scarf, price: 299, desc: "Check scarf " },
+        { id: 4, name: 'Backpack', src: backpack, price: 899, desc: "Laptop bag with multiple comartments" },
+        { id: 5, name: 'Perfume', src: perfume, price: 1280, desc: "Long lasting perfume for women" },
+        { id: 6, name: 'Denim jacket', src: jeanjacket, price: 1149, desc: "Sky-blue colour Jean jacket" },
+        { id: 7, name: 'Fitness tracker', src: fitnesstracker, price: 599, desc: "Multifunctional digital fitness tracker band" },
+        { id: 8, name: 'Sneakers', src: blackSneakers, price: 499, desc: "Lightweight black sneakers" },
+        { id: 9, name: 'Binoculars', src: binoculars, price: 1800, desc: "50x zoom binoculars " },
+        { id: 10, name: 'Camera', src: camera, price: 34999, desc: "Bestselling camera of the season" },
+        { id: 11, name: 'Bracelet', src: bracelet, price: 199, desc: "Anchor bracelet for men" },
+        { id: 12, name: 'Red shoes', src: redshoes, price: 1399, desc: "Glowing shoes" },
+        { id: 13, name: 'Purse', src: pinkpurse, price: 1649, desc: "Pink Purse for women" },
+        { id: 14, name: 'Headphones', src: headphones, price: 1800, desc: "Black colour headphones" },
+        { id: 15, name: 'Yoga mat', src: yogamat, price: 350, desc: "3 meter long yoga mat" }
     ]
 };
 
