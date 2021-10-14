@@ -1,9 +1,14 @@
-
-
 .App {
   text-align: center;
 }
 
+/**app.js*/
+.tst{
+  position: fixed ;
+  bottom: 5% ;
+  z-index: 99;
+  right: 5%;
+}
 
 /*cart.css*/
 .def{
@@ -44,21 +49,23 @@
 }
 .plus-minus:nth-child(1){
   border-radius: 4px 0 0 4px;
-  color: green;
+  color: green ;
 }
 .plus-minus:nth-child(3){
   border-radius: 0  4px 4px 0;
   color: red ;
 }
 .trash{
+  cursor: pointer;
   color: red;
 }
 
 .place-order{ 
   width: 300px;
-  background-color: rgb(226, 226, 226);
+  background-color: #f7f7f7;
   margin-left: 10px;
   border-radius: 4px;
+  border: 1px solid black;
 }
 
 
@@ -70,6 +77,8 @@
   top: 30%;
 }
 
+
+/* navbar.js*/
 .logo{
   width: 100px;
   height: 45px;
@@ -78,6 +87,42 @@
   background-size: contain;
   background-repeat: no-repeat;
 }
+
+
+/* items.js*/
+.appearance{
+  appearance: none;
+  text-decoration: none;
+  color: black;
+}
+.appearance:hover{
+  color: black;
+}
+
+.showfull{
+  background-color: rgb(240, 240, 240);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  z-index: 99;
+  padding: 30px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px;
+}
+.inner{
+  background-color: '';
+}
+.inner img{
+  width: 400px;
+  height: 300px;
+}
+.texts{
+  width: 300px;
+  padding: 20px;
+}
+
+
 
 @media (max-width:991px) {
   .abc{

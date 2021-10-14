@@ -1,11 +1,19 @@
 const express = require('express');
 const router = express('router');
 const bcrypt = require('bcryptjs');
-const jwt=require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
-const User=require('../models/user');
+const cookieParser = require('cookie-parser');
+router.use(cookieParser());
 
+const User = require('../models/user');
 
+const dotenv = require('dotenv');
+dotenv.config({ path: './env/config.env' });
+const sk = process.env.SK;
+
+const { v4: uuidv4 } = require('uuid');
+const stripe = require('stripe')(sk);
 
 /*************routes***************/
 
@@ -13,14 +21,14 @@ const User=require('../models/user');
 //signup 
 router.post('/signup', async (req, res) => {
 
-    const { firstName, lastName, email, password} = req.body;
+    const { firstName, lastName, email, password } = req.body;
 
-    console.log( firstName, lastName, email, password);
+    console.log(firstName, lastName, email, password);
 
-    if (!firstName || !lastName || !email || !password ){
+    if (!firstName || !lastName || !email || !password) {
         return res.status(422).json({ error: "fill all details" });
     }
- 
+
     try {
         const userExist = await User.findOne({ email: email });
 
@@ -28,7 +36,7 @@ router.post('/signup', async (req, res) => {
             return res.status(422).json({ error: "email already exists" });
         }
 
-        const user = new User({ firstName, lastName, email, password});
+        const user = new User({ firstName, lastName, email, password });
 
         //hashing password
 
@@ -45,8 +53,8 @@ router.post('/signup', async (req, res) => {
 
 //signin
 router.post('/signin', async (req, res) => {
-    try {
 
+    try {
         const { email, password } = req.body;
 
         if (!email || !password) {
@@ -60,13 +68,17 @@ router.post('/signin', async (req, res) => {
         if (userLogin) {
             const isMatch = await bcrypt.compare(password, userLogin.password);
 
-            const token=await userLogin.generateAuthToken();
+            const token = await userLogin.generateAuthToken();
             console.log(token);
 
-            res.cookie('jwt',token,{
-                expires:new Date(Date.now() +3600000),
-                httpOnly:true
+            res.cookie('jwt', token, {
+                expires: new Date(Date.now() + 3600000),
+                httpOnly: true
             });//not working
+            res.cookie('email', email, {
+                expires: new Date(Date.now() + 3600000),
+                httpOnly: true
+            });
 
             if (!isMatch) {
                 res.status(400).json({ error: "invalid credentials" });
@@ -81,6 +93,63 @@ router.post('/signin', async (req, res) => {
         console.log(req.body);
     }
 })
+
+//stripe
+router.post('/checkout', async (req, res) => {
+
+    const { totalPrice, token } = req.body;
+    console.log("prdouct :", totalPrice);
+    console.log("token :", token);
+    const indempontencyKey = uuidv4();
+
+    const customer = await stripe.customers.create({
+        email: token.email,
+        source: token.id
+    });
+
+    const charge = await stripe.charges.create({
+        amount: totalPrice.toFixed(2) * 100,
+        currency: 'INR',
+        customer: customer.id,
+        receipt_email: 'custmeridgoeshere@gmail.com',
+        description: 'purchase is done',
+        shipping: {
+            name: token.card.name,
+            address: {
+                country: token.card.address_country
+            },
+        }
+    }, { idempotencyKey: indempontencyKey });
+
+});
+
+
+
+router.get('/exist', (req, res) => {
+
+    let token = req.cookies.jwt;
+    //console.log('Cookies: ', token);
+    if (token) {
+        res.status(200).json({ message: "exist" });
+    } else {
+        res.status(400).json({ error: "not exists" });
+        //    res.redirect('/signin');
+    }
+
+});
+
+router.post('/getEmail', async (req, res) => {
+    
+
+    try {
+        let email = req.cookies.email;
+        console.log("email:", email);
+        res.send(JSON.stringify(email));
+    } catch (err) {
+        console.log(req.body);
+    }
+
+});
 
 
 module.exports = router;

@@ -44,13 +44,24 @@ const SignUp = () => {
         }else{
             window.alert("account created successfully");
             console.log("account created successfully");
+            document.getElementById('closeSignup').click();
         }
 
     }
 
 
     return (
-        <>
+        <><div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalToggleLabel2">New Account</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeSignup"></button>
+            </div>
+            <div class="modal-body">
+            
+
+
+
             <div className="container p-5">
                 <form method="post">
                     <div className="mb-3">
@@ -71,6 +82,13 @@ const SignUp = () => {
                     <button type="submit" onClick={handleClick} className="btn btn-outline-primary w-100">Create</button>
                 </form>
             </div>
+          
+            </div>
+            <div class="modal-footer">
+                <a href="#exampleModalToggle" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Already have an account? SignIn</a>
+            </div>
+        </div>
+    </div>
         </>
 
     )
