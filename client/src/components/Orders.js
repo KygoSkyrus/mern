@@ -3,7 +3,7 @@ import React from 'react'
 const Orders = (props) => {
 
     const { data, totalprice } = props;
-    console.log(data);
+    //console.log(data);
 
     return (
         <div>
