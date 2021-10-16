@@ -49,6 +49,5 @@ userSchema.methods.generateAuthToken=async function(){
     }
 }
 
-
 //connecting with collection
 module.exports = mongoose.model('USER', userSchema); 

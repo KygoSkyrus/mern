@@ -1,42 +1,47 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from 'react-router-dom'
 import StripeCheckout from 'react-stripe-checkout'
 import { Toast, ToastContainer } from 'react-bootstrap'
 import mainlogo from './images/mainlogo.png'
 
-
+//this toast will only be visible if the user isn't logged in
 const Example = (props) => {
-
   //console.log(props.showORnot);
-
   const [showA, setShowA] = useState(true);
   const toggleShowA = () => setShowA(!showA);
+  const [showB, setShowB] = useState(true);
+  const toggleShowB = () => setShowB(!showB);
 
-  if (props.showORnot == false) {
-    return (
-      <>
-        <ToastContainer className="p-3 tst" >
-          <Toast bg="warning" show={showA} onClose={toggleShowA}>
-            <Toast.Header>
-              <img src='' className="rounded me-2" alt=""/>
-              <strong className="me-auto">Shopp-itt</strong>
-            </Toast.Header>
-            <Toast.Body>You need to signin  to your account to checkout</Toast.Body>
-          </Toast>
-        </ToastContainer>
-      </>
-    );
-  } else {
-    return null
-  }
+  return (<ToastContainer className="p-3 tst" >
+    {props.showORnot === false ?
+      <Toast bg="danger" show={showA} onClose={toggleShowA}>
+        <Toast.Header>
+          <img src='' className="rounded me-2" alt="" />
+          <strong className="me-auto">Shopp-itt</strong>
+        </Toast.Header>
+        <Toast.Body className="text-light">You need to signin  to your account to checkout</Toast.Body>
+      </Toast>
+      : null}
+    <Toast bg="warning" show={showB} onClose={toggleShowB}>
+      <Toast.Header>
+        <img src='' className="rounded me-2" alt="" />
+        <strong className="me-auto">Shopp-itt</strong>
+      </Toast.Header>
+      <Toast.Body>Use card number <b>4242 4242 4242 4242</b> for a successful payment</Toast.Body>
+    </Toast>
+  </ToastContainer>)
 }
 
 
 const Cart = (props) => {
 
-  const { data, onAdd, onRemove, clear } = props;
+  const { data, onAdd, onRemove, clear ,callback} = props;
+
   const [jwtResponse, setjwtResponse] = useState();
   const [getemail, setgetemail] = useState();
+  const [paymentStatus, setpaymentStatus] = useState();
 
+  let history = useHistory();
 
   //pricing section
   const itemsPrice = data.reduce((a, c) => a + c.price * c.qty, 0);
@@ -54,14 +59,20 @@ const Cart = (props) => {
       })
     }
     ).then(response => {
-      console.log(response)
-      const { status } = response;
-      console.log(status)
+      response.json().then((res) => setpaymentStatus(res.status))
     }).catch(error => console.log(error))
   }
+  //console.log(paymentStatus);
 
-;
-//to get token
+
+//will run only if payment is successfull and will redirect to success page
+  if (paymentStatus === 'succeeded') {
+    console.log('s');
+    history.push('/success');//redirecting to success page
+    callback(data,totalPrice);//this is to send the cart data and totaprice to the parent which later send it to orders 
+  } 
+
+  //to get token
   useEffect(() => {
     const interval = setInterval(() => {
       var abc;
@@ -78,8 +89,8 @@ const Cart = (props) => {
   //console.log(jwtResponse);
 
 
-  //getemail 
-  if (jwtResponse == true) {
+  //getemail from backend to show it at the time of payment
+  if (jwtResponse === true) {
     fetch('/getemail', {
       method: 'POST',
       body: data
@@ -89,8 +100,9 @@ const Cart = (props) => {
     }).catch((error) => console.log(error));
   }
 
+  //this button will only be shown if the user has logged in
   const Button = () => {
-    if (jwtResponse == true) {
+    if (jwtResponse === true) {
       return (
         <button className="btn btn-outline-dark w-100 mt-3" id="hide">Checkout Now</button>
       )
@@ -112,7 +124,7 @@ const Cart = (props) => {
   } else {
     return (
       <>
-        <h2 className="mt-3 mb-4">Cart <i className="fas fa-shopping-cart"></i></h2>
+        <h2 className="mt-3 mb-4">Cart <i className="fas fa-shopping-cart fa-sm text-warning"></i></h2>
 
         <div className="container d-flex mt-5 abc">
 
@@ -124,13 +136,11 @@ const Cart = (props) => {
                   <h5>{item.name}</h5>
                 </div>
 
-                <div className="price">{item.price} &#8377;</div>
+                <div className="price">&#8377; {item.price} </div>
 
                 <div className="d-flex ">
                   <button onClick={() => onAdd(item)} className="plus-minus"><i className="fas fa-plus"></i></button>
-
                   <div className="p-2 qty">{item.qty}</div>
-
                   <button onClick={() => onRemove(item)} className="plus-minus"><i className="fas fa-minus "></i></button>
                 </div>
 
@@ -140,25 +150,25 @@ const Cart = (props) => {
           </div>
 
 
-          <div className="container place-order d-flex flex-column justify-content-between p-3 mb-2">
+          <div className="container place-order d-flex flex-column justify-content-between p-3 mb-3">
 
             <div className="">
               <div className="d-flex justify-content-between">
                 <section>Subtotal</section>
-                <section>{itemsPrice} &#8377;</section>
+                <section>&#8377; {itemsPrice}</section>
               </div>
               <div className="d-flex justify-content-between">
                 <section>Sales tax(16%)</section>
-                <section>{taxPrice} &#8377;</section>
+                <section>&#8377; {taxPrice}</section>
               </div>
               <div className="d-flex justify-content-between">
                 <section>Shippinng charges</section>
-                <section>{shippingPrice} &#8377;</section>
+                <section>&#8377; {shippingPrice} </section>
               </div>
               <hr />
               <div className="d-flex justify-content-between">
                 <section><b>Total</b></section>
-                <section><b>{totalPrice} &#8377;</b></section>
+                <section><b>&#8377; {totalPrice}</b></section>
               </div>
             </div>
 
@@ -179,7 +189,8 @@ const Cart = (props) => {
             </div>
           </div>
 
-        </div><Example showORnot={jwtResponse} />
+        </div>
+        <Example showORnot={jwtResponse} />
       </>
     )
   }

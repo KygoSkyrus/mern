@@ -23,7 +23,7 @@ router.post('/signup', async (req, res) => {
 
     const { firstName, lastName, email, password } = req.body;
 
-    console.log(firstName, lastName, email, password);
+    //console.log(firstName, lastName, email, password);
 
     if (!firstName || !lastName || !email || !password) {
         return res.status(422).json({ error: "fill all details" });
@@ -63,18 +63,18 @@ router.post('/signin', async (req, res) => {
 
         const userLogin = await User.findOne({ email: email });
 
-        console.log(userLogin);
+        //console.log(userLogin);
 
         if (userLogin) {
             const isMatch = await bcrypt.compare(password, userLogin.password);
 
             const token = await userLogin.generateAuthToken();
-            console.log(token);
+            //console.log(token);
 
             res.cookie('jwt', token, {
                 expires: new Date(Date.now() + 3600000),
                 httpOnly: true
-            });//not working
+            });
             res.cookie('email', email, {
                 expires: new Date(Date.now() + 3600000),
                 httpOnly: true
@@ -90,16 +90,16 @@ router.post('/signin', async (req, res) => {
         }
 
     } catch (err) {
-        console.log(req.body);
+        console.log(err);
     }
-})
+})  
 
 //stripe
 router.post('/checkout', async (req, res) => {
 
     const { totalPrice, token } = req.body;
-    console.log("prdouct :", totalPrice);
-    console.log("token :", token);
+    //console.log("prdouct :", totalPrice);
+    //console.log("token :", token);
     const indempontencyKey = uuidv4();
 
     const customer = await stripe.customers.create({
@@ -121,22 +121,11 @@ router.post('/checkout', async (req, res) => {
         }
     }, { idempotencyKey: indempontencyKey });
 
-});
+    res.send(JSON.stringify(charge));//charge is the reponse from stripe with all payment related details
+
+});  
 
 
-/*
-router.get('/exist', (req, res) => {
-
-    let token = req.cookies.jwt;
-    console.log('Cookies: ', token);
-    if (token) {
-        res.status(200).json({ message: "exist" });
-    } else {
-        res.status(400).json({ error: "not exists" });
-    }
-    res.status(200).json({ message: "exist" });
-});
-*/
 router.post('/exist', async (req, res) => {
 
     try {
@@ -148,7 +137,7 @@ router.post('/exist', async (req, res) => {
             res.send(JSON.stringify(false));
         }
     } catch (err) {
-        console.log(req.body);
+        console.log(err);
     }
 
 });
@@ -158,9 +147,9 @@ router.post('/getemail', async (req, res) => {
     try {
         let email = req.cookies.email;
         //console.log("email:", email);
-        res.send(JSON.stringify(email));
+        res.send(JSON.stringify(email));//sending email from cookies to react
     } catch (err) {
-        console.log(req.body);
+        console.log(err);
     }
 
 });

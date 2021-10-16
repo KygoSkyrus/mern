@@ -22,7 +22,7 @@ const SignIn = () => {
 
         const data = await res.json();
 
-        console.log(data);
+        //console.log(data);
         if (data.error === "account doesn't exists") {
             window.alert("account doesn't exists");
         } else if (data.error === "fill all details") {
@@ -41,15 +41,15 @@ const SignIn = () => {
 
     return (
         <>
-            <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalToggleLabel">SIGN In</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeSignin"></button>
+            <div className="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
+                <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalToggleLabel">SIGN IN</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeSignin"></button>
                         </div>
 
-                        <div class="modal-body">
+                        <div className="modal-body">
 
                             <div className=" p-5" >
                                 <form method="POST">
@@ -64,14 +64,14 @@ const SignIn = () => {
                             </div>
                         </div>
 
-                        <div class="modal-footer">
+                        <div className="modal-footer">
                             <a data-bs-target="#exampleModalToggle2" href="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">New to Shopp-itt? create new account</a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabIndex="-1">
+            <div className="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabIndex="-1">
                 <SignUp />
             </div>
         </>
