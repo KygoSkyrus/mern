@@ -3,14 +3,13 @@ import React from 'react'
 const Orders = (props) => {
 
     const { data, totalprice } = props;
-    //console.log(data);
+    console.log(data);
 
     return (
         <div>
             <h2 className="p-3">My orders</h2>
-{data===null?
-            <div className="container d-flex justify-content-center align-items-center mt-5 mb-5 abc ">
-
+{data===null?  <p>no orders yet. <a href="/">Continue shopping</a></p>
+: <div className="container d-flex justify-content-center align-items-center mt-5 mb-5 abc ">
                 <div className="order-box ">
 
                     <div className="container cart-item mb-3 accordion-bodyposition-relative bg-dark text-light ">
@@ -51,7 +50,7 @@ const Orders = (props) => {
                         </div>
                     </div>
                 </div>
-            </div> : <p>no orders yet. <a href="/">Continue shopping</a></p>}
+            </div>}
         </div>
     )
 }

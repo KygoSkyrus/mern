@@ -74,11 +74,11 @@ const Item = (props) => {
       <div className="card h-100" >
         <img src={product.src} className="card-img-top" alt="..." onClick={handleShow} />
         <div className="card-body" onClick={handleShow}>
-          <div className="d-flex justify-content-between mb-2">
+          <div className="d-flex justify-content-between mb-2 fc">
             <h5 className="card-title">{product.name}</h5>
             <h6 className="">&#8377;{product.price}</h6>
           </div>
-          <p className="card-text">{product.desc}</p>
+          <p className="card-text ">{product.desc}</p>
         </div>
         <button onClick={() =>
           onAdd(product)} className="btn btn-outline-warning"  >
