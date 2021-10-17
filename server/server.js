@@ -26,5 +26,9 @@ mongoose.connect(db, {
 }).catch((err) => console.log(err));
 
 
+if(process.env.NODE_ENV ==="production"){
+  app.use(express.static("client/build"));
+}
+
 
 app.listen(port, () => console.log(`server is running at ${port}`));
