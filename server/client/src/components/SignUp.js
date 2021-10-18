@@ -57,7 +57,7 @@ const SignUp = () => {
                 </div>
                 <div className="modal-body">
 
-                    <div className="container p-5">
+                    <div className="container padding">
                         <form method="post">
                             <div className="mb-3">
                                 <div className=" w-50 d-inline-block ">
@@ -74,7 +74,7 @@ const SignUp = () => {
                                 <input type="password" className="form-control"
                                     placeholder="Password*" id="password" name="password" value={user.password} onChange={handleInputs} />
                             </div>
-                            <button type="submit" onClick={handleClick} className="btn btn-outline-primary w-100">Create</button>
+                            <button type="submit" onClick={handleClick} className="btn btn-outline-warning w-100">Create</button>
                         </form>
                     </div>
 

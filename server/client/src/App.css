@@ -9,7 +9,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f7f7f7;
 }
 .mainlogo img{
   width: 120px;
@@ -158,6 +157,10 @@
   width: 50%;
 }
 
+/*signin.js*/
+.padding{
+  padding: 25px;
+}
 
 @media (max-width:991px) {
   .abc{
@@ -259,5 +262,10 @@
     width:300px;
     height:250px;
   }
+
+  /*signin.js*/
+.padding{
+  padding: 15px;
+}
   
 }

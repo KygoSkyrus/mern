@@ -15,10 +15,8 @@ function AppLoaded(props) {
     const splash = () => {
         return (
             <div className="mainlogo">
-                <div className="logo-bg-outer">
-                <div className="logo-bg">
+                <div className="">
                     <img src={mainlogo}  alt="logo" />
-                </div>
                 </div>
                 <p className="by">by dheeraj gupta</p>
             </div>

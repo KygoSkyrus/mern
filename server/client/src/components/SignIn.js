@@ -51,7 +51,7 @@ const SignIn = () => {
 
                         <div className="modal-body">
 
-                            <div className=" p-5" >
+                            <div className="padding" >
                                 <form method="POST">
                                     <div className="mb-3">
                                         <input type="email" className="form-control" name="email" id="email" placeholder="Email address*" aria-describedby="emailHelp" value={email} onChange={(e) => setemail(e.target.value)} />
@@ -59,7 +59,7 @@ const SignIn = () => {
                                     <div className="mb-3">
                                         <input type="password" className="form-control" id="password" name="password" placeholder="Password*" value={password} onChange={(e) => setpassword(e.target.value)} />
                                     </div>
-                                    <button type="submit" className="btn btn-outline-primary w-100" onClick={loginuser}>SIGN IN</button>
+                                    <button type="submit" className="btn btn-outline-warning w-100" onClick={loginuser}>SIGN IN</button>
                                 </form>
                             </div>
                         </div>
