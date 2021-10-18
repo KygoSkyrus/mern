@@ -151,6 +151,9 @@
     padding-top: 20px;
     padding-left: 0
   }
+  .inner button{
+    width:100% !important;
+  }
 
   /*orders.js*/
   .order-box{
@@ -229,7 +232,5 @@
     width:300px;
     height:250px;
   }
-  .inner button{
-    width:100% !important;
-  }
+  
 }

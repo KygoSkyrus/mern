@@ -25,7 +25,7 @@ function App() {
       return (
         <>
         <ToastContainer  className="p-3 mt-5 tst">
-              <Toast onClose={() => setShow(false)} show={show} delay={3000} autohide bg="danger">
+              <Toast onClose={() => setShow(false)} show={show} delay={3000} autohide bg="danger" >
                 <Toast.Header>
                   <img
                     src=""

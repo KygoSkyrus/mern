@@ -8,7 +8,7 @@ const Orders = (props) => {
     return (
         <div>
             <h2 className="p-3">My orders</h2>
-{data===null?  <p>no orders yet. <a href="/">Continue shopping</a></p>
+{data===undefined ?  <p>no orders yet. <a href="/">Continue shopping</a></p>
 : <div className="container d-flex justify-content-center align-items-center mt-5 mb-5 abc ">
                 <div className="order-box ">
 

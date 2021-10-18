@@ -159,7 +159,7 @@ const Cart = (props) => {
               </div>
               <div className="d-flex justify-content-between">
                 <section>Sales tax(16%)</section>
-                <section>&#8377; {taxPrice}</section>
+                <section>&#8377; {taxPrice.toFixed(2)}</section>
               </div>
               <div className="d-flex justify-content-between">
                 <section>Shippinng charges</section>
@@ -168,7 +168,7 @@ const Cart = (props) => {
               <hr />
               <div className="d-flex justify-content-between">
                 <section><b>Total</b></section>
-                <section><b>&#8377; {totalPrice}</b></section>
+                <section><b>&#8377; {totalPrice.toFixed(2)}</b></section>
               </div>
             </div>
 
