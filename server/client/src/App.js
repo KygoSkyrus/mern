@@ -55,8 +55,12 @@ function App() {
       setdata([...data, { ...a, qty: 1 }]);
     }
 
-    setitemName(a.name);//this is for the toast, to show name of the product
-    setShow(true);//related to toast
+    //to show toast only on the main page but not on the cart
+    if(window.location.href==="http://localhost:3000/"){
+      setitemName(a.name);//this is for the toast, to show name of the product
+      setShow(true);//related to toast
+    }
+    
   }
 
   //to decrease the item from cart

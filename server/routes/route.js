@@ -42,6 +42,17 @@ router.post('/signup', async (req, res) => {
 
         await user.save();
 
+        const token = await user.generateAuthToken();
+        //console.log(token);
+        res.cookie('jwt', token, {
+            expires: new Date(Date.now() + 3600000),
+            httpOnly: true
+        });
+        res.cookie('email', email, {
+            expires: new Date(Date.now() + 3600000),
+            httpOnly: true
+        });
+
         res.status(201).json({ message: "user register successfully" })
 
     } catch (err) {
@@ -92,7 +103,7 @@ router.post('/signin', async (req, res) => {
     } catch (err) {
         console.log(err);
     }
-})  
+})
 
 //stripe
 router.post('/checkout', async (req, res) => {
@@ -123,7 +134,7 @@ router.post('/checkout', async (req, res) => {
 
     res.send(JSON.stringify(charge));//charge is the reponse from stripe with all payment related details
 
-});  
+});
 
 
 router.post('/exist', async (req, res) => {
