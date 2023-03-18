@@ -1,14 +1,14 @@
-const express = require('express');
-const mongoose = require('mongoose');
+import express, {} from 'express';
+import { connect } from 'mongoose';
 const app = express();
-const dotenv = require('dotenv');
+import { config } from 'dotenv';
 
 
 app.use(express.static('public'));
 
-dotenv.config({ path: './env/config.env' });
+config({ path: './env/config.env' });
 
-app.use(express.json());
+app.use(json());
 
 app.use(require('./routes/route'));
 
@@ -18,7 +18,7 @@ const db = process.env.dbURI;
 const port = process.env.PORT || 4000;
 
 
-mongoose.connect(db, {
+connect(db, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => {
