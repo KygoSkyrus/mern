@@ -2,10 +2,16 @@ import React, { useState } from 'react'
 import SignUp from './SignUp';
 
 
+import { initializeApp } from 'firebase/app';
+import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+
+
 const SignIn = () => {
 
     const [email, setemail] = useState('');
     const [password, setpassword] = useState('');
+
+    const [phone, setphone] = useState();
 
     const loginuser = async (e) => {
         e.preventDefault();
@@ -39,6 +45,68 @@ const SignIn = () => {
     }
 
 
+
+
+
+
+
+    const loginWithNumber = async (e) => {
+        e.preventDefault(e)
+
+        //FIREBASE_________________________________
+        const firebaseConfig = {
+            apiKey: "AIzaSyD356cys4X2N0DHboL4T8MZCDR1BuN2n88",
+            authDomain: "shopp-itt.firebaseapp.com",
+            projectId: "shopp-itt",
+            storageBucket: "shopp-itt.appspot.com",
+            messagingSenderId: "500784370915",
+            appId: "1:500784370915:web:5433a992ab3e3229daa1d6",
+            measurementId: "G-DVFRLB25DQ"
+        };
+        const app = initializeApp(firebaseConfig);
+
+        const auth = getAuth();
+        auth.languageCode = 'it';
+        //FIREBASE_________________________________
+
+
+        window.recaptchaVerifier = new RecaptchaVerifier('sign-in-button', {
+            'size': 'invisible',
+            'callback': (response) => {
+                // reCAPTCHA solved, allow signInWithPhoneNumber.
+                // onSignInSubmit();
+            }
+        }, auth);
+
+        let appVerifier=window.recaptchaVerifier ;
+
+        onSignInSubmit(appVerifier)
+        console.log('phone', phone)
+
+
+
+
+
+function onSignInSubmit (appVerifier){
+
+console.log('inside xyz',appVerifier,phone)
+        signInWithPhoneNumber(auth, '+91 8076806118', appVerifier)
+            .then((confirmationResult) => {
+                console.log('confirmation rsult', confirmationResult)
+                // SMS sent. Prompt user to type the code from the message, then sign the
+                // user in with confirmationResult.confirm(code).
+                window.confirmationResult = confirmationResult;
+                // ...
+            }).catch((error) => {
+                console.log(error)
+                // Error; SMS not sent
+                // ...
+            });
+        }
+
+    }
+
+
     return (
         <>
             <div className="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
@@ -62,6 +130,21 @@ const SignIn = () => {
                                     <button type="submit" className="btn btn-outline-warning w-100" onClick={loginuser}>SIGN IN</button>
                                 </form>
                             </div>
+
+                            <div className="padding" >
+                                <form >
+                                    <div className="mb-3">
+                                        <input type="number" className="form-control" name="phone" id="phone" placeholder="Phone Number*" aria-describedby="emailHelp" value={phone} onChange={(e) => setphone(e.target.value)} />
+                                    </div>
+                                    <div id='sign-in-button'>ss</div>
+                                    {/* <div className="mb-3">
+                                        <input type="password" className="form-control" id="password" name="password" placeholder="Password*" value={password} onChange={(e) => setpassword(e.target.value)} />
+                                    </div> */}
+                                    <button className="btn btn-outline-warning w-100" onClick={loginWithNumber}>LOG IN</button>
+                                </form>
+                            </div>
+
+
                         </div>
 
                         <div className="modal-footer">
