@@ -3,96 +3,96 @@
 }
 
 /*apploaded.js*/
-.mainlogo{
+.mainlogo {
   width: 100vw;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.mainlogo img{
+.mainlogo img {
   width: 120px;
 }
-.logo-bg{
-  width:200px;
+.logo-bg {
+  width: 200px;
   height: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: rgb(95, 58, 197);
   border-radius: 50%;
-  box-shadow: 0px 8px 20px rgb(88, 88, 88),0px -8px 20px rgb(201, 201, 201);
+  box-shadow: 0px 8px 20px rgb(88, 88, 88), 0px -8px 20px rgb(201, 201, 201);
 }
-.by{
+.by {
   position: absolute;
   bottom: 0px;
 }
 
 /**app.js*/
-.tst{
-  position: fixed ;
-  bottom: 5% ;
+.tst {
+  position: fixed;
+  bottom: 5%;
   z-index: 99;
   right: 4%;
 }
 
 /*cart.css*/
-.def{
+.def {
   width: 75%;
 }
-.cart-item{
+.cart-item {
   border: 1px solid black;
   border-radius: 4px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.cart-item img{
+.cart-item img {
   width: 100px;
 }
-.pic-name{
+.pic-name {
   width: 250px;
   display: flex;
   align-items: center;
 }
-.pic-name h5{
+.pic-name h5 {
   margin-left: 10px;
 }
-.price{
+.price {
   width: 70px;
   display: flex;
-    justify-content: center;
-    align-items: center;
+  justify-content: center;
+  align-items: center;
 }
-.qty{
+.qty {
   width: 35px;
   height: 35px;
   border-top: 1px solid black;
   border-bottom: 1px solid black;
   display: flex;
-    justify-content: center;
-    align-items: center;
+  justify-content: center;
+  align-items: center;
 }
-.plus-minus{
+.plus-minus {
   width: 35px;
   height: 35px;
   background-color: inherit;
   border: 1px solid black;
 }
-.plus-minus:nth-child(1){
+.plus-minus:nth-child(1) {
   border-radius: 4px 0 0 4px;
-  color: green ;
+  color: green;
 }
-.plus-minus:nth-child(3){
-  border-radius: 0  4px 4px 0;
-  color: red ;
+.plus-minus:nth-child(3) {
+  border-radius: 0 4px 4px 0;
+  color: red;
 }
-.trash{
- color: red;
- cursor: pointer;
+.trash {
+  color: red;
+  cursor: pointer;
 }
 
-.place-order{ 
+.place-order {
   width: 300px;
   height: fit-content;
   background-color: #f7f7f7;
@@ -101,18 +101,15 @@
   border: 1px solid black;
 }
 
-
-
 /* status.js*/
-.status{
+.status {
   width: 100%;
   position: absolute;
   top: 30%;
 }
 
-
 /* navbar.js*/
-.logo{
+.logo {
   width: 100px;
   height: 45px;
   background: url(./components/images/mainlogo1.png);
@@ -121,44 +118,43 @@
   background-repeat: no-repeat;
 }
 
-
 /* items.js*/
-.appearance{
+.appearance {
   appearance: none;
   text-decoration: none;
   color: black;
 }
-.appearance:hover{
+.appearance:hover {
   color: black;
 }
 
-.showfull{
+.showfull {
   padding: 30px;
   border-radius: 4px;
 }
-.inner{
-  background-color: '';
+.inner {
+  background-color: "";
   display: flex;
 }
-.inner img{
+.inner img {
   width: 400px;
   height: 300px;
 }
-.texts{
+.texts {
   padding-left: 30px;
 }
-.grey{
+.grey {
   font-size: 18px;
   color: rgb(85, 85, 85);
 }
 
 /*orders.js*/
-.order-box{
+.order-box {
   width: 50%;
 }
 
 /******************************************** signin.js **********************************************/
-.padding{
+.padding {
   padding: 25px;
 }
 /* Chrome, Safari, Edge, Opera */
@@ -168,73 +164,137 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 /* Firefox */
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
+/******************************************** signin.js **********************************************/
 
-@media (max-width:991px) {
-  .abc{
+
+
+/******************************************** phone otp **********************************************/
+
+.card{
+  transition: all 0.3s;
+}
+.card:hover {
+    box-shadow: 0px 5px 20px 0px #d2dae3;
+}
+
+.card h6 {
+  color: red;
+  font-size: 20px;
+}
+
+.inputs input {
+  width: 40px;
+  height: 40px;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+.card-2 {
+  background-color: #fff;
+  padding: 10px;
+  width: 350px;
+  height: 100px;
+  bottom: -50px;
+  left: 20px;
+  position: absolute;
+  border-radius: 5px;
+}
+
+.card-2 .content {
+  margin-top: 50px;
+}
+
+.card-2 .content a {
+  color: red;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border: 2px solid red;
+}
+
+.validate {
+  border-radius: 20px;
+  height: 40px;
+  background-color: red;
+  border: 1px solid red;
+  width: 140px;
+}
+/******************************************** phone otp **********************************************/
+
+
+
+/******************************************** responsive**********************************************/
+@media (max-width: 991px) {
+  .abc {
     flex-direction: column;
   }
-  .def{
+  .def {
     width: 100%;
   }
-  .place-order{
+  .place-order {
     width: 100%;
     margin-left: 0;
   }
 
-  .inner{
+  .inner {
     flex-direction: column;
   }
-  .texts{
+  .texts {
     padding-top: 20px;
-    padding-left: 0
+    padding-left: 0;
   }
-  .inner button{
-    width:100% !important;
+  .inner button {
+    width: 100% !important;
   }
 
   /*orders.js*/
-  .order-box{
+  .order-box {
     width: 100%;
   }
 }
 
-@media ( max-width:422px) {
-  .abc{
+@media (max-width: 422px) {
+  .abc {
     flex-direction: column;
   }
 
-  .tst{
-    bottom: 0% ;
+  .tst {
+    bottom: 0%;
     right: 0%;
   }
 
-
-  .def{
+  .def {
     width: 100%;
   }
-  .cart-item img{
+  .cart-item img {
     width: 70px;
   }
-  .pic-name{
+  .pic-name {
     width: 170px;
     text-align: left;
   }
-  .pic-name h5{
+  .pic-name h5 {
     margin-left: 5px;
     font-size: 16px;
   }
-  .price{
+  .price {
     width: 80px;
   }
-  .qty{
+  .qty {
     width: 30px;
     height: 30px;
-
   }
-  .plus-minus{
+  .plus-minus {
     font-size: 12px;
     width: 25px;
     height: 30px;
@@ -242,42 +302,40 @@ input[type=number] {
     align-items: center;
     justify-content: center;
   }
-  
-  .trash{
+
+  .trash {
     position: absolute;
     right: -7px;
     top: -6px;
     border-radius: 50%;
     background-color: white;
   }
-  
-  .place-order{ 
+
+  .place-order {
     width: 100%;
     margin-left: 0;
   }
   /*ietms.js*/
-  .fc{
-    flex-direction:column;
+  .fc {
+    flex-direction: column;
   }
-  .showfull{
-    padding:10px;
+  .showfull {
+    padding: 10px;
   }
-  .inner{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
+  .inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
-  .inner img{
-    width:300px;
-    height:250px;
+  .inner img {
+    width: 300px;
+    height: 250px;
   }
-
-
-
 
   /*signin.js*/
-.padding{
-  padding: 15px;
+  .padding {
+    padding: 15px;
+  }
 }
-}
+/******************************************** responsive**********************************************/

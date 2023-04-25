@@ -6,12 +6,14 @@ import reportWebVitals from './reportWebVitals';
 
 import AppLoaded from './AppLoaded.js';
 import AppRoot from './AppRoot.js';
+import App from './App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <AppRoot>
+    {/* <AppRoot>
       <AppLoaded/>
-    </AppRoot>
+    </AppRoot> */}
+    <App/>
   </React.StrictMode>,
   document.getElementById('root')
 );

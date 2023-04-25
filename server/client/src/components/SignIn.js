@@ -12,6 +12,7 @@ const SignIn = () => {
     const [password, setpassword] = useState('');
 
     const [phone, setphone] = useState();
+    const [otp, setOtp] = useState(["", "", "", "", "", ""])
 
     const loginuser = async (e) => {
         e.preventDefault();
@@ -45,8 +46,51 @@ const SignIn = () => {
     }
 
 
+    function OTPInput() {
+
+        console.log('otpinputr3')
 
 
+        const newOtpValues = [...otp]
+
+        const inputs = document.querySelectorAll('#otp > *[id]');
+
+        for (let i = 0; i < inputs.length; i++) {
+
+            inputs[i].addEventListener('keydown', function (event) {
+                if (event.key === "Backspace") {
+                    console.log('current input ---',inputs[i],i,inputs[i].value )
+                    
+                    inputs[i].value = '';
+                    newOtpValues[i] = '';//setting otp state
+                    setOtp(newOtpValues)//setting otp state
+                    if (i !== 0) {
+                        //console.log('inputs[i - 1].value BFEORE',inputs[i - 1].value,inputs[i - 1])
+                        inputs[i - 1].focus();
+                        //console.log('inputs[i - 1].value AFTER',inputs[i - 1].value)
+                    }
+                } else {
+                    if (i === inputs.length - 1 && inputs[i].value !== '') {
+                        return true;
+                    } else if (event.keyCode > 47 && event.keyCode < 58) {
+                        inputs[i].value = event.key;
+                        newOtpValues[i] = event.key;//setting otp state
+                        setOtp(newOtpValues)//setting otp state
+                        if (i !== inputs.length - 1) inputs[i + 1].focus();
+                        event.preventDefault();
+                    } else if (event.keyCode > 64 && event.keyCode < 91) {
+                        inputs[i].value = String.fromCharCode(event.keyCode);
+                        newOtpValues[i] = String.fromCharCode(event.keyCode);//setting otp state
+                        setOtp(newOtpValues)//setting otp state
+                        if (i !== inputs.length - 1) inputs[i + 1].focus();
+                        event.preventDefault();
+                    }
+                }
+            });
+        }
+
+
+    }
 
 
 
@@ -66,7 +110,9 @@ const SignIn = () => {
         const app = initializeApp(firebaseConfig);
 
         const auth = getAuth();
-        auth.languageCode = 'it';
+        // To apply the default browser preference instead of explicitly setting it.
+
+        auth.useDeviceLanguage();
         //FIREBASE_________________________________
 
 
@@ -78,35 +124,51 @@ const SignIn = () => {
             }
         }, auth);
 
-        let appVerifier=window.recaptchaVerifier ;
+        let appVerifier = window.recaptchaVerifier;
 
         onSignInSubmit(appVerifier)
         console.log('phone', phone)
 
 
 
+        function onSignInSubmit(appVerifier) {
 
+            console.log('inside xyz', appVerifier, phone)
+            signInWithPhoneNumber(auth, '+91 ' + phone, appVerifier)
+                .then((confirmationResult) => {
+                    console.log('confirmation rsult', confirmationResult)
+                    // SMS sent. Prompt user to type the code from the message, then sign the
 
-function onSignInSubmit (appVerifier){
-
-console.log('inside xyz',appVerifier,phone)
-        signInWithPhoneNumber(auth, '+91 8076806118', appVerifier)
-            .then((confirmationResult) => {
-                console.log('confirmation rsult', confirmationResult)
-                // SMS sent. Prompt user to type the code from the message, then sign the
-                // user in with confirmationResult.confirm(code).
-                window.confirmationResult = confirmationResult;
-                // ...
-            }).catch((error) => {
-                console.log(error)
-                // Error; SMS not sent
-                // ...
-            });
+                    //here you have to show the otp inputs 
+                    window.confirmationResult = confirmationResult;
+                    // ...
+                }).catch((error) => {
+                    console.log(error)
+                    // Error; SMS not sent
+                    // ...
+                });
         }
 
     }
 
+    function onValidate(e) {
+        console.log('otttp', otp,otp.join(""))
 
+        window.confirmationResult.confirm(otp.join("")).then((result) => {
+          const user = result.user;
+          console.log('User signed in successfully.',user)//returned data from firebase on confirmation
+          // ...
+        }).catch((error) => {
+            console.log("User couldn't sign in (bad verification code?)",error)
+        });
+
+        e.preventDefault()
+    }
+
+
+
+
+    /////////////////
     return (
         <>
             <div className="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
@@ -136,10 +198,26 @@ console.log('inside xyz',appVerifier,phone)
                                     <div className="mb-3">
                                         <input type="number" className="form-control" name="phone" id="phone" placeholder="Phone Number*" aria-describedby="emailHelp" value={phone} onChange={(e) => setphone(e.target.value)} />
                                     </div>
-                                    <div id='sign-in-button'>ss</div>
+                                    <div id='sign-in-button' className='d-none'>ss</div>
                                     {/* <div className="mb-3">
                                         <input type="password" className="form-control" id="password" name="password" placeholder="Password*" value={password} onChange={(e) => setpassword(e.target.value)} />
                                     </div> */}
+                                    <div className="position-relative">
+                                        <div className="card p-2 text-center">
+                                            <h6>Please enter the one time password <br /> to verify your account</h6>
+                                            <div> <span>A code has been sent to</span> <small>*******9897</small> </div>
+                                            <div id="otp" className="inputs d-flex flex-row justify-content-center mt-2" onClick={e => OTPInput(e)}>
+                                                <input className="m-2 text-center form-control rounded" type="text" id="first" maxLength="1" />
+                                                <input className="m-2 text-center form-control rounded" type="text" id="second" maxLength="1" />
+                                                <input className="m-2 text-center form-control rounded" type="text" id="third" maxLength="1" />
+                                                <input className="m-2 text-center form-control rounded" type="text" id="fourth" maxLength="1" />
+                                                <input className="m-2 text-center form-control rounded" type="text" id="fifth" maxLength="1" />
+                                                <input className="m-2 text-center form-control rounded" type="text" id="sixth" maxLength="1" />
+                                            </div>
+                                            <div className="mt-4"> <button className="btn btn-danger px-4 validate" onClick={e => onValidate(e)}>Validate</button> </div>
+                                        </div>
+                                    </div>
+
                                     <button className="btn btn-outline-warning w-100" onClick={loginWithNumber}>LOG IN</button>
                                 </form>
                             </div>
