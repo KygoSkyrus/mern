@@ -57,28 +57,29 @@ const SignIn = () => {
 
         for (let i = 0; i < inputs.length; i++) {
 
-            inputs[i].addEventListener('keydown', function (event) {
+            inputs[i].addEventListener('keyup', function (event) {
                 if (event.key === "Backspace") {
-                    console.log('current input ---',inputs[i],i,inputs[i].value )
-                    
                     inputs[i].value = '';
                     newOtpValues[i] = '';//setting otp state
                     setOtp(newOtpValues)//setting otp state
+                    //sets the current controller to previous input on clearing
                     if (i !== 0) {
-                        //console.log('inputs[i - 1].value BFEORE',inputs[i - 1].value,inputs[i - 1])
                         inputs[i - 1].focus();
-                        //console.log('inputs[i - 1].value AFTER',inputs[i - 1].value)
                     }
                 } else {
+                    //for the last input and if its not empty
                     if (i === inputs.length - 1 && inputs[i].value !== '') {
                         return true;
                     } else if (event.keyCode > 47 && event.keyCode < 58) {
+                        //if user enters any digits
                         inputs[i].value = event.key;
                         newOtpValues[i] = event.key;//setting otp state
                         setOtp(newOtpValues)//setting otp state
+                        //send the cntroller to next input if its not last input
                         if (i !== inputs.length - 1) inputs[i + 1].focus();
                         event.preventDefault();
                     } else if (event.keyCode > 64 && event.keyCode < 91) {
+                        //if user enters any letters
                         inputs[i].value = String.fromCharCode(event.keyCode);
                         newOtpValues[i] = String.fromCharCode(event.keyCode);//setting otp state
                         setOtp(newOtpValues)//setting otp state
@@ -129,8 +130,6 @@ const SignIn = () => {
         onSignInSubmit(appVerifier)
         console.log('phone', phone)
 
-
-
         function onSignInSubmit(appVerifier) {
 
             console.log('inside xyz', appVerifier, phone)
@@ -152,13 +151,12 @@ const SignIn = () => {
     }
 
     function onValidate(e) {
-        console.log('otttp', otp,otp.join(""))
-
         window.confirmationResult.confirm(otp.join("")).then((result) => {
           const user = result.user;
           console.log('User signed in successfully.',user)//returned data from firebase on confirmation
           // ...
         }).catch((error) => {
+            alert('incorrect one time password')
             console.log("User couldn't sign in (bad verification code?)",error)
         });
 
@@ -203,7 +201,7 @@ const SignIn = () => {
                                         <input type="password" className="form-control" id="password" name="password" placeholder="Password*" value={password} onChange={(e) => setpassword(e.target.value)} />
                                     </div> */}
                                     <div className="position-relative">
-                                        <div className="card p-2 text-center">
+                                        <div className="p-2 text-center">
                                             <h6>Please enter the one time password <br /> to verify your account</h6>
                                             <div> <span>A code has been sent to</span> <small>*******9897</small> </div>
                                             <div id="otp" className="inputs d-flex flex-row justify-content-center mt-2" onClick={e => OTPInput(e)}>
