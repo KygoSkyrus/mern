@@ -166,4 +166,10 @@ router.post('/getemail', async (req, res) => {
 });
 
 
+router.get('/getproducts',async (req,res)=>{
+    res.send({data:"....d"})
+})
+
+
+
 module.exports = router;

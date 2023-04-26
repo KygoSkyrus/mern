@@ -12,7 +12,6 @@ import itemData from './components/itemData';
 import Items from './components/Items';
 import Success from './components/Success';
 import Failed from './components/Failed'
-import Admin from './components/v2/Admin';
 
 
 function App() {
@@ -96,14 +95,33 @@ function App() {
         <SignIn />
 
         <Navbar data={dl} />
-  
+        {/**the mess starts */}
 
 
-        <Route path="/admin" component={Cart}>
-          <Admin />
+        <Notification show={show} itemName={itemName} />
+
+        <Route exact path="/">
+          <Items onAdd={onAdd} itemData={itemData} />
+        </Route>
+
+        <Route path="/cart" component={Cart}>
+          <Cart onAdd={onAdd} onRemove={onRemove} clear={clear} data={data} callback={callbck}/>
+        </Route>
+
+        {/**the mess ends */}
+
+        <Route path="/orders" component={Orders}>
+          <Orders data={cartData} totalprice={tPrice}/>
         </Route>
 
 
+        <Route path="/success" component={Success}>
+          <Success />
+        </Route>
+
+        <Route path="/failed" component={Failed}>
+          <Failed />
+        </Route>
 
       </div>
     </Router>
