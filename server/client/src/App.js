@@ -3,11 +3,12 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Toast, ToastContainer } from 'react-bootstrap'
 
 import './App.css';
+import './components/v2/v2.css'
 
 import Navbar from './components/Navbar';
 import SignIn from './components/SignIn';
 import Cart from './components/Cart';
-import Orders from './components/Orders';
+import Orders from './components/Orders'; 
 import itemData from './components/itemData';
 import Items from './components/Items';
 import Success from './components/Success';

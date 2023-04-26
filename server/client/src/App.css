@@ -1,7 +1,3 @@
-.App {
-  text-align: center;
-}
-
 /*apploaded.js*/
 .mainlogo {
   width: 100vw;
@@ -219,7 +215,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .form-control:focus {
   box-shadow: none;
-  border: 2px solid red;
+  border: 1.5px solid #ffd53d;
 }
 
 .validate {
