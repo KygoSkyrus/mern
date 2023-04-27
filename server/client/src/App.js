@@ -5,15 +5,16 @@ import { Toast, ToastContainer } from 'react-bootstrap'
 import './App.css';
 import './components/v2/v2.css'
 
-import Navbar from './components/Navbar';
-import SignIn from './components/SignIn';
-import Cart from './components/Cart';
-import Orders from './components/Orders'; 
-import itemData from './components/itemData';
-import Items from './components/Items';
-import Success from './components/Success';
-import Failed from './components/Failed'
+import Navbar from './components/v2/Navbar';
+import SignIn from './components/v2/SignIn'
+// import Cart from './components/oldcomp/Cart';
+// import Orders from './components/Orders'; 
+// import itemData from './components/itemData';
+// import Items from './components/Items';
+// import Success from './components/Success';
+// import Failed from './components/Failed'
 import Admin from './components/v2/Admin';
+import Homepage from './components/v2/Homepage';
 
 
 function App() {
@@ -26,20 +27,20 @@ function App() {
     if (props.show === true) {
       return (
         <>
-        <ToastContainer  className="p-3 mt-5 tst">
-              <Toast onClose={() => setShow(false)} show={show} delay={3000} autohide bg="danger" >
-                <Toast.Header>
-                  <img
-                    src=""
-                    className="rounded me-2"
-                    alt=""
-                  />
-                  <strong className="me-auto">Shopp-itt</strong>
-                  <small className="text-muted">just now</small>
-                </Toast.Header>
-                <Toast.Body className="text-light">{props.itemName}, has been aded to your cart.</Toast.Body>
-              </Toast>
-            </ToastContainer>
+          <ToastContainer className="p-3 mt-5 tst">
+            <Toast onClose={() => setShow(false)} show={show} delay={3000} autohide bg="danger" >
+              <Toast.Header>
+                <img
+                  src=""
+                  className="rounded me-2"
+                  alt=""
+                />
+                <strong className="me-auto">Shopp-itt</strong>
+                <small className="text-muted">just now</small>
+              </Toast.Header>
+              <Toast.Body className="text-light">{props.itemName}, has been aded to your cart.</Toast.Body>
+            </Toast>
+          </ToastContainer>
         </>
       );
     } else return null
@@ -58,11 +59,11 @@ function App() {
     }
 
     //to show toast only on the main page but not on the cart
-    if(window.location.href==="http://localhost:3000/"){
+    if (window.location.href === "http://localhost:3000/") {
       setitemName(a.name);//this is for the toast, to show name of the product
       setShow(true);//related to toast
     }
-    
+
   }
 
   //to decrease the item from cart
@@ -84,7 +85,7 @@ function App() {
   const [cartData, setcartData] = useState();
   const [tPrice, settPrice] = useState();
   //callback function to cart to get the data from there and send to orders
-  const callbck=(data,totalprice)=>{
+  const callbck = (data, totalprice) => {
     setcartData(data);
     settPrice(totalprice);
   }
@@ -97,10 +98,13 @@ function App() {
         <SignIn />
 
         <Navbar data={dl} />
-  
 
 
-        <Route path="/admin" component={Cart}>
+        <Route path="/" component={Homepage}>
+          {/* <Admin /> */}
+        </Route>
+
+        <Route path="/admin" component={Admin}>
           <Admin />
         </Route>
 
