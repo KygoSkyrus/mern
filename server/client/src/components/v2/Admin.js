@@ -11,7 +11,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 const Admin = () => {
 
     const [showLoader, setShowLoader] = useState(false)
-    const [productData,setProductData]=useState({name:"",url:"",price:0,description:"",category:"",image:"",stock:0})
+    const [productData, setProductData] = useState({ name: "", url: "", price: 0, description: "", category: "", image: "", stock: 0 })
 
 
     //-------------------- FIREBASE INITIALIZE -----------------------
@@ -31,73 +31,86 @@ const Admin = () => {
     async function sendData(e) {
         e.preventDefault()//this stops page to refresh if the form submission is used with type submit button
         setShowLoader(true)//start showing loader
-console.log('eeee',productData)
-        let image = document.getElementById("image")?.files[0];
-        let title = document.getElementById("title")?.value;
-        let url = document.getElementById("url")?.value;
-        let category = document.getElementById("category")?.value;
-        let select
-        if (document.querySelector("input[type=radio][name=select]:checked")) {
-            select = document.querySelector("input[type=radio][name=select]:checked")?.value;
-        } else {
-            select = ''
-        }
-        let shortdesc = document.getElementById("shortdesc")?.value;
-        let author = document.getElementById("author")?.value;
-        let metatitle = document.getElementById("metatitle")?.value;
-        let metakeyword = document.getElementById("metakeyword")?.value;
-        let metadesc = document.getElementById("metadesc")?.value;
+        console.log('eeee', productData)
+
+
+        // let image = document.getElementById("image")?.files[0];
+        // let title = document.getElementById("title")?.value;
+        // let url = document.getElementById("url")?.value;
+        // let category = document.getElementById("category")?.value;
+        // let select
+        // if (document.querySelector("input[type=radio][name=select]:checked")) {
+        //     select = document.querySelector("input[type=radio][name=select]:checked")?.value;
+        // } else {
+        //     select = ''
+        // }
+        // let shortdesc = document.getElementById("shortdesc")?.value;
+        // let author = document.getElementById("author")?.value;
+        // let metatitle = document.getElementById("metatitle")?.value;
+        // let metakeyword = document.getElementById("metakeyword")?.value;
+        // let metadesc = document.getElementById("metadesc")?.value;
 
 
 
-        let imageUrl;
-        const imageRef = ref(storage, "skyblog/" + uuidv4());
-        //uploading image to firebase storage
-        await uploadBytes(imageRef, image)
-            .then(snapshot => {
-                return snapshot.metadata.fullPath;
-            })
-            .catch(error => {
-                console.log(error)
-            });
+        let imageUrl=[];
 
-        //getting the image url
-        await getDownloadURL(imageRef)
-            .then(url => {
-                imageUrl = url;
-            })
-            .catch(error => {
-                console.log(error)
-            });
+        Array.from(productData.image).forEach(async x => {
+            let imageRef = ref(storage, "shoppitt/" + uuidv4());
+            //uploading image to firebase storage
 
-        fetch("/blogdata", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                imageUrl,
-                title,
-                url,
-                category,
-                select,
-                shortdesc,
-                author,
-                metatitle,
-                metakeyword,
-                metadesc,
-            }),
-        }).then(response => response.json())
-            .then(data => {
-                if (data.blog_added) {
-                    setShowLoader(false)
-                    window.location.reload();
-                } else {
-                    //resetting the fields
-                    setShowLoader(false)
-                    document.getElementById("frm").reset();
-                    setDynamicLabel()
-                }
-            })
-            .catch(err => console.log(err))
+            console.log('x',x)
+//u can also add the upload status feature here
+            await uploadBytes(imageRef, x)
+                .then(snapshot => {
+                    return snapshot.metadata.fullPath;
+                })
+                .catch(error => {
+                    console.log(error)
+                });
+
+            //getting the image url
+            await getDownloadURL(imageRef)
+                .then(url => {
+                    imageUrl.push(url);
+                    console.log("url",url)
+                })
+                .catch(error => {
+                    console.log(error)
+                });
+        })
+
+        console.log(imageUrl)
+
+
+
+        // fetch("/blogdata", {
+        //     method: "POST",
+        //     headers: { "Content-Type": "application/json" },
+        //     body: JSON.stringify({
+        //         imageUrl,
+        //         title,
+        //         url,
+        //         category,
+        //         select,
+        //         shortdesc,
+        //         author,
+        //         metatitle,
+        //         metakeyword,
+        //         metadesc,
+        //     }),
+        // }).then(response => response.json())
+        //     .then(data => {
+        //         if (data.blog_added) {
+        //             setShowLoader(false)
+        //             window.location.reload();
+        //         } else {
+        //             //resetting the fields
+        //             setShowLoader(false)
+        //             document.getElementById("frm").reset();
+        //             setDynamicLabel()
+        //         }
+        //     })
+        //     .catch(err => console.log(err))
     }
 
     async function deleteBlog(id) {
@@ -122,18 +135,23 @@ console.log('eeee',productData)
         let title = e.target.value;
         let str = title.replace(/\s+/g, "-").toLowerCase();
         document.getElementById("url").value = str;
-        setProductData({...productData, [e.target.name]:e.target.value,url:str})
+        setProductData({ ...productData, [e.target.name]: e.target.value, url: str })
     }
 
     function setDynamicLabel(e) {
-        if (document.getElementById("image")?.files[0]?.name) {
-            document.getElementById("dynamicLabel").innerHTML = document.getElementById("image")?.files[0]?.name;
-            const [file] = document.getElementById("image").files;
-            let displayImg = document.getElementById('displayimg')
-            if (displayImg) {
-                displayImg.style.backgroundImage = `url('${URL.createObjectURL(file)}')`
-                displayImg.style.display = "block"
+        let imageHolder = document.getElementById('imageHolder')
+        imageHolder.innerHTML = "";
+        if (e.target.files) {
+            document.getElementById("dynamicLabel").innerHTML = e.target.files[0]?.name;
+            if (imageHolder) {
+                Array.from(e.target.files).forEach(x => {
+                    let div = document.createElement('div')
+                    div.classList.add('displayimg')
+                    div.style.backgroundImage = `url('${URL.createObjectURL(x)}')`
+                    imageHolder.appendChild(div)
+                })
             }
+            setProductData({ ...productData, [e.target.name]: e.target.files })
         } else {
             document.getElementById("dynamicLabel").innerHTML = "Choose a file…"
         }
@@ -175,19 +193,19 @@ console.log('eeee',productData)
                                     <div className="form-group">
                                         <label htmlFor="price" className="font-weight-600">Price</label>
                                         <input type='number' name="price" placeholder="price" className="form-control"
-                                            id="price" required value={productData.price} onChange={e=>setProductData({...productData,[e.target.name]:e.target.value})} />
+                                            id="price" required value={productData.price} onChange={e => setProductData({ ...productData, [e.target.name]: e.target.value })} />
                                     </div>
 
                                     <div className="form-group">
                                         <label htmlFor="description" className="font-weight-600">Description</label>
                                         <textarea name="description" placeholder="description" className="form-control"
-                                            id="description" rows="2" required onChange={e=>setProductData({...productData,[e.target.name]:e.target.value})}></textarea>
+                                            id="description" rows="2" required onChange={e => setProductData({ ...productData, [e.target.name]: e.target.value })}></textarea>
                                     </div>
 
                                     <div className="form-group">
                                         <label htmlFor="category" className="font-weight-600">Category</label>
                                         <div className="">
-                                            <select className="form-control basic-single" name="category" id="category" onChange={e=>setProductData({...productData,[e.target.name]:e.target.value})} >
+                                            <select className="form-control basic-single" name="category" id="category" onChange={e => setProductData({ ...productData, [e.target.name]: e.target.value })} >
                                                 {/* <optgroup label="Select Category" id="optgroup">
                                                     {allCategory?.map(x => {
                                                         return (<option value={x.category} key={x._id} >{x.category}</option>)
@@ -196,15 +214,15 @@ console.log('eeee',productData)
                                                 <optgroup label="Select Category" id="optgroup" name="category" >
                                                     <option value='first' >first</option>
                                                     <option value='second' >second</option>
-                                                </optgroup> 
+                                                </optgroup>
                                             </select>
                                         </div>
 
                                         <div className="form-group">
-                                        <label htmlFor="categoryOption" className="font-weight-600">select</label>
-                                        <input name="categoryOption" placeholder="description" className="form-control"
-                                            id="categoryOption" required />
-                                    </div>
+                                            <label htmlFor="categoryOption" className="font-weight-600">select</label>
+                                            <input name="categoryOption" placeholder="description" className="form-control"
+                                                id="categoryOption" required />
+                                        </div>
                                     </div>
 
                                     <div className="form-group d-flex flex-column">
@@ -217,13 +235,13 @@ console.log('eeee',productData)
                                             <i className="fa fa-upload"></i>&nbsp;&nbsp;
                                             <span id='dynamicLabel'>Choose a file…</span>
                                         </label>
-                                        <div id="displayimg"></div>
+                                        <div id="imageHolder" className='d-flex flex-wrap'></div>
                                     </div>
 
                                     <div className="form-group">
                                         <label htmlFor="stock" className="font-weight-600">In Stock</label>
                                         <input type='number' name="stock" placeholder="stock" className="form-control"
-                                            id="stock" required onChange={e=>setProductData({...productData,[e.target.name]:e.target.value})} />
+                                            id="stock" required onChange={e => setProductData({ ...productData, [e.target.name]: e.target.value })} />
                                     </div>
 
                                     {/* this should not be here as admin should not put rrating or reviews,, */}
@@ -243,8 +261,6 @@ console.log('eeee',productData)
                     </div>
                 </div>
             </div>
-
-
         </>
     )
 }
