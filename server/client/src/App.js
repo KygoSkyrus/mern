@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter , Route, Routes } from "react-router-dom";
 import { Toast, ToastContainer } from 'react-bootstrap'
 
 import './App.css';
@@ -93,25 +93,21 @@ function App() {
   const dl = data.length;//no.of items cart has
 
   return (
-    <Router>
+    <BrowserRouter>
       <div className="App">
         <SignIn />
 
         <Navbar data={dl} />
 
 
-        <Route path="/" component={Homepage}>
-          {/* <Admin /> */}
-        </Route>
-
-        <Route path="/admin" component={Admin}>
-          <Admin />
-        </Route>
-
+<Routes>
+        <Route path="/" exact element={<Homepage/>} />
+        <Route path="/admin" exact element={<Admin/>} />
+</Routes>
 
 
       </div>
-    </Router>
+    </BrowserRouter>
   );
 }
 

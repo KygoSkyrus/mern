@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 //firebase
 import { initializeApp } from 'firebase/app';
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getStorage, ref, uploadBytes, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 
 
 
@@ -52,31 +52,53 @@ const Admin = () => {
 
 
 
-        let imageUrl=[];
+        let imageUrl = [];
 
         Array.from(productData.image).forEach(async x => {
             let imageRef = ref(storage, "shoppitt/" + uuidv4());
             //uploading image to firebase storage
 
-            console.log('x',x)
-//u can also add the upload status feature here
-            await uploadBytes(imageRef, x)
-                .then(snapshot => {
-                    return snapshot.metadata.fullPath;
-                })
-                .catch(error => {
-                    console.log(error)
-                });
+            console.log('x', x)
+            //u can also add the upload status feature here
 
-            //getting the image url
-            await getDownloadURL(imageRef)
-                .then(url => {
-                    imageUrl.push(url);
-                    console.log("url",url)
-                })
-                .catch(error => {
-                    console.log(error)
-                });
+
+
+            const uploadTask = uploadBytesResumable(imageRef, x);
+
+            // Register three observers:
+            // 1. 'state_changed' observer, called any time the state changes
+            // 2. Error observer, called on failure
+            // 3. Completion observer, called on successful completion
+            uploadTask.on('state_changed',
+                (snapshot) => {
+                    // Observe state change events such as progress, pause, and resume
+                    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log('Upload is ' + progress + '% done');
+                    switch (snapshot.state) {
+                        case 'paused':
+                            console.log('Upload is paused');
+                            break;
+                        case 'running':
+                            console.log('Upload is running');
+                            break;
+                        default: console.log('');
+                            break
+                    }
+                },
+                (error) => {
+                    // Handle unsuccessful uploads
+                },
+                () => {
+                    // Handle successful uploads on complete
+                    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                        console.log('File available at', downloadURL);
+                    });
+                }
+            );
+
+
         })
 
         console.log(imageUrl)
