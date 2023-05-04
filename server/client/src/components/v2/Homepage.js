@@ -13,7 +13,7 @@ const Homepage = () => {
         .then(res=>res.json())
         .then(data=>console.log('products',data))
   },[])
-
+ 
 
   return (
     <>
