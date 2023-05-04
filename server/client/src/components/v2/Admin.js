@@ -94,6 +94,7 @@ const Admin = () => {
                     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
                     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                         console.log('File available at', downloadURL);
+                        productData.image.push(downloadURL)
                     });
                 }
             );
@@ -101,9 +102,10 @@ const Admin = () => {
 
         })
 
-        console.log(imageUrl)
+        console.log('productdata----',productData)
 
 
+//we should avoid using url,, just use a template to show product and send data when its clicked
 
         // fetch("/blogdata", {
         //     method: "POST",

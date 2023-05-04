@@ -1,8 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import products from './dummy'
 
 const Homepage = () => {
+
+
+  useEffect(()=>{
+        fetch('/getproducts',{
+          method:"GET",
+          headers: { "Content-Type": "application/json" },        
+        })
+        .then(res=>res.json())
+        .then(data=>console.log('products',data))
+  },[])
 
 
   return (

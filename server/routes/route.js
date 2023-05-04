@@ -15,8 +15,13 @@ const sk = process.env.SK;
 const { v4: uuidv4 } = require('uuid');
 const stripe = require('stripe')(sk);
 
-/*************routes***************/
 
+/************* SCHEMA ***************/
+const PRODUCT = require('../models/product')
+
+
+
+/*************routes***************/
 
 //signup 
 router.post('/signup', async (req, res) => {
@@ -167,7 +172,17 @@ router.post('/getemail', async (req, res) => {
 
 
 router.get('/getproducts',async (req,res)=>{
-    res.send({data:"....d"})
+
+
+    try {
+        let result = await PRODUCT.find({})
+        console.log('result',result)
+        res.send(result);
+      } catch (err) {
+        console.log("error", err);
+      }
+
+
 })
 
 
