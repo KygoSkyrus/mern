@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>slider</title>
+    <style>
+      .carousel {
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .carousel-inner {
+        display: flex;
+        transition: transform 0.3s ease;
+      }
+
+      .carousel-inner img {
+        flex: 0 0 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="carousel">
+      <div class="carousel-inner">
+        <img src="https://picsum.photos/300/300" alt="Image 1" />
+        <img src="https://picsum.photos/300/300" alt="Image 2" />
+        <img src="https://picsum.photos/300/300" alt="Image 3" />
+      </div>
+    </div>
+
+    <script>
+      const carousel = document.querySelector(".carousel");
+      const carouselInner = carousel.querySelector(".carousel-inner");
+      const images = carousel.querySelectorAll("img");
+
+      let currentImageIndex = 0;
+      let isDragging = false;
+      let startPosition = 0;
+      let currentTranslateX = 0;
+
+      function handleMouseDown(e) {
+        isDragging = true;
+        startPosition = e.clientX;
+      }
+
+      function handleMouseMove(e) {
+        if (isDragging) {
+          const dx = e.clientX - startPosition;
+          carouselInner.style.transform = `translateX(${
+            currentTranslateX + dx
+          }px)`;
+        }
+      }
+
+      function handleMouseUp(e) {
+        isDragging = false;
+        const dx = e.clientX - startPosition;
+        currentTranslateX += dx;
+
+        if (dx > 0 && currentImageIndex > 0) {
+          currentImageIndex--;
+        } else if (dx < 0 && currentImageIndex < images.length - 1) {
+          currentImageIndex++;
+        }
+
+        const imageWidth = images[0].clientWidth;
+        currentTranslateX = -currentImageIndex * imageWidth;
+
+        carouselInner.style.transform = `translateX(${currentTranslateX}px)`;
+      }
+
+      carousel.addEventListener("mousedown", handleMouseDown);
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
+    </script>
+  </body>
+</html>
