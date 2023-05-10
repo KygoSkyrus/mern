@@ -5,8 +5,10 @@ import { v4 as uuidv4 } from 'uuid';
 //firebase
 import { initializeApp } from 'firebase/app';
 import { getStorage, ref, uploadBytes, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import AddProductForm from './AddProductForm';
 
-
+import './admin.css'
+import Nav from './Admin/Nav';
 
 const Admin = () => {
 
@@ -52,7 +54,7 @@ const Admin = () => {
 
 
 
-        let imageUrl = [];
+        let tempArr = [];
 
         Array.from(productData.image).forEach(async x => {
             let imageRef = ref(storage, "shoppitt/" + uuidv4());
@@ -94,7 +96,9 @@ const Admin = () => {
                     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
                     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                         console.log('File available at', downloadURL);
-                        productData.image.push(downloadURL)
+                        tempArr.push(downloadURL)
+                        //WORKING HERE::hAS ERROR
+                        //from here you need to call the api by wrapping it inside a function and oassing the temparr and product data
                     });
                 }
             );
@@ -102,7 +106,7 @@ const Admin = () => {
 
         })
 
-        console.log('productdata----',productData)
+        console.log('productdata----',productData,tempArr)
 
 
 //we should avoid using url,, just use a template to show product and send data when its clicked
@@ -111,7 +115,7 @@ const Admin = () => {
         //     method: "POST",
         //     headers: { "Content-Type": "application/json" },
         //     body: JSON.stringify({
-        //         imageUrl,
+        //         tempArr,
         //         title,
         //         url,
         //         category,
@@ -183,107 +187,9 @@ const Admin = () => {
 
     return (
         <>
+        <Nav/>
             <div className="body-content m-3">
-                <div className="card mb-4">
-                    <div className="card-header">
-                        <div className="d-flex justify-content-between align-items-center">
-                            <div>
-                                <h6 className="fs-17 font-weight-600 mb-0">Post a Blog</h6>
-                            </div>
-                            <div className="text-right">
-                                <div className="actions">
-                                    <span onClick={e => window.location.reload()} className="action-item cursor-pointer" >
-                                        <i
-                                            className="fas fa-refresh"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="card-body">
-                        <div className="row">
-                            <div className="col-xs-12 col-sm-12 col-md-12 p-l-30 p-r-30">
-                                <form id="frm" onSubmit={e => sendData(e)}>
-                                    <div className="form-group">
-                                        <label htmlFor="name" className="font-weight-600">Product name</label>
-                                        <input type="text" className="form-control" name="name" id="name"
-                                            autoComplete="off" placeholder="product name" onChange={e => settingUrl(e)} required />
-                                    </div>
-                                    <div className="form-group">
-                                        {/* <label htmlFor="url" className="font-weight-600">Product Url</label> */}
-                                        <input type="hidden" className="form-control" name="url" id="url"
-                                            autoComplete="off" placeholder="Product URL" required />
-                                    </div>
-
-                                    <div className="form-group">
-                                        <label htmlFor="price" className="font-weight-600">Price</label>
-                                        <input type='number' name="price" placeholder="price" className="form-control"
-                                            id="price" required value={productData.price} onChange={e => setProductData({ ...productData, [e.target.name]: e.target.value })} />
-                                    </div>
-
-                                    <div className="form-group">
-                                        <label htmlFor="description" className="font-weight-600">Description</label>
-                                        <textarea name="description" placeholder="description" className="form-control"
-                                            id="description" rows="2" required onChange={e => setProductData({ ...productData, [e.target.name]: e.target.value })}></textarea>
-                                    </div>
-
-                                    <div className="form-group">
-                                        <label htmlFor="category" className="font-weight-600">Category</label>
-                                        <div className="">
-                                            <select className="form-control basic-single" name="category" id="category" onChange={e => setProductData({ ...productData, [e.target.name]: e.target.value })} >
-                                                {/* <optgroup label="Select Category" id="optgroup">
-                                                    {allCategory?.map(x => {
-                                                        return (<option value={x.category} key={x._id} >{x.category}</option>)
-                                                    })}
-                                                </optgroup> */}
-                                                <optgroup label="Select Category" id="optgroup" name="category" >
-                                                    <option value='first' >first</option>
-                                                    <option value='second' >second</option>
-                                                </optgroup>
-                                            </select>
-                                        </div>
-
-                                        <div className="form-group">
-                                            <label htmlFor="categoryOption" className="font-weight-600">select</label>
-                                            <input name="categoryOption" placeholder="description" className="form-control"
-                                                id="categoryOption" required />
-                                        </div>
-                                    </div>
-
-                                    <div className="form-group d-flex flex-column">
-                                        <label htmlFor="image" className="font-weight-600" id="colorRed">File<span
-                                            id="starRed">*</span></label>
-                                        <input type="file" name="image" id="image" className="custom-input-file border-0"
-                                            data-multiple-caption="{count} files selected" accept="image/*" multiple
-                                            required onChange={e => setDynamicLabel(e)} />
-                                        <label htmlFor="image" id="customLabel" className='customLabel form-control' >
-                                            <i className="fa fa-upload"></i>&nbsp;&nbsp;
-                                            <span id='dynamicLabel'>Choose a file…</span>
-                                        </label>
-                                        <div id="imageHolder" className='d-flex flex-wrap'></div>
-                                    </div>
-
-                                    <div className="form-group">
-                                        <label htmlFor="stock" className="font-weight-600">In Stock</label>
-                                        <input type='number' name="stock" placeholder="stock" className="form-control"
-                                            id="stock" required onChange={e => setProductData({ ...productData, [e.target.name]: e.target.value })} />
-                                    </div>
-
-                                    {/* this should not be here as admin should not put rrating or reviews,, */}
-                                    {/* <div className="form-group">
-                                        <label htmlFor="rating" className="font-weight-600">Ratings</label>
-                                        <input type='number' name="rating" placeholder="rating" className="form-control"
-                                            id="rating" required />
-                                    </div> */}
-
-                                    <button id="go" type='submit' >
-                                        Add product
-                                    </button>
-                                </form>
-                            </div>
-                            <div className="col-xs-12 col-sm-12 col-md-6 p-l-30 p-r-30"></div>
-                        </div>
-                    </div>
-                </div>
+                <AddProductForm sendData={sendData} settingUrl={settingUrl} productData={productData} setProductData={setProductData} setDynamicLabel={setDynamicLabel} />
             </div>
         </>
     )

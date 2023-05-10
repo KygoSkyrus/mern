@@ -58,6 +58,11 @@ const Navbar = (props) => {
                   Orders
                 </Link>
               </li>
+              <li className="nav-item ">
+              <Link to="/admin" className="nav-link">
+                  Admin
+                </Link>
+                </li>
             </ul>
           </div>
         </div>

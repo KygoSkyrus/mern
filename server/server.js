@@ -17,10 +17,10 @@ app.use(require('./routes/route'));
 const db = process.env.dbURI;
 const port = process.env.PORT || 4000;
 
-
+mongoose.set('strictQuery', false);
 mongoose.connect(db, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
 }).then(() => {
   console.log('db connected');
 }).catch((err) => console.log(err));
