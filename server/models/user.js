@@ -2,7 +2,9 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const userSchema = new mongoose.Schema({
+const Schema = mongoose.Schema;
+
+const userSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -62,7 +64,7 @@ const userSchema = new mongoose.Schema({
             }
         }
     ]
-});
+},{collection:"users"});
 
 //hashing password
 userSchema.pre('save', async function (next) {

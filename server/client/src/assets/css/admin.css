@@ -1,15 +1,17 @@
 /******************** NAV *************************/
-.btn-wrap {
-    margin: 25px 0px;
-}
+
 
 .btn-trapezoid-outline {
+    position: absolute;
+    height: 400px;
     display: inline-block;
-    color: #fcec0c;
+    color: #ffc107;
     transform-style: preserve-3d;
     padding: 20px 70px;
-    border: 1px solid #fcec0c;
-    transform: perspective(200px) rotateX(35deg) translateZ(25px) translateY(5px);
+    border: 1px solid #ffc107;
+    border-radius: 0 6px 6px 0;
+    /* transform: perspective(200px) rotateX(35deg) translateZ(25px) translateY(5px); */
+    transform: perspective(314px) rotateY(11deg) ;
     -webkit-backface-visibility: hidden;
     transition: all 0.3s ease-out;
 }
@@ -20,7 +22,7 @@
     transform: perspective(160px) rotateX(-18deg) translateZ(4px) translateY(4px);
 }
 .btn-trapezoid-outline:hover {
-    background: #fcec0c;
+    background: #ffc107;
     color: #136377;
 }
 /******************** NAV *************************/

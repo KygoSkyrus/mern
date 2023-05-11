@@ -171,20 +171,45 @@ router.post('/getemail', async (req, res) => {
 });
 
 
-router.get('/getproducts',async (req,res)=>{
+router.get('/api/getproducts', async (req, res) => {
 
 
     try {
         let result = await PRODUCT.find({})
-        console.log('result',result)
+        console.log('result', result)
         res.send(result);
-      } catch (err) {
+    } catch (err) {
         console.log("error", err);
-      }
+    }
 
 
 })
 
+router.post('/api/addproducts', async (req, res) => {
 
+    const {name,price,description,category,image,stock} = req.body;
+    console.log('dd',name,price,description,category,image,stock)
+    console.log("reqData :>",req.body.image )
+
+    // const product = new PRODUCT({
+    //     name: reqData.name,
+    //     price: reqData.price,
+    //     description: reqData.description,
+    //     category: reqData.category,
+    //     image: reqData.image,
+    //     stock: reqData.stock,
+    // })
+
+    // product.save()
+    // .then(response => {
+    //     console.log('response', response)
+    //     res.send({ blog_added: true });
+    //   })
+    //     .catch(err => {
+    //       console.log(err)
+    //       res.send({ blog_added: false });
+    //     })
+
+})
 
 module.exports = router;

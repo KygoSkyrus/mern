@@ -56,7 +56,8 @@ const Admin = () => {
 
         let tempArr = [];
 
-        Array.from(productData.image).forEach(async x => {
+        Array.from(productData.image).forEach(async (x,index) => {
+            console.log('i',index)
             let imageRef = ref(storage, "shoppitt/" + uuidv4());
             //uploading image to firebase storage
 
@@ -99,6 +100,7 @@ const Admin = () => {
                         tempArr.push(downloadURL)
                         //WORKING HERE::hAS ERROR
                         //from here you need to call the api by wrapping it inside a function and oassing the temparr and product data
+                        if(index===productData.image.length-1) addProductAPI(tempArr)
                     });
                 }
             );
@@ -106,39 +108,43 @@ const Admin = () => {
 
         })
 
-        console.log('productdata----',productData,tempArr)
+       
 
 
 //we should avoid using url,, just use a template to show product and send data when its clicked
 
-        // fetch("/blogdata", {
-        //     method: "POST",
-        //     headers: { "Content-Type": "application/json" },
-        //     body: JSON.stringify({
-        //         tempArr,
-        //         title,
-        //         url,
-        //         category,
-        //         select,
-        //         shortdesc,
-        //         author,
-        //         metatitle,
-        //         metakeyword,
-        //         metadesc,
-        //     }),
-        // }).then(response => response.json())
-        //     .then(data => {
-        //         if (data.blog_added) {
-        //             setShowLoader(false)
-        //             window.location.reload();
-        //         } else {
-        //             //resetting the fields
-        //             setShowLoader(false)
-        //             document.getElementById("frm").reset();
-        //             setDynamicLabel()
-        //         }
-        //     })
-        //     .catch(err => console.log(err))
+      
+    }
+
+    function addProductAPI(images){ 
+         console.log('productdata----',productData,images)
+        console.log('addproduct ran????????????????????????????')
+        fetch("/api/addproducts", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                name:productData.name, 
+                url:productData.url, 
+                price:productData.price, 
+                description:productData.description, 
+                category:productData.category, 
+                image:images, 
+                stock:productData.stock 
+            }),
+        }).then(response => response.json())
+            .then(data => {
+                console.log('dd',data)
+                // if (data.blog_added) {
+                //     setShowLoader(false)
+                //     window.location.reload();
+                // } else {
+                //     //resetting the fields
+                //     setShowLoader(false)
+                //     document.getElementById("frm").reset();
+                //     setDynamicLabel()
+                // }
+            })
+            .catch(err => console.log(err))
     }
 
     async function deleteBlog(id) {
@@ -187,7 +193,7 @@ const Admin = () => {
 
     return (
         <>
-        <Nav/>
+            <Nav/>
             <div className="body-content m-3">
                 <AddProductForm sendData={sendData} settingUrl={settingUrl} productData={productData} setProductData={setProductData} setDynamicLabel={setDynamicLabel} />
             </div>

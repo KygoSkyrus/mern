@@ -14,7 +14,7 @@
 
 ### would be better to have
 - on scroll dont keep the nav fixed, instead make a minifide nav which will stay floated at the top
-
+- havee to add delete image from firestoreage when product is deleted 
 
 
 
