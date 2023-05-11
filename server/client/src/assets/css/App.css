@@ -122,7 +122,7 @@
 .logo {
   width: 100px;
   height: 45px;
-  background: url(./components/images/mainlogo1.png);
+  background: url(../images/mainlogo1.png);
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;

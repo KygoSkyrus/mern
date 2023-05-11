@@ -2,13 +2,7 @@
 .btn-wrap {
     margin: 25px 0px;
 }
-.btn {
-    font-family: sans-serif;
-    text-transform: uppercase;
-    text-decoration: none;
-    background: red;
-    border-radius: 4px;
-}
+
 .btn-trapezoid-outline {
     display: inline-block;
     color: #fcec0c;

@@ -7,7 +7,7 @@ import { initializeApp } from 'firebase/app';
 import { getStorage, ref, uploadBytes, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import AddProductForm from './AddProductForm';
 
-import './admin.css'
+import './../../assets/css/admin.css'
 import Nav from './Admin/Nav';
 
 const Admin = () => {

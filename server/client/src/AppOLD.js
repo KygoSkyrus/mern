@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Toast, ToastContainer } from 'react-bootstrap'
 
-import './App.css';
+import './assets/css/App.css';
 
 import Navbar from './components/Navbar';
 import SignIn from './components/SignIn';

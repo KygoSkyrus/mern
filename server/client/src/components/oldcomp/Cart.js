@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from 'react-router-dom'
 import StripeCheckout from 'react-stripe-checkout'
 import { Toast, ToastContainer } from 'react-bootstrap'
-import mainlogo from './images/mainlogo.png'
+import mainlogo from '../../assets/images/mainlogo.png'
 
 //this toast will only be visible if the user isn't logged in
 const Example = (props) => {

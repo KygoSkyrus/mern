@@ -1,18 +1,18 @@
-import tshirt from '../images/bluetshirt.jpg';
-import watch from '../images/watch.jpg'
-import scarf from '../images/scarf.jpg'
-import backpack from '../images/backpack.jpg';
-import binoculars from '../images/binoculars.jpg'
-import blackSneakers from '../images/blackSneakers.jpg'
-import bracelet from '../images/bracelet.jpg';
-import camera from '../images/camera.jpg'
-import fitnesstracker from '../images/fitnesstracker.jpg'
-import headphones from '../images/headphones.jpg';
-import jeanjacket from '../images/jeanjacket.jpg'
-import perfume from '../images/perfume.jpg'
-import pinkpurse from '../images/pinkpurse.jpg';
-import yogamat from '../images/yogamat.jpg'
-import redshoes from '../images/redshoes.jpg'
+import tshirt from '../../assets/images/bluetshirt.jpg';
+import watch from '../../assets/images/watch.jpg'
+import scarf from '../../assets/images/scarf.jpg'
+import backpack from '../../assets/images/backpack.jpg';
+import binoculars from '../../assets/images/binoculars.jpg'
+import blackSneakers from '../../assets/images/blackSneakers.jpg'
+import bracelet from '../../assets/images/bracelet.jpg';
+import camera from '../../assets/images/camera.jpg'
+import fitnesstracker from '../../assets/images/fitnesstracker.jpg'
+import headphones from '../../assets/images/headphones.jpg';
+import jeanjacket from '../../assets/images/jeanjacket.jpg'
+import perfume from '../../assets/images/perfume.jpg'
+import pinkpurse from '../../assets/images/pinkpurse.jpg';
+import yogamat from '../../assets/images/yogamat.jpg'
+import redshoes from '../../assets/images/redshoes.jpg'
 
 
 const products =[

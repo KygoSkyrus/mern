@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { BrowserRouter , Route, Routes } from "react-router-dom";
 import { Toast, ToastContainer } from 'react-bootstrap'
 
-import './App.css';
-import './components/v2/v2.css'
+import './assets/css/App.css';
+import './assets/css/v2.css'
 
 import Navbar from './components/v2/Navbar';
 import SignIn from './components/v2/SignIn'
