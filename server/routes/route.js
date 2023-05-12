@@ -174,13 +174,18 @@ router.post('/getemail', async (req, res) => {
 router.get('/api/getproducts', async (req, res) => {
 
 
-    try {
-        let result = await PRODUCT.find({})
-        console.log('result', result)
-        res.send(result);
-    } catch (err) {
-        console.log("error", err);
-    }
+    
+        await PRODUCT.find({})
+        .then(response=>{
+            console.log(response)
+            res.send(response)
+        })
+        .catch(error=>{
+            console.log(error)
+            res.send({error:error})
+        })
+       
+   
 
 
 })
@@ -189,26 +194,29 @@ router.post('/api/addproducts', async (req, res) => {
 
     const {name,price,description,category,image,stock} = req.body;
     console.log('dd',name,price,description,category,image,stock)
-    console.log("reqData :>",req.body.image )
 
-    // const product = new PRODUCT({
-    //     name: reqData.name,
-    //     price: reqData.price,
-    //     description: reqData.description,
-    //     category: reqData.category,
-    //     image: reqData.image,
-    //     stock: reqData.stock,
-    // })
+    //const data= JSON.parse(req.body)
 
-    // product.save()
-    // .then(response => {
-    //     console.log('response', response)
-    //     res.send({ blog_added: true });
-    //   })
-    //     .catch(err => {
-    //       console.log(err)
-    //       res.send({ blog_added: false });
-    //     })
+    console.log("data :>",req.body )
+
+    const product = new PRODUCT({
+        name:name,
+        price: price,
+        description: description,
+        category: category,
+        image: image,
+        stock: stock,
+    })
+
+    product.save()
+    .then(response => {
+        console.log('response', response)
+        res.send({ is_product_added: true });
+      })
+        .catch(err => {
+          console.log(err)
+          res.send({ is_product_added: false });
+        })
 
 })
 

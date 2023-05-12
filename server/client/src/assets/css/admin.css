@@ -26,3 +26,25 @@
     color: #136377;
 }
 /******************** NAV *************************/
+
+
+
+
+/******************** PROGRESS BAR *************************/
+.progressHolder{
+    width: 100vw;
+    height: 100vh;
+    background: #000000b5;
+    position: absolute;
+    top: 0;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+}
+.progressHolder section{
+    max-width: 70vw;
+    width: 70vw;
+    height: 6px;
+    background-color: rgb(223, 221, 119);
+}
+/******************** PROGRESS BAR *************************/

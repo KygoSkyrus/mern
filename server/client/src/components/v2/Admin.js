@@ -33,49 +33,25 @@ const Admin = () => {
     async function sendData(e) {
         e.preventDefault()//this stops page to refresh if the form submission is used with type submit button
         setShowLoader(true)//start showing loader
-        console.log('eeee', productData)
-
-
-        // let image = document.getElementById("image")?.files[0];
-        // let title = document.getElementById("title")?.value;
-        // let url = document.getElementById("url")?.value;
-        // let category = document.getElementById("category")?.value;
-        // let select
-        // if (document.querySelector("input[type=radio][name=select]:checked")) {
-        //     select = document.querySelector("input[type=radio][name=select]:checked")?.value;
-        // } else {
-        //     select = ''
-        // }
-        // let shortdesc = document.getElementById("shortdesc")?.value;
-        // let author = document.getElementById("author")?.value;
-        // let metatitle = document.getElementById("metatitle")?.value;
-        // let metakeyword = document.getElementById("metakeyword")?.value;
-        // let metadesc = document.getElementById("metadesc")?.value;
-
-
 
         let tempArr = [];
 
         Array.from(productData.image).forEach(async (x,index) => {
-            console.log('i',index)
+            console.log(index +": ", index)
             let imageRef = ref(storage, "shoppitt/" + uuidv4());
             //uploading image to firebase storage
 
-            console.log('x', x)
             //u can also add the upload status feature here
 
-
-
             const uploadTask = uploadBytesResumable(imageRef, x);
-
             // Register three observers:
             // 1. 'state_changed' observer, called any time the state changes
-            // 2. Error observer, called on failure
             // 3. Completion observer, called on successful completion
             uploadTask.on('state_changed',
                 (snapshot) => {
                     // Observe state change events such as progress, pause, and resume
                     // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                    console.log('---' ,snapshot.bytesTransferred , snapshot.totalBytes, snapshot.bytesTransferred/snapshot.totalBytes);
                     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                     console.log('Upload is ' + progress + '% done');
                     switch (snapshot.state) {
@@ -91,17 +67,21 @@ const Admin = () => {
                 },
                 (error) => {
                     // Handle unsuccessful uploads
+                    console.log(error)
                 },
-                () => {
+                async () => {
                     // Handle successful uploads on complete
                     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                    console.log('111')
+                   await getDownloadURL(uploadTask.snapshot.ref)
+                    .then((downloadURL) => {
                         console.log('File available at', downloadURL);
                         tempArr.push(downloadURL)
                         //WORKING HERE::hAS ERROR
                         //from here you need to call the api by wrapping it inside a function and oassing the temparr and product data
-                        if(index===productData.image.length-1) addProductAPI(tempArr)
+                        if(index===productData.image.length-1) addProductAPI(tempArr)                       
                     });
+                    console.log('---------------------------------->>>>>>>>>>>>>>>>>')
                 }
             );
 
@@ -116,8 +96,8 @@ const Admin = () => {
       
     }
 
-    function addProductAPI(images){ 
-         console.log('productdata----',productData,images)
+    function addProductAPI(image){ 
+         console.log('productdata----',productData,image)
         console.log('addproduct ran????????????????????????????')
         fetch("/api/addproducts", {
             method: "POST",
@@ -128,21 +108,21 @@ const Admin = () => {
                 price:productData.price, 
                 description:productData.description, 
                 category:productData.category, 
-                image:images, 
-                stock:productData.stock 
+                stock:productData.stock,
+                image:image, 
             }),
         }).then(response => response.json())
             .then(data => {
                 console.log('dd',data)
-                // if (data.blog_added) {
-                //     setShowLoader(false)
-                //     window.location.reload();
-                // } else {
-                //     //resetting the fields
-                //     setShowLoader(false)
-                //     document.getElementById("frm").reset();
-                //     setDynamicLabel()
-                // }
+                if (data.is_product_added) {
+                    setShowLoader(false)
+                   // window.location.reload();
+                } else {
+                    //resetting the fields
+                    setShowLoader(false)
+                    //document.getElementById("frm").reset();
+                    //setDynamicLabel()
+                }
             })
             .catch(err => console.log(err))
     }
@@ -194,6 +174,11 @@ const Admin = () => {
     return (
         <>
             <Nav/>
+
+<div className='progressHolder'>
+    <section></section>
+</div>
+
             <div className="body-content m-3">
                 <AddProductForm sendData={sendData} settingUrl={settingUrl} productData={productData} setProductData={setProductData} setDynamicLabel={setDynamicLabel} />
             </div>

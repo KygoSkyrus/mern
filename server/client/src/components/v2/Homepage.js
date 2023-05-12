@@ -6,7 +6,8 @@ const Homepage = () => {
 
 
   useEffect(()=>{
-        fetch('/getproducts',{
+    console.log('ue in hp')
+        fetch('/api/getproducts',{
           method:"GET",
           headers: { "Content-Type": "application/json" },        
         })

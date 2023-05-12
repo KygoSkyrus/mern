@@ -9,7 +9,7 @@
 [https://bs-5-jekyll-git-airframe-styleguide-tomaszowczarczyk.vercel.app/]products
 -color and box shadow [https://codepen.io/animationbro/full/poLvzmE]
 - menu hamburger icon [https://codepen.io/Vishal4225/pen/jOezoZj]
-
+- on every action like on adding prodcut pr deleeting ,,all repsonse from serever,,,add a notification for that response,,,let user now what has been done and then dont refresh the page,,,call the required api which will update the page
 
 
 ### would be better to have

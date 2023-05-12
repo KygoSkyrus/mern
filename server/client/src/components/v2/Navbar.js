@@ -15,9 +15,9 @@ const Navbar = (props) => {
 
   return (
     <>
-     <div className='header-top'>
+     {/* <div className='header-top'>
           header top
-        </div>
+        </div> */}
       <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm" >
         
         <div className="container-fluid px-4">
