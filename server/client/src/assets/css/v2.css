@@ -53,3 +53,21 @@ label{
     padding: 0.8rem 2rem;
 }
 /*-------------------------- NAVBAR -------------------------------------*/
+
+
+
+
+
+
+
+/*-------------------------- TOAST -------------------------------------*/
+.toastContainer{
+    width: 200px;
+    height: 100px;
+    background-color: grey;
+    border-radius: 4px;
+    position: absolute;
+    bottom: 3%;
+    right: 2%;
+}
+/*-------------------------- TOAST -------------------------------------*/

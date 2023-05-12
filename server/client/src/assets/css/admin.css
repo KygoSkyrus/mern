@@ -31,20 +31,38 @@
 
 
 /******************** PROGRESS BAR *************************/
-.progressHolder{
+.progressOverlay{
+    display: none;
     width: 100vw;
     height: 100vh;
     background: #000000b5;
     position: absolute;
     top: 0;
     z-index: 2;
-    display: grid;
     place-items: center;
 }
-.progressHolder section{
+.progressOverlay .progressBar{
     max-width: 70vw;
     width: 70vw;
     height: 6px;
     background-color: rgb(223, 221, 119);
+    transition: all 0.3s;
+}
+.progressOverlay .progressBar #progress{
+    height: inherit;
+     width: 0%; 
+    background-color: #ffc107;
+    transition: all 0.3s;
+}
+.imagePreview{
+    height: 50px;
+    width: 75px;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    /* border: 1px solid #e5e5e5;
+    position: relative;
+    top: 9px;
+    border-radius: 4px; */
 }
 /******************** PROGRESS BAR *************************/
