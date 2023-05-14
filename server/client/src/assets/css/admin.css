@@ -1,19 +1,38 @@
+.adminContainer{   
+     /* height: 100vh;
+overflow: hidden; */
+width: 100%;
+overflow: auto;
+}
+
+.adminView {
+    background-color: #dce4e3;
+    background-color: var(--body-bg-color);
+    color: #084236;
+    color: var(--text-color);
+    width: 100vw;
+    height: 100vh;
+    font-family: "Poppins",sans-serif;
+    position: fixed;
+    display: flex;
+}
+
+
 /******************** NAV *************************/
 
 
 .btn-trapezoid-outline {
-    position: absolute;
     height: 400px;
     display: inline-block;
     color: #ffc107;
     transform-style: preserve-3d;
-    padding: 20px 70px;
+    padding: 20px 20px;
     border: 1px solid #ffc107;
-    border-radius: 0 6px 6px 0;
+    border-radius: 0 8px 8px 0;
     /* transform: perspective(200px) rotateX(35deg) translateZ(25px) translateY(5px); */
     transform: perspective(314px) rotateY(11deg) ;
     -webkit-backface-visibility: hidden;
-    transition: all 0.3s ease-out;
+    transition: all 0.6s ease-out;
 }
 .btn-trapezoid-outline span {
     font-size: 15px;
@@ -24,6 +43,7 @@
 .btn-trapezoid-outline:hover {
     background: #ffc107;
     color: #136377;
+    transition: all 0.6s ease-out;
 }
 /******************** NAV *************************/
 
@@ -60,9 +80,16 @@
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
+    display: grid;
+    place-items: center;
     /* border: 1px solid #e5e5e5;
     position: relative;
     top: 9px;
     border-radius: 4px; */
 }
+.imagePreview img{
+    display: none;
+    width: 24px;
+    height: 24px;
+}   
 /******************** PROGRESS BAR *************************/

@@ -3,8 +3,11 @@ import React from 'react'
 const Nav = () => {
   return (
     <>
-  <div className="btn btn-trapezoid-outline" href="#/">
-  </div>
+
+    <div className='d-flex align-items-center'>
+
+  <div className="btn-trapezoid-outline" ></div>
+    </div>
 
 
     </>

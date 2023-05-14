@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { BrowserRouter , Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toast, ToastContainer } from 'react-bootstrap'
 
 import './assets/css/App.css';
 import './assets/css/v2.css'
 
-import Navbar from './components/v2/Navbar';
 import SignIn from './components/v2/SignIn'
 // import Cart from './components/oldcomp/Cart';
 // import Orders from './components/Orders'; 
@@ -14,7 +13,7 @@ import SignIn from './components/v2/SignIn'
 // import Success from './components/Success';
 // import Failed from './components/Failed'
 import Admin from './components/v2/Admin';
-import Homepage from './components/v2/Homepage';
+import TheFront from './components/v2/TheFront';
 
 
 function App() {
@@ -97,13 +96,13 @@ function App() {
       <div className="App">
         <SignIn />
 
-        <Navbar data={dl} />
+        
 
 
-<Routes>
-        <Route path="/" exact element={<Homepage/>} />
-        <Route path="/admin" exact element={<Admin/>} />
-</Routes>
+        <Routes>
+          <Route path="/*" exact element={<TheFront dl={dl} />} />
+          <Route path="/admin/*" exact element={<Admin />} />
+        </Routes>
 
 
       </div>

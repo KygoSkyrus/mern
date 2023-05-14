@@ -50,7 +50,7 @@ const AddProductForm = (props) => {
                                 <div className="form-group">
                                     <label htmlFor="category" className="font-weight-600">Category</label>
                                     <div className="">
-                                        <select className="form-control basic-single" name="category" id="category" onChange={e => setProductData({ ...productData, [e.target.name]: e.target.value })} >
+                                        <select  className="form-control basic-single" name="category" id="category" onChange={e => setProductData({ ...productData, [e.target.name]: e.target.value })} >
                                             {/* <optgroup label="Select Category" id="optgroup">
                                                     {allCategory?.map(x => {
                                                         return (<option value={x.category} key={x._id} >{x.category}</option>)
