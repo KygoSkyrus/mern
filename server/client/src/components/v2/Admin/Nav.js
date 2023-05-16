@@ -6,7 +6,10 @@ const Nav = () => {
 
     <div className='d-flex align-items-center'>
 
-  <div className="btn-trapezoid-outline" ></div>
+  <i class="fa-solid fa-face-awesome" aria-hidden="true"></i>
+  <div className="btn-trapezoid-outline" >
+
+  </div>
     </div>
 
 

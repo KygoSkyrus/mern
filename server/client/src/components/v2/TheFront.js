@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import Navbar from "./Navbar"
 import Homepage from "./Homepage"
 import Toast from './Toast';
+import Footer from './Footer';
 
 const TheFront = ({ dl }) => {
     return (
@@ -15,6 +16,8 @@ const TheFront = ({ dl }) => {
             
                 {/* <Route path="/:id" exact element={<SingleBlog  />} /> */}
             </Routes>
+
+            <Footer/>
 
         </>
     )
