@@ -387,9 +387,10 @@ const Dashboard = () => {
 
 
 
+ 
 
 
-                <Modal />
+<Modal editProduct={true} />
                 {products ?
 
                     products.map(x => {

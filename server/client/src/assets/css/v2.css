@@ -1,4 +1,9 @@
 
+.modal-backdrop{
+    z-index: -1;
+}
+
+
 /*-------------------------- ADMIN inputs -------------------------------------*/
 .form-group{
     margin-bottom: 1rem;
