@@ -9,26 +9,25 @@ import Dashboard from './Admin/Dashboard';
 
 const Admin = () => {
 
-    
+
 
     return (
         <>
-        <div className='adminView'>
+            <div className='adminView'>
 
-            <Nav />
+                <Nav />
 
-            
-            <div className='adminContainer'>
+                <div className='adminContainer'>
 
-            <Routes>
-                <Route path="/dashboard" exact element={<Dashboard />} />
-                <Route path="/addproduct" exact element={<AddProduct />} />
-                {/* <Route path="/:id" exact element={<SingleBlog  />} /> */}
-            </Routes>
+                    <Routes>
+                        <Route path="/dashboard" exact element={<Dashboard />} />
+                        <Route path="/addproduct" exact element={<AddProduct />} />
+                        {/* <Route path="/:id" exact element={<SingleBlog  />} /> */}
+                    </Routes>
+                </div>
             </div>
-        </div>
-<Toast />
-        
+            <Toast />
+
         </>
     )
 }

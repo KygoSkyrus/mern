@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 
 //firebase
@@ -12,7 +12,7 @@ import okayIcon from "./../../../assets/images/okay-icon.png"
 const AddProduct = (props) => {
 
 
-     const [showLoader, setShowLoader] = useState(false)
+    const [showLoader, setShowLoader] = useState(false)
     const [productData, setProductData] = useState({ name: "", url: "", price: 0, description: "", category: "", image: "", stock: 0 })
 
 
@@ -63,14 +63,14 @@ const AddProduct = (props) => {
 
                     //show progress bar
                     progressOverlay.style.display = "grid"
-                    
+
                     progressElem.style.width = Math.round(progress) + "%"
                     imagePreview.style.backgroundImage = `url('${URL.createObjectURL(x)}')`
-                    imgName.innerHTML=x.name;
+                    imgName.innerHTML = x.name;
 
                     if (Math.round(progress) === 100) {
                         ok.style.display = "block"
-                        progressOverlay.style.display="none"
+                        progressOverlay.style.display = "none"
                         progressElem.style.width = "0%"
                     }
 
@@ -192,8 +192,9 @@ const AddProduct = (props) => {
     }
 
 
-  return (
- <>            <div className='progressOverlay'>
+    return (
+        <>
+            <div className='progressOverlay'>
                 <div className='d-flex flex-column align-items-center'>
                     <section className='progressBar'>
                         <section id='progress'></section>
@@ -208,10 +209,10 @@ const AddProduct = (props) => {
             <div className="body-content m-3">
                 <AddProductForm sendData={sendData} settingUrl={settingUrl} productData={productData} setProductData={setProductData} setDynamicLabel={setDynamicLabel} />
             </div>
-            </>
+        </>
 
 
-  )
+    )
 }
 
 export default AddProduct
