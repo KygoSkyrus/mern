@@ -6,9 +6,12 @@ const Dashboard = () => {
     const [products, setProducts] = useState()
     const [selectedProduct, setSelectedProduct] = useState(null);
 
+    const[displayProductForm,setDisplayProductForm] = useState(false)
+
     const handleCardClick = (product) => {
-        setSelectedProduct(product);
-      };
+        setSelectedProduct(product);//setting the current selected product
+        setDisplayProductForm(true)//showing the product form
+    };
     useEffect(() => {
         console.log('ue in hp')
         fetch('/api/getproducts', {
@@ -22,15 +25,10 @@ const Dashboard = () => {
             })
     }, [])
 
-    function handleEdit  (edit){
- console.log('rann',edit)
- document.getElementById('editclicker').click()
-
-    }
 
     return (
         <>
-        <div id="x"></div>
+            <div id="x"></div>
             <div >
 
                 <div class="p-3 overflow-auto d-flex  bg-white border-bottom shadow-sm ">
@@ -400,20 +398,14 @@ const Dashboard = () => {
 
 
 
-               
+
                 {products ?
                     products.map(x => {
                         return (
                             <div className='m-2 bg-dark text-light p-2'>
                                 <section>name - {x.name}</section>
-                                <section data-bs-toggle="modal" href="#editProduct" role="button" id='editclicker' >edit</section>
                                 <button onClick={() => handleCardClick(x)}>..</button>
-                                {selectedProduct && (
-        <Modal
-          product={selectedProduct}
-        //   onClose={handleModalClose}
-        />
-      )}
+
                                 {/* {x.image.map(img=>(<img src={img} alt={x.name} width='300px' />))} */}
                             </div>
                         )
@@ -421,7 +413,11 @@ const Dashboard = () => {
                     : <div></div>
                 }
             </div>
-
+            <Modal
+                product={selectedProduct}
+                displayProductForm={displayProductForm}
+                setDisplayProductForm={setDisplayProductForm}
+            />
         </>
     )
 

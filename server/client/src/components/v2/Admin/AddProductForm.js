@@ -1,11 +1,11 @@
 import React from 'react'
 
 const AddProductForm = (props) => {
- const {sendData, settingUrl , productData ,setProductData, setDynamicLabel} =props;
+ const {sendData, settingUrl , productData ,setProductData, setDynamicLabel } =props;
 
     return (
         <>
-            <div className="card mb-4">
+            <div className="card productForm">
                 <div className="card-header">
                     <div className="d-flex justify-content-between align-items-center">
                         <div>
