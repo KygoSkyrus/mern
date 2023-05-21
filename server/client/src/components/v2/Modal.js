@@ -1,7 +1,7 @@
 import React from 'react'
-import AddProductForm from './Admin/AddProductForm'
+import AddProductForm from './Admin/ProductForm'
 
-const Modal = ({ product, displayProductForm, setDisplayProductForm }) => {
+const Modal = ({ product, displayProductForm, setDisplayProductForm, title }) => {
 
     const closeProductContainer = () => {
         setDisplayProductForm(false)
@@ -13,7 +13,7 @@ const Modal = ({ product, displayProductForm, setDisplayProductForm }) => {
     return (
         <div className={displayProductForm ? "activeProductContainer" : "editProductContainer"}>
             <section className='closeProductContainer' onClick={closeProductContainer}>X</section>
-            <AddProductForm productData={product} />
+            <AddProductForm productData={product} title={title} />
         </div>
     )
 }

@@ -23,9 +23,12 @@
   display: inline-block;
   color: #ffc107;
   transform-style: preserve-3d;
-  padding: 20px 20px;
+  /* padding: 20px 20px; */
   border: 1px solid #ffc107;
   border-radius: 0 8px 8px 0;
+ display:flex ;
+ flex-direction: column;
+ justify-content: center;
   /* transform: perspective(200px) rotateX(35deg) translateZ(25px) translateY(5px); */
   transform: perspective(314px) rotateY(11deg);
   -webkit-backface-visibility: hidden;
@@ -41,6 +44,11 @@
   background: #ffc107;
   color: #136377;
   transition: all 0.6s ease-out;
+}
+
+.nav-icons{
+  padding: 6px 20px;
+  cursor: pointer;
 }
 /******************** NAV *************************/
 

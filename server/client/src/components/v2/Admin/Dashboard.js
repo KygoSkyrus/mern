@@ -413,11 +413,12 @@ const Dashboard = () => {
                     : <div></div>
                 }
             </div>
-            <Modal
+            {displayProductForm && <Modal
                 product={selectedProduct}
                 displayProductForm={displayProductForm}
                 setDisplayProductForm={setDisplayProductForm}
-            />
+                title="Edit product"
+            />}
         </>
     )
 

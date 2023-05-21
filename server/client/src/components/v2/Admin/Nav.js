@@ -6,8 +6,14 @@ const Nav = () => {
 
     <div className='d-flex align-items-center'>
 
-  <i class="fa-solid fa-face-awesome" aria-hidden="true"></i>
   <div className="btn-trapezoid-outline" >
+    <section className='nav-icons'>
+
+  <i class="fa-solid fa-shopping-bag" aria-hidden="true"></i>
+    </section>
+<section className='nav-icons'>
+  <i class="fa-solid fa-add" aria-hidden="true"></i>
+</section>
 
   </div>
     </div>

@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { initializeApp } from 'firebase/app';
 import { getStorage, ref, uploadBytes, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 
-import AddProductForm from './AddProductForm';
+import AddProductForm from './ProductForm';
 import okayIcon from "./../../../assets/images/okay-icon.png"
 
 
@@ -13,7 +13,7 @@ const AddProduct = (props) => {
 
 
     const [showLoader, setShowLoader] = useState(false)
-    const [productData, setProductData] = useState({ name: "", url: "", price: 0, description: "", category: "", image: "", stock: 0 })
+    const [productData, setProductData] = useState({ name: "", url: "", price: 0, description: "", category: "", image: null, stock: 0 })
 
 
     //-------------------- FIREBASE INITIALIZE -----------------------
@@ -33,7 +33,7 @@ const AddProduct = (props) => {
     async function sendData(e) {
         e.preventDefault()//this stops page to refresh if the form submission is used with type submit button
         setShowLoader(true)//start showing loader
-
+        console.log('pd', productData)
         let tempArr = [];
         let progressOverlay = document.querySelector('.progressOverlay')
         let progressElem = document.getElementById('progress')
@@ -136,6 +136,7 @@ const AddProduct = (props) => {
                 console.log('dd', data)
                 if (data.is_product_added) {
                     setShowLoader(false)
+                    //have to set the state for toast to true ,,this should be in redux store
                     // window.location.reload();
                 } else {
                     //resetting the fields
@@ -173,6 +174,7 @@ const AddProduct = (props) => {
     }
 
     function setDynamicLabel(e) {
+        //you can write the ogic to create the object url and store it in array state wihich will update the image holder like in edit componnent
         let imageHolder = document.getElementById('imageHolder')
         imageHolder.innerHTML = "";
         if (e.target.files) {
@@ -207,7 +209,8 @@ const AddProduct = (props) => {
             </div>
 
             <div className="body-content m-3">
-                <AddProductForm sendData={sendData} settingUrl={settingUrl} productData={productData} setProductData={setProductData} setDynamicLabel={setDynamicLabel} />
+                {/* {should move all these function to the productform compoennnet} */}
+                <AddProductForm sendData={sendData} settingUrl={settingUrl} productData={productData} setProductData={setProductData} setDynamicLabel={setDynamicLabel} title="Add product" />
             </div>
         </>
 

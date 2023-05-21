@@ -12,6 +12,9 @@
 - on every action like on adding prodcut pr deleeting ,,all repsonse from serever,,,add a notification for that response,,,let user now what has been done and then dont refresh the page,,,call the required api which will update the page
 
 
+
+
+
 ### would be better to have
 - on scroll dont keep the nav fixed, instead make a minifide nav which will stay floated at the top
 - havee to add delete image from firestoreage when product is deleted 

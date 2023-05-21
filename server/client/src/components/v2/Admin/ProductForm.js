@@ -1,7 +1,7 @@
 import React from 'react'
 
-const AddProductForm = (props) => {
- const {sendData, settingUrl , productData ,setProductData, setDynamicLabel } =props;
+const ProductForm = (props) => {
+ const {sendData, settingUrl , productData ,setProductData, setDynamicLabel , title } =props;
 
     return (
         <>
@@ -9,7 +9,7 @@ const AddProductForm = (props) => {
                 <div className="card-header">
                     <div className="d-flex justify-content-between align-items-center">
                         <div>
-                            <h6 className="fs-17 font-weight-600 mb-0">Add product</h6>
+                            <h6 className="fs-17 font-weight-600 mb-0">{title}</h6>
                         </div>
                         <div className="text-right">
                             <div className="actions">
@@ -27,7 +27,7 @@ const AddProductForm = (props) => {
                                 <div className="form-group">
                                     <label htmlFor="name" className="font-weight-600">Product name</label>
                                     <input type="text" className="form-control" name="name" id="name"
-                                        autoComplete="off" placeholder="product name" onChange={e => settingUrl(e)} required />
+                                       value={productData?.name} autoComplete="off" placeholder="product name" onChange={e => settingUrl(e)} required />
                                 </div>
                                 <div className="form-group">
                                     {/* <label htmlFor="url" className="font-weight-600">Product Url</label> */}
@@ -44,49 +44,57 @@ const AddProductForm = (props) => {
                                 <div className="form-group">
                                     <label htmlFor="description" className="font-weight-600">Description</label>
                                     <textarea name="description" placeholder="description" className="form-control"
-                                        id="description" rows="2" required onChange={e => setProductData({ ...productData, [e.target.name]: e.target.value })}></textarea>
+                                        id="description" rows="2" required value={productData?.description} onChange={e => setProductData({ ...productData, [e.target.name]: e.target.value })}></textarea>
                                 </div>
 
                                 <div className="form-group">
                                     <label htmlFor="category" className="font-weight-600">Category</label>
                                     <div className="">
-                                        <select  className="form-control basic-single" name="category" id="category" onChange={e => setProductData({ ...productData, [e.target.name]: e.target.value })} >
+                                        <select  className="form-control basic-single" name="category" id="category" value={productData?.category} onChange={e => setProductData({ ...productData, [e.target.name]: e.target.value })} required >
                                             {/* <optgroup label="Select Category" id="optgroup">
                                                     {allCategory?.map(x => {
                                                         return (<option value={x.category} key={x._id} >{x.category}</option>)
                                                     })}
                                                 </optgroup> */}
-                                            <optgroup label="Select Category" id="optgroup" name="category" >
-                                                <option value='first' >first</option>
-                                                <option value='second' >second</option>
-                                            </optgroup>
+
+                                                <option value=''>Select category</option>
+                                            {/* <optgroup label="Select Category" id="optgroup" name="category" > */}
+                                                <option value='first'>first</option>
+                                                <option value='second'>second</option>
+                                            {/* </optgroup> */}
                                         </select>
                                     </div>
 
-                                    <div className="form-group">
+                                    {/* <div className="form-group">
                                         <label htmlFor="categoryOption" className="font-weight-600">select</label>
                                         <input name="categoryOption" placeholder="description" className="form-control"
                                             id="categoryOption" required />
-                                    </div>
+                                    </div> */}
                                 </div>
 
                                 <div className="form-group d-flex flex-column">
                                     <label htmlFor="image" className="font-weight-600" id="colorRed">File<span
                                         id="starRed">*</span></label>
-                                    <input type="file" name="image" id="image" className="custom-input-file border-0"
+                                    <input type="file" name="image" id="image" className="custom-input-file border-0 mb-3"
                                         data-multiple-caption="{count} files selected" accept="image/*" multiple
                                         required onChange={e => setDynamicLabel(e)} />
                                     <label htmlFor="image" id="customLabel" className='customLabel form-control' >
                                         <i className="fa fa-upload"></i>&nbsp;&nbsp;
                                         <span id='dynamicLabel'>Choose a file…</span>
                                     </label>
-                                    <div id="imageHolder" className='d-flex flex-wrap'></div>
+                                    <div id="imageHolder" >
+                                        {title==="Edit product"?productData.image?.map(item=>{
+                                            return(
+                                               <div className='displayimg' style={{backgroundImage:`url(${item})`}}></div>
+                                            )
+                                        }):""}
+                                    </div>
                                 </div>
 
                                 <div className="form-group">
                                     <label htmlFor="stock" className="font-weight-600">In Stock</label>
                                     <input type='number' name="stock" placeholder="stock" className="form-control"
-                                        id="stock" required onChange={e => setProductData({ ...productData, [e.target.name]: e.target.value })} />
+                                        id="stock" required value={productData?.stock} onChange={e => setProductData({ ...productData, [e.target.name]: e.target.value })} />
                                 </div>
 
                                 {/* this should not be here as admin should not put rrating or reviews,, */}
@@ -109,4 +117,4 @@ const AddProductForm = (props) => {
     )
 }
 
-export default AddProductForm
+export default ProductForm

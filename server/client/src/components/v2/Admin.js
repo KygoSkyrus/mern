@@ -21,7 +21,7 @@ const Admin = () => {
 
                     <Routes>
                         <Route path="/dashboard" exact element={<Dashboard />} />
-                        <Route path="/addproduct" exact element={<AddProduct />} />
+                        {/* <Route path="/addproduct" exact element={<AddProduct />} /> */}
                         {/* <Route path="/:id" exact element={<SingleBlog  />} /> */}
                     </Routes>
                 </div>
