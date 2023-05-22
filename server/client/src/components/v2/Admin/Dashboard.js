@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import {productFormVisibility} from './../redux/todoSlice'
+
 import Modal from './../Modal'
 
 const Dashboard = () => {
@@ -7,10 +10,14 @@ const Dashboard = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
 
     const[displayProductForm,setDisplayProductForm] = useState(false)
+    const visibility = useSelector(state => state.todos.visibility)
 
+    const dispatch = useDispatch()
     const handleCardClick = (product) => {
         setSelectedProduct(product);//setting the current selected product
         setDisplayProductForm(true)//showing the product form
+        dispatch(productFormVisibility({visibility:!visibility}));
+
     };
     useEffect(() => {
         console.log('ue in hp')
@@ -413,7 +420,7 @@ const Dashboard = () => {
                     : <div></div>
                 }
             </div>
-            {displayProductForm && <Modal
+            { visibility && <Modal
                 product={selectedProduct}
                 displayProductForm={displayProductForm}
                 setDisplayProductForm={setDisplayProductForm}

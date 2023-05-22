@@ -1,6 +1,21 @@
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+
+import {productFormVisibility} from './../redux/todoSlice'
+
 
 const Nav = () => {
+  const dispatch = useDispatch()
+
+  const visibility = useSelector(state => state.todos.visibility)
+  
+    
+  const handleAddClick = () => {
+    dispatch(productFormVisibility({visibility:!visibility}));
+  };
+ 
+  
+
   return (
     <>
 
@@ -10,8 +25,10 @@ const Nav = () => {
     <section className='nav-icons'>
 
   <i class="fa-solid fa-shopping-bag" aria-hidden="true"></i>
+  
     </section>
-<section className='nav-icons'>
+    <p>{visibility}</p>
+<section className='nav-icons'  onClick={handleAddClick}>
   <i class="fa-solid fa-add" aria-hidden="true"></i>
 </section>
 

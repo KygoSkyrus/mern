@@ -2,13 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export const todoSlice = createSlice({
 	name: 'todos',
-	initialState: [
-		{ id: 1, title: 'todo1', completed: false },
-		{ id: 2, title: 'todo2', completed: false },
-		{ id: 3, title: 'todo3', completed: true },
-		{ id: 4, title: 'todo4', completed: false },
-		{ id: 5, title: 'todo5', completed: false },
-	],
+	initialState: { 
+		visibility: false
+	},
 	reducers: {
 		addTodo: (state, action) => {
 			const todo = {
@@ -25,12 +21,16 @@ export const todoSlice = createSlice({
 		deleteTodo: (state, action) => {
 			return state.filter((todo) => todo.id !== action.payload.id);
 		},
+		productFormVisibility: (state,action) => {
+			console.log('acta',action.payload.visibility)
+		 state.visibility=action.payload.visibility
+		},
 
 	},
 });
 
 //createSlice function automatically creates actions based on our reducer names
 
-export const { addTodo, toggleComplete, deleteTodo } = todoSlice.actions;
+export const { addTodo, toggleComplete, deleteTodo, productFormVisibility } = todoSlice.actions;
 
 export default todoSlice.reducer;
