@@ -10,7 +10,7 @@ const Dashboard = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
 
     const[displayProductForm,setDisplayProductForm] = useState(false)
-    const visibility = useSelector(state => state.todos.visibility)
+    const visibility = useSelector(state => state.productFormVisibility.visibility)
 
     const dispatch = useDispatch()
     const handleCardClick = (product) => {
@@ -409,7 +409,7 @@ const Dashboard = () => {
                 {products ?
                     products.map(x => {
                         return (
-                            <div className='m-2 bg-dark text-light p-2'>
+                            <div className='m-2 bg-dark text-light p-2' key={x._id}>
                                 <section>name - {x.name}</section>
                                 <button onClick={() => handleCardClick(x)}>..</button>
 

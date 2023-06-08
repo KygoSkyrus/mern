@@ -15,12 +15,12 @@ import App from './App';
 
 ReactDOM.render(
   <React.StrictMode>
-      <Provider store={store}>
+    <Provider store={store}>
 
-    {/* <AppRoot>
+      {/* <AppRoot>
       <AppLoaded/>
     </AppRoot> */}
-    <App/>
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import todoReducer from './todoSlice';
+import {productFormVisibilityReducer,productFormReducer} from './todoSlice';
+//import {productFormReducer} from './todoSlice';
 
 const store = configureStore({
     reducer: {
-      todos: todoReducer,
+      productFormVisibility: productFormVisibilityReducer,
+      productForm:productFormReducer,
     }
 })
-export default store;
+export default store; 

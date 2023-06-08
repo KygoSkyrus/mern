@@ -3,15 +3,18 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import {productFormVisibility} from './../redux/todoSlice'
 
+import {clearProductForm} from './../redux/todoSlice'
 
 const Nav = () => {
   const dispatch = useDispatch()
 
-  const visibility = useSelector(state => state.todos.visibility)
+  const visibility = useSelector(state => state.productFormVisibility.visibility)
   
     
   const handleAddClick = () => {
-    dispatch(productFormVisibility({visibility:!visibility}));
+    // dispatch(productFormVisibility({visibility:!visibility}));
+    dispatch(clearProductForm());
+console.log('ccc')
   };
  
   
