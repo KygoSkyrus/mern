@@ -4,18 +4,17 @@ import { productFormVisibility } from './redux/todoSlice'
 
 import AddProductForm from './Admin/ProductForm'
 
-const Modal = ({ product, displayProductForm, setDisplayProductForm, title }) => {
+const Modal = ({ product, title }) => {
 
     const visibility = useSelector(state => state.todos.visibility)
     const dispatch = useDispatch()
 
     
     const closeProductContainer = () => {
-        setDisplayProductForm(false)
         dispatch(productFormVisibility({visibility:false}));
     }
 
-    console.log('xxx',visibility, product, displayProductForm)
+    console.log('xxx',visibility, product)
 
 
     return (

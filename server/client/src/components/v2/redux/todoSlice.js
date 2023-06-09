@@ -23,7 +23,7 @@ export const todoSlice = createSlice({
 		},
 		productFormVisibility: (state,action) => {
 			console.log('acta',action.payload.visibility)
-		 state.visibility=action.payload.visibility
+		    state.visibility=action.payload.visibility
 		},
 
 	},

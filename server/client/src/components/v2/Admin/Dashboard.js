@@ -9,13 +9,11 @@ const Dashboard = () => {
     const [products, setProducts] = useState()
     const [selectedProduct, setSelectedProduct] = useState(null);
 
-    const[displayProductForm,setDisplayProductForm] = useState(false)
     const visibility = useSelector(state => state.todos.visibility)
 
     const dispatch = useDispatch()
     const handleCardClick = (product) => {
         setSelectedProduct(product);//setting the current selected product
-        setDisplayProductForm(true)//showing the product form
         dispatch(productFormVisibility({visibility:!visibility}));
 
     };
@@ -412,7 +410,7 @@ const Dashboard = () => {
                             <div className='m-2 bg-dark text-light p-2'>
                                 <section>name - {x.name}</section>
                                 <button onClick={() => handleCardClick(x)}>..</button>
-
+{/* on click here show the modal but also create a state which will be updated with the clicked prodict and in the product form selector function will gte the product state */}
                                 {/* {x.image.map(img=>(<img src={img} alt={x.name} width='300px' />))} */}
                             </div>
                         )
@@ -420,10 +418,9 @@ const Dashboard = () => {
                     : <div></div>
                 }
             </div>
+
             { visibility && <Modal
                 product={selectedProduct}
-                displayProductForm={displayProductForm}
-                setDisplayProductForm={setDisplayProductForm}
                 title="Edit product"
             />}
         </>
