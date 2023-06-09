@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import {productFormVisibility} from './../redux/todoSlice'
+import {productFormVisibility,setProductForm} from './../redux/todoSlice'
 
 import Modal from './../Modal'
 
@@ -14,7 +14,9 @@ const Dashboard = () => {
 
     const dispatch = useDispatch()
     const handleCardClick = (product) => {
-        setSelectedProduct(product);//setting the current selected product
+        //setSelectedProduct(product);//setting the current selected product
+        dispatch(setProductForm(product))
+        //note:update the redux here instead of setting state...and wherever this state is used,,get the state from store
         setDisplayProductForm(true)//showing the product form
         dispatch(productFormVisibility({visibility:!visibility}));
 

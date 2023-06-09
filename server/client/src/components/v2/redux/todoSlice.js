@@ -64,7 +64,7 @@ export const productFormSlice = createSlice({
 			return state.filter((todo) => todo.id !== action.payload.id);
 		},
 		setProductForm: (state, action) => {
-			console.log('form actuion', action.payload)
+			console.log('setform actuion', action.payload)
 
 			//state.visibility = action.payload.visibility
 		},
@@ -72,7 +72,7 @@ export const productFormSlice = createSlice({
 			if(!action?.payload){
 				state=initState
 			}
-			console.log('form actuion1',state, action.payload)
+			console.log('clearform actuion1',state, action.payload)
 
 			//state.visibility = action.payload.visibility
 		},

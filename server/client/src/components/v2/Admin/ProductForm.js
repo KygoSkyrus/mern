@@ -1,7 +1,16 @@
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import {setProductForm} from './../redux/todoSlice'
 
 const ProductForm = (props) => {
- const {sendData, settingUrl , productData ,setProductData, setDynamicLabel , title } =props;
+ const {sendData, settingUrl , 
+    // productData ,
+    setProductData,
+     setDynamicLabel , title } =props;
+
+
+ const productData = useSelector(state => state.setProductForm)
+console.log('pddd',productData)
 
     return (
         <>
