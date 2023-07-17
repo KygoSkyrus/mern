@@ -94,7 +94,8 @@ label{
 
 /*-------------------------- HOMEPAGE -------------------------------------*/
 .hero-bg{
- background-image: url("./../images/bg.jpg");
+ /* background-image: url("./../images/bg.jpg"); */
+ background: linear-gradient(330deg, #07ffa3, #ffc1074f);
  height: 75vh;
  background-repeat: no-repeat;
  background-position: center;

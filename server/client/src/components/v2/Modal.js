@@ -6,7 +6,7 @@ import AddProductForm from './Admin/ProductForm'
 
 const Modal = ({ product, title }) => {
 
-    const visibility = useSelector(state => state.todos.visibility)
+    const visibility = useSelector(state => state.productFormVisibility.visibility)
     const dispatch = useDispatch()
 
     

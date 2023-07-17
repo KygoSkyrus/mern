@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import {productFormVisibility} from './../redux/todoSlice'
+import {productFormVisibility,setProductForm} from './../redux/todoSlice'
 
 import Modal from './../Modal'
 
@@ -9,11 +9,15 @@ const Dashboard = () => {
     const [products, setProducts] = useState()
     const [selectedProduct, setSelectedProduct] = useState(null);
 
-    const visibility = useSelector(state => state.todos.visibility)
+    const[displayProductForm,setDisplayProductForm] = useState(false)
+    const visibility = useSelector(state => state.productFormVisibility.visibility)
 
     const dispatch = useDispatch()
     const handleCardClick = (product) => {
-        setSelectedProduct(product);//setting the current selected product
+        //setSelectedProduct(product);//setting the current selected product
+        dispatch(setProductForm(product))
+        //note:update the redux here instead of setting state...and wherever this state is used,,get the state from store
+        setDisplayProductForm(true)//showing the product form
         dispatch(productFormVisibility({visibility:!visibility}));
 
     };
@@ -407,7 +411,7 @@ const Dashboard = () => {
                 {products ?
                     products.map(x => {
                         return (
-                            <div className='m-2 bg-dark text-light p-2'>
+                            <div className='m-2 bg-dark text-light p-2' key={x._id}>
                                 <section>name - {x.name}</section>
                                 <button onClick={() => handleCardClick(x)}>..</button>
 {/* on click here show the modal but also create a state which will be updated with the clicked prodict and in the product form selector function will gte the product state */}
