@@ -21,5 +21,8 @@
 - add the feature where selected images to be uploaded can be unselected individually before uploaing and also after seecting other images can also be selected and  should be appneded to the exisiting list
 
 
+https://www.freepik.com/free-photos-vectors/sale-png
 ### forever notes
-- 
+- https://codepen.io/polypane/full/LYdvPze
+- https://polypane.app/css-3d-transform-examples/
+https://3dtransforms.desandro.com/carousel

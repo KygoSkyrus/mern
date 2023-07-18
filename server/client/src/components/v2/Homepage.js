@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 
 import products from './dummy'
 
+import img1 from './../../assets/images/newImg/products/bluePhone.png'
+
 const Homepage = () => {
 
 
@@ -20,7 +22,7 @@ const Homepage = () => {
     <>
 
     <div className='hero-bg'>
-
+<img src={img1} alt='' />
     </div>
 
     <div className='container'>

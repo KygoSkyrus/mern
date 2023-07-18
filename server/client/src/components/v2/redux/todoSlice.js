@@ -23,7 +23,7 @@ export const productFormVisibilitySlice = createSlice({
 		},
 		productFormVisibility: (state, action) => {
 			console.log('acta', action.payload.visibility)
-			   state.visibility = action.payload.visibility
+			state.visibility = action.payload.visibility
 		},
 	},
 });
@@ -34,6 +34,7 @@ export const { addTodo, toggleComplete, deleteTodo, productFormVisibility } = pr
 
 
 const initialState={
+	productData:{
 	name: "",
 	url: "",
 	price: 0,
@@ -41,6 +42,7 @@ const initialState={
 	category: "",
 	image: null,
 	stock: 0
+	}
 }
 
 
@@ -65,8 +67,14 @@ export const productFormSlice = createSlice({
 		},
 		setProductForm: (state, action) => {
 			console.log('setform actuion', action.payload)
-
+			const x= action.payload
+			state.productData=x
+            // return {...state.productData,x}
 			//state.visibility = action.payload.visibility
+		},
+		getProductData:(state,action)=>{
+			console.log('st',state)
+		  
 		},
 		clearProductForm: (state, action) => {
 			if(!action?.payload){
@@ -79,7 +87,7 @@ export const productFormSlice = createSlice({
 	},
 });
 
-export const { setProductForm , clearProductForm} = productFormSlice.actions; //these are the actions which are imported in the components
+export const { setProductForm ,getProductData, clearProductForm} = productFormSlice.actions; //these are the actions which are imported in the components
 
 
 

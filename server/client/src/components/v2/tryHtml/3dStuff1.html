@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: grid;
+            place-items: center;
+            height: 100vh;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        div {
+            width: 55vmin;
+            height: 45vmin;
+            transform: scale(0.75) rotateY(-30deg) rotateX(45deg) translateZ(4.5rem);
+            transform-origin: 50% 100%;
+            transform-style: preserve-3d;
+            box-shadow: 1rem 1rem 2rem rgba(0, 0, 0, 0.25);
+            transition: 0.6s ease transform;
+            background: #fbe806;
+        }
+
+        div:hover {
+            transform: scale(1);
+        }
+
+        div::before,
+        div::after {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s ease;
+        }
+
+        div::before {
+            transform: translateZ(4rem);
+            border: 5px solid #f96b59;
+        }
+
+        div::before:hover {
+            transform: translateZ(0);
+        }
+
+        div::after {
+            transform: translateZ(-4rem);
+            background: #f96b59;
+            box-shadow: 1rem 1rem 2rem rgba(0, 0, 0, 0.25);
+        }
+
+        div::after:hover {
+            transform: translateZ(-1px);
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+</body>
+
+</html>

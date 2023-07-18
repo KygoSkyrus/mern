@@ -1,16 +1,17 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import {setProductForm} from './../redux/todoSlice'
+import { setProductForm,getProductData } from './../redux/todoSlice'
 
 const ProductForm = (props) => {
- const {sendData, settingUrl , 
-    // productData ,
-    setProductData,
-     setDynamicLabel , title } =props;
+    const { sendData, settingUrl,
+        // productData ,
+        setProductData,
+        setDynamicLabel, title } = props;
 
 
- const productData = useSelector(state => state.setProductForm)
-console.log('pddd',productData)
+    // const productData = useSelector(state => state.setProductForm)
+    const productData = useSelector(state => state.setProductForm)
+    console.log('pddd', productData)
 
     return (
         <>
@@ -36,7 +37,7 @@ console.log('pddd',productData)
                                 <div className="form-group">
                                     <label htmlFor="name" className="font-weight-600">Product name</label>
                                     <input type="text" className="form-control" name="name" id="name"
-                                       value={productData?.name} autoComplete="off" placeholder="product name" onChange={e => settingUrl(e)} required />
+                                        value={productData?.name} autoComplete="off" placeholder="product name" onChange={e => settingUrl(e)} required />
                                 </div>
                                 <div className="form-group">
                                     {/* <label htmlFor="url" className="font-weight-600">Product Url</label> */}
@@ -59,17 +60,17 @@ console.log('pddd',productData)
                                 <div className="form-group">
                                     <label htmlFor="category" className="font-weight-600">Category</label>
                                     <div className="">
-                                        <select  className="form-control basic-single" name="category" id="category" value={productData?.category} onChange={e => setProductData({ ...productData, [e.target.name]: e.target.value })} required >
+                                        <select className="form-control basic-single" name="category" id="category" value={productData?.category} onChange={e => setProductData({ ...productData, [e.target.name]: e.target.value })} required >
                                             {/* <optgroup label="Select Category" id="optgroup">
                                                     {allCategory?.map(x => {
                                                         return (<option value={x.category} key={x._id} >{x.category}</option>)
                                                     })}
                                                 </optgroup> */}
 
-                                                <option value=''>Select category</option>
+                                            <option value=''>Select category</option>
                                             {/* <optgroup label="Select Category" id="optgroup" name="category" > */}
-                                                <option value='first'>first</option>
-                                                <option value='second'>second</option>
+                                            <option value='first'>first</option>
+                                            <option value='second'>second</option>
                                             {/* </optgroup> */}
                                         </select>
                                     </div>
@@ -92,11 +93,11 @@ console.log('pddd',productData)
                                         <span id='dynamicLabel'>Choose a file…</span>
                                     </label>
                                     <div id="imageHolder" >
-                                        {title==="Edit product"?productData.image?.map(item=>{
-                                            return(
-                                               <div className='displayimg' style={{backgroundImage:`url(${item})`}}></div>
+                                        {title === "Edit product" ? productData?.image?.map(item => {
+                                            return (
+                                                <div className='displayimg' style={{ backgroundImage: `url(${item})` }}></div>
                                             )
-                                        }):""}
+                                        }) : ""}
                                     </div>
                                 </div>
 
