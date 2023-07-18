@@ -13,8 +13,12 @@ const Nav = () => {
     
   const handleAddClick = () => {
     // dispatch(productFormVisibility({visibility:!visibility}));
-    dispatch(clearProductForm());
-console.log('ccc')
+    if(!visibility){
+      dispatch(clearProductForm());
+      dispatch(productFormVisibility({visibility:!visibility}));
+  
+  console.log('ccc')
+    }
   };
  
   

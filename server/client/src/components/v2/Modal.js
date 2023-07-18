@@ -10,18 +10,20 @@ const Modal = ({ product, title }) => {
     const dispatch = useDispatch()
 
     
-    const closeProductContainer = () => {
+  
+    console.log('xxx',visibility, product)
+    const closeProductContainer = (e) => {
+        console.log('dd1222',e.target,document.querySelector('.productForm'))
+        if(e.target!==document.querySelector('.productForm'))
         dispatch(productFormVisibility({visibility:false}));
     }
 
-    console.log('xxx',visibility, product)
-
-
-    return (
-        <div className={visibility ? "activeProductContainer" : "editProductContainer"}>
-            <section className='closeProductContainer' onClick={closeProductContainer}>X</section>
-            <AddProductForm productData={product} title={title} />
+    return (<>
+        <div className={visibility ? "activeProductContainer" : "editProductContainer"} onClick={e=>closeProductContainer(e)}>
         </div>
+            {/* <section className='closeProductContainer'>X</section> */}
+            <AddProductForm productData={product} title={title} />
+            </>
     )
 }
 

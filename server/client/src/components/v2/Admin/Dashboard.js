@@ -17,7 +17,7 @@ const Dashboard = () => {
         //setSelectedProduct(product);//setting the current selected product
         dispatch(setProductForm(product))
         //note:update the redux here instead of setting state...and wherever this state is used,,get the state from store
-        setDisplayProductForm(true)//showing the product form
+        //setDisplayProductForm(true)//showing the product form
         dispatch(productFormVisibility({visibility:!visibility}));
 
     };

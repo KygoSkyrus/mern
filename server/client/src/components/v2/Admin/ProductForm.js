@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { setProductForm,getProductData } from './../redux/todoSlice'
+import { setProductForm,getProductData ,productFormVisibility} from './../redux/todoSlice'
 
 const ProductForm = (props) => {
     const { sendData, settingUrl,
@@ -8,10 +8,17 @@ const ProductForm = (props) => {
         setProductData,
         setDynamicLabel, title } = props;
 
+        const dispatch = useDispatch()
+
 
     // const productData = useSelector(state => state.setProductForm)
-    const productData = useSelector(state => state.setProductForm)
+    const productData = useSelector(state => state.productForm.productData)//here the productForm is name of the slice
     console.log('pddd', productData)
+
+    const closeProductContainer = () => {
+        dispatch(productFormVisibility({visibility:false}));
+    }
+
 
     return (
         <>
@@ -23,9 +30,12 @@ const ProductForm = (props) => {
                         </div>
                         <div className="text-right">
                             <div className="actions">
-                                <span onClick={e => window.location.reload()} className="action-item cursor-pointer" >
+                                <span
+                                //  onClick={e => window.location.reload()}
+                                 onClick={closeProductContainer}
+                                className="action-item cursor-pointer" >
                                     <i
-                                        className="fas fa-refresh"></i></span>
+                                        className="fas fa-times"></i></span>
                             </div>
                         </div>
                     </div>

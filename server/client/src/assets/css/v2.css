@@ -1,7 +1,43 @@
+*{
+ --darkBlue:#011627;
+ --red:#F71735;
+ --teal:#41EAD4;
+ --white:#FDFFFC;
+ --yellow:#FF9F1C;
+
+ --transition: all ease-in-out 0.4s;
+}
+
+/*-------------------------- BASICSSS -------------------------------------*/
+.text-stroke-container{
+    position: absolute;
+    z-index: 99;
+    background: #FFEB3B;
+    padding: 30px;  
+}
+.text-stroke-style{
+-webkit-text-stroke: 2px aquamarine;
+text-shadow: -4px 2px #fd0000;
+}
+.tex{
+    filter: drop-shadow(0px 0px 1px black);
+    color: #ffeb3b;
+    font-size: 51px;
+}
+.te{
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: red;
+    font-size: 43px;
+    font-weight: 900;
+    color: #ffeb3b;
+}
+/*-------------------------- BASICSSS -------------------------------------*/
+
 
 /* .modal-backdrop{
     z-index: -1;
 } */
+
 
 
 /*-------------------------- ADMIN inputs -------------------------------------*/
@@ -93,6 +129,8 @@ label{
 
 
 /*-------------------------- HOMEPAGE -------------------------------------*/
+/*-------------------------- HOMEPAGE -------------------------------------*/
+/*-------------------------- HOMEPAGE -------------------------------------*/
 .hero-bg{
  /* background-image: url("./../images/bg.jpg"); */
  background: linear-gradient(330deg, #07ffa3, #ffc1074f);
@@ -101,4 +139,38 @@ label{
  background-position: center;
  background-size: cover;
 }
+
+
+/*-------------------------- products --------------------------*/
+.card2 .card-body{
+    position: relative;
+}
+.rating-stars{
+    width: 100%;
+    background: #00000082;
+    display: flex;
+    justify-content: flex-end;
+    padding: 6px;
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    transition: var(--transition);
+}
+.card2:hover .rating-stars{
+    top: -26px;
+    z-index: 0;
+}
+
+.fa-star,
+.fa-star-half-stroke{
+    color: var(--yellow);
+}
+/*-------------------------- products --------------------------*/
+
+
+
+
+/*-------------------------- HOMEPAGE -------------------------------------*/
+/*-------------------------- HOMEPAGE -------------------------------------*/
 /*-------------------------- HOMEPAGE -------------------------------------*/
