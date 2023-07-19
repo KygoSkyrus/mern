@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { productFormVisibility } from './redux/todoSlice'
 
-import AddProductForm from './Admin/ProductForm'
+import ProductForm from './Admin/ProductForm'
 
 const Modal = ({ product, title }) => {
 
@@ -22,7 +22,7 @@ const Modal = ({ product, title }) => {
         <div className={visibility ? "activeProductContainer" : "editProductContainer"} onClick={e=>closeProductContainer(e)}>
         </div>
             {/* <section className='closeProductContainer'>X</section> */}
-            <AddProductForm productData={product} title={title} />
+            <ProductForm productData={product} title={title} />
             </>
     )
 }

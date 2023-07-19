@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { initializeApp } from 'firebase/app';
 import { getStorage, ref, uploadBytes, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 
-import AddProductForm from './ProductForm';
+import ProductForm from './ProductForm';
 import okayIcon from "./../../../assets/images/okay-icon.png"
 
 
@@ -210,7 +210,7 @@ const AddProduct = (props) => {
 
             <div className="body-content m-3">
                 {/* {should move all these function to the productform compoennnet} */}
-                <AddProductForm sendData={sendData} settingUrl={settingUrl} productData={productData} setProductData={setProductData} setDynamicLabel={setDynamicLabel} title="Add product" />
+                <ProductForm sendData={sendData} settingUrl={settingUrl} productData={productData} setProductData={setProductData} setDynamicLabel={setDynamicLabel} title="Add product" />
             </div>
         </>
 

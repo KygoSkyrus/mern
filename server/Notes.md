@@ -3,6 +3,10 @@
 
 
 ### todo
+- finish homepage,,
+
+
+
 - initially only 3 reviews will be added in product schema,the rest will go to reviews table with the product id as key, so the tree reviews will be shown initailly and on cliccking view more the rest of reviews will be loaded from review table
 - admin menubar will be like hanging from ;left or maybe circular at any corner,,,will have desktop where it will show all products categories,,,orders completed and orders in progress 
 - fort products dashboard refer to this 
