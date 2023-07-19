@@ -18,10 +18,10 @@ const Modal = () => {
     }
 
     return (
-    <>
-        <div className={visibility ? "activeProductContainer" : "editProductContainer"} onClick={e => closeProductContainer(e)}></div>
-        <ProductForm />
-    </>
+        <>
+            <div className={visibility ? "activeProductContainer" : "editProductContainer"} onClick={e => closeProductContainer(e)}></div>
+            <ProductForm />
+        </>
     )
 }
 
