@@ -423,10 +423,7 @@ const Dashboard = () => {
                 }
             </div>
 
-            { visibility && <Modal
-                product={selectedProduct}
-                title="Edit product"
-            />}
+            { visibility && <Modal />}
         </>
     )
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { setProductForm,getProductData ,productFormVisibility} from './../redux/todoSlice'
+import { productFormVisibility} from './../redux/todoSlice'
 
 const ProductForm = (props) => {
     const { sendData, settingUrl,

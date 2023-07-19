@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 export const productFormVisibilitySlice = createSlice({
 	name: 'productFormVisibility',
 	initialState: {
-		visibility: false
+		visibility: false,
+		title:""
 	},
 	reducers: {
 		addTodo: (state, action) => {
@@ -71,10 +72,6 @@ export const productFormSlice = createSlice({
 			state.productData=x
             // return {...state.productData,x}
 			//state.visibility = action.payload.visibility
-		},
-		getProductData:(state,action)=>{
-			console.log('st',state)
-		  
 		},
 		clearProductForm: (state, action) => {
 			if(!action?.payload){
