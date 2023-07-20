@@ -4,8 +4,9 @@
 
 ### todo
 - finish homepage,,
+- we dont need the image upload progress in here,,instead add a loader to shoup product add status
 
-
+- make the same loader for both admin and front...use logo,,and for admin just put a hat above the logo's top
 
 - initially only 3 reviews will be added in product schema,the rest will go to reviews table with the product id as key, so the tree reviews will be shown initailly and on cliccking view more the rest of reviews will be loaded from review table
 - admin menubar will be like hanging from ;left or maybe circular at any corner,,,will have desktop where it will show all products categories,,,orders completed and orders in progress 

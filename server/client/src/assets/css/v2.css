@@ -31,6 +31,18 @@ text-shadow: -4px 2px #fd0000;
     font-weight: 900;
     color: #ffeb3b;
 }
+
+.loader{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--darkBlue);
+    display: grid;
+    place-items: center;
+    z-index: 999;
+}
 /*-------------------------- BASICSSS -------------------------------------*/
 
 

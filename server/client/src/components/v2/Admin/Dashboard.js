@@ -195,12 +195,12 @@ const Dashboard = () => {
                                 <tr>
                                     <th scope="col" width="30"></th>
                                     <th scope="col" width="30"></th>
-                                    <th scope="col" class="small fw-normal">Title</th>
-                                    <th scope="col" class="small fw-normal">Last Updated</th>
-                                    <th scope="col" class="small fw-normal">Due Date</th>
-                                    <th scope="col" class="small fw-normal">Members</th>
-                                    <th scope="col" class="small fw-normal">Status</th>
-                                    <th scope="col" class="small fw-normal text-end">Progress</th>
+                                    <th scope="col" class="small fw-normal">Product</th>
+                                    <th scope="col" class="small fw-normal">Category</th>
+                                    <th scope="col" class="small fw-normal">Price</th>
+                                    <th scope="col" class="small fw-normal">Images</th>
+                                    <th scope="col" class="small fw-normal">In stock</th>
+                                    <th scope="col" class="small fw-normal text-end">Rating</th>
                                     <th scope="col" class="small fw-normal"></th>
                                 </tr>
                             </thead>
@@ -249,10 +249,7 @@ const Dashboard = () => {
                                                         </span>
                                                     </span>
 
-                                                    {/* <!-- Input Search --> */}
-                                                    <div class="">
-                                                        <input type="email" class="form-control rounded-top rounded-3 border-0 " placeholder="Search..." />
-                                                    </div>
+                                                    
 
                                                     {/* <!-- START Header --> */}
                                                     <div class="px-3 py-2 d-flex align-items-center bg-light small border-top">
@@ -262,39 +259,6 @@ const Dashboard = () => {
 
                                                     {/* <!-- START List --> */}
                                                     <ul class="overflow-auto list-unstyled mb-0 vstack" style={{ height: "200px", gap: "1px" }}>
-                                                        <li>
-                                                            <a class="dropdown-item d-flex py-2" href="#" data-bs-toggle="button">
-                                                                <div class="avatar-sm rounded-pill bg-secondary small text-white d-flex align-items-center justify-content-center text-wrap small me-3">
-                                                                    <small>UY</small>
-                                                                </div>
-                                                                <span class="flex-grow-1 align-self-center me-5">Ugo Yanaroseh</span>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="dropdown-item d-flex py-2" href="#" data-bs-toggle="button">
-                                                                <img class="avatar-sm rounded-pill me-3" src="https://randomuser.me/api/portraits/women/65.jpg" alt="" />
-                                                                <span class="flex-grow-1 align-self-center me-5">Rakesh Maraiop</span>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="dropdown-item d-flex py-2" href="#" data-bs-toggle="button">
-                                                                <div class="avatar-sm rounded-pill bg-secondary small text-white d-flex align-items-center justify-content-center text-wrap small me-3">
-                                                                    <small>
-                                                                        <i class="fa fa-user"></i>
-                                                                    </small>
-                                                                </div>
-                                                                <span class="flex-grow-1 align-self-center me-5">Adam Sandler</span>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="dropdown-item active d-flex py-2" href="#" data-bs-toggle="button">
-                                                                <div class="avatar-sm rounded-pill bg-secondary small text-white d-flex align-items-center justify-content-center text-wrap small me-3">
-                                                                    <small>UY</small>
-                                                                </div>
-                                                                <span class="flex-grow-1 align-self-center me-5">Ugo Yanaroseh</span>
-                                                                <i class="fas fa-check small align-self-center"></i>
-                                                            </a>
-                                                        </li>
                                                         <li>
                                                             <a class="dropdown-item d-flex py-2" href="#" data-bs-toggle="button">
                                                                 <img class="avatar-sm rounded-pill me-3" src="https://randomuser.me/api/portraits/women/65.jpg" alt="" />

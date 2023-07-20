@@ -61,6 +61,8 @@ const ProductForm = (props) => {
     const storage = getStorage(app);
     //-------------------- FIREBASE INITIALIZE -----------------------
 
+
+
     async function sendData(e) {
         e.preventDefault()//this stops page to refresh if the form submission is used with type submit button
         setShowLoader(true)//start showing loader
@@ -129,7 +131,7 @@ const ProductForm = (props) => {
                             console.log('File available at', downloadURL);
                             tempArr.push(downloadURL)
                             //WORKING HERE::hAS ERROR
-                            //from here you need to call the api by wrapping it inside a function and oassing the temparr and product data
+                            //from here you need to call the api by wrapping it inside a function and passing the temparr and product data
                             if (index === productData.image.length - 1) addProductAPI(tempArr)
                         });
                     console.log('---------------------------------->>>>>>>>>>>>>>>>>')
@@ -340,6 +342,8 @@ const ProductForm = (props) => {
                 </div>
             </div>
 
+
+{showLoader && <div className='loader'><h1>LOADING...</h1></div>}
 
             {/* image upload progress */}
             <div className='progressOverlay'>
