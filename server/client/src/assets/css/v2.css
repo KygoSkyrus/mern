@@ -76,7 +76,7 @@ label{
 }
 .displayimg{
     height: 100px;
-    max-width: 150px;
+    /* max-width: 150px; */
     /* display: none; */
     background-position: center;
     background-size: contain;

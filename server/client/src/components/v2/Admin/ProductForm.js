@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { productFormVisibility} from './../redux/todoSlice'
+import { productFormVisibility } from './../redux/todoSlice'
 
 
 // ADD PRODUCT --------------------------------------
@@ -15,32 +15,40 @@ import okayIcon from "./../../../assets/images/okay-icon.png"
 
 
 const ProductForm = (props) => {
-    // const { sendData, settingUrl,
-    //     // productData ,
-    //     setProductData,
-    //     setDynamicLabel, title } = props;
 
-    const [productData, setProductData] = React.useState({ name: "", url: "", price: 0, description: "", category: "", image: null, stock: 0 })
+    const [productData, setProductData] = React.useState({
+        //  name: "", url: "", price: 0, description: "", category: "", image: null, stock: 0 
+        })
     const [showLoader, setShowLoader] = React.useState(false)
 
 
     const dispatch = useDispatch()
-    // const productData = useSelector(state => state.setProductForm)
+
     const productState = useSelector(state => state.productForm.productData)//here the productForm is name of the slice
-    const title= useSelector(state=>state.productFormVisibility.title)
-    console.log('pddd', productState)
+    const title = useSelector(state => state.productFormVisibility.title)
+    console.log('pddd', productState,title)
+
+    console.log('--------------c.c.c..c',productData,productState)
+
+    useEffect(()=>{
+        console.log('--------------',productData,productState.name)
+        setProductData(productState)//setting the inputs to selected product to edit
+    },[])
 
 
+    const handleInputChange=(e)=>{
+        setProductData({ ...productData, [e.target.name]: e.target.value })
+    }
 
     const closeProductContainer = () => {
-        dispatch(productFormVisibility({visibility:false}));
+        dispatch(productFormVisibility({ visibility: false }));
     }
 
 
 
     //FROM ADDPRODUCT
-      //-------------------- FIREBASE INITIALIZE -----------------------
-      const firebaseConfig = {
+    //-------------------- FIREBASE INITIALIZE -----------------------
+    const firebaseConfig = {
         apiKey: process.env.apiKey,
         authDomain: "shopp-itt.firebaseapp.com",
         projectId: "shopp-itt",
@@ -138,6 +146,7 @@ const ProductForm = (props) => {
 
 
     }
+
     function addProductAPI(image) {
         console.log('productdata----', productData, image)
         console.log('addproduct ran????????????????????????????')
@@ -228,9 +237,9 @@ const ProductForm = (props) => {
                         <div className="text-right">
                             <div className="actions">
                                 <span
-                                //  onClick={e => window.location.reload()}
-                                 onClick={closeProductContainer}
-                                className="action-item cursor-pointer" >
+                                    //  onClick={e => window.location.reload()}
+                                    onClick={closeProductContainer}
+                                    className="action-item cursor-pointer" >
                                     <i
                                         className="fas fa-times"></i></span>
                             </div>
@@ -244,7 +253,7 @@ const ProductForm = (props) => {
                                 <div className="form-group">
                                     <label htmlFor="name" className="font-weight-600">Product name</label>
                                     <input type="text" className="form-control" name="name" id="name"
-                                        value={productState?.name} autoComplete="off" placeholder="product name" onChange={e => settingUrl(e)} required />
+                                        value={productData?.name} autoComplete="off" placeholder="product name" onChange={e => settingUrl(e)} required />
                                 </div>
                                 <div className="form-group">
                                     {/* <label htmlFor="url" className="font-weight-600">Product Url</label> */}
@@ -255,19 +264,19 @@ const ProductForm = (props) => {
                                 <div className="form-group">
                                     <label htmlFor="price" className="font-weight-600">Price</label>
                                     <input type='number' name="price" placeholder="price" className="form-control"
-                                        id="price" required value={productState?.price} onChange={e => setProductData({ ...productData, [e.target.name]: e.target.value })} />
+                                        id="price" required value={productData?.price} onChange={e => handleInputChange(e)} />
                                 </div>
 
                                 <div className="form-group">
                                     <label htmlFor="description" className="font-weight-600">Description</label>
                                     <textarea name="description" placeholder="description" className="form-control"
-                                        id="description" rows="2" required value={productState?.description} onChange={e => setProductData({ ...productData, [e.target.name]: e.target.value })}></textarea>
+                                        id="description" rows="2" required value={productData?.description} onChange={e => handleInputChange(e)}></textarea>
                                 </div>
 
                                 <div className="form-group">
                                     <label htmlFor="category" className="font-weight-600">Category</label>
                                     <div className="">
-                                        <select className="form-control basic-single" name="category" id="category" value={productState?.category} onChange={e => setProductData({ ...productData, [e.target.name]: e.target.value })} required >
+                                        <select className="form-control basic-single" name="category" id="category" value={productData?.category} onChange={e => handleInputChange(e)} required >
                                             {/* <optgroup label="Select Category" id="optgroup">
                                                     {allCategory?.map(x => {
                                                         return (<option value={x.category} key={x._id} >{x.category}</option>)
@@ -311,7 +320,7 @@ const ProductForm = (props) => {
                                 <div className="form-group">
                                     <label htmlFor="stock" className="font-weight-600">In Stock</label>
                                     <input type='number' name="stock" placeholder="stock" className="form-control"
-                                        id="stock" required value={productState?.stock} onChange={e => setProductData({ ...productData, [e.target.name]: e.target.value })} />
+                                        id="stock" required value={productData?.stock} onChange={e => handleInputChange(e)} />
                                 </div>
 
                                 {/* this should not be here as admin should not put rrating or reviews,, */}

@@ -1,46 +1,45 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import {productFormVisibility} from './../redux/todoSlice'
+import { productFormVisibility, setProductFormTitle } from './../redux/todoSlice'
 
-import {clearProductForm} from './../redux/todoSlice'
+import { clearProductForm } from './../redux/todoSlice'
 
 const Nav = () => {
   const dispatch = useDispatch()
 
   const visibility = useSelector(state => state.productFormVisibility.visibility)
-  
-    
+
+
   const handleAddClick = () => {
-    // dispatch(productFormVisibility({visibility:!visibility}));
-    if(!visibility){
+    if (!visibility) {
       dispatch(clearProductForm());
-      dispatch(productFormVisibility({visibility:!visibility}));
-  
-  console.log('ccc')
+      dispatch(productFormVisibility({ visibility: !visibility }));
+      dispatch(setProductFormTitle({title:"Add product"}))
+      console.log('ccc')
     }
   };
- 
-  
+
+
 
   return (
     <>
 
-    <div className='d-flex align-items-center'>
+      <div className='d-flex align-items-center'>
 
-  <div className="btn-trapezoid-outline" >
-    <section className='nav-icons'>
+        <div className="btn-trapezoid-outline" >
+          <section className='nav-icons'>
 
-  <i class="fa-solid fa-shopping-bag" aria-hidden="true"></i>
-  
-    </section>
-    <p>{visibility}</p>
-<section className='nav-icons'  onClick={handleAddClick}>
-  <i class="fa-solid fa-add" aria-hidden="true"></i>
-</section>
+            <i class="fa-solid fa-shopping-bag" aria-hidden="true"></i>
 
-  </div>
-    </div>
+          </section>
+          <p>{visibility}</p>
+          <section className='nav-icons' onClick={handleAddClick}>
+            <i class="fa-solid fa-add" aria-hidden="true"></i>
+          </section>
+
+        </div>
+      </div>
 
 
     </>

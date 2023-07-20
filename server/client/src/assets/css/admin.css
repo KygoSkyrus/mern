@@ -255,9 +255,9 @@ body {
 }
 .productForm {
   width: 50vw;
-  background-color: #ffffff24;
+  background-color: #00000080;
   color: #fff;
-  /* box-shadow: 0 0 12px black; */
+  box-shadow: 0 0 12px #000000b5;
   position: absolute;
     top: 20px;
     right: 20px;

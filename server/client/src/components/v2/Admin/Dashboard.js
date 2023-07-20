@@ -1,30 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { productFormVisibility, setProductForm } from './../redux/todoSlice'
+import { productFormVisibility, setProductFormTitle, setProductForm } from './../redux/todoSlice'
 
 
 
 
 import Modal from './../Modal'
-import AddProduct from './AddProduct'
 
 const Dashboard = () => {
 
-    const [products, setProducts] = useState()
-    const [selectedProduct, setSelectedProduct] = useState(null);
-
-    const visibility = useSelector(state => state.productFormVisibility.visibility)
+    const [products, setProducts] = useState() //to set products fetched from server
 
 
+    const visibility = useSelector(state => state.productFormVisibility.visibility)// modal's visibility
     const dispatch = useDispatch()
-    const handleCardClick = (product) => {
-        //setSelectedProduct(product);//setting the current selected product
-        dispatch(setProductForm(product))
-        //note:update the redux here instead of setting state...and wherever this state is used,,get the state from store
-        //setDisplayProductForm(true)//showing the product form
-        dispatch(productFormVisibility({ visibility: !visibility }));
 
+
+    const handleCardClick = (product) => {
+        dispatch(setProductForm(product)) //setting the product form with currently selected product for editing
+        dispatch(productFormVisibility({ visibility: !visibility })); //setting modal's visibility
+        dispatch(setProductFormTitle({title:"Edit product"})) // setting modal's title
     };
+
+    
     useEffect(() => {
         console.log('ue in hp')
         fetch('/api/getproducts', {
@@ -409,8 +407,6 @@ const Dashboard = () => {
 
 
 
-
-
                 {products ?
                     products.map(x => {
                         return (
@@ -422,16 +418,12 @@ const Dashboard = () => {
                             </div>
                         )
                     })
-                    : <div></div>
+                    : <div className='d-flex justify-content-center align-items-center'><h1>...Loading</h1></div>
                 }
+
             </div>
 
             {visibility && <Modal/>}
-
-
-
-
-       
 
 
         </>
