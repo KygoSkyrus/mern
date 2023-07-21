@@ -1,13 +1,34 @@
+
+
+### todo
+1. first complete the add product feature,,
+2. delete product and diable product all stuff..all basic things that were in skyblog,,just copy
+3. get rid of unecessary stuff
+4. once all its done,,upload all the product with detials to the homepage can be designed
+
+- finish homepage,,
+- we dont need the image upload progress in here,,instead add a loader to shoup product add status
+
+-add dark light option in admin
+
+
+https://codepen.io/tag/product-card
+
+
+http://preview.themeforest.net/item/ella-multipurpose-shopify-theme-os-20/full_screen_preview/9691007?_ga=2.156118136.2104234991.1689665488-2058099207.1682318429&_gac=1.242927030.1689665488.EAIaIQobChMI9Jfytt6XgAMVt5lmAh3z2QlPEAAYASAAEgLCCPD_BwE
+
+
+https://new-ella-demo.myshopify.com/pages/landing-2
+
 ### DEFECTS
 - one backspaceing in otp inputs,,two digits are getting erased
 
 
-### todo
-- finish homepage,,
-- we dont need the image upload progress in here,,instead add a loader to shoup product add status
 
+
+
+### Thoughts
 - make the same loader for both admin and front...use logo,,and for admin just put a hat above the logo's top
-
 - initially only 3 reviews will be added in product schema,the rest will go to reviews table with the product id as key, so the tree reviews will be shown initailly and on cliccking view more the rest of reviews will be loaded from review table
 - admin menubar will be like hanging from ;left or maybe circular at any corner,,,will have desktop where it will show all products categories,,,orders completed and orders in progress 
 - fort products dashboard refer to this 

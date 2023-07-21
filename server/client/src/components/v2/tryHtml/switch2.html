@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  transition: 0.2s;
+}
+
+.toggle {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 120px;
+  height: 60px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.checkbox {
+  display: none;
+}
+.icon {
+  width: 50%;
+  font-size: 32px;
+  line-height: 60px;
+  text-align: center;
+  z-index: 1;
+}
+.ball {
+  position: absolute;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  margin: 7px;
+  transition: 0.2s;
+}
+/* ---- ---- Light Mode ---- ---- */
+.light {
+  background-color: #fafafa;
+}
+.light .toggle {
+  background: linear-gradient(145deg, #e1e1e1, #fff);
+  box-shadow: 3px 3px 4px #e6e6e6, -3px -3px 4px #fff;
+}
+.light .icon--light {
+  color: #fafafa;
+}
+.light .icon--dark {
+  color: #151d2a;
+}
+.light .ball {
+  background-color: #151d2a;
+}
+/* ---- ---- Dark Mode ---- ---- */
+.dark {
+  background-color: #151d2a;
+}
+.dark .toggle {
+  background: #151d2a;
+  box-shadow: 3px 3px 3px #0e131b, -3px -3px 3px #1c2739;
+}
+.dark .icon--light {
+  color: #fafafa;
+}
+.dark .icon--dark {
+  color: #0e131b;
+}
+.dark .ball {
+  background-color: #fafafa;
+  transition: 0.3s;
+  transform: translateX(60px);
+}
+
+    </style>
+</head>
+<body class="light">
+    <input class="checkbox" type="checkbox" id="toggle" />
+    <label class="toggle" for="toggle">
+      <ion-icon class="icon icon--light" name="sunny-outline"></ion-icon>
+      <ion-icon class="icon icon--dark" name="moon-outline"></ion-icon>
+      <span class="ball"></span>
+    </label>
+  
+  <!-- add ionicons - icon-->
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+  
+    <script>
+        const body = document.querySelector('body');
+const toggle = document.querySelector('#toggle');
+
+toggle.addEventListener('change', () => {
+  body.classList.toggle('dark');
+});
+
+    </script>
+</body>
+</html>

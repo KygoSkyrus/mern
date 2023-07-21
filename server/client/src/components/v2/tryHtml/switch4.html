@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+  background: linear-gradient(to right, #8ca6db, #b993d6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.dm-label {
+  width: 150px;
+  height: 60px;
+  position: relative;
+  display: block;
+  background: #d2d2d2;
+  border-radius: 2rem;
+  box-shadow: inset 0px 5px 10px rgba(0, 0, 0, 0.4),
+    inset 0px -5px 10px rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+}
+
+.dm-label::after {
+  content: "";
+  height: 80%;
+  aspect-ratio: 1/1;
+  position: absolute;
+  background-image: url("https://i.ibb.co/FwY96p8/sun.png");
+  background-size: 120%;
+  background-position: center;
+  background-repeat: no-repeat;
+  top: 0px;
+  left: 0%;
+  bottom: 0px;
+  margin: auto 0px auto 5%;
+  border-radius: 2rem;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.dm-check {
+  width: 0%;
+  height: 0%;
+  visibility: hidden;
+}
+
+.dm-check:checked + label {
+  background-color: #8a8a8a;
+}
+
+.dm-check:checked + .dm-label::after {
+  left: 95%;
+  background-image: url("https://i.ibb.co/KzLP5qt/moon.png");
+  background-color: red;
+  margin: auto 5% auto 0px;
+  transform: translateX(-100%);
+}
+
+.dm-label,
+.dm-label::after {
+  transition: all 0.4s ease;
+}
+
+    </style>
+</head>
+<body>
+    <div class="dark-mode">
+        <input class='dm-check' type="checkbox" name="darkmode" id="darkmode" />
+        <label class='dm-label' for="darkmode" ></label>
+      </div>
+</body>
+</html>

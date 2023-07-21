@@ -13,7 +13,7 @@ const Admin = () => {
 
     return (
         <>
-            <div className='adminView'>
+            <div className='adminView light'>
 
                 <Nav />
 

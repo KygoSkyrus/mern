@@ -12,6 +12,7 @@ const Toast = () => {
   return (
     <>
     <div className='toastContainer' onClick={hideToast}>
+      <section className='toast-inner'></section>
         the toast
     </div>
     </>
