@@ -11,6 +11,14 @@ const TheFront = ({ dl }) => {
         <>
             <Navbar data={dl} />
 
+            <div className='bag-container'>
+                <div style={{position:"relative"}}>
+<div className='bag'>
+</div>
+    <div className='handle'></div>
+    </div>
+            </div>
+
             <Routes>
                 <Route path="/" exact element={<Homepage />} />
             

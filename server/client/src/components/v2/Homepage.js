@@ -22,7 +22,7 @@ const Homepage = () => {
     <>
 
       <div className='hero-bg'>
-        <img src={img1} alt='' />
+        <img src={img1} alt='' width={"30%"} />
       </div>
 
       <div className='container'>

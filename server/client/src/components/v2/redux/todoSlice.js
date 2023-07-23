@@ -23,7 +23,7 @@ export const productFormVisibilitySlice = createSlice({
 		// 	return state.filter((todo) => todo.id !== action.payload.id);
 		// },
 		productFormVisibility: (state, action) => {
-			console.log('acta', action.payload.visibility)
+			// console.log('acta', action.payload.visibility)
 			state.visibility = action.payload.visibility
 		},
 		setProductFormTitle:(state,action)=>{

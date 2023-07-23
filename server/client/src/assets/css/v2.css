@@ -1,189 +1,236 @@
-*{
- --darkBlue:#011627;
- --red:#F71735;
- --teal:#41EAD4;
- --white:#FDFFFC;
- --yellow:#FF9F1C;
+* {
+  --darkBlue: #011627;
+  --red: #f71735;
+  --teal: #41ead4;
+  --white: #fdfffc;
+  --yellow: #ff9f1c;
 
- --transition: all ease-in-out 0.4s;
+  --background: #fafafa;
+  --bg-white-custom: rgba(255, 255, 255, 1);
+
+  --transition: all ease-in-out 0.4s;
 }
 
 /*-------------------------- BASICSSS -------------------------------------*/
-.text-stroke-container{
-    position: absolute;
-    z-index: 99;
-    background: #FFEB3B;
-    padding: 30px;  
+.text-stroke-container {
+  position: absolute;
+  z-index: 99;
+  background: #ffeb3b;
+  padding: 30px;
 }
-.text-stroke-style{
--webkit-text-stroke: 2px aquamarine;
-text-shadow: -4px 2px #fd0000;
+.text-stroke-style {
+  -webkit-text-stroke: 2px aquamarine;
+  text-shadow: -4px 2px #fd0000;
 }
-.tex{
-    filter: drop-shadow(0px 0px 1px black);
-    color: #ffeb3b;
-    font-size: 51px;
+.tex {
+  filter: drop-shadow(0px 0px 1px black);
+  color: #ffeb3b;
+  font-size: 51px;
 }
-.te{
-    -webkit-text-stroke-width: 2px;
-    -webkit-text-stroke-color: red;
-    font-size: 43px;
-    font-weight: 900;
-    color: #ffeb3b;
+.te {
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: red;
+  font-size: 43px;
+  font-weight: 900;
+  color: #ffeb3b;
 }
 
-.loader{
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: var(--darkBlue);
-    display: grid;
-    place-items: center;
-    z-index: 999;
+.loader {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--darkBlue);
+  display: grid;
+  align-content: center;
+  z-index: 999;
 }
 /*-------------------------- BASICSSS -------------------------------------*/
-
 
 /* .modal-backdrop{
     z-index: -1;
 } */
 
-
+/* BAG LOGO */
+.bag-container {
+  width: 300px;
+  height: 300px;
+  /* background-color: #e5e5e5; */
+  display: grid;
+  place-items: center;
+  /* to place it in background with animation */
+  /* position: absolute;
+  right: 10%; */
+  animation: float 3s infinite ease-in-out;
+  transition: all ease;
+}
+@keyframes float {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(0,15px);
+  }
+  100% {
+    transform: translate(0,-0);
+  }
+}
+.bag {
+  width: 100px;
+  height: 88px;
+  z-index: 1;
+  position: relative;
+  background-color: #ffc107;
+  border: 3px solid black;
+  transform: perspective(314px) rotateX(10deg);
+  box-shadow: 1px -3px 0px #e5e5e5;
+  box-shadow: 1px -2px 0px #dedede, 4px -5px 0px #000000;
+  /* 2px -2px 0px #dedede, 5px -5px 0px #000000 */
+}
+.bag::before,
+.bag::after {
+  content: "";
+  position: absolute;
+  background-color: black;
+  width: 3px;
+  height: 3px;
+}
+.bag::before {
+  top: 6%;
+  left: 7%;
+}
+.bag::after {
+  top: 6%;
+  right: 7%;
+}
+.handle {
+  width: 80px;
+  height: 80px;
+  /* background-color: #e5e5e5; */
+  border-radius: 50%;
+  position: absolute;
+  bottom: 53%;
+  /* left: 9%; */
+  left: 13%;
+  border: 3px solid black;
+}
+/* BAG LOGO */
 
 /*-------------------------- ADMIN inputs -------------------------------------*/
-.form-group{
-    margin-bottom: 1rem;
-    position: relative;
+.form-group {
+  margin-bottom: 1rem;
+  position: relative;
 }
-label{
-    display: inline-block;
-    margin-bottom: 0.5rem;
+label {
+  display: inline-block;
+  margin-bottom: 0.5rem;
 }
 .form-control {
-    display: block;
-    width: 100%;
-    height: calc(1.5em + 0.75rem + 2px);
-    padding: 0.375rem 0.75rem;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border-radius: 0.25rem;
-    border: 1px solid rgba(0,0,0,.1);
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border-radius: 0.25rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
-#customLabel{
-    position: absolute;
-    top: 26px;
-    left: 0px;
+#customLabel {
+  position: absolute;
+  top: 26px;
+  left: 0px;
 }
-#imageHolder{
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    grid-gap: 2px;
+#imageHolder {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2px;
 }
-.displayimg{
-    height: 100px;
-    /* max-width: 150px; */
-    /* display: none; */
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    border: 1px solid #e5e5e5;
-    /* position: relative;
+.displayimg {
+  height: 100px;
+  /* max-width: 150px; */
+  /* display: none; */
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  border: 1px solid #e5e5e5;
+  /* position: relative;
     top: 9px; */
-    border-radius: 4px;
+  border-radius: 4px;
 }
 /*-------------------------- ADMIN inputs -------------------------------------*/
 
-
-
-
-
 /*-------------------------- NAVBAR -------------------------------------*/
-.header-top{
-    background-color: #ffc107;
-    color: #fff;
-    padding: 0.8rem 2rem;
+.header-top {
+  background-color: #ffc107;
+  color: #fff;
+  padding: 0.8rem 2rem;
 }
 /*-------------------------- NAVBAR -------------------------------------*/
-
-
-
-
-
-
 
 /*-------------------------- TOAST -------------------------------------*/
-.toastContainer{
-    width: 200px;
-    height: 100px;
-    background-color: grey;
-    border-radius: 4px;
-    position: absolute;
-    bottom: 3%;
-    right: 2%;
-    transition: 0.5s all ease;
+.toastContainer {
+  width: 200px;
+  height: 100px;
+  background-color: grey;
+  border-radius: 4px;
+  position: absolute;
+  bottom: 3%;
+  right: 2%;
+  transition: 0.5s all ease;
 }
-.hideToast{
-    transform: translateY(20px);
-    opacity: 0;
-    visibility: hidden;
-    /* display: none; */
+.hideToast {
+  transform: translateY(20px);
+  opacity: 0;
+  visibility: hidden;
+  /* display: none; */
 }
 
 /*-------------------------- TOAST -------------------------------------*/
 
-
-
-
-
 /*-------------------------- HOMEPAGE -------------------------------------*/
 /*-------------------------- HOMEPAGE -------------------------------------*/
 /*-------------------------- HOMEPAGE -------------------------------------*/
-.hero-bg{
- /* background-image: url("./../images/bg.jpg"); */
- background: linear-gradient(330deg, #07ffa3, #ffc1074f);
- height: 75vh;
- background-repeat: no-repeat;
- background-position: center;
- background-size: cover;
+.hero-bg {
+  /* background-image: url("./../images/bg.jpg"); */
+  background: linear-gradient(330deg, #07ffa3, #ffc1074f);
+  height: 75vh;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
-
 
 /*-------------------------- products --------------------------*/
-.card2 .card-body{
-    position: relative;
+.card2 .card-body {
+  position: relative;
 }
-.rating-stars{
-    width: 100%;
-    background: #00000082;
-    display: flex;
-    justify-content: flex-end;
-    padding: 6px;
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    left: 0;
-    transition: var(--transition);
+.rating-stars {
+  width: 100%;
+  background: #00000082;
+  display: flex;
+  justify-content: flex-end;
+  padding: 6px;
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  transition: var(--transition);
 }
-.card2:hover .rating-stars{
-    top: -26px;
-    z-index: 0;
+.card2:hover .rating-stars {
+  top: -26px;
+  z-index: 0;
 }
 
 .fa-star,
-.fa-star-half-stroke{
-    color: var(--yellow);
+.fa-star-half-stroke {
+  color: var(--yellow);
 }
 /*-------------------------- products --------------------------*/
-
-
-
 
 /*-------------------------- HOMEPAGE -------------------------------------*/
 /*-------------------------- HOMEPAGE -------------------------------------*/

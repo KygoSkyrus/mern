@@ -12,31 +12,33 @@ import { getStorage, ref, uploadBytes, getDownloadURL, uploadBytesResumable } fr
 import okayIcon from "./../../../assets/images/okay-icon.png"
 // ADD PRODUCT --------------------------------------
 
-
+const productState={
+    name: "xx", url: "xx", price: 2, description: "x", category: "first", image: ["https://webrtc.github.io/samples/img.png","https://webrtc.github.io/samples/iii.jpg"], stock: 0
+}
 
 const ProductForm = (props) => {
 
     const [productData, setProductData] = React.useState({
         //  name: "", url: "", price: 0, description: "", category: "", image: null, stock: 0 
-        })
+    })
     const [showLoader, setShowLoader] = React.useState(false)
 
 
     const dispatch = useDispatch()
 
-    const productState = useSelector(state => state.productForm.productData)//here the productForm is name of the slice
+    //const productState = useSelector(state => state.productForm.productData)//here the productForm is name of the slice
     const title = useSelector(state => state.productFormVisibility.title)
-    console.log('pddd', productState,title)
+    // console.log('pddd', productState, title)
 
-    console.log('--------------c.c.c..c',productData,productState)
+    // console.log('--------------c.c.c..c', productData, productState)
 
-    useEffect(()=>{
-        console.log('--------------',productData,productState.name)
+    useEffect(() => {
+        // console.log('--------------', productData, productState.name)
         setProductData(productState)//setting the inputs to selected product to edit
-    },[])
+    }, [])
 
 
-    const handleInputChange=(e)=>{
+    const handleInputChange = (e) => {
         setProductData({ ...productData, [e.target.name]: e.target.value })
     }
 
@@ -66,7 +68,16 @@ const ProductForm = (props) => {
     async function sendData(e) {
         e.preventDefault()//this stops page to refresh if the form submission is used with type submit button
         setShowLoader(true)//start showing loader
-        console.log('pd', productData)
+
+
+
+
+        console.log('pd', productData, productState)
+        //here when editing you need to push the chnage stuff only 
+
+        return;
+
+
         let tempArr = [];
         let progressOverlay = document.querySelector('.progressOverlay')
         let progressElem = document.getElementById('progress')
@@ -208,8 +219,18 @@ const ProductForm = (props) => {
 
     function setDynamicLabel(e) {
         //you can write the ogic to create the object url and store it in array state wihich will update the image holder like in edit componnent
+        console.log('setdynmaic')
         let imageHolder = document.getElementById('imageHolder')
         imageHolder.innerHTML = "";
+        if(title==="Edit product"){
+           //re add the exiting image here
+           productState.image?.map(x=>{
+                let div = document.createElement('div')
+                div.classList.add('displayimg')
+                div.style.backgroundImage = `url('${x}')`
+                imageHolder.appendChild(div)
+           })
+        }
         if (e.target.files) {
             document.getElementById("dynamicLabel").innerHTML = e.target.files[0]?.name;
             if (imageHolder) {
@@ -220,13 +241,13 @@ const ProductForm = (props) => {
                     imageHolder.appendChild(div)
                 })
             }
-            setProductData({ ...productData, [e.target.name]: e.target.files })
+            setProductData({ ...productData, [e.target.name]: e.target.files })//this is needed for new product as this goes to send data where the image is uploaded to firrstore but in edit this is messing up with displa img
         } else {
             document.getElementById("dynamicLabel").innerHTML = "Choose a file…"
         }
+        console.log('SETDYNAM END')
     }
     // ADD PRODUCT--------------------------------------
-    //from ADD PRODICT
 
     return (
         <>
@@ -311,7 +332,7 @@ const ProductForm = (props) => {
                                         <span id='dynamicLabel'>Choose a file…</span>
                                     </label>
                                     <div id="imageHolder" >
-                                        {title === "Edit product" ? productData?.image?.map(item => {
+                                        {title === "Edit product" ? productState?.image?.map(item => {
                                             return (
                                                 <div className='displayimg' style={{ backgroundImage: `url(${item})` }}></div>
                                             )
@@ -333,7 +354,7 @@ const ProductForm = (props) => {
                                     </div> */}
 
                                 <button id="go" type='submit' >
-                                    Add
+                                    {title}
                                 </button>
                             </form>
                         </div>
@@ -343,7 +364,19 @@ const ProductForm = (props) => {
             </div>
 
 
-{showLoader && <div className='loader'><h1>LOADING...</h1></div>}
+{/* the loader between process actions */}
+            {showLoader &&
+                <div className='loader'>
+                    <div className='bag-container'>
+                        <div style={{ position: "relative" }}>
+                            <div className='bag'>
+                            </div>
+                            <div className='handle'></div>
+                        </div>
+                    </div>
+                        <h2>LOADING...</h2>
+                </div>
+            }
 
             {/* image upload progress */}
             <div className='progressOverlay'>

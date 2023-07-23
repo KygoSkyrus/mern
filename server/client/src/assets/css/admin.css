@@ -156,6 +156,11 @@
   --bs-body-line-height: 1.5;
   --bs-body-color: #8493a5;
   --bs-body-bg: #f9fafc;
+
+
+  --background:#fafafa;
+  --bg-white-custom:rgba(255,255,255,1);
+ 
 }
 body {
   margin: 0;
@@ -219,7 +224,7 @@ body {
 }
 
 .bg-white-custom{
-  background-color: rgba(255,255,255,1);
+  background-color:var(--bg-white-custom);
 }
 /******************** DASHBOARD *************************/
 
@@ -279,29 +284,27 @@ body {
 
 
 /******************** Dark mode *************************/
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  transition: 0.2s;
-}
+
 
 .toggle {
   position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 120px;
-  height: 60px;
+  /* width: 120px;
+  height: 60px; */
+  width: 24px;
+  height: 13px;
+  margin-bottom: 0;
   border-radius: 50px;
   cursor: pointer;
   transition: 0.2s;
+
+  /* for smaller size of icon */
+  /* transform: scale(0.2);
+  position: absolute;
+  left: -82px;
+  top: -16px; */
 }
 .checkbox {
   display: none;
@@ -315,19 +318,21 @@ body {
 }
 .ball {
   position: absolute;
-  width: 45px;
-  height: 45px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
-  margin: 7px;
+  margin: 2px;
   transition: 0.2s;
 }
 /* ---- ---- Light Mode ---- ---- */
 .light {
-  background-color: #fafafa;
+  /* background-color:  #fafafa; */
+  background-color: var(--background);
 }
 .light .toggle {
   background: linear-gradient(145deg, #e1e1e1, #fff);
-  box-shadow: 3px 3px 4px #e6e6e6, -3px -3px 4px #fff;
+  /* box-shadow: 3px 3px 4px #e6e6e6, -3px -3px 4px #fff; */
+  box-shadow: 1px 1px 1px #e6e6e6, 2px -1px 1px #fff;
 }
 .light .icon--light {
   color: #fafafa;
@@ -340,11 +345,13 @@ body {
 }
 /* ---- ---- Dark Mode ---- ---- */
 .dark {
-  background-color: #151d2a;
+  /* background-color: #151d2a; */
+  --background:var(--darkBlue);
+  --bg-white-custom:#090f19; /* for dashboard's header */
 }
 .dark .toggle {
   background: #151d2a;
-  box-shadow: 3px 3px 3px #0e131b, -3px -3px 3px #1c2739;
+  box-shadow:3px 3px 3px #0e131b, -1px 0px 0px #1c2739;
 }
 .dark .icon--light {
   color: #fafafa;
@@ -355,7 +362,7 @@ body {
 .dark .ball {
   background-color: #fafafa;
   transition: 0.3s;
-  transform: translateX(60px);
+  transform: translateX(11px);
 }
 
 /******************** Dark mode *************************/

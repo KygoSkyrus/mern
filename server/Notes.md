@@ -37,7 +37,7 @@ https://new-ella-demo.myshopify.com/pages/landing-2
 - menu hamburger icon [https://codepen.io/Vishal4225/pen/jOezoZj]
 - on every action like on adding prodcut pr deleeting ,,all repsonse from serever,,,add a notification for that response,,,let user now what has been done and then dont refresh the page,,,call the required api which will update the page
 
-
+- when any action gets complete then dont refresh the page just reload the stuff and show toast about the action 
 
 
 
@@ -45,7 +45,7 @@ https://new-ella-demo.myshopify.com/pages/landing-2
 - on scroll dont keep the nav fixed, instead make a minifide nav which will stay floated at the top
 - havee to add delete image from firestoreage when product is deleted 
 - add the feature where selected images to be uploaded can be unselected individually before uploaing and also after seecting other images can also be selected and  should be appneded to the exisiting list
-
+- when images are selected through inputs then for multiple images there should be an option to remove imgages
 
 https://www.freepik.com/free-photos-vectors/sale-png
 ### forever notes

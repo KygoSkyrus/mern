@@ -177,7 +177,7 @@ router.get('/api/getproducts', async (req, res) => {
     
         await PRODUCT.find({})
         .then(response=>{
-            console.log(response)
+            // console.log(response)
             res.send(response)
         })
         .catch(error=>{
