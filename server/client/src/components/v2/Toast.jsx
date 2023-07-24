@@ -1,22 +1,47 @@
-import React from 'react'
+import React from "react";
+import { useRef } from "react";
+import { toastVisibility } from "./redux/todoSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Toast = () => {
- 
-  const hideToast =()=>{
-    console.log('hidetoast')
-    //when neeeded to show just add the class to make it visinle and after a few sec set a settiemout to delete the node
-    let toastContainer = document.querySelector('.toastContainer')
-    toastContainer.classList.add('hideToast')
-  }
 
+
+  const toastContainer =useRef()
+  let timer;
+
+ const dispatch=useDispatch()
+  
+  const hideToast = () => {
+    toastContainer.current.classList.remove("active");
+    clearTimeout(timer);
+  };
+
+  const showToast = () => {
+    toastContainer.current.classList.add("active");
+
+    timer = setTimeout(() => {
+      toastContainer.current.classList.remove("active");
+      dispatch(toastVisibility({ toastVisibility: false }))//setting visibility to flase
+    }, 5000);
+  };
+  
+  const isToastVisible= useSelector(state=>state.productFormVisibility.toast)
+
+  if(isToastVisible){
+    showToast()
+  }
+ 
   return (
     <>
-    <div className='toastContainer' onClick={hideToast}>
-      <section className='toast-inner'></section>
-        the toast
-    </div>
-    </>
-  )
-}
+      <div className="toastContainer" ref={toastContainer} onClick={hideToast}>
+        <section className="toast-inner">the toast</section>
 
-export default Toast
+        <span onClick={hideToast}>
+          <i class="fa-solid fa-xmark close"></i>
+        </span>
+      </div>
+    </>
+  );
+};
+
+export default Toast;

@@ -8,8 +8,8 @@
 
 - finish homepage,,
 - we dont need the image upload progress in here,,instead add a loader to shoup product add status
-
--add dark light option in admin
+- add user account compo
+- add dark light option in admin
 
 
 https://codepen.io/tag/product-card

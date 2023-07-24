@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { productFormVisibility } from './../redux/todoSlice'
+import { productFormVisibility, clearProductForm, toastVisibility, isProductUpdated } from './../redux/todoSlice'
 
 
 // ADD PRODUCT --------------------------------------
@@ -12,9 +12,9 @@ import { getStorage, ref, uploadBytes, getDownloadURL, uploadBytesResumable } fr
 import okayIcon from "./../../../assets/images/okay-icon.png"
 // ADD PRODUCT --------------------------------------
 
-const productState={
-    name: "xx", url: "xx", price: 2, description: "x", category: "first", image: ["https://webrtc.github.io/samples/img.png","https://webrtc.github.io/samples/iii.jpg"], stock: 0
-}
+// const productState={
+//     name: "xx", url: "xx", price: 2, description: "x", category: "first", image: ["https://webrtc.github.io/samples/img.png","https://webrtc.github.io/samples/iii.jpg"], stock: 0
+// }
 
 const ProductForm = (props) => {
 
@@ -26,11 +26,10 @@ const ProductForm = (props) => {
 
     const dispatch = useDispatch()
 
-    //const productState = useSelector(state => state.productForm.productData)//here the productForm is name of the slice
+    const productState = useSelector(state => state.productForm.productData)//here the productForm is name of the slice
     const title = useSelector(state => state.productFormVisibility.title)
     // console.log('pddd', productState, title)
 
-    // console.log('--------------c.c.c..c', productData, productState)
 
     useEffect(() => {
         // console.log('--------------', productData, productState.name)
@@ -43,6 +42,7 @@ const ProductForm = (props) => {
     }
 
     const closeProductContainer = () => {
+        //add the clearing from dispatch here too as we are clearing the form basically ine evry close
         dispatch(productFormVisibility({ visibility: false }));
     }
 
@@ -71,87 +71,81 @@ const ProductForm = (props) => {
 
 
 
-
+        let isNewImageAdded = false;
         console.log('pd', productData, productState)
+
+        //do this only when its product edit form
+        // if (title === "Edit product") {
+        //     const isThereAnyChange = JSON.stringify(productData) !== JSON.stringify(productState)
+
+        //     console.log("isThereAnyChange - ", isThereAnyChange)
+
+        //     if (isThereAnyChange) {
+        //         console.log('it had chnages')
+        //         if (productData.image !== productState.image) {
+        //             isNewImageAdded = true;
+        //         }
+        //     } else {
+        //         alert('there are no chnages')
+        //         dispatch(clearProductForm())//clearinf form
+        //         closeProductContainer()//closing modal
+        //     }
+
+        // }
         //here when editing you need to push the chnage stuff only 
 
-        return;
+        //here first we will compare both object completely ,,if yes then we will go for the updation or else will maynbe give a popup telling there is no chnage
+        //later will will cgheck if images are chnaged,,,(if the exiting image is removed..this will come in later),,,or if the new image is added
+        //if new image is added then we will upload that imafge and add the url to this object and the send to server
+
+
+
 
 
         let tempArr = [];
-        let progressOverlay = document.querySelector('.progressOverlay')
-        let progressElem = document.getElementById('progress')
-        let imagePreview = document.querySelector('.imagePreview')
-        let ok = document.getElementById('ok');
-        let imgName = document.querySelector('.imgName')
-        Array.from(productData.image).forEach(async (x, index) => {
-            console.log(index + ": ", x)
-            let imageRef = ref(storage, "shoppitt/" + uuidv4());
-            //uploading image to firebase storage
 
-            ok.style.display = "none"
-            //u can also add the upload status feature here
+        if(productData.image){
 
-            const uploadTask = uploadBytesResumable(imageRef, x);
-            // Register three observers:
-            // 1. 'state_changed' observer, called any time the state changes
-            // 3. Completion observer, called on successful completion
-            uploadTask.on('state_changed',
-                (snapshot) => {
-                    // Observe state change events such as progress, pause, and resume
-                    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                    console.log('---', snapshot.bytesTransferred, snapshot.totalBytes, snapshot.bytesTransferred / snapshot.totalBytes);
-                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    console.log('Upload is ' + Math.round(progress) + '% done');
+console.log('insite upload',typeof(productData.image),typeof(productState.image))
 
+        // Array.from(productData.image).forEach(async (x, index) => {
+        //     console.log(index + ": ", x)
+        //     let imageRef = ref(storage, "shoppitt/" + uuidv4());
 
-                    //show progress bar
-                    progressOverlay.style.display = "grid"
+        //     const uploadTask = uploadBytesResumable(imageRef, x);
 
-                    progressElem.style.width = Math.round(progress) + "%"
-                    imagePreview.style.backgroundImage = `url('${URL.createObjectURL(x)}')`
-                    imgName.innerHTML = x.name;
+        //     uploadTask.on('state_changed',
+        //         (snapshot) => {
+        //             switch (snapshot.state) {
+        //                 case 'paused':
+        //                     console.log('Upload is paused');
+        //                     break;
+        //                 case 'running':
+        //                     console.log('Upload is running');
+        //                     break;
+        //                 default: console.log('');
+        //                     break
+        //             }
+        //         },
+        //         (error) => {
+        //             console.log(error)
+        //         },
+        //         async () => {
+        //             await getDownloadURL(uploadTask.snapshot.ref)
+        //                 .then((downloadURL) => {
+        //                     console.log('File available at', downloadURL);
+        //                     tempArr.push(downloadURL)
+        //                     //WORKING HERE::hAS ERROR
+        //                     if (index === productData.image.length - 1) addProductAPI(tempArr)
+        //                 });
+        //             console.log('---------------------------------->>>>>>>>>>>>>>>>>')
+        //         }
+        //     );
 
-                    if (Math.round(progress) === 100) {
-                        ok.style.display = "block"
-                        progressOverlay.style.display = "none"
-                        progressElem.style.width = "0%"
-                    }
+        //     // db.collection.update(  { _id:...} , { $set: someObjectWithNewData } 
 
-                    switch (snapshot.state) {
-                        case 'paused':
-                            console.log('Upload is paused');
-                            break;
-                        case 'running':
-                            console.log('Upload is running');
-                            break;
-                        default: console.log('');
-                            break
-                    }
-                },
-                (error) => {
-                    // Handle unsuccessful uploads
-                    console.log(error)
-                },
-                async () => {
-                    // Handle successful uploads on complete
-                    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-                    console.log('111')
-                    await getDownloadURL(uploadTask.snapshot.ref)
-                        .then((downloadURL) => {
-                            console.log('File available at', downloadURL);
-                            tempArr.push(downloadURL)
-                            //WORKING HERE::hAS ERROR
-                            //from here you need to call the api by wrapping it inside a function and passing the temparr and product data
-                            if (index === productData.image.length - 1) addProductAPI(tempArr)
-                        });
-                    console.log('---------------------------------->>>>>>>>>>>>>>>>>')
-                }
-            );
-
-
-        })
-
+        // })
+    }
 
 
 
@@ -179,9 +173,13 @@ const ProductForm = (props) => {
             .then(data => {
                 console.log('dd', data)
                 if (data.is_product_added) {
-                    setShowLoader(false)
-                    //have to set the state for toast to true ,,this should be in redux store
-                    // window.location.reload();
+                    setShowLoader(false)//hiding loader
+                    dispatch(clearProductForm())//clearinf form
+                    closeProductContainer()//closing modal
+                    dispatch(toastVisibility({ toastVisibility: true }))//also here we need to add the text for the loader that what action has happened
+                    //also reload the product list here to show the changed
+                    //to do thta you need to store the all the product in redux and then the edited product can be updated there
+                    dispatch(isProductUpdated({ updateProduct: true }))
                 } else {
                     //resetting the fields
                     setShowLoader(false)
@@ -222,14 +220,14 @@ const ProductForm = (props) => {
         console.log('setdynmaic')
         let imageHolder = document.getElementById('imageHolder')
         imageHolder.innerHTML = "";
-        if(title==="Edit product"){
-           //re add the exiting image here
-           productState.image?.map(x=>{
+        if (title === "Edit product") {
+            //re add the exiting image here
+            productState.image?.map(x => {
                 let div = document.createElement('div')
                 div.classList.add('displayimg')
                 div.style.backgroundImage = `url('${x}')`
                 imageHolder.appendChild(div)
-           })
+            })
         }
         if (e.target.files) {
             document.getElementById("dynamicLabel").innerHTML = e.target.files[0]?.name;
@@ -326,7 +324,7 @@ const ProductForm = (props) => {
                                         id="starRed">*</span></label>
                                     <input type="file" name="image" id="image" className="custom-input-file border-0 mb-3"
                                         data-multiple-caption="{count} files selected" accept="image/*" multiple
-                                        required onChange={e => setDynamicLabel(e)} />
+                                        required={productState?.image == null ? true : false} onChange={e => setDynamicLabel(e)} />
                                     <label htmlFor="image" id="customLabel" className='customLabel form-control' >
                                         <i className="fa fa-upload"></i>&nbsp;&nbsp;
                                         <span id='dynamicLabel'>Choose a file…</span>
@@ -364,7 +362,7 @@ const ProductForm = (props) => {
             </div>
 
 
-{/* the loader between process actions */}
+            {/* the loader between process actions */}
             {showLoader &&
                 <div className='loader'>
                     <div className='bag-container'>
@@ -374,7 +372,7 @@ const ProductForm = (props) => {
                             <div className='handle'></div>
                         </div>
                     </div>
-                        <h2>LOADING...</h2>
+                    <h2>LOADING...</h2>
                 </div>
             }
 

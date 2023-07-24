@@ -1,10 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+
+//to maintian the state  of updated an editied things,, responsible for the calling the api again on updation
+export const isUpdatedSlice=createSlice({
+	name:"isUpdated",
+	initialState:{
+		product:false,
+	},
+	reducers:{
+		isProductUpdated:(state,action)=>{
+			state.product=action.payload.updateProduct
+		}
+	}
+})
+export const {isProductUpdated}=isUpdatedSlice.actions;
+
+
 export const productFormVisibilitySlice = createSlice({
 	name: 'productFormVisibility',
 	initialState: {
 		visibility: false,
-		title:""
+		title:"",
+		toast:false,
 	},
 	reducers: {
 		// addTodo: (state, action) => {
@@ -28,13 +45,17 @@ export const productFormVisibilitySlice = createSlice({
 		},
 		setProductFormTitle:(state,action)=>{
 			state.title=action.payload.title
-		}
+		},
+		toastVisibility: (state, action) => {
+			 console.log('ac', action.payload.toastVisibility)
+			state.toast = action.payload.toastVisibility
+		},
 	},
 });
 
 //productFormVisibility
 //createSlice function automatically creates actions based on our reducer names
-export const { productFormVisibility, setProductFormTitle } = productFormVisibilitySlice.actions;
+export const { productFormVisibility, setProductFormTitle, toastVisibility } = productFormVisibilitySlice.actions;
 
 
 const initialState={
@@ -74,3 +95,4 @@ export const { setProductForm ,getProductData, clearProductForm} = productFormSl
 
 export const productFormVisibilityReducer= productFormVisibilitySlice.reducer;
 export const productFormReducer= productFormSlice.reducer;
+export const isUpdatedReducer=isUpdatedSlice.reducer
