@@ -104,7 +104,8 @@ const ProductForm = (props) => {
 
         let tempArr = [];
 
-        if(productData.image){
+        //this will enable the new product as the productstate has empty stuff initially and prodictData should have image as its mandatory while for editing the image will be different when one is firetsore url and other will be sleected image
+        if(productData.image!==productState.image){
 
 console.log('insite upload',typeof(productData.image),typeof(productState.image))
 
@@ -145,6 +146,8 @@ console.log('insite upload',typeof(productData.image),typeof(productState.image)
         //     // db.collection.update(  { _id:...} , { $set: someObjectWithNewData } 
 
         // })
+    }else{
+        console.log('no new images are there')//but there can be other change,,so keep that in a vairbak eif tehre is a cnage and check that here if its true than ----call the addproduct api from here
     }
 
 
@@ -372,7 +375,7 @@ console.log('insite upload',typeof(productData.image),typeof(productState.image)
                             <div className='handle'></div>
                         </div>
                     </div>
-                    <h2>LOADING...</h2>
+                    <section>LOADING...</section>
                 </div>
             }
 
