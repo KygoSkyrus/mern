@@ -63,6 +63,10 @@ overflow: hidden;
     top: -169%;
     right: 10%;
 }
+.slow1{
+  animation: scrolldown 3s infinite linear;
+  right: 40%;
+}
 @keyframes scrolldown {
   0% {
     transform: translate(0, 0);
@@ -277,6 +281,9 @@ label {
 .card2 .card-body {
   position: relative;
 }
+.card-body .card-title{
+  font-size: 14px;
+}
 .rating-stars {
   width: 100%;
   background: #00000082;
@@ -299,6 +306,8 @@ label {
   color: var(--yellow);
 }
 /*-------------------------- products --------------------------*/
+
+
 
 /*-------------------------- HOMEPAGE -------------------------------------*/
 /*-------------------------- HOMEPAGE -------------------------------------*/

@@ -175,11 +175,11 @@ const ProductForm = (props) => {
         console.log('addproduct ran????????????????????????????')
 
         let apiURL;
-        let img;
+        let img=image;//for add product
         if (title === "Edit product") {
             apiURL = "/api/editproduct";
             if(image){
-                img=[...productState.image,image]
+                img= [productState.image,image].flat()
             }else{
                 img=productData.image;
             }
@@ -187,44 +187,47 @@ const ProductForm = (props) => {
             apiURL = "/api/addproducts";
         }
 
+// NOTE::TRY CHECKING WITH MULTIPLE IMAGES,,maybe bcz if internet is not working...image is troubling//also when edited is done,,then its giving cannot remoeve child from node errror on clearform function///last image from newly added image is being left behind
+console.log('rr',productState.image,image)        
+console.log('ggsdagjsda',img)
 
-        console.log('ggsdagjsda',img)
 
-
-        // fetch(apiURL, {
-        //     method: "POST",
-        //     headers: { "Content-Type": "application/json" },
-        //     body: JSON.stringify({
-        //         name: productData.name,
-        //         url: productData.url,
-        //         price: productData.price,
-        //         description: productData.description,
-        //         category: productData.category,
-        //         stock: productData.stock,
-        //         image: img,
-        //         // image: image ? image : productData.image,//sending changed image if chnaged otherwise the existing image
-        //         id: productData._id
-        //     }),
-        // }).then(response => response.json())
-        //     .then(data => {
-        //         console.log('dd', data)
-        //         if (data.is_product_added) {
-        //             setShowLoader(false)//hiding loader
-        //             dispatch(clearProductForm())//clearinf form
-        //             closeProductContainer()//closing modal
-        //             dispatch(toastVisibility({ toastVisibility: true }))//also here we need to add the text for the loader that what action has happened
-        //             //also reload the product list here to show the changed
-        //             //to do thta you need to store the all the product in redux and then the edited product can be updated there
-        //             dispatch(isProductUpdated({ updateProduct: true }))
-        //         } else {
-        //             //resetting the fields
-        //             setShowLoader(false)
-        //             //document.getElementById("frm").reset();
-        //             //setDynamicLabel()
-        //             //call the toast here with error
-        //         }
-        //     })
-        //     .catch(err => console.log(err))
+        fetch(apiURL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                name: productData.name,
+                url: productData.url,
+                price: productData.price,
+                description: productData.description,
+                category: productData.category,
+                stock: productData.stock,
+                image: img,
+                // image: image ? image : productData.image,//sending changed image if chnaged otherwise the existing image
+                id: productData._id
+            }),
+        }).then(response => response.json())
+            .then(data => {
+                console.log('dd', data)
+                if (data.is_product_added || data.isProductEdited) {
+                    setShowLoader(false)//hiding loader
+                    //dispatch(clearProductForm())//clearinf form
+                    closeProductContainer()//closing modal
+                    dispatch(toastVisibility({ toastVisibility: true }))//also here we need to add the text for the loader that what action has happened
+                    //also reload the product list here to show the changed
+                    //to do thta you need to store the all the product in redux and then the edited product can be updated there
+                    dispatch(isProductUpdated({ updateProduct: true }))
+                } else {
+                    //resetting the fields
+                    setShowLoader(false)
+                    closeProductContainer()//closing modal
+                    dispatch(toastVisibility({ toastVisibility: true }))//throw error here
+                    //document.getElementById("frm").reset();
+                    //setDynamicLabel()
+                    //call the toast here with error
+                }
+            })
+            .catch(err => console.log(err))
 
     }
 

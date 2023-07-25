@@ -226,22 +226,18 @@ router.post('/api/editproduct', async (req, res) => {
 
     //const data= JSON.parse(req.body)
 
+try{
+    const result =await PRODUCT.findOneAndUpdate({_id:id}, { $set: { name,price,description,category,image,stock } },{ new: true })
+    if (result) {
+        res.send({ isProductEdited: true })
+      } else {
+        res.send({ isProductEdited: false })
+      }
+    }catch(error){
+        console.log(error)
+    }
 
-    PRODUCT.findOneAndUpdate({_id:id}, { $set: { name,price,description,category,image,stock } })
-    .then(xx=>{
-        console.log(xx)
-    })
-
-
-    // product.save()
-    // .then(response => {
-    //     console.log('response', response)
-    //     res.send({ is_product_added: true });
-    //   })
-    //     .catch(err => {
-    //       console.log(err)
-    //       res.send({ is_product_added: false });
-    //     })
+   
 
 })
 

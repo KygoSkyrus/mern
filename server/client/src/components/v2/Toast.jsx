@@ -37,7 +37,7 @@ const Toast = () => {
         <section className="toast-inner">the toast</section>
 
         <span onClick={hideToast}>
-          <i class="fa-solid fa-xmark close"></i>
+          <i className="fa-solid fa-xmark close"></i>
         </span>
       </div>
     </>

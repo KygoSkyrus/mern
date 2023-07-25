@@ -80,9 +80,9 @@ export const productFormSlice = createSlice({
 			state.productData=action.payload
 		},
 		clearProductForm: (state, action) => {
-			if(!action?.payload){
+			//if(!action?.payload){
 				state.productData=initialState.productData
-			}
+			//}
 			// console.log('clearform actuion1',state, action.payload)
 		},
 	},

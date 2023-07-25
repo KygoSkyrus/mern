@@ -112,14 +112,14 @@ const Dashboard = () => {
 
                         {/* Dark Mode */}
                         <div className='btn'>
-                            <input class="checkbox" type="checkbox" id="toggle" onChange={() => {
+                            <input className="checkbox" type="checkbox" id="toggle" onChange={() => {
                                 document.querySelector('.adminView').classList.toggle('dark');
                                 document.querySelectorAll('.bg-white-custom').forEach(x => { x.classList.toggle('dark') })
                             }} />
-                            <label class="toggle" for="toggle">
-                                <ion-icon class="icon icon--light" name="sunny-outline"></ion-icon>
-                                <ion-icon class="icon icon--dark" name="moon-outline"></ion-icon>
-                                <span class="ball"></span>
+                            <label className="toggle" for="toggle">
+                                <ion-icon className="icon icon--light" name="sunny-outline"></ion-icon>
+                                <ion-icon className="icon icon--dark" name="moon-outline"></ion-icon>
+                                <span className="ball"></span>
                             </label>
                         </div>
                         {/* <!-- List View --> */}

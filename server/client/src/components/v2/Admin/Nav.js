@@ -30,12 +30,12 @@ const Nav = () => {
         <div className="btn-trapezoid-outline" >
           <section className='nav-icons'>
 
-            <i class="fa-solid fa-shopping-bag" aria-hidden="true"></i>
+            <i className="fa-solid fa-shopping-bag" aria-hidden="true"></i>
 
           </section>
           <p>{visibility}</p>
           <section className='nav-icons' onClick={handleAddClick}>
-            <i class="fa-solid fa-add" aria-hidden="true"></i>
+            <i className="fa-solid fa-add" aria-hidden="true"></i>
           </section>
 
         </div>

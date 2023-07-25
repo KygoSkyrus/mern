@@ -40,6 +40,8 @@ https://new-ella-demo.myshopify.com/pages/landing-2
 - when any action gets complete then dont refresh the page just reload the stuff and show toast about the action 
 
 
+NOTE;:::the issue that withou internet you are not abke to acces db,,,setup the db on local
+
 
 ### would be better to have
 - on scroll dont keep the nav fixed, instead make a minifide nav which will stay floated at the top
