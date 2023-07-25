@@ -54,24 +54,22 @@ overflow: hidden;
     transform: translate(0,350px);
   }
   100% {
-    transform: translate(0,-0);
+    transform: translate(0,0);
   }
 }
 .scrolldown{
-  animation: scrolldown 10s infinite ease-in-out;
+  animation: scrolldown 2s infinite linear;
     position: absolute;
-    top: -350px;
+    top: -169%;
     right: 10%;
 }
 @keyframes scrolldown {
   0% {
     transform: translate(0, 0);
   }
-  50% {
-    transform: translate(0,-350px);
-  }
+
   100% {
-    transform: translate(0,-0);
+    transform: translate(0,10%);
   }
 }
 

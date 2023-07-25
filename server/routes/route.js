@@ -173,8 +173,6 @@ router.post('/getemail', async (req, res) => {
 
 router.get('/api/getproducts', async (req, res) => {
 
-
-    
         await PRODUCT.find({})
         .then(response=>{
             // console.log(response)
@@ -184,11 +182,10 @@ router.get('/api/getproducts', async (req, res) => {
             console.log(error)
             res.send({error:error})
         })
-       
-   
-
 
 })
+
+
 
 router.post('/api/addproducts', async (req, res) => {
 
@@ -217,6 +214,34 @@ router.post('/api/addproducts', async (req, res) => {
           console.log(err)
           res.send({ is_product_added: false });
         })
+
+})
+
+
+
+router.post('/api/editproduct', async (req, res) => {
+
+    const {name,price,description,category,image,stock,id} = req.body;
+    console.log('dd',name,price,description,category,image,stock,id)
+
+    //const data= JSON.parse(req.body)
+
+
+    PRODUCT.findOneAndUpdate({_id:id}, { $set: { name,price,description,category,image,stock } })
+    .then(xx=>{
+        console.log(xx)
+    })
+
+
+    // product.save()
+    // .then(response => {
+    //     console.log('response', response)
+    //     res.send({ is_product_added: true });
+    //   })
+    //     .catch(err => {
+    //       console.log(err)
+    //       res.send({ is_product_added: false });
+    //     })
 
 })
 

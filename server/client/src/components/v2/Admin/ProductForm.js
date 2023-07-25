@@ -71,7 +71,6 @@ const ProductForm = (props) => {
 
 
 
-        let isNewImageAdded = false;
         console.log('pd', productData, productState)
 
         //do this only when its product edit form
@@ -105,50 +104,64 @@ const ProductForm = (props) => {
         let tempArr = [];
 
         //this will enable the new product as the productstate has empty stuff initially and prodictData should have image as its mandatory while for editing the image will be different when one is firetsore url and other will be sleected image
-        if(productData.image!==productState.image){
 
-console.log('insite upload',typeof(productData.image),typeof(productState.image))
+        //when images are chnaged (will run for : newProduct/editProduct)
+        if (productData.image !== productState.image) {
 
-        // Array.from(productData.image).forEach(async (x, index) => {
-        //     console.log(index + ": ", x)
-        //     let imageRef = ref(storage, "shoppitt/" + uuidv4());
+            console.log('insite upload', typeof (productData.image), typeof (productState.image))
 
-        //     const uploadTask = uploadBytesResumable(imageRef, x);
+            Array.from(productData.image).forEach(async (x, index) => {
+                console.log(index + ": ", x)
+                let imageRef = ref(storage, "shoppitt/" + uuidv4());
 
-        //     uploadTask.on('state_changed',
-        //         (snapshot) => {
-        //             switch (snapshot.state) {
-        //                 case 'paused':
-        //                     console.log('Upload is paused');
-        //                     break;
-        //                 case 'running':
-        //                     console.log('Upload is running');
-        //                     break;
-        //                 default: console.log('');
-        //                     break
-        //             }
-        //         },
-        //         (error) => {
-        //             console.log(error)
-        //         },
-        //         async () => {
-        //             await getDownloadURL(uploadTask.snapshot.ref)
-        //                 .then((downloadURL) => {
-        //                     console.log('File available at', downloadURL);
-        //                     tempArr.push(downloadURL)
-        //                     //WORKING HERE::hAS ERROR
-        //                     if (index === productData.image.length - 1) addProductAPI(tempArr)
-        //                 });
-        //             console.log('---------------------------------->>>>>>>>>>>>>>>>>')
-        //         }
-        //     );
+                const uploadTask = uploadBytesResumable(imageRef, x);
 
-        //     // db.collection.update(  { _id:...} , { $set: someObjectWithNewData } 
+                uploadTask.on('state_changed',
+                    (snapshot) => {
+                        switch (snapshot.state) {
+                            case 'paused':
+                                console.log('Upload is paused');
+                                break;
+                            case 'running':
+                                console.log('Upload is running');
+                                break;
+                            default: console.log('');
+                                break
+                        }
+                    },
+                    (error) => {
+                        console.log(error)
+                    },
+                    async () => {
+                        await getDownloadURL(uploadTask.snapshot.ref)
+                            .then((downloadURL) => {
+                                console.log('File available at', downloadURL);
+                                tempArr.push(downloadURL)
+                                //WORKING HERE::hAS ERROR
+                                if (index === productData.image.length - 1) addProductAPI(tempArr)
+                            });
+                        console.log('---------------------------------->>>>>>>>>>>>>>>>>')
+                    }
+                );
 
-        // })
-    }else{
-        console.log('no new images are there')//but there can be other change,,so keep that in a vairbak eif tehre is a cnage and check that here if its true than ----call the addproduct api from here
-    }
+                // db.collection.update(  { _id:...} , { $set: someObjectWithNewData } 
+
+            })
+        } else {
+            //when images are not chnaged (will run for : editProduct) ONLY [bcz newproduct doest fire unless image is slected]
+            console.log('no new images are there')
+            if (JSON.stringify(productData) !== JSON.stringify(productState)) {
+                //when things other than images are changed
+                console.log('----------------------caalomg apo')
+                addProductAPI(undefined)
+            }else{
+                //nothing changed
+                alert('there are no chnages')
+                dispatch(clearProductForm())//clearinf form
+                closeProductContainer()//closing modal
+            }
+            //but there can be other change,,so keep that in a vairbak eif tehre is a cnage and check that here if its true than ----call the addproduct api from here
+        }
 
 
 
@@ -160,37 +173,59 @@ console.log('insite upload',typeof(productData.image),typeof(productState.image)
     function addProductAPI(image) {
         console.log('productdata----', productData, image)
         console.log('addproduct ran????????????????????????????')
-        fetch("/api/addproducts", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                name: productData.name,
-                url: productData.url,
-                price: productData.price,
-                description: productData.description,
-                category: productData.category,
-                stock: productData.stock,
-                image: image,
-            }),
-        }).then(response => response.json())
-            .then(data => {
-                console.log('dd', data)
-                if (data.is_product_added) {
-                    setShowLoader(false)//hiding loader
-                    dispatch(clearProductForm())//clearinf form
-                    closeProductContainer()//closing modal
-                    dispatch(toastVisibility({ toastVisibility: true }))//also here we need to add the text for the loader that what action has happened
-                    //also reload the product list here to show the changed
-                    //to do thta you need to store the all the product in redux and then the edited product can be updated there
-                    dispatch(isProductUpdated({ updateProduct: true }))
-                } else {
-                    //resetting the fields
-                    setShowLoader(false)
-                    //document.getElementById("frm").reset();
-                    //setDynamicLabel()
-                }
-            })
-            .catch(err => console.log(err))
+
+        let apiURL;
+        let img;
+        if (title === "Edit product") {
+            apiURL = "/api/editproduct";
+            if(image){
+                img=[...productState.image,image]
+            }else{
+                img=productData.image;
+            }
+        } else {
+            apiURL = "/api/addproducts";
+        }
+
+
+        console.log('ggsdagjsda',img)
+
+
+        // fetch(apiURL, {
+        //     method: "POST",
+        //     headers: { "Content-Type": "application/json" },
+        //     body: JSON.stringify({
+        //         name: productData.name,
+        //         url: productData.url,
+        //         price: productData.price,
+        //         description: productData.description,
+        //         category: productData.category,
+        //         stock: productData.stock,
+        //         image: img,
+        //         // image: image ? image : productData.image,//sending changed image if chnaged otherwise the existing image
+        //         id: productData._id
+        //     }),
+        // }).then(response => response.json())
+        //     .then(data => {
+        //         console.log('dd', data)
+        //         if (data.is_product_added) {
+        //             setShowLoader(false)//hiding loader
+        //             dispatch(clearProductForm())//clearinf form
+        //             closeProductContainer()//closing modal
+        //             dispatch(toastVisibility({ toastVisibility: true }))//also here we need to add the text for the loader that what action has happened
+        //             //also reload the product list here to show the changed
+        //             //to do thta you need to store the all the product in redux and then the edited product can be updated there
+        //             dispatch(isProductUpdated({ updateProduct: true }))
+        //         } else {
+        //             //resetting the fields
+        //             setShowLoader(false)
+        //             //document.getElementById("frm").reset();
+        //             //setDynamicLabel()
+        //             //call the toast here with error
+        //         }
+        //     })
+        //     .catch(err => console.log(err))
+
     }
 
     async function deleteBlog(id) {

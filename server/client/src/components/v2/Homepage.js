@@ -59,51 +59,47 @@ const Homepage = () => {
 
 <div className='text-stroke-container'>
   <div className='scrollup'>
-    {Array.from(25).map(x=>{
-      return(<h1 className='text-stroke-style'>KYGOSKYRUS</h1>)
-    })}
+    {
+      Array.from(Array(30).keys()).map(x=>{
+        return(<h1 className='text-stroke-style'>KYGOSKYRUS</h1>)
+   })
+    }
   
   
   </div>
 
   {/* <h1 className='tex'>KYGOSKYRUS</h1> */}
   <div className='scrolldown'>
-  
   <h1 className='te'>KYGOSKYRUS</h1>
   <h1 className='te'>KYGOSKYRUS</h1>
   <h1 className='te'>KYGOSKYRUS</h1>
   <h1 className='te'>KYGOSKYRUS</h1>
   <h1 className='te'>KYGOSKYRUS</h1>
   <h1 className='te'>KYGOSKYRUS</h1>
-  
   <h1 className='te'>KYGOSKYRUS</h1>
   <h1 className='te'>KYGOSKYRUS</h1>
   <h1 className='te'>KYGOSKYRUS</h1>
   <h1 className='te'>KYGOSKYRUS</h1>
   <h1 className='te'>KYGOSKYRUS</h1>
   <h1 className='te'>KYGOSKYRUS</h1>
-  
   <h1 className='te'>KYGOSKYRUS</h1>
   <h1 className='te'>KYGOSKYRUS</h1>
   <h1 className='te'>KYGOSKYRUS</h1>
   <h1 className='te'>KYGOSKYRUS</h1>
   <h1 className='te'>KYGOSKYRUS</h1>
   <h1 className='te'>KYGOSKYRUS</h1>
-  
   <h1 className='te'>KYGOSKYRUS</h1>
   <h1 className='te'>KYGOSKYRUS</h1>
   <h1 className='te'>KYGOSKYRUS</h1>
   <h1 className='te'>KYGOSKYRUS</h1>
   <h1 className='te'>KYGOSKYRUS</h1>
   <h1 className='te'>KYGOSKYRUS</h1>
-  
   <h1 className='te'>KYGOSKYRUS</h1>
   <h1 className='te'>KYGOSKYRUS</h1>
   <h1 className='te'>KYGOSKYRUS</h1>
   <h1 className='te'>KYGOSKYRUS</h1>
   <h1 className='te'>KYGOSKYRUS</h1>
   <h1 className='te'>KYGOSKYRUS</h1>
-
   </div>
 </div>
 

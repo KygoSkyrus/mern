@@ -15,12 +15,19 @@ const Product = ({ details }) => {
         dispatch(setProductFormTitle({ title: "Edit product" })) // setting modal's title
     };
 
+    const imagePreview = (e) => {
+        e.target.nextElementSibling.style.backgroundImage = e.target.style['background-image']//placing the same image to the hover preview
+        e.target.nextElementSibling.classList.add('display-block')
+    }
+    const hideImagePreview = (e) => {
+        e.target.nextElementSibling.classList.remove('display-block')
+    }
 
     return (
         <tr key={details._id}>
             <th scope="row" className="align-middle">
                 <div>
-                    <input className="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="..."   onClick={()=>handleCardClick(details)} />
+                    <input className="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="..." onClick={() => handleCardClick(details)} />
                 </div>
             </th>
 
@@ -52,13 +59,15 @@ const Product = ({ details }) => {
             <td className="align-middle">
 
                 {/* <!-- START Avatars #4 --> */}
-                <div className="d-inline-flex">                  
-                    <div className="avatars d-flex">
+                <div className="d-inline-flex">
+                    <div className="avatars d-flex position-relative">
                         {details.image.map(x => {
-                            return (
-                                <div className="avatars__item" style={{ background: `url(${x})`, backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat" }}>
+                            return (<>
+                                <div className="avatars__item pointer" onMouseEnter={(e) => imagePreview(e)} onMouseLeave={(e) => hideImagePreview(e)} style={{ background: `url(${x})`, backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat", }}>
                                     {/* <img className="rounded-3" src={x} alt="" width={"100%"} height={"100%"} /> */}
                                 </div>
+                                    <div className='image-preview'></div>
+                            </>
                             )
                         })}
                     </div>
@@ -73,60 +82,60 @@ const Product = ({ details }) => {
             </td>
             <td className="align-middle text-end">
 
-            <div className="btn-group">
-                        <button type="button" className="me-3 btn btn-badge border-0 rounded-pill text-decoration-none p-0 align-self-center" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" style={{ height: "26px !important", width: "26px !important" }}>
-                            <i className="fa fa-eye small text-body"></i>
-                        </button>
+                <div className="btn-group">
+                    <button type="button" className="me-3 btn btn-badge border-0 rounded-pill text-decoration-none p-0 align-self-center" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" style={{ height: "26px !important", width: "26px !important" }}>
+                        <i className="fa fa-eye small text-body"></i>
+                    </button>
 
-                        <div className="dropdown-menu shadow pt-0 rounded-3 pb-0">
+                    <div className="dropdown-menu shadow pt-0 rounded-3 pb-0">
 
-                            {/* <!-- Right Close Button --> */}
-                            <span className="position-absolute top-0 start-100 translate-middle" style={{ zIndex: "999" }}>
-                                <span className="fa-stack" style={{ fontSize: " 0.7em" }}>
-                                    <i className="fa fa-circle fa-stack-2x text-dark"></i>
-                                    <i className="fa fa-times fa-stack-1x text-white"></i>
-                                </span>
+                        {/* <!-- Right Close Button --> */}
+                        <span className="position-absolute top-0 start-100 translate-middle" style={{ zIndex: "999" }}>
+                            <span className="fa-stack" style={{ fontSize: " 0.7em" }}>
+                                <i className="fa fa-circle fa-stack-2x text-dark"></i>
+                                <i className="fa fa-times fa-stack-1x text-white"></i>
                             </span>
+                        </span>
 
 
-                            <div className="px-3 py-2 d-flex align-items-center bg-light small border-top">
-                                <small> Apply people for this task</small>
-                            </div>
-
-                            <ul className="overflow-auto list-unstyled mb-0 vstack" style={{ height: "200px", gap: "1px" }}>
-                                <li>
-                                    <a className="dropdown-item d-flex py-2" href="#" data-bs-toggle="button">
-                                        <img className="avatar-sm rounded-pill me-3" src="https://randomuser.me/api/portraits/women/65.jpg" alt="" />
-                                        <span className="flex-grow-1 align-self-center me-5">Rakesh Maraiop</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a className="dropdown-item d-flex py-2" href="#" data-bs-toggle="button">
-                                        <div className="avatar-sm rounded-pill bg-secondary small text-white d-flex align-items-center justify-content-center text-wrap small me-3">
-                                            <small>
-                                                <i className="fa fa-user"></i>
-                                            </small>
-                                        </div>
-                                        <span className="flex-grow-1 align-self-center me-5">Adam Sandler</span>
-                                    </a>
-                                </li>
-
-                            </ul>
-
-                            <div className="hstack p-0 d-flex align-items-center bg-light small text-muted border-top rounded-bottom">
-                                <button type="button" className="btn btn-sm small py-2 flex-fill rounded-0 btn-link text-dark text-decoration-none m-0">
-                                    Edit Users
-                                </button>
-
-                                <div className="vr m-0 bg-gray-600"></div>
-
-                                <button type="button" className="btn btn-sm small py-2 flex-fill rounded-0 btn-link text-dark text-decoration-none m-0">
-                                    Add Users
-                                </button>
-                            </div>
+                        <div className="px-3 py-2 d-flex align-items-center bg-light small border-top">
+                            <small> Apply people for this task</small>
                         </div>
 
+                        <ul className="overflow-auto list-unstyled mb-0 vstack" style={{ height: "200px", gap: "1px" }}>
+                            <li>
+                                <a className="dropdown-item d-flex py-2" href="#" data-bs-toggle="button">
+                                    <img className="avatar-sm rounded-pill me-3" src="https://randomuser.me/api/portraits/women/65.jpg" alt="" />
+                                    <span className="flex-grow-1 align-self-center me-5">Rakesh Maraiop</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a className="dropdown-item d-flex py-2" href="#" data-bs-toggle="button">
+                                    <div className="avatar-sm rounded-pill bg-secondary small text-white d-flex align-items-center justify-content-center text-wrap small me-3">
+                                        <small>
+                                            <i className="fa fa-user"></i>
+                                        </small>
+                                    </div>
+                                    <span className="flex-grow-1 align-self-center me-5">Adam Sandler</span>
+                                </a>
+                            </li>
+
+                        </ul>
+
+                        <div className="hstack p-0 d-flex align-items-center bg-light small text-muted border-top rounded-bottom">
+                            <button type="button" className="btn btn-sm small py-2 flex-fill rounded-0 btn-link text-dark text-decoration-none m-0">
+                                Edit Users
+                            </button>
+
+                            <div className="vr m-0 bg-gray-600"></div>
+
+                            <button type="button" className="btn btn-sm small py-2 flex-fill rounded-0 btn-link text-dark text-decoration-none m-0">
+                                Add Users
+                            </button>
+                        </div>
                     </div>
+
+                </div>
 
                 {details.rating}
             </td>
