@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { productFormVisibility, setProductFormTitle, setProductForm, } from './../redux/todoSlice'
+// import { productFormVisibility, setProductFormTitle, setProductForm, } from './../redux/todoSlice'
 
 
 
 
 import Modal from './../Modal'
 import Product from './Product'
-import okayIcon from "./../../../assets/images/okay-icon.png"
+// import okayIcon from "./../../../assets/images/okay-icon.png"
 
 const Dashboard = () => {
 
@@ -31,17 +31,11 @@ const Dashboard = () => {
 
 
 
-    //delete this,,net issue
 
-    const dispatch = useDispatch()
     const productState = {
         name: "xx", url: "xx", price: 2, description: "x", category: "first", image: ["https:/?njdsj"], stock: 0
     }
-    const handleCardClick = (product) => {
-        dispatch(setProductForm(product)) //setting the product form with currently selected product for editing
-        dispatch(productFormVisibility({ visibility: !visibility })); //setting modal's visibility
-        dispatch(setProductFormTitle({ title: "Edit product" })) // setting modal's title
-    };  
+
 
 
 
@@ -214,11 +208,11 @@ const Dashboard = () => {
                                     <th scope="col" className="small fw-normal">Images</th>
                                     <th scope="col" className="small fw-normal">In stock</th>
                                     <th scope="col" className="small fw-normal text-end">Rating</th>
-                                    <th scope="col" className="small fw-normal text-end">visibility</th>
+                                    <th scope="col" className="small fw-normal text-end">Visibility</th>
                                     <th scope="col" className="small fw-normal"></th>
                                 </tr>
                             </thead>
-                            <tbody>                            
+                            <tbody>                      
                                 {products ?
                                     products.map(x => {
                                         return (

@@ -4,7 +4,6 @@ import { Link, Route, Routes } from 'react-router-dom'
 import './../../assets/css/admin.css'
 import Nav from './Admin/Nav';
 import Toast from './Toast';
-import AddProduct from './Admin/AddProduct';
 import Dashboard from './Admin/Dashboard';
 
 const Admin = () => {

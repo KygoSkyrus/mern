@@ -17,11 +17,12 @@ export const {isProductUpdated}=isUpdatedSlice.actions;
 
 
 export const productFormVisibilitySlice = createSlice({
-	name: 'productFormVisibility',
+	name: 'productFormVisibility',//change this to visibility..will have visibilty losgic of various compo like form loader toast
 	initialState: {
 		visibility: false,
 		title:"",
 		toast:false,
+		toastContent:"",
 	},
 	reducers: {
 		// addTodo: (state, action) => {
@@ -46,16 +47,21 @@ export const productFormVisibilitySlice = createSlice({
 		setProductFormTitle:(state,action)=>{
 			state.title=action.payload.title
 		},
+
+
 		toastVisibility: (state, action) => {
 			 console.log('ac', action.payload.toastVisibility)
 			state.toast = action.payload.toastVisibility
 		},
+		setToastContent:(state,action)=>{
+			state.toastContent=action.payload.message
+		}
 	},
 });
 
 //productFormVisibility
 //createSlice function automatically creates actions based on our reducer names
-export const { productFormVisibility, setProductFormTitle, toastVisibility } = productFormVisibilitySlice.actions;
+export const { productFormVisibility, setProductFormTitle, toastVisibility, setToastContent } = productFormVisibilitySlice.actions;
 
 
 const initialState={
@@ -66,7 +72,8 @@ const initialState={
 	description: "",
 	category: "",
 	image: null,
-	stock: 0
+	stock: 0,
+	visibility:null,
 	}
 }
 

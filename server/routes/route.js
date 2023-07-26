@@ -241,12 +241,12 @@ try{
 
 
 //seeting blogs visibility
-router.post("/productVisibility", async (req, res) => {
+router.post("/productvisibility", async (req, res) => {
     const details = req.body;
-  
+  console.log("s--s-s-s-s",details)
     try {
       //findByIdAndUpdate: is the alternatice to directly use id
-      let result = await BLOG.findOneAndUpdate({ _id: details.id }, { status: details.val }, { new: true })
+      let result = await PRODUCT.findOneAndUpdate({ _id: details.id }, { visibility: details.visibility }, { new: true })
       if (result) {
         res.send({ isSet: true })
       } else {

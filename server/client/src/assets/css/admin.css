@@ -208,7 +208,7 @@ body {
 }
 .avatars__item {
   background-color: rgb(233, 236, 239);
-  border: 2px solid rgb(249, 250, 252);
+  border:2px solid rgb(217 217 217);
   border-radius: 100%;
   color: rgb(255, 255, 255);
   display: block;
@@ -245,6 +245,11 @@ body {
 }
 .display-block{
   display: block;
+}
+
+
+.clr-red{
+  color: red !important;
 }
 /******************** DASHBOARD *************************/
 

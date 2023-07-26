@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { productFormVisibility, setProductFormTitle, setProductForm } from './../redux/todoSlice'
+import { productFormVisibility, setProductFormTitle, setProductForm ,toastVisibility, setToastContent} from './../redux/todoSlice'
 
 const Product = ({ details }) => {
 
@@ -25,20 +25,24 @@ const Product = ({ details }) => {
     }
 
     //set product visibility
-    async function setProductVisibility(id) {
-        setShowLoader(true)
-        fetch("/deleteblog", {
+    async function setProductVisibility(e,details) {
+        // setShowLoader(true)
+    e.target.classList.toggle('clr-red')
+   
+        fetch("/productvisibility", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                id,
+                id:details._id,visibility:!details.visibility
             }),
         })
             .then(res => res.json())
             .then(data => {
-                if (data.isDeleted) {
-                    setShowLoader(false)
-                    window.location.reload()
+                if (data.isSet) {
+                    dispatch(toastVisibility({ toastVisibility: true }))
+                    dispatch(setToastContent({message:`Product visibility has been turned ${details.visibility? "off":"on"}`}))
+                }else{
+
                 }
             })
     }
@@ -84,10 +88,10 @@ const Product = ({ details }) => {
                     <div className="avatars d-flex position-relative">
                         {details.image.map(x => {
                             return (<>
-                                <div className="avatars__item pointer mx-0" onMouseEnter={(e) => imagePreview(e)} onMouseLeave={(e) => hideImagePreview(e)} style={{ background: `url(${x})`, backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat", }}>
+                                <div className="avatars__item pointer" onMouseEnter={(e) => imagePreview(e)} onMouseLeave={(e) => hideImagePreview(e)} style={{ background: `url(${x})`, backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat", }}>
                                     {/* <img className="rounded-3" src={x} alt="" width={"100%"} height={"100%"} /> */}
                                 </div>
-                                    <div className='image-preview'></div>
+                                <div className='image-preview'></div>
                             </>
                             )
                         })}
@@ -158,8 +162,8 @@ const Product = ({ details }) => {
             </td>
 
             <td className="ps-3 align-middle text-center">
-            <button onClick={()=>setProductVisibility(details._id)} type="button" className=" btn btn-badge border-0 rounded-pill text-decoration-none p-0 align-self-center" style={{ height: "26px !important", width: "26px !important" }}>
-                        <i className="fa fa-eye small text-body"></i>
+            <button type="button" className=" btn btn-badge border-0 rounded-pill text-decoration-none p-0 align-self-center" style={{ height: "26px !important", width: "26px !important" }}>
+                        <i onClick={(e)=>setProductVisibility(e,details)} className={`fa fa-eye small text-body ${!details.visibility && "clr-red"}`}></i>
                     </button>
             </td>
 
