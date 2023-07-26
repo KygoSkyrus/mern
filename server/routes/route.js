@@ -236,9 +236,43 @@ try{
     }catch(error){
         console.log(error)
     }
-
-   
-
 })
+
+
+
+//seeting blogs visibility
+router.post("/productVisibility", async (req, res) => {
+    const details = req.body;
+  
+    try {
+      //findByIdAndUpdate: is the alternatice to directly use id
+      let result = await BLOG.findOneAndUpdate({ _id: details.id }, { status: details.val }, { new: true })
+      if (result) {
+        res.send({ isSet: true })
+      } else {
+        res.send({ isSet: false })
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
+
+  //deleting blog record
+router.post("/deleteblog", async (req, res) => {
+    const details = req.body;
+  
+    try {
+      let result = await BLOG.deleteOne({ _id: details.id })
+      if(result.deletedCount>0){
+        res.send({ isDeleted: true });
+        console.log('result',result)
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
+
 
 module.exports = router;

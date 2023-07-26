@@ -138,7 +138,7 @@ const ProductForm = (props) => {
                                 console.log('File available at', downloadURL);
                                 tempArr.push(downloadURL)
                                 //WORKING HERE::hAS ERROR
-                                if (index === productData.image.length - 1) addProductAPI(tempArr)
+                                if (index === productData.image.length - 1 && downloadURL) addProductAPI(tempArr)
                             });
                         console.log('---------------------------------->>>>>>>>>>>>>>>>>')
                     }
@@ -171,8 +171,6 @@ const ProductForm = (props) => {
     }
 
     function addProductAPI(image) {
-        console.log('productdata----', productData, image)
-        console.log('addproduct ran????????????????????????????')
 
         let apiURL;
         let img=image;//for add product
@@ -187,10 +185,7 @@ const ProductForm = (props) => {
             apiURL = "/api/addproducts";
         }
 
-// NOTE::TRY CHECKING WITH MULTIPLE IMAGES,,maybe bcz if internet is not working...image is troubling//also when edited is done,,then its giving cannot remoeve child from node errror on clearform function///last image from newly added image is being left behind
-console.log('rr',productState.image,image)        
-console.log('ggsdagjsda',img)
-
+// NOTE::(UPDATE:::ITS WORKING NOW)TRY CHECKING WITH MULTIPLE IMAGES,,maybe bcz if internet is not working...image is troubling//also when edited is done,,then its giving cannot remoeve child from node errror on clearform function///last image from newly added image is being left behind
 
         fetch(apiURL, {
             method: "POST",
@@ -203,7 +198,6 @@ console.log('ggsdagjsda',img)
                 category: productData.category,
                 stock: productData.stock,
                 image: img,
-                // image: image ? image : productData.image,//sending changed image if chnaged otherwise the existing image
                 id: productData._id
             }),
         }).then(response => response.json())
@@ -231,23 +225,7 @@ console.log('ggsdagjsda',img)
 
     }
 
-    async function deleteBlog(id) {
-        setShowLoader(true)
-        fetch("/deleteblog", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                id,
-            }),
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.isDeleted) {
-                    setShowLoader(false)
-                    window.location.reload()
-                }
-            })
-    }
+ 
 
     function settingUrl(e) {
         let title = e.target.value;

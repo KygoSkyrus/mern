@@ -41,7 +41,7 @@ const Dashboard = () => {
         dispatch(setProductForm(product)) //setting the product form with currently selected product for editing
         dispatch(productFormVisibility({ visibility: !visibility })); //setting modal's visibility
         dispatch(setProductFormTitle({ title: "Edit product" })) // setting modal's title
-    };
+    };  
 
 
 
@@ -214,6 +214,7 @@ const Dashboard = () => {
                                     <th scope="col" className="small fw-normal">Images</th>
                                     <th scope="col" className="small fw-normal">In stock</th>
                                     <th scope="col" className="small fw-normal text-end">Rating</th>
+                                    <th scope="col" className="small fw-normal text-end">visibility</th>
                                     <th scope="col" className="small fw-normal"></th>
                                 </tr>
                             </thead>

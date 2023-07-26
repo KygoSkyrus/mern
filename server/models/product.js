@@ -40,7 +40,6 @@ const productSchema = new Schema({
     },
     rating: {
       type: Number,
-      
     },
   }],
 },{collection:"products"});

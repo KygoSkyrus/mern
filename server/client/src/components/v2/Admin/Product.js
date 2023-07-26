@@ -15,6 +15,7 @@ const Product = ({ details }) => {
         dispatch(setProductFormTitle({ title: "Edit product" })) // setting modal's title
     };
 
+    //on hhover the product image preview
     const imagePreview = (e) => {
         e.target.nextElementSibling.style.backgroundImage = e.target.style['background-image']//placing the same image to the hover preview
         e.target.nextElementSibling.classList.add('display-block')
@@ -22,6 +23,27 @@ const Product = ({ details }) => {
     const hideImagePreview = (e) => {
         e.target.nextElementSibling.classList.remove('display-block')
     }
+
+    //set product visibility
+    async function setProductVisibility(id) {
+        setShowLoader(true)
+        fetch("/deleteblog", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                id,
+            }),
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.isDeleted) {
+                    setShowLoader(false)
+                    window.location.reload()
+                }
+            })
+    }
+
+
 
     return (
         <tr key={details._id}>
@@ -52,18 +74,17 @@ const Product = ({ details }) => {
             <td className="align-middle">
                 <span className="badge badge-light-light rounded-pill text-dark py-1 fw-normal pe-3 ps-1">
                     <i className="fa fa-pause-circle me-1 text-warning"></i>
-                    {details.stock}
+                    {details.price}
                 </span>
             </td>
 
             <td className="align-middle">
-
                 {/* <!-- START Avatars #4 --> */}
                 <div className="d-inline-flex">
                     <div className="avatars d-flex position-relative">
                         {details.image.map(x => {
                             return (<>
-                                <div className="avatars__item pointer" onMouseEnter={(e) => imagePreview(e)} onMouseLeave={(e) => hideImagePreview(e)} style={{ background: `url(${x})`, backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat", }}>
+                                <div className="avatars__item pointer mx-0" onMouseEnter={(e) => imagePreview(e)} onMouseLeave={(e) => hideImagePreview(e)} style={{ background: `url(${x})`, backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat", }}>
                                     {/* <img className="rounded-3" src={x} alt="" width={"100%"} height={"100%"} /> */}
                                 </div>
                                     <div className='image-preview'></div>
@@ -72,19 +93,15 @@ const Product = ({ details }) => {
                         })}
                     </div>
                 </div>
-
-
             </td>
             <td className="ps-3 align-middle">
-
-                {details.price}
-
+                {details.stock}
             </td>
             <td className="align-middle text-end">
 
                 <div className="btn-group">
                     <button type="button" className="me-3 btn btn-badge border-0 rounded-pill text-decoration-none p-0 align-self-center" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" style={{ height: "26px !important", width: "26px !important" }}>
-                        <i className="fa fa-eye small text-body"></i>
+                        <i className="fa fa-expand small text-body"></i>
                     </button>
 
                     <div className="dropdown-menu shadow pt-0 rounded-3 pb-0">
@@ -139,6 +156,13 @@ const Product = ({ details }) => {
 
                 {details.rating}
             </td>
+
+            <td className="ps-3 align-middle text-center">
+            <button onClick={()=>setProductVisibility(details._id)} type="button" className=" btn btn-badge border-0 rounded-pill text-decoration-none p-0 align-self-center" style={{ height: "26px !important", width: "26px !important" }}>
+                        <i className="fa fa-eye small text-body"></i>
+                    </button>
+            </td>
+
             <td className="align-middle text-end">
                 {/* <!-- START Dropdown: Options --> */}
                 <div className="btn-group  dropdown ">
