@@ -11,9 +11,16 @@
 - add user account compo
 - add dark light option in admin
 
+- **PRODUCT** 
+- add wishlist option for produicts
+- grey out when products when they are out of stocks
+-
 
 https://codepen.io/tag/product-card
-
+- https://codepen.io/syrizaldev/pen/MWqJzXY
+- extra card [https://codepen.io/toufiq-gilani/pen/xxaVBgz]
+- mdc https://codepen.io/RaduBratan/pen/LYPzwNe 
+https://codepen.io/RaduBratan/pen/BaBmEYE
 
 http://preview.themeforest.net/item/ella-multipurpose-shopify-theme-os-20/full_screen_preview/9691007?_ga=2.156118136.2104234991.1689665488-2058099207.1682318429&_gac=1.242927030.1689665488.EAIaIQobChMI9Jfytt6XgAMVt5lmAh3z2QlPEAAYASAAEgLCCPD_BwE
 

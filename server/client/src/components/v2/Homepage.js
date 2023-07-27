@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+// import {util} from '@material/ripple/index';
 
 import products from './dummy'
 
@@ -16,6 +17,31 @@ const Homepage = () => {
       .then(res => res.json())
       .then(data => console.log('products', data))
   }, [])
+
+
+
+  //PRODUCT 4
+
+  const selector = ".mdc-button, .mdc-icon-button, .mdc-card__primary-action";
+  // const ripples = [].map.call(document.querySelectorAll(selector), function(el) {
+  //   return new MDCFoo(el);
+  // });
+ 
+  useEffect(()=>{
+    const mdcCard=document.querySelector('.mdc-card')
+    mdcCard.classList.add("animation-reveal");
+    mdcCard.style.opacity=0
+    // $(".mdc-card").addClass("animation-reveal");
+    // $(".mdc-card").css("opacity", "0");
+    setTimeout(() => {
+      mdcCard.classList.remove("animation-reveal");
+      mdcCard.style.opacity=1
+      // $(".mdc-card").removeClass("animation-reveal");
+      // $(".mdc-card").css("opacity", "1");
+    }, 1000);
+  },[])
+
+  //PRODUCT 4
 
 
   return (
@@ -69,168 +95,72 @@ const Homepage = () => {
 
 
 
-{/* PRODUCT 2 */}
-      <div class="container">
-  <div class="card dark">
-    <img src="https://codingyaar.com/wp-content/uploads/chair-image.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-      <div class="text-section">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">Some quick example text to build on the card's
-          content.</p>
+      {/* PRODUCT 2 */}
+      <div class='cardN'>
+        <img src='https://raw.githubusercontent.com/mohammadjarabah/codepen-assets/main/pens/mdwvNJP/images/shoes.png' class='card__img' alt='' />
+        <h2 class='card__title'>Nike Shoes</h2>
+        <div class='card__content'>
+          <div class='card__sizeContainer'>
+            <p class='card__sizeTitle'>Size:</p>
+            <span class='card__sizeNumber'>7</span>
+            <span class='card__sizeNumber'>8</span>
+            <span class='card__sizeNumber'>9</span>
+            <span class='card__sizeNumber'>10</span>
+          </div>
+          <div class='card__colorContainer'>
+            <p class='card__colorTitle'>Color:</p>
+            <span class='card__colorCircle' style={{ backgroundColor: '#9bdc28' }}></span>
+            <span class='card__colorCircle' style={{ backgroundColor: '#03a9f4' }}></span>
+            <span class='card__colorCircle' style={{ backgroundColor: '#e91e63' }}></span>
+          </div>
+        </div>
+        <a href='/#' class='card__link'>Buy Now</a>
       </div>
-      <div class="cta-section">
-        <div>$129.00</div>
-        <a href="#" class="btn btn-light">Buy Now</a>
-      </div>
-    </div>
-  </div>
-  <div class="card bg-light-subtle mt-4">
-    <img src="https://codingyaar.com/wp-content/uploads/chair-image.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-      <div class="text-section">
-        <h5 class="card-title fw-bold">Card title</h5>
-        <p class="card-text">Some quick example text to build on the card's content.</p>
-      </div>
-      <div class="cta-section">
-        <div>$129.00</div>
-        <a href="#" class="btn btn-dark">Buy Now</a>
-      </div>
-    </div>
-  </div>
-  <div class="card bg-danger-subtle mt-4">
-    <img src="https://codingyaar.com/wp-content/uploads/chair-image.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-      <div class="text-section">
-        <h5 class="card-title fw-bold">Card title</h5>
-        <p class="card-text">Some quick example text to build on the card's content.</p>
-      </div>
-      <div class="cta-section">
-        <div>$129.00</div>
-        <a href="#" class="btn btn-dark">Buy Now</a>
-      </div>
-    </div>
-  </div>
-  <div class="card bg-primary-subtle mt-4">
-    <img src="https://codingyaar.com/wp-content/uploads/chair-image.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-      <div class="text-section">
-        <h5 class="card-title fw-bold">Card title</h5>
-        <p class="card-text">Some quick example text to build on the card's content.</p>
-      </div>
-      <div class="cta-section">
-        <div>$129.00</div>
-        <a href="#" class="btn btn-dark">Buy Now</a>
-      </div>
-    </div>
-  </div>
-  <div class="card bg-success-subtle mt-4">
-    <img src="https://codingyaar.com/wp-content/uploads/chair-image.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-      <div class="text-section">
-        <h5 class="card-title fw-bold">Card title</h5>
-        <p class="card-text">Some quick example text to build on the card's content.</p>
-      </div>
-      <div class="cta-section">
-        <div>$129.00</div>
-        <a href="#" class="btn btn-dark">Buy Now</a>
-      </div>
-    </div>
-  </div>
-  <div class="card bg-warning-subtle mt-4">
-    <img src="https://codingyaar.com/wp-content/uploads/chair-image.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-      <div class="text-section">
-        <h5 class="card-title fw-bold">Card title</h5>
-        <p class="card-text">Some quick example text to build on the card's content.</p>
-      </div>
-      <div class="cta-section">
-        <div>$129.00</div>
-        <a href="#" class="btn btn-dark">Buy Now</a>
-      </div>
-    </div>
-  </div>
-  <div class="card bg-info-subtle mt-4">
-    <img src="https://codingyaar.com/wp-content/uploads/chair-image.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-      <div class="text-section">
-        <h5 class="card-title fw-bold">Card title</h5>
-        <p class="card-text">Some quick example text to build on the card's content.</p>
-      </div>
-      <div class="cta-section">
-        <div>$129.00</div>
-        <a href="#" class="btn btn-dark">Buy Now</a>
-      </div>
-    </div>
-  </div>
-  <div class="card bg-dark mt-4">
-    <img src="https://codingyaar.com/wp-content/uploads/chair-image.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-      <div class="text-section">
-        <h5 class="card-title fw-bold text-white">Card title</h5>
-        <p class="card-text text-white">Some quick example text to build on the card's content.</p>
-      </div>
-      <div class="cta-section">
-        <div class="text-white">$129.00</div>
-        <a href="#" class="btn btn-light">Buy Now</a>
-      </div>
-    </div>
-  </div>
-  <div class="card bg-warning mt-4">
-    <img src="https://codingyaar.com/wp-content/uploads/chair-image.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-      <div class="text-section">
-        <h5 class="card-title fw-bold">Card title</h5>
-        <p class="card-text">Some quick example text to build on the card's content.</p>
-      </div>
-      <div class="cta-section">
-        <div>$129.00</div>
-        <a href="#" class="btn btn-dark">Buy Now</a>
-      </div>
-    </div>
-  </div>
-  <div class="card bg-info mt-4">
-    <img src="https://codingyaar.com/wp-content/uploads/chair-image.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-      <div class="text-section">
-        <h5 class="card-title fw-bold text-white">Card title</h5>
-        <p class="card-text text-white">Some quick example text to build on the card's content.</p>
-      </div>
-      <div class="cta-section">
-        <div class="text-white">$129.00</div>
-        <a href="#" class="btn btn-light">Buy Now</a>
-      </div>
-    </div>
-  </div>
-  <div class="card bg-dark-subtle mt-4">
-    <img src="https://codingyaar.com/wp-content/uploads/chair-image.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-      <div class="text-section">
-        <h5 class="card-title fw-bold">Card title</h5>
-        <p class="card-text">Some quick example text to build on the card's content.</p>
-      </div>
-      <div class="cta-section">
-        <div>$129.00</div>
-        <a href="#" class="btn btn-dark">Buy Now</a>
-      </div>
-    </div>
-  </div>
-  <div class="card bg-success mt-4">
-    <img src="https://codingyaar.com/wp-content/uploads/chair-image.jpg" class="card-img-top" alt="..."/>
-    <div class="card-body">
-      <div class="text-section">
-        <h5 class="card-title fw-bold text-white">Card title</h5>
-        <p class="card-text text-white">Some quick example text to build on the card's content.</p>
-      </div>
-      <div class="cta-section">
-        <div class="text-white">$129.00</div>
-        <a href="#" class="btn btn-light">Buy Now</a>
-      </div>
-    </div>
-  </div>
-</div>
-{/* PRODUCT 2 */}
+      {/* PRODUCT 2 */}
 
+
+
+
+
+      {/* PRODUCT 3 */}
+      <div class="container">
+        <div class="card-3">
+          <img src={img1} class="card-img-top" alt="..." />
+          <div class="card3-body">
+            <div class="text-section">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some quick example text to build on the card's
+                content.</p>
+            </div>
+            <div class="cta-section">
+              <div>$129.00</div>
+              <a href="/#" class="btn btn-light">Buy Now</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      {/* PRODUCT 3 */}
+
+
+
+
+
+      {/* PRODUCT 4 */}
+      <div class="mdc-card mini-card mdc-elevation--z4">
+        <div class="mdc-card__primary-action">
+          <div class="media-image mdc-card__media mdc-card__media--square">
+            <div class="mdc-card__media-content">
+              <div class="card-info">
+                <h1>The new headphones</h1>
+                <h2>Explore</h2>
+                <h3>HEADPHONES</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* PRODUCT 4 */}
 
 
 
