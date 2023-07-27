@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 
 import Modal from './../Modal'
-import Product from './Product'
+import Product from './ProductList'
 // import okayIcon from "./../../../assets/images/okay-icon.png"
 
 const Dashboard = () => {
@@ -49,56 +49,11 @@ const Dashboard = () => {
                 <div className="p-3 overflow-auto d-flex  bg-white-custom border-bottom shadow-sm ">
 
                     {/* <!-- Left Side--> */}
-                    <div className="d-flex flex-grow-1">
-
-
+                    <div className="d-flex flex-grow-1 align-items-center">
                         <h6 className="align-self-center mb-0 me-3 fw-semibold text-nowrap">
-                            Projects
+                            Products
                         </h6>
-
-
-                        {/* <!-- START Dropdown: Bulk Options--> */}
-                        <div className="dropdown">
-                            <button className="btn btn-sm btn-link text-decoration-none text-muted dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i className="fa fa-cog"></i>
-                            </button>
-                            <ul className="dropdown-menu shadow rounded-4" aria-labelledby="dropdownMenuButton1">
-                                <li><h6 className="dropdown-header fw-normal">Bulk Options</h6></li>
-                                <li>
-                                    <a className="dropdown-item gap-2 d-flex" href="#">
-                                        <i className="fa fa-star fa-fw me-2 me-2 text-muted opacity-50 align-self-center"></i>
-                                        Add to Favorites
-                                    </a>
-                                </li>
-                                <li>
-                                    <a className="dropdown-item gap-2 d-flex" href="#">
-                                        <i className="fa fa-align-right fa-fw text-muted me-2 opacity-50 align-self-center"></i>
-                                        Select Priority
-                                    </a>
-                                </li>
-                                <li>
-                                    <a className="dropdown-item gap-2 d-flex" href="#">
-                                        <i className="fa fa-signal fa-fw  me-2 text-muted opacity-50 align-self-center"></i>
-                                        Select Status
-                                    </a>
-                                </li>
-                                <li>
-                                    <button className="dropdown-item gap-2 d-flex" type="button" data-bs-toggle="modal" data-bs-target="#modalSelectUsers">
-                                        <i className="fa fa-user fa-fw me-2 text-muted opacity-50 align-self-center"></i>
-                                        Assign Users
-                                    </button>
-                                </li>
-                                <li><hr className="dropdown-divider" /></li>
-                                <li>
-                                    <a className="dropdown-item gap-2 d-flex" href="#">
-                                        <i className="fa fa-trash fa-fw text-muted me-2 opacity-50 align-self-center"></i>
-                                        Delete
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        {/* <!-- END Dropdown: Bulk Options--> */}
-
+                        <i class="fa-solid fa-shopping-bag"></i>
                     </div>
 
                     {/* <!-- Right Side--> */}
@@ -149,12 +104,12 @@ const Dashboard = () => {
                     <span className="badge badge-light-light rounded-pill text-dark py-2 fw-normal">
                         <i className="fa fa-circle me-1 text-danger"></i>
                         <span className="text-body me-1">Tag</span>Usability <span className="text-body small ms-1">(12)</span>
-                        <a href="#" className="text-dark opacity-25 ms-1">
+                        <a href="/#" className="text-dark opacity-25 ms-1">
                             <i className="fa fa-times-circle"></i>
                         </a>
                     </span>
 
-                    <a href="#" className="badge badge-light-light text-dark rounded-pill py-2 text-decoration-none fw-normal">
+                    <a href="/#" className="badge badge-light-light text-dark rounded-pill py-2 text-decoration-none fw-normal">
                         <i className="fa fa-calendar me-1 text-muted ms-1"></i>
                         <span className="text-body me-1">Date</span>12 January 2019 <span className="text-body small ms-1">(12)</span>
                         <span className="text-dark opacity-25 ms-1">
@@ -167,7 +122,7 @@ const Dashboard = () => {
                             <span style={{ fontSize: "10px" }}>JM</span>
                         </div>
                         <span className="text-body me-1">Person</span>Jane Marakesh <span className="text-body small ms-1">(12)</span>
-                        <a href="#" className="text-dark opacity-25 ms-2">
+                        <a href="/#" className="text-dark opacity-25 ms-2">
                             <i className="fa fa-times-circle"></i>
                         </a>
                     </span>
@@ -177,7 +132,7 @@ const Dashboard = () => {
                             <i className="fa fa-user" style={{ fontSize: "10px" }}></i>
                         </div>
                         <span className="text-body me-1">Person</span>Maria Novakovic <span className="text-body small ms-1">(12)</span>
-                        <a href="#" className="text-dark opacity-25 ms-2">
+                        <a href="/#" className="text-dark opacity-25 ms-2">
                             <i className="fa fa-times-circle"></i>
                         </a>
                     </span>
@@ -185,7 +140,7 @@ const Dashboard = () => {
                     <span className="badge badge-avatar badge-light-light rounded-pill text-dark py-1 d-inline-flex align-items-center fw-normal">
                         <img src="https://randomuser.me/api/portraits/women/65.jpg" className="rounded-pill me-2" alt="..." width="20" />
                         <span className="text-body me-1">Person</span>Kayla Moinse <span className="text-body small mx-1">(12)</span>
-                        <a href="#" className="text-dark opacity-25 ms-1">
+                        <a href="/#" className="text-dark opacity-25 ms-1">
                             <i className="fa fa-times-circle"></i>
                         </a>
                     </span>
@@ -208,7 +163,7 @@ const Dashboard = () => {
                                     <th scope="col" className="small fw-normal">Images</th>
                                     <th scope="col" className="small fw-normal">In stock</th>
                                     <th scope="col" className="small fw-normal text-end">Rating</th>
-                                    <th scope="col" className="small fw-normal text-end">Visibility</th>
+                                    <th scope="col" className="small fw-normal text-center">Visibility</th>
                                     <th scope="col" className="small fw-normal"></th>
                                 </tr>
                             </thead>
@@ -302,13 +257,13 @@ const Dashboard = () => {
 
 //             <ul className="overflow-auto list-unstyled mb-0 vstack" style={{ height: "200px", gap: "1px" }}>
 //                 <li>
-//                     <a className="dropdown-item d-flex py-2" href="#" data-bs-toggle="button">
+//                     <a className="dropdown-item d-flex py-2" href="/#" data-bs-toggle="button">
 //                         <img className="avatar-sm rounded-pill me-3" src="https://randomuser.me/api/portraits/women/65.jpg" alt="" />
 //                         <span className="flex-grow-1 align-self-center me-5">Rakesh Maraiop</span>
 //                     </a>
 //                 </li>
 //                 <li>
-//                     <a className="dropdown-item d-flex py-2" href="#" data-bs-toggle="button">
+//                     <a className="dropdown-item d-flex py-2" href="/#" data-bs-toggle="button">
 //                         <div className="avatar-sm rounded-pill bg-secondary small text-white d-flex align-items-center justify-content-center text-wrap small me-3">
 //                             <small>
 //                                 <i className="fa fa-user"></i>
@@ -346,17 +301,17 @@ const Dashboard = () => {
 //         <ul className="dropdown-menu dropdown-menu-end shadow" aria-labelledby="dropdownMenuButton1">
 //             <li><h6 className="dropdown-header fw-normal">Options</h6></li>
 //             <li>
-//                 <a className="dropdown-item gap-2 d-flex" href="#">
+//                 <a className="dropdown-item gap-2 d-flex" href="/#">
 //                     <i className="fa fa-pen fa-fw me-2 opacity-50 align-self-center"></i> Edit this Task
 //                 </a>
 //             </li>
 //             <li>
-//                 <a className="dropdown-item gap-2 d-flex" href="#">
+//                 <a className="dropdown-item gap-2 d-flex" href="/#">
 //                     <i className="fa fa-calendar fa-fw me-2 opacity-50 align-self-center"></i> Due Date
 //                 </a>
 //             </li>
 //             <li>
-//                 <a className="dropdown-item gap-2 d-flex" href="#">
+//                 <a className="dropdown-item gap-2 d-flex" href="/#">
 //                     <i className="fa fa-list fa-fw me-2 opacity-50 align-self-center"></i> Add Subtask
 //                 </a>
 //             </li>

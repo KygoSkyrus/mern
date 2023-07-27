@@ -17,7 +17,7 @@
   display: flex;
 }
 
-/******************** NAV *************************/
+/****************************************** SIDE NAV **************************************************/
 .btn-trapezoid-outline {
   height: 400px;
   display: inline-block;
@@ -26,9 +26,9 @@
   /* padding: 20px 20px; */
   border: 1px solid #ffc107;
   border-radius: 0 8px 8px 0;
- display:flex ;
- flex-direction: column;
- justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   /* transform: perspective(200px) rotateX(35deg) translateZ(25px) translateY(5px); */
   transform: perspective(314px) rotateY(11deg);
   -webkit-backface-visibility: hidden;
@@ -46,13 +46,14 @@
   transition: all 0.6s ease-out;
 }
 
-.nav-icons{
+.nav-icons {
   padding: 6px 20px;
   cursor: pointer;
 }
-/******************** NAV *************************/
+/****************************************** SIDE NAV **************************************************/
 
-/******************** PROGRESS BAR *************************/
+/********************************************* PROGRESS BAR **************************************************/
+/* NOT IN USE */
 .progressOverlay {
   display: none;
   width: 100vw;
@@ -94,9 +95,9 @@
   width: 24px;
   height: 24px;
 }
-/******************** PROGRESS BAR *************************/
+/********************************************* PROGRESS BAR **************************************************/
 
-/******************** DASHBOARD *************************/
+/********************************************* DASHBOARD **************************************************/
 :root {
   --bs-blue: #1eb7ff;
   --bs-indigo: #6610f2;
@@ -157,10 +158,8 @@
   --bs-body-color: #8493a5;
   --bs-body-bg: #f9fafc;
 
-
-  --background:#fafafa;
-  --bg-white-custom:rgba(255,255,255,1);
- 
+  --background: #fafafa;
+  --bg-white-custom: rgba(255, 255, 255, 1);
 }
 body {
   margin: 0;
@@ -208,7 +207,7 @@ body {
 }
 .avatars__item {
   background-color: rgb(233, 236, 239);
-  border:2px solid rgb(217 217 217);
+  border: 2px solid rgb(217 217 217);
   border-radius: 100%;
   color: rgb(255, 255, 255);
   display: block;
@@ -219,15 +218,15 @@ body {
   width: 30px;
   line-height: 15px;
   text-align: center;
-  /* overflow: hidden; */
-  margin-left: -10px;
+  overflow: hidden;
+  margin-right: -10px;
 }
 
-.bg-white-custom{
-  background-color:var(--bg-white-custom);
+.bg-white-custom {
+  background-color: var(--bg-white-custom);
 }
 
-.image-preview{
+.image-preview {
   width: 150px;
   height: 120px;
   border-radius: 4px;
@@ -236,28 +235,16 @@ body {
   border: 1px solid grey;
   top: 100%;
   left: 12%;
-  background: url('./../images/backpack.jpg');
+  background: url("./../images/backpack.jpg");
   background-size: contain;
-  background-position:  center;
-  background-repeat:  no-repeat;
+  background-position: center;
+  background-repeat: no-repeat;
   transition: all 0.3s ease-in-out;
   display: none;
 }
-.display-block{
-  display: block;
-}
-
-
-.clr-red{
-  color: red !important;
-}
 /******************** DASHBOARD *************************/
 
-
-
-
-
-/******************** EDIT PRODUCT *************************/
+/******************** PRODUCT FORM MODAL *************************/
 .editProductContainer,
 .activeProductContainer {
   position: absolute;
@@ -274,17 +261,17 @@ body {
   overflow: auto;
   transition: 0.3s all;
 }
-.activeProductContainer{
+.activeProductContainer {
   right: 0;
 }
-.closeProductContainer{
+.closeProductContainer {
   position: absolute;
   left: 0px;
   top: 0;
   padding: 10px;
-    background: none;
-    color: #fff;
-    cursor: pointer;
+  background: none;
+  color: #fff;
+  cursor: pointer;
 }
 .productForm {
   width: 50vw;
@@ -292,25 +279,72 @@ body {
   color: #fff;
   box-shadow: 0 0 12px #000000b5;
   position: absolute;
-    top: 20px;
-    right: 20px;
-    height: calc(100vh - 40px);
-    overflow: auto;
+  top: 20px;
+  right: 20px;
+  height: calc(100vh - 40px);
+  overflow: auto;
 }
-.productForm::-webkit-scrollbar{
+.productForm::-webkit-scrollbar {
   width: 0;
 }
 .productForm:hover {
   box-shadow: 0px 5px 20px 0px #000000ba;
 }
-/******************** EDIT PRODUCT *************************/
+/******************** PRODUCT FORM MODAL *************************/
+
+/************************************************ PRODUCT FORM INPUTS ************************************************/
+.form-group {
+  margin-bottom: 1rem;
+  position: relative;
+}
+label {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+.form-control {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border-radius: 0.25rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+#customLabel {
+  position: absolute;
+  top: 26px;
+  left: 0px;
+}
+#imageHolder {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2px;
+}
+.displayimg {
+  height: 100px;
+  /* max-width: 150px; */
+  /* display: none; */
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  border: 1px solid #e5e5e5;
+  /* position: relative;
+    top: 9px; */
+  border-radius: 4px;
+}
+/************************************************ PRODUCT FORM INPUTS ************************************************/
+
 
 
 
 
 /******************** Dark mode *************************/
-
-
 .toggle {
   position: relative;
   display: flex;
@@ -371,12 +405,12 @@ body {
 /* ---- ---- Dark Mode ---- ---- */
 .dark {
   /* background-color: #151d2a; */
-  --background:var(--darkBlue);
-  --bg-white-custom:#090f19; /* for dashboard's header */
+  --background: var(--darkBlue);
+  --bg-white-custom: #090f19; /* for dashboard's header */
 }
 .dark .toggle {
   background: #151d2a;
-  box-shadow:3px 3px 3px #0e131b, -1px 0px 0px #1c2739;
+  box-shadow: 3px 3px 3px #0e131b, -1px 0px 0px #1c2739;
 }
 .dark .icon--light {
   color: #fafafa;

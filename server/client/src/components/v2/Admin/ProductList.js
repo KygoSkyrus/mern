@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { productFormVisibility, setProductFormTitle, setProductForm ,toastVisibility, setToastContent} from './../redux/todoSlice'
+import { productFormVisibility, setProductFormTitle, setProductForm, toastVisibility, setToastContent, setLoaderVisibility } from '../redux/todoSlice'
 
 const Product = ({ details }) => {
 
@@ -9,13 +9,13 @@ const Product = ({ details }) => {
     const dispatch = useDispatch()
 
 
-    const handleCardClick = (product) => {
+    const handlEditProduct = (product) => {
         dispatch(setProductForm(product)) //setting the product form with currently selected product for editing
         dispatch(productFormVisibility({ visibility: !visibility })); //setting modal's visibility
         dispatch(setProductFormTitle({ title: "Edit product" })) // setting modal's title
     };
 
-    //on hhover the product image preview
+    //on hover the product image preview
     const imagePreview = (e) => {
         e.target.nextElementSibling.style.backgroundImage = e.target.style['background-image']//placing the same image to the hover preview
         e.target.nextElementSibling.classList.add('display-block')
@@ -25,24 +25,25 @@ const Product = ({ details }) => {
     }
 
     //set product visibility
-    async function setProductVisibility(e,details) {
-        // setShowLoader(true)
-    e.target.classList.toggle('clr-red')
-   
+    async function setProductVisibility(e, details) {
+        dispatch(setLoaderVisibility({ loader: true }))//loader turned on
+        e.target.classList.toggle('clr-red')
+
         fetch("/productvisibility", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                id:details._id,visibility:!details.visibility
+                id: details._id, visibility: !details.visibility
             }),
         })
             .then(res => res.json())
             .then(data => {
+                dispatch(setLoaderVisibility({ loader: false }))//loader turned off
+                dispatch(toastVisibility({ toast: true }))
                 if (data.isSet) {
-                    dispatch(toastVisibility({ toastVisibility: true }))
-                    dispatch(setToastContent({message:`Product visibility has been turned ${details.visibility? "off":"on"}`}))
-                }else{
-
+                    dispatch(setToastContent({ message: `Product visibility has been turned ${details.visibility ? "off" : "on"}` }))
+                } else {
+                    dispatch(setToastContent({ message: `Something went wrong!` }))
                 }
             })
     }
@@ -52,8 +53,9 @@ const Product = ({ details }) => {
     return (
         <tr key={details._id}>
             <th scope="row" className="align-middle">
-                <div>
-                    <input className="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="..." onClick={() => handleCardClick(details)} />
+                <div className='text-center'> 
+                    {/* <input className="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="..." /> */}
+                    <i class="fa fa-edit font-weight-100 pointer"  onClick={() => handlEditProduct(details)}></i>
                 </div>
             </th>
 
@@ -66,9 +68,9 @@ const Product = ({ details }) => {
 
             <td className="align-middle">
                 <i className="fa fa-circle fa-fw me-2 text-indigo"></i>
-                <a href="/tasks-table.html" className="text-dark pb-0">
+                <span className="text-dark pb-0">
                     {details.name}
-                </a>
+                </span>
             </td>
 
             <td className="align-middle">
@@ -83,7 +85,6 @@ const Product = ({ details }) => {
             </td>
 
             <td className="align-middle">
-                {/* <!-- START Avatars #4 --> */}
                 <div className="d-inline-flex">
                     <div className="avatars d-flex position-relative">
                         {details.image.map(x => {
@@ -91,25 +92,28 @@ const Product = ({ details }) => {
                                 <div className="avatars__item pointer" onMouseEnter={(e) => imagePreview(e)} onMouseLeave={(e) => hideImagePreview(e)} style={{ background: `url(${x})`, backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat", }}>
                                     {/* <img className="rounded-3" src={x} alt="" width={"100%"} height={"100%"} /> */}
                                 </div>
-                                <div className='image-preview'></div>
+                                <div className='image-preview'>
+                                    {/* here create anm img and put the preview here ,,when there will be png images this will solve the issue */}
+                                    {/* <section className='xxx'></section> */}
+                                    </div>
                             </>
                             )
                         })}
                     </div>
                 </div>
             </td>
+
             <td className="ps-3 align-middle">
                 {details.stock}
             </td>
-            <td className="align-middle text-end">
 
+            <td className="align-middle text-end">
                 <div className="btn-group">
                     <button type="button" className="me-3 btn btn-badge border-0 rounded-pill text-decoration-none p-0 align-self-center" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" style={{ height: "26px !important", width: "26px !important" }}>
                         <i className="fa fa-expand small text-body"></i>
                     </button>
 
                     <div className="dropdown-menu shadow pt-0 rounded-3 pb-0">
-
                         {/* <!-- Right Close Button --> */}
                         <span className="position-absolute top-0 start-100 translate-middle" style={{ zIndex: "999" }}>
                             <span className="fa-stack" style={{ fontSize: " 0.7em" }}>
@@ -118,20 +122,19 @@ const Product = ({ details }) => {
                             </span>
                         </span>
 
-
                         <div className="px-3 py-2 d-flex align-items-center bg-light small border-top">
                             <small> Apply people for this task</small>
                         </div>
 
                         <ul className="overflow-auto list-unstyled mb-0 vstack" style={{ height: "200px", gap: "1px" }}>
                             <li>
-                                <a className="dropdown-item d-flex py-2" href="#" data-bs-toggle="button">
+                                <a className="dropdown-item d-flex py-2" href="/#" data-bs-toggle="button">
                                     <img className="avatar-sm rounded-pill me-3" src="https://randomuser.me/api/portraits/women/65.jpg" alt="" />
                                     <span className="flex-grow-1 align-self-center me-5">Rakesh Maraiop</span>
                                 </a>
                             </li>
                             <li>
-                                <a className="dropdown-item d-flex py-2" href="#" data-bs-toggle="button">
+                                <a className="dropdown-item d-flex py-2" href="/#" data-bs-toggle="button">
                                     <div className="avatar-sm rounded-pill bg-secondary small text-white d-flex align-items-center justify-content-center text-wrap small me-3">
                                         <small>
                                             <i className="fa fa-user"></i>
@@ -162,9 +165,9 @@ const Product = ({ details }) => {
             </td>
 
             <td className="ps-3 align-middle text-center">
-            <button type="button" className=" btn btn-badge border-0 rounded-pill text-decoration-none p-0 align-self-center" style={{ height: "26px !important", width: "26px !important" }}>
-                        <i onClick={(e)=>setProductVisibility(e,details)} className={`fa fa-eye small text-body ${!details.visibility && "clr-red"}`}></i>
-                    </button>
+                <button type="button" className=" btn btn-badge border-0 rounded-pill text-decoration-none p-0 align-self-center" style={{ height: "26px !important", width: "26px !important" }}>
+                    <i onClick={(e) => setProductVisibility(e, details)} className={`fa fa-eye small text-body ${!details.visibility && "clr-red"}`}></i>
+                </button>
             </td>
 
             <td className="align-middle text-end">
@@ -177,24 +180,24 @@ const Product = ({ details }) => {
                     <ul className="dropdown-menu dropdown-menu-end shadow" aria-labelledby="dropdownMenuButton1">
                         <li><h6 className="dropdown-header fw-normal">Options</h6></li>
                         <li>
-                            <a className="dropdown-item gap-2 d-flex" href="#">
+                            <a className="dropdown-item gap-2 d-flex" href="/#">
                                 <i className="fa fa-pen fa-fw me-2 opacity-50 align-self-center"></i> Edit this Task
                             </a>
                         </li>
                         <li>
-                            <a className="dropdown-item gap-2 d-flex" href="#">
+                            <a className="dropdown-item gap-2 d-flex" href="/#">
                                 <i className="fa fa-calendar fa-fw me-2 opacity-50 align-self-center"></i> Due Date
                             </a>
                         </li>
                         <li>
-                            <a className="dropdown-item gap-2 d-flex" href="#">
+                            <a className="dropdown-item gap-2 d-flex" href="/#">
                                 <i className="fa fa-list fa-fw me-2 opacity-50 align-self-center"></i> Add Subtask
                             </a>
                         </li>
                         <li><hr className="dropdown-divider" /></li>
                         <li>
 
-                            <button type="button" className="dropdown-item gap-2 d-flex" data-bs-toggle="modal" data-bs-target="#modalDanger">
+                            <button type="button" className="dropdown-item gap-2 d-flex" data-bs-toggle="modal" data-bs-target="#modalDanger" >
                                 <i className="fa fa-trash fa-fw me-2 opacity-50 align-self-center"></i> Delete
                             </button>
 

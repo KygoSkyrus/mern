@@ -23,6 +23,8 @@ export const productFormVisibilitySlice = createSlice({
 		title:"",
 		toast:false,
 		toastContent:"",
+
+		loader:false,
 	},
 	reducers: {
 		// addTodo: (state, action) => {
@@ -50,18 +52,21 @@ export const productFormVisibilitySlice = createSlice({
 
 
 		toastVisibility: (state, action) => {
-			 console.log('ac', action.payload.toastVisibility)
-			state.toast = action.payload.toastVisibility
+			state.toast = action.payload.toast
 		},
 		setToastContent:(state,action)=>{
 			state.toastContent=action.payload.message
-		}
+		},
+
+        setLoaderVisibility:(state,action)=>{
+			state.loader=action.payload.loader
+		},
 	},
 });
 
 //productFormVisibility
 //createSlice function automatically creates actions based on our reducer names
-export const { productFormVisibility, setProductFormTitle, toastVisibility, setToastContent } = productFormVisibilitySlice.actions;
+export const { productFormVisibility, setProductFormTitle, toastVisibility, setToastContent, setLoaderVisibility } = productFormVisibilitySlice.actions;
 
 
 const initialState={

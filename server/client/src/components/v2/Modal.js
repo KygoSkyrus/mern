@@ -9,8 +9,6 @@ const Modal = () => {
     const visibility = useSelector(state => state.productFormVisibility.visibility)
     const dispatch = useDispatch()
 
-
-
     const closeProductContainer = (e) => {
         if (e.target !== document.querySelector('.productForm')) {
             dispatch(productFormVisibility({ visibility: false }));

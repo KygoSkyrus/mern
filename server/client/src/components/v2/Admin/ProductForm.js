@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { productFormVisibility, clearProductForm, toastVisibility, isProductUpdated } from './../redux/todoSlice'
+import { productFormVisibility, clearProductForm, toastVisibility, setToastContent, isProductUpdated, setLoaderVisibility } from './../redux/todoSlice'
 
 
 // ADD PRODUCT --------------------------------------
@@ -21,7 +21,6 @@ const ProductForm = (props) => {
     const [productData, setProductData] = React.useState({
         //  name: "", url: "", price: 0, description: "", category: "", image: null, stock: 0 
     })
-    const [showLoader, setShowLoader] = React.useState(false)
 
 
     const dispatch = useDispatch()
@@ -67,44 +66,14 @@ const ProductForm = (props) => {
 
     async function sendData(e) {
         e.preventDefault()//this stops page to refresh if the form submission is used with type submit button
-        setShowLoader(true)//start showing loader
-
+        
+        dispatch(setLoaderVisibility({loader:true}))
 
 
         console.log('pd', productData, productState)
 
-        //do this only when its product edit form
-        // if (title === "Edit product") {
-        //     const isThereAnyChange = JSON.stringify(productData) !== JSON.stringify(productState)
-
-        //     console.log("isThereAnyChange - ", isThereAnyChange)
-
-        //     if (isThereAnyChange) {
-        //         console.log('it had chnages')
-        //         if (productData.image !== productState.image) {
-        //             isNewImageAdded = true;
-        //         }
-        //     } else {
-        //         alert('there are no chnages')
-        //         dispatch(clearProductForm())//clearinf form
-        //         closeProductContainer()//closing modal
-        //     }
-
-        // }
-        //here when editing you need to push the chnage stuff only 
-
-        //here first we will compare both object completely ,,if yes then we will go for the updation or else will maynbe give a popup telling there is no chnage
-        //later will will cgheck if images are chnaged,,,(if the exiting image is removed..this will come in later),,,or if the new image is added
-        //if new image is added then we will upload that imafge and add the url to this object and the send to server
-
-
-
-
 
         let tempArr = [];
-
-        //this will enable the new product as the productstate has empty stuff initially and prodictData should have image as its mandatory while for editing the image will be different when one is firetsore url and other will be sleected image
-
         //when images are chnaged (will run for : newProduct/editProduct)
         if (productData.image !== productState.image) {
 
@@ -112,10 +81,10 @@ const ProductForm = (props) => {
 
             Array.from(productData.image).forEach(async (x, index) => {
                 console.log(index + ": ", x)
+
                 let imageRef = ref(storage, "shoppitt/" + uuidv4());
 
                 const uploadTask = uploadBytesResumable(imageRef, x);
-
                 uploadTask.on('state_changed',
                     (snapshot) => {
                         switch (snapshot.state) {
@@ -137,14 +106,11 @@ const ProductForm = (props) => {
                             .then((downloadURL) => {
                                 console.log('File available at', downloadURL);
                                 tempArr.push(downloadURL)
-                                //WORKING HERE::hAS ERROR
                                 if (index === productData.image.length - 1 && downloadURL) addProductAPI(tempArr)
                             });
                         console.log('---------------------------------->>>>>>>>>>>>>>>>>')
                     }
                 );
-
-                // db.collection.update(  { _id:...} , { $set: someObjectWithNewData } 
 
             })
         } else {
@@ -156,18 +122,15 @@ const ProductForm = (props) => {
                 addProductAPI(undefined)
             }else{
                 //nothing changed
-                alert('there are no chnages')
-                dispatch(clearProductForm())//clearinf form
+                dispatch(toastVisibility({ toast: true }))
+                dispatch(setToastContent({message:`No changes were made"}`}))
+
+                dispatch(clearProductForm())//clearing form
                 closeProductContainer()//closing modal
             }
-            //but there can be other change,,so keep that in a vairbak eif tehre is a cnage and check that here if its true than ----call the addproduct api from here
+
         }
-
-
-
         //we should avoid using url,, just use a template to show product and send data when its clicked
-
-
     }
 
     function addProductAPI(image) {
@@ -185,8 +148,7 @@ const ProductForm = (props) => {
             apiURL = "/api/addproducts";
         }
 
-// NOTE::(UPDATE:::ITS WORKING NOW)TRY CHECKING WITH MULTIPLE IMAGES,,maybe bcz if internet is not working...image is troubling//also when edited is done,,then its giving cannot remoeve child from node errror on clearform function///last image from newly added image is being left behind
-
+        // NOTE::(UPDATE:::ITS WORKING NOW)TRY CHECKING WITH MULTIPLE IMAGES,,maybe bcz if internet is not working...image is troubling//also when edited is done,,then its giving cannot remoeve child from node errror on clearform function///last image from newly added image is being left behind
         fetch(apiURL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -202,23 +164,17 @@ const ProductForm = (props) => {
             }),
         }).then(response => response.json())
             .then(data => {
-                console.log('dd', data)
-                if (data.is_product_added || data.isProductEdited) {
-                    setShowLoader(false)//hiding loader
-                    //dispatch(clearProductForm())//clearinf form
-                    closeProductContainer()//closing modal
-                    dispatch(toastVisibility({ toastVisibility: true }))//also here we need to add the text for the loader that what action has happened
-                    //also reload the product list here to show the changed
-                    //to do thta you need to store the all the product in redux and then the edited product can be updated there
-                    dispatch(isProductUpdated({ updateProduct: true }))
+                // console.log('dd', data)
+                dispatch(setLoaderVisibility({loader:false}))
+                closeProductContainer()//closing modal
+                dispatch(toastVisibility({ toast: true }))
+                if (data.is_product_added || data.isProductEdited) {                   
+                    dispatch(setToastContent({message:`Product has been ${title==="Add product"? "added":"edited"}`}))
+                    //also to do thta you need to store the all the product in redux and then the edited product can be updated there
+                    dispatch(isProductUpdated({ updateProduct: true }))//reloading the product list to show updated list
                 } else {
                     //resetting the fields
-                    setShowLoader(false)
-                    closeProductContainer()//closing modal
-                    dispatch(toastVisibility({ toastVisibility: true }))//throw error here
-                    //document.getElementById("frm").reset();
-                    //setDynamicLabel()
-                    //call the toast here with error
+                    dispatch(setToastContent({message:`Product couldn't be added. Something went wrong!"}`}))
                 }
             })
             .catch(err => console.log(err))
@@ -236,7 +192,7 @@ const ProductForm = (props) => {
 
     function setDynamicLabel(e) {
         //you can write the ogic to create the object url and store it in array state wihich will update the image holder like in edit componnent
-        console.log('setdynmaic')
+        // console.log('setdynmaic')
         let imageHolder = document.getElementById('imageHolder')
         imageHolder.innerHTML = "";
         if (title === "Edit product") {
@@ -262,7 +218,7 @@ const ProductForm = (props) => {
         } else {
             document.getElementById("dynamicLabel").innerHTML = "Choose a file…"
         }
-        console.log('SETDYNAM END')
+        // console.log('SETDYNAM END')
     }
     // ADD PRODUCT--------------------------------------
 
@@ -274,10 +230,9 @@ const ProductForm = (props) => {
                         <div>
                             <h6 className="fs-17 font-weight-600 mb-0">{title}</h6>
                         </div>
-                        <div className="text-right">
+                        <div className="text-right pointer">
                             <div className="actions">
                                 <span
-                                    //  onClick={e => window.location.reload()}
                                     onClick={closeProductContainer}
                                     className="action-item cursor-pointer" >
                                     <i
@@ -375,38 +330,10 @@ const ProductForm = (props) => {
                                 </button>
                             </form>
                         </div>
-                        <div className="col-xs-12 col-sm-12 col-md-6 p-l-30 p-r-30"></div>
                     </div>
                 </div>
             </div>
-
-
-            {/* the loader between process actions */}
-            {showLoader &&
-                <div className='loader'>
-                    <div className='bag-container'>
-                        <div style={{ position: "relative" }}>
-                            <div className='bag'>
-                            </div>
-                            <div className='handle'></div>
-                        </div>
-                    </div>
-                    <section>LOADING...</section>
-                </div>
-            }
-
-            {/* image upload progress */}
-            <div className='progressOverlay'>
-                <div className='d-flex flex-column align-items-center'>
-                    <section className='progressBar'>
-                        <section id='progress'></section>
-                    </section>
-                    <div className='imagePreview my-2'>
-                        <img id='ok' src={okayIcon} alt="done" />
-                    </div>
-                    <section className='imgName'></section>
-                </div>
-            </div>
+     
         </>
     )
 }

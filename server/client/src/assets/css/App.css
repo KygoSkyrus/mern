@@ -1,17 +1,3 @@
-/*************** basics ************************/
-::-moz-selection { /* Code for Firefox */
-  background: #ffc107;
-  color: #fff;
-}
-::selection {
-  background: #ffc107;
-  color: #fff;
-}
-/*************** basics ************************/
-
-
-
-
 /*apploaded.js*/
 .mainlogo {
   width: 100vw;
@@ -187,7 +173,6 @@ input[type="number"] {
 
 
 /******************************************** phone otp **********************************************/
-
 .card{
   transition: all 0.3s;
 }

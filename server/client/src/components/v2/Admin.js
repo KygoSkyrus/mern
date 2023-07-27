@@ -1,14 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link, Route, Routes } from 'react-router-dom'
 
 import './../../assets/css/admin.css'
 import Nav from './Admin/Nav';
 import Toast from './Toast';
 import Dashboard from './Admin/Dashboard';
+import Loader from './Loader.jsx';
 
 const Admin = () => {
-
-
 
     return (
         <>
@@ -25,7 +24,10 @@ const Admin = () => {
                     </Routes>
                 </div>
             </div>
+
+
             <Toast />
+            <Loader/>
 
         </>
     )
