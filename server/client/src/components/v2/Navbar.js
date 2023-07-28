@@ -48,9 +48,11 @@ const Navbar = (props) => {
                 </a>
               </li>
 
-              <li className="nav-item">
+              <li className="nav-item position-relative">
                 <Link to="/cart" className="nav-link">
-                  Cart <Badge />
+                  <i className='fa fa-shopping-cart'></i>
+                 <span>Cart</span>  
+                  <Badge />
                 </Link>
               </li>
               <li className="nav-item ">
@@ -61,6 +63,12 @@ const Navbar = (props) => {
               <li className="nav-item ">
               <Link to="/admin/dashboard" className="nav-link">
                   Admin
+                </Link>
+                </li>
+                <li className="nav-item position-relative">
+              <Link to="/admin/dashboard" className="nav-link">
+                  <span>Profile</span>
+                  <i className='fa fa-user'></i>
                 </Link>
                 </li>
             </ul>
