@@ -35,7 +35,7 @@
 }
 
 .display-block {
-  display: block;
+  display: block !important;
 }
 
 .clr-red {
@@ -49,11 +49,10 @@
 
 /*--------------------------------- the scroll up n down animation --------------------------------- */
 .text-stroke-container {
-  position: absolute;
+  position: relative;
   z-index: 99;
   background: #ffeb3b;
   padding: 30px;
-  width: 80%;
   display: flex;
   justify-content: space-evenly;
   height: 270px;
@@ -76,23 +75,6 @@
   color: #ffeb3b;
 }
 
-.scrollup {
-  animation: scrollup 10s infinite ease-in-out;
-  position: absolute;
-  top: -350px;
-  left: 10%;
-}
-@keyframes scrollup {
-  0% {
-    transform: translate(0, 0);
-  }
-  50% {
-    transform: translate(0, 350px);
-  }
-  100% {
-    transform: translate(0, 0);
-  }
-}
 .scrolldown {
   animation: scrolldown 2s infinite linear;
   position: absolute;
@@ -102,6 +84,10 @@
 .slow1 {
   animation: scrolldown 3s infinite linear;
   right: 40%;
+}
+.slow2 {
+  animation: scrolldown 2s infinite linear;
+  right: 41%;
 }
 @keyframes scrolldown {
   0% {
@@ -124,10 +110,10 @@
 .textClip {
   font-size: 8px;
   line-height: 10px;
-  background: url("./../images/newImg//products/applap_395f1832-31fa-4105-b32b-8c273816d3e76a4c.png")
+  /* background: url("./../images/newImg//products/applap_395f1832-31fa-4105-b32b-8c273816d3e76a4c.png")
     fixed center no-repeat;
   background: url("./../images/newImg//products/one1plus_6a561c17-dde7-4500-a75d-d0caf41de55800b0.png")
-    center no-repeat;
+    center no-repeat; */
   background-size: contain;
   background-clip: text;
   -webkit-background-clip: text;
@@ -221,6 +207,12 @@
   color: #fff;
   padding: 0.8rem 2rem;
 }
+.nav-link span {
+  /* opacity: 1; */
+  display: block;
+  transform: translate(0, 0);
+  transition: all 0.3s ease-in-out;
+}
 .nav-item i {
   position: absolute;
   top: 37%;
@@ -234,7 +226,7 @@
   opacity: 1;
 }
 .nav-item:hover .nav-link span {
-  transform: translate(100px, 0);
+  transform: translate(0, -19px);
   opacity: 0;
 }
 /*---------------------------------------------- NAVBAR ---------------------------------------------------*/

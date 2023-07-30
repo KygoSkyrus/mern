@@ -10,11 +10,11 @@
 - we dont need the image upload progress in here,,instead add a loader to shoup product add status
 - add user account compo
 - add dark light option in admin
-
+- add dicount field for product whihc will be dfault to 0 and admin can set the discount whenever
 - **PRODUCT** 
 - add wishlist option for produicts
 - grey out when products when they are out of stocks
--
+- when new image is added,,refresh the list
 
 https://codepen.io/tag/product-card
 - extra card [https://codepen.io/toufiq-gilani/pen/xxaVBgz]

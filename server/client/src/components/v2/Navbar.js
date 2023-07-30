@@ -66,7 +66,7 @@ const Navbar = (props) => {
                 </Link>
                 </li>
                 <li className="nav-item position-relative">
-              <Link to="/admin/dashboard" className="nav-link">
+              <Link to="/admin/profile" className="nav-link">
                   <span>Profile</span>
                   <i className='fa fa-user'></i>
                 </Link>

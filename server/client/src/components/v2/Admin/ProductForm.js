@@ -265,33 +265,34 @@ const ProductForm = (props) => {
                                 <div className="form-group">
                                     <label htmlFor="description" className="font-weight-600">Description</label>
                                     <textarea name="description" placeholder="description" className="form-control"
-                                        id="description" rows="2" required value={productData?.description} onChange={e => handleInputChange(e)}></textarea>
+                                        id="description" rows="4" style={{height:"unset"}} required value={productData?.description} onChange={e => handleInputChange(e)}></textarea>
                                 </div>
 
                                 <div className="form-group">
                                     <label htmlFor="category" className="font-weight-600">Category</label>
+                                    <input type='text' name="category" placeholder="category" className="form-control"
+                                        id="category" required value={productData?.category} onChange={e => handleInputChange(e)} />
+                                </div>
+                                {/* Dropdown category */}
+                                {/* <div className="form-group">
+                                    <label htmlFor="category" className="font-weight-600">Category</label>
                                     <div className="">
-                                        <select className="form-control basic-single" name="category" id="category" value={productData?.category} onChange={e => handleInputChange(e)} required >
-                                            {/* <optgroup label="Select Category" id="optgroup">
+                                        <select className="form-control basic-single" name="category" id="category" value={productData?.category} onChange={e => handleInputChange(e)} required > */}
+                                            {/*this hsould be commented <optgroup label="Select Category" id="optgroup">
                                                     {allCategory?.map(x => {
                                                         return (<option value={x.category} key={x._id} >{x.category}</option>)
                                                     })}
                                                 </optgroup> */}
 
-                                            <option value=''>Select category</option>
-                                            {/* <optgroup label="Select Category" id="optgroup" name="category" > */}
-                                            <option value='first'>first</option>
+                                            {/* <option value=''>Select category</option> */}
+                                            {/*this hsould be commented <optgroup label="Select Category" id="optgroup" name="category" > */}
+                                            {/* <option value='first'>first</option>
                                             <option value='second'>second</option>
-                                            {/* </optgroup> */}
-                                        </select>
+                                            <option value='smartphones'>smartphones</option> */}
+                                            {/*this hsould be commented </optgroup> */}
+                                        {/* </select>
                                     </div>
-
-                                    {/* <div className="form-group">
-                                        <label htmlFor="categoryOption" className="font-weight-600">select</label>
-                                        <input name="categoryOption" placeholder="description" className="form-control"
-                                            id="categoryOption" required />
-                                    </div> */}
-                                </div>
+                                </div>  */}
 
                                 <div className="form-group d-flex flex-column">
                                     <label htmlFor="image" className="font-weight-600" id="colorRed">File<span

@@ -268,6 +268,30 @@ const Homepage = () => {
       </div> */}
 
 
+
+<div className='text-stroke-container'>
+              <div className='scrolldown slow1'>
+                {Array.from(Array(30).keys()).map(x => {
+                  return (<h1 key={x} className='text-stroke-style'>KYGOSKYRUS</h1>)
+                })}
+              </div>
+
+              {/* <div className='scrolldown'>
+                {Array.from(Array(30).keys()).map(x => {
+                  return (<h1 key={x} className='te'>KYGOSKYRUS</h1>)
+                })}
+              </div>
+
+              <div className='scrolldown slow2'>
+                {Array.from(Array(30).keys()).map(x => {
+                  return (<h1 key={x} className='te'>KYGOSKYRUS</h1>)
+                })}
+              </div> */}
+
+            </div>
+
+
+
       <div className='container'>
         <div className="row row-cols-2 row-cols-md-4 g-4 m-3">
           <div className='col'>
@@ -295,27 +319,7 @@ const Homepage = () => {
 
             </div>
 
-            <div className='text-stroke-container'>
-              <div className='scrollup'>
-                {Array.from(Array(30).keys()).map(x => {
-                  return (<h1 key={x} className='text-stroke-style'>KYGOSKYRUS</h1>)
-                })}
-              </div>
-
-              {/* <h1 className='tex'>KYGOSKYRUS</h1> */}
-              <div className='scrolldown'>
-                {Array.from(Array(30).keys()).map(x => {
-                  return (<h1 key={x} className='te'>KYGOSKYRUS</h1>)
-                })}
-              </div>
-
-              <div className='scrolldown slow1'>
-                {Array.from(Array(30).keys()).map(x => {
-                  return (<h1 key={x} className='te'>KYGOSKYRUS</h1>)
-                })}
-              </div>
-
-            </div>
+            
 
             <div className='card2 card h-100'>
               <img src="https://picsum.photos/350/300" className="card-img-top" alt="..." />

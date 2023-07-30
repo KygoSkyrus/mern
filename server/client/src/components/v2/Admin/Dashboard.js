@@ -53,7 +53,7 @@ const Dashboard = () => {
                         <h6 className="align-self-center mb-0 me-3 fw-semibold text-nowrap">
                             Products
                         </h6>
-                        <i class="fa-solid fa-shopping-bag"></i>
+                        <i className="fa-solid fa-shopping-bag"></i>
                     </div>
 
                     {/* <!-- Right Side--> */}
@@ -65,7 +65,7 @@ const Dashboard = () => {
                                 document.querySelector('.adminView').classList.toggle('dark');
                                 document.querySelectorAll('.bg-white-custom').forEach(x => { x.classList.toggle('dark') })
                             }} />
-                            <label className="toggle" for="toggle">
+                            <label className="toggle" htmlFor="toggle">
                                 <ion-icon className="icon icon--light" name="sunny-outline"></ion-icon>
                                 <ion-icon className="icon icon--dark" name="moon-outline"></ion-icon>
                                 <span className="ball"></span>
@@ -171,10 +171,10 @@ const Dashboard = () => {
                                 {products ?
                                     products.map(x => {
                                         return (
-                                            <Product details={x} />
+                                            <Product details={x} key={x._id} />
                                         )
                                     })
-                                    : <div className='d-flex justify-content-center align-items-center'><h1>...Loading</h1></div>
+                                    : <tr className='d-flex justify-content-center align-items-center'><td><h1>...Loading</h1></td></tr>
                                 }
                             </tbody>
                         </table>

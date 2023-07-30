@@ -73,13 +73,14 @@ const Product = ({ details }) => {
                 </span>
             </td>
 
-            <td className="align-middle">
+            <td className="align-middle text-capitalize">
                 {details.category}
             </td>
 
             <td className="align-middle">
                 <span className="badge badge-light-light rounded-pill text-dark py-1 fw-normal pe-3 ps-1">
-                    <i className="fa fa-pause-circle me-1 text-warning"></i>
+                    {/* <i className="fa fa-money-bill me-1 text-warning"></i> */}
+                    <i className="fa fa-rupee me-1 text-warning"></i>
                     {details.price}
                 </span>
             </td>
