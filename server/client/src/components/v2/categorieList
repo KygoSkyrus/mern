@@ -1,19 +1,19 @@
 - Smartphones
 - Laptops
 - Tablets & iPads
-Desktop Computers
-- Smartwatches
+- Desktop Computers
+- Smartwatches/Wearable Devices (-Fitness Trackers, Smart Bands,headphones)
 - Headphones & Earphones
-- Cameras (Digital Cameras, DSLRs, Mirrorless)
-Televisions (LED, OLED, QLED)
+- Cameras (Digital Cameras, DSLRs, Mirrorless, camcorder)
+- Televisions (LED, OLED, QLED)
+- MP3 Player
 Home Theater Systems
 Gaming Consoles (PlayStation, Xbox, Nintendo)
-- Speakers (Bluetooth Speakers, Home Audio)
-Wearable Devices (Fitness Trackers, Smart Bands)
+- Speakers (-Bluetooth Speakers, -Home Audio)
 Drones
-Virtual Reality (VR) Headsets
+- VR Headsets
 - Printers & Scanners
-Computer Accessories (Keyboards, Mice, Monitors)
+- Computer Accessories (Keyboards, -Mouse, Monitors)
 Networking Devices (Routers, Modems)
 Smart Home Devices (Smart Bulbs, Smart Plugs, Smart Thermostats)
 Power Banks
@@ -32,17 +32,13 @@ Smart Home Automation (Smart Locks, Smart Thermostats)
 Car Electronics (Car Stereos, GPS Navigation Systems)
 Computer Software (Operating Systems, Productivity Suites)
 Graphics Cards
-Computer Memory (RAM)
-Computer Processors (CPUs)
-Computer Storage (SSDs, HDDs)
+- Computer Processors (CPUs)
+- Computer Storage (RAM,SSDs, HDDs, pendrive)
 Computer Peripherals (Webcams, Graphics Tablets)
-Electronic Gadgets (Gadgets for Geeks, Novelty Gadgets)
 Electronic Components (Resistors, Capacitors, ICs)
-Home Audio Systems (Stereo Systems, Soundbars)
 Smart Speakers & Voice Assistants (Amazon Echo, Google Home)
 Security Systems & Alarms
 - Video Game Accessories (Controllers, VR Accessories)
-Home Entertainment Furniture (TV Stands, Speaker Stands)
 Electric Bicycles & Scooters
 E-readers & E-books
 GPS Trackers & Wearables for Pets
@@ -50,3 +46,4 @@ Solar Panels & Solar Power Systems
 Musical Instruments & Equipment (Guitars, Keyboards)
 
 --only the main categories is added in product ,,neeed to add the subcategfory too
+-- true to give same component in different categories , this way you will have more categories for less product

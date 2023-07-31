@@ -16,12 +16,14 @@
 - grey out when products when they are out of stocks
 - when new image is added,,refresh the list
 
-https://codepen.io/tag/product-card
+```https://codepen.io/tag/product-card```
 - extra card [https://codepen.io/toufiq-gilani/pen/xxaVBgz]
 
 - https://codepen.io/syrizaldev/pen/MWqJzXY
 
 - mdc https://codepen.io/RaduBratan/pen/LYPzwNe , https://codepen.io/RaduBratan/pen/BaBmEYE
+
+- ***PRODUCT PAGE*** https://codepen.io/filipdanisko/pen/VadXXq
 
 http://preview.themeforest.net/item/ella-multipurpose-shopify-theme-os-20/full_screen_preview/9691007?_ga=2.156118136.2104234991.1689665488-2058099207.1682318429&_gac=1.242927030.1689665488.EAIaIQobChMI9Jfytt6XgAMVt5lmAh3z2QlPEAAYASAAEgLCCPD_BwE
 
@@ -30,7 +32,7 @@ https://new-ella-demo.myshopify.com/pages/landing-2
 
 ### DEFECTS
 - one backspaceing in otp inputs,,two digits are getting erased
-
+- if product has more tha one image sthen its not uploading the other images on slow network,,its an issue 
 
 
 
@@ -62,3 +64,6 @@ https://www.freepik.com/free-photos-vectors/sale-png
 - https://codepen.io/polypane/full/LYdvPze
 - https://polypane.app/css-3d-transform-examples/
 https://3dtransforms.desandro.com/carousel
+https://codepen.io/blazit/pen/BaGmmaP
+
+- chamnging div can be implemented with this https://codepen.io/TheMOZZARELLA/pen/dyZZKqE

@@ -260,6 +260,47 @@ const Homepage = () => {
 
 
 
+{/* XBOX AD */}
+<div className='container'>
+<section class="xbox">
+      <div class="xbox-content">
+        <h2>Xbox Game Pass Ultimate</h2>
+        <p>Xbox Game Pass Ultimate Xbox Live Gold and over 100 high-quality
+          console and PC games. Play together with friends and discover your
+          next favorite game.</p>
+          <a href="/#" class="xbox-btn">
+            Join Now <i class="fas fa-chevron-right"></i>
+          </a>
+      </div>
+    </section>
+</div>
+{/* XBOX AD */}
+
+
+{/* MACINTOX BANNER */}
+<div class="container">
+  <div class="page">
+    <div class="left">
+      <h1>Take home a Macintosh.</h1>
+      <p className='page-text'>Apple's remarkable new personal computer</p>
+      <button>See it in action</button>
+      
+    </div>
+    <div class="right">
+      <div class="img"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fsebastien-compagne.fr%2Fwebsite%2Fzpg%2Farcheologeek%2F1990_-_apple_mac_classic_II.png&f=1&nofb=1" alt='..' />
+      </div>
+      <ul>
+        <li>Instagram</li>
+        <li>-</li>
+        <li>Facebook</li>
+        <li>-</li>
+        <li>Twitter</li>
+      </ul>
+    </div>
+  </div>
+</div>
+{/* MACINTOX BANNER */}
+
 
 
       {/* try adding word flip things on all these letters from hyperplexed */}
