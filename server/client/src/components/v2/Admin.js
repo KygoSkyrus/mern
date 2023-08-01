@@ -8,6 +8,8 @@ import Dashboard from './Admin/Dashboard';
 import Loader from './Loader.jsx';
 
 const Admin = () => {
+    
+    //ONLY let this function run if the user is admin
 
     return (
         <>
