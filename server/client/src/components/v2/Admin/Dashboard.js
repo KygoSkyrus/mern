@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-// import { productFormVisibility, setProductFormTitle, setProductForm, } from './../redux/todoSlice'
+ import { isProductUpdated } from './../redux/todoSlice'
 
 
 
@@ -16,6 +16,8 @@ const Dashboard = () => {
     const visibility = useSelector(state => state.productFormVisibility.visibility)// modal's visibility 
     const isUpdated = useSelector(state => state.isUpdated.product)
 
+    const dispatch =useDispatch()
+
     useEffect(() => {
         console.log('ue in hp')
         fetch('/api/getproducts', {
@@ -26,6 +28,7 @@ const Dashboard = () => {
             .then(data => {
                 console.log('products', data)
                 setProducts(data)//save this data in redux
+                dispatch(isProductUpdated({ updateProduct: false }))//setting to false after reloading the product list
             })
     }, [isUpdated])
 

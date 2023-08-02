@@ -30,10 +30,19 @@ http://preview.themeforest.net/item/ella-multipurpose-shopify-theme-os-20/full_s
 
 https://new-ella-demo.myshopify.com/pages/landing-2
 
+
+
+### w/o IP
+- fix admin filter 
+- stocky navbar in admin dasboard
+- image preview background
+
+
+
 ### DEFECTS
 - one backspaceing in otp inputs,,two digits are getting erased
 - if product has more tha one image sthen its not uploading the other images on slow network,,its an issue 
-
+- there should be an option to delete a prooduct but before deleting chekc thta produict is is an anyone's cart or is pending to be deleived, if not only than let it be deleted
 
 
 
