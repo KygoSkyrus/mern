@@ -17,6 +17,7 @@ const TheFront = ({ dl }) => {
                     </div>
                     <div className='handle'></div>
                 </div>
+                <div className='glass'></div>
             </div>
 
             <Routes>

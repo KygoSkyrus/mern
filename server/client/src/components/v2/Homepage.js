@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 // import {util} from '@material/ripple/index';
 
 import products from './dummy'
@@ -7,6 +7,7 @@ import img1 from './../../assets/images/newImg/products/bluePhone.png'
 
 const Homepage = () => {
 
+  const [product, setProducts] = useState()
 
   useEffect(() => {
     console.log('ue in hp')
@@ -15,28 +16,14 @@ const Homepage = () => {
       headers: { "Content-Type": "application/json" },
     })
       .then(res => res.json())
-      .then(data => console.log('products', data))
+      .then(data => {
+        console.log('products', data)
+        setProducts(data)//save this data in redux
+      })
   }, [])
 
 
 
-  //PRODUCT 4
-  const selector = ".mdc-button, .mdc-icon-button, .mdc-card__primary-action";
-  // const ripples = [].map.call(document.querySelectorAll(selector), function(el) {
-  //   return new MDCFoo(el);
-  // });
-
-  useEffect(() => {
-    // const mdcCard=document.querySelector('.mdc-card')
-    // mdcCard.classList.add("animation-reveal");
-    // mdcCard.style.opacity=0
-
-    // setTimeout(() => {
-    //   mdcCard.classList.remove("animation-reveal");
-    //   mdcCard.style.opacity=1
-    // }, 1000);
-  }, [])
-  //PRODUCT 4
 
 
   //RIPPLE--------------
@@ -174,15 +161,31 @@ const Homepage = () => {
 
 
       {/* PRODUCT 4 */}
-      <div class="mdc-card mini-card mdc-elevation--z4" >
-        <div class="mdc-card__primary-action">
-          <div class="media-image mdc-card__media mdc-card__media--square">
-            <div class="mdc-card__media-content">
-              <div class="card-info">
-                <h1>The new headphones</h1>
-                <h2>Explore</h2>
-                <h3>HEADPHONES</h3>
-              </div>
+
+
+      <div className='container'>
+        <div className='row'>
+          <div className='col-12'>
+            <div className='row'>
+              {Array.from(Array(6).keys()).map(x => {
+                return (
+                  <div className='col-md-6 col-lg-4'>
+                    <div class="mini-card mdc-elevation--z4" >
+                      <div class="mdc-card__primary-action">
+                        <div class="media-image mdc-card__media mdc-card__media--square">
+                          <div class="mdc-card__media-content">
+                            <div class="card-info">
+                              <h1>The new headphones</h1>
+                              <h2>Explore</h2>
+                              <h3>HEADPHONES</h3>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
             </div>
           </div>
         </div>

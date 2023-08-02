@@ -201,6 +201,17 @@
   left: 13%;
   border: 3px solid black;
 }
+.glass{
+  width: inherit;
+  height: inherit;
+  position: absolute;
+  z-index: 2;
+background: rgba(255, 255, 255, 0.13);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(3.7px);
+-webkit-backdrop-filter: blur(3.7px);
+}
 /************************************************ BAG LOGO ************************************************/
 
 /*---------------------------------------------- NAVBAR ---------------------------------------------------*/
@@ -711,7 +722,7 @@
 
 .mini-card {
   user-select: none;
-  width: 333px;
+  width: 100%;
   height: 111px;
   border-radius: 12px;
   background-color: transparent;
@@ -770,7 +781,7 @@
 
 .mini-card .card-info > h3 {
   position: absolute;
-  transform: translate(0%, 38%);
+  transform: translate(3%, 38%);
   font-size: 3rem;
   font-family: "Lexend Deca", sans-serif;
   color: #fff;
