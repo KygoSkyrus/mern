@@ -25,17 +25,17 @@ const Homepage = () => {
   // const ripples = [].map.call(document.querySelectorAll(selector), function(el) {
   //   return new MDCFoo(el);
   // });
- 
-  useEffect(()=>{
+
+  useEffect(() => {
     // const mdcCard=document.querySelector('.mdc-card')
     // mdcCard.classList.add("animation-reveal");
     // mdcCard.style.opacity=0
-  
+
     // setTimeout(() => {
     //   mdcCard.classList.remove("animation-reveal");
     //   mdcCard.style.opacity=1
     // }, 1000);
-  },[])
+  }, [])
   //PRODUCT 4
 
 
@@ -67,9 +67,9 @@ const Homepage = () => {
   return (
     <>
 
-     {/* PRODUCT 5 */}   
-     <button className='button5' onClick={createRipple}>Ripple</button>
-       {/* PRODUCT 5 */}
+      {/* PRODUCT 5 */}
+      <button className='button5' onClick={createRipple}>Ripple</button>
+      {/* PRODUCT 5 */}
 
 
 
@@ -193,113 +193,111 @@ const Homepage = () => {
 
 
 
-{/* PRODUCT 6 */}
-<div class="bottom-card">
-  <div class="first-half">
-    <div class="media-image top-card">
-    </div>
-  </div>
-  <div class="last-half">
-    <div class="card-info">
-      <h2 className='pname' >iPhone 11 Pro Max</h2>
-      <h4>$1,499.00</h4>
-      <h6>United States, 16 hours ago</h6>
-    </div>
-  </div>
-</div>
-{/* PRODUCT 6 */}
+      {/* PRODUCT 6 */}
+      <div class="bottom-card">
+        <div class="first-half">
+          <div class="media-image top-card">
+          </div>
+        </div>
+        <div class="last-half">
+          <div class="card-info">
+            <h2 className='pname' >iPhone 11 Pro Max</h2>
+            <h4>$1,499.00</h4>
+            <h6>United States, 16 hours ago</h6>
+          </div>
+        </div>
+      </div>
+      {/* PRODUCT 6 */}
 
 
 
 
-{/* PRODUCT 7 */}
-
-
-<main class="main">
-   {/* <!-- Wrapper Section --> */}
-   <section class="section wrapper wrapper-section">
-      <div class="container wrapper-column">
-         <div class="wrapper-figure">
-            <img src="https://i.ibb.co/3msVHYZ/sneaker-image.png" class="wrapper-image" loading="lazy" alt="Sneaker"/>
-         </div>
-         <div class="wrapper-content">
-            <div class="wrapper-inform">
-               <span class="badge badge-darken">Man's Shoes</span>
-               <h1 class="heading-sm font-bold text-dark">Nike Air Motion Max</h1>
-               <p class="text-md font-regular">
+      {/* PRODUCT 7 */}
+      <main class="main">
+        {/* <!-- Wrapper Section --> */}
+        <section class="section wrapper wrapper-section">
+          <div class="container wrapper-column">
+            <div class="wrapper-figure">
+              <img src="https://i.ibb.co/3msVHYZ/sneaker-image.png" class="wrapper-image" loading="lazy" alt="Sneaker" />
+            </div>
+            <div class="wrapper-content">
+              <div class="wrapper-inform">
+                <span class="badge badge-darken">Man's Shoes</span>
+                <h1 class="heading-sm font-bold text-dark">Nike Air Motion Max</h1>
+                <p class="text-md font-regular">
                   The combine of breathable mesh without seams for a traditional and
                   modern style to add the perfect amount of flash to make you shine.
-               </p>
-            </div>
-            <div class="wrapper-detail">
-               <div class="price">
+                </p>
+              </div>
+              <div class="wrapper-detail">
+                <div class="price">
                   <span class="text-md font-semi text-dark">Price:</span>
                   <h3 class="text-xxl font-bold text-dark">$99.00</h3>
-               </div>
-               <div class="sizes">
+                </div>
+                <div class="sizes">
                   <span class="text-md font-semi text-dark">Sizes:</span>
                   <ul class="sizes-list p-0">
-                     <li class="sizes-item is-select">37</li>
-                     <li class="sizes-item">38</li>
-                     <li class="sizes-item">39</li>
-                     <li class="sizes-item">40</li>
+                    <li class="sizes-item is-select">37</li>
+                    <li class="sizes-item">38</li>
+                    <li class="sizes-item">39</li>
+                    <li class="sizes-item">40</li>
                   </ul>
-               </div>
-            </div>
-            <div class="wrapper-action">
-               <button class="btn btn-darken">Add to Bag</button>
-               <button class="btn btn-neutral">
+                </div>
+              </div>
+              <div class="wrapper-action">
+                <button class="btn btn-darken">Add to Bag</button>
+                <button class="btn btn-neutral">
                   <i class="fa fa-heart"></i>
-               </button>
+                </button>
+              </div>
             </div>
-         </div>
+          </div>
+        </section>
+      </main>
+      {/* PRODUCT 7 */}
+
+
+
+      {/* XBOX AD */}
+      <div className='container'>
+        <section class="xbox">
+          <div class="xbox-content">
+            <h2>Xbox Game Pass Ultimate</h2>
+            <p>Xbox Game Pass Ultimate Xbox Live Gold and over 100 high-quality
+              console and PC games. Play together with friends and discover your
+              next favorite game.</p>
+            <a href="/#" class="xbox-btn">
+              Join Now <i class="fas fa-chevron-right"></i>
+            </a>
+          </div>
+        </section>
       </div>
-   </section>
-</main>
-{/* PRODUCT 7 */}
+      {/* XBOX AD */}
 
 
+      {/* MACINTOX BANNER */}
+      <div class="container">
+        <div class="page">
+          <div class="left">
+            <h1>Take home a Macintosh.</h1>
+            <p className='page-text'>Apple's remarkable new personal computer</p>
+            <button>See it in action</button>
 
-{/* XBOX AD */}
-<div className='container'>
-<section class="xbox">
-      <div class="xbox-content">
-        <h2>Xbox Game Pass Ultimate</h2>
-        <p>Xbox Game Pass Ultimate Xbox Live Gold and over 100 high-quality
-          console and PC games. Play together with friends and discover your
-          next favorite game.</p>
-          <a href="/#" class="xbox-btn">
-            Join Now <i class="fas fa-chevron-right"></i>
-          </a>
+          </div>
+          <div class="right">
+            <div class="img"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fsebastien-compagne.fr%2Fwebsite%2Fzpg%2Farcheologeek%2F1990_-_apple_mac_classic_II.png&f=1&nofb=1" alt='..' />
+            </div>
+            <ul>
+              <li>Instagram</li>
+              <li>-</li>
+              <li>Facebook</li>
+              <li>-</li>
+              <li>Twitter</li>
+            </ul>
+          </div>
+        </div>
       </div>
-    </section>
-</div>
-{/* XBOX AD */}
-
-
-{/* MACINTOX BANNER */}
-<div class="container">
-  <div class="page">
-    <div class="left">
-      <h1>Take home a Macintosh.</h1>
-      <p className='page-text'>Apple's remarkable new personal computer</p>
-      <button>See it in action</button>
-      
-    </div>
-    <div class="right">
-      <div class="img"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fsebastien-compagne.fr%2Fwebsite%2Fzpg%2Farcheologeek%2F1990_-_apple_mac_classic_II.png&f=1&nofb=1" alt='..' />
-      </div>
-      <ul>
-        <li>Instagram</li>
-        <li>-</li>
-        <li>Facebook</li>
-        <li>-</li>
-        <li>Twitter</li>
-      </ul>
-    </div>
-  </div>
-</div>
-{/* MACINTOX BANNER */}
+      {/* MACINTOX BANNER */}
 
 
 
@@ -310,26 +308,26 @@ const Homepage = () => {
 
 
 
-<div className='text-stroke-container'>
-              <div className='scrolldown slow1'>
-                {Array.from(Array(30).keys()).map(x => {
-                  return (<h1 key={x} className='text-stroke-style'>KYGOSKYRUS</h1>)
-                })}
-              </div>
+      <div className='text-stroke-container'>
+        <div className='scrolldown slow1'>
+          {Array.from(Array(30).keys()).map(x => {
+            return (<h1 key={x} className='text-stroke-style'>KYGOSKYRUS</h1>)
+          })}
+        </div>
 
-              {/* <div className='scrolldown'>
-                {Array.from(Array(30).keys()).map(x => {
-                  return (<h1 key={x} className='te'>KYGOSKYRUS</h1>)
-                })}
-              </div>
+        <div className='scrolldown slow3'>
+          {Array.from(Array(30).keys()).map(x => {
+            return (<h1 key={x} className='te'>KYGOSKYRUS</h1>)
+          })}
+        </div>
 
-              <div className='scrolldown slow2'>
-                {Array.from(Array(30).keys()).map(x => {
-                  return (<h1 key={x} className='te'>KYGOSKYRUS</h1>)
-                })}
-              </div> */}
+        <div className='scrolldown slow2'>
+          {Array.from(Array(30).keys()).map(x => {
+            return (<h1 key={x} className='te'>KYGOSKYRUS</h1>)
+          })}
+        </div>
 
-            </div>
+      </div>
 
 
 
@@ -360,7 +358,7 @@ const Homepage = () => {
 
             </div>
 
-            
+
 
             <div className='card2 card h-100'>
               <img src="https://picsum.photos/350/300" className="card-img-top" alt="..." />

@@ -6,6 +6,8 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 
 
+import loginImg from "./../../assets/images/login-cover.svg"
+
 const SignIn = () => {
 
     const [email, setemail] = useState('');
@@ -152,12 +154,12 @@ const SignIn = () => {
 
     function onValidate(e) {
         window.confirmationResult.confirm(otp.join("")).then((result) => {
-          const user = result.user;
-          console.log('User signed in successfully.',user)//returned data from firebase on confirmation
-          // ...
+            const user = result.user;
+            console.log('User signed in successfully.', user)//returned data from firebase on confirmation
+            // ...
         }).catch((error) => {
             alert('incorrect one time password')
-            console.log("User couldn't sign in (bad verification code?)",error)
+            console.log("User couldn't sign in (bad verification code?)", error)
         });
 
         e.preventDefault()
@@ -170,62 +172,68 @@ const SignIn = () => {
     return (
         <>
             <div className="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
-                <div className="modal-dialog modal-dialog-centered">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalToggleLabel">SIGN IN</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeSignin"></button>
+                <div className="modal-dialog modal-dialog-centered w-75" style={{maxWidth:"80%"}}>
+                    <div className="modal-content d-flex flex-row">
+                        <div className='w-50 d-flex bg-dark'>
+                            <img src={loginImg} alt='' />
                         </div>
-
-                        <div className="modal-body">
-
-                            <div className="padding" >
-                                <form method="POST">
-                                    <div className="mb-3">
-                                        <input type="email" className="form-control" name="email" id="email" placeholder="Email address*" aria-describedby="emailHelp" value={email} onChange={(e) => setemail(e.target.value)} />
-                                    </div>
-                                    <div className="mb-3">
-                                        <input type="password" className="form-control" id="password" name="password" placeholder="Password*" value={password} onChange={(e) => setpassword(e.target.value)} />
-                                    </div>
-                                    <button type="submit" className="btn btn-outline-warning w-100" onClick={loginuser}>SIGN IN</button>
-                                </form>
+                        <div className='w-50'>
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="exampleModalToggleLabel">SIGN IN</h5>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeSignin"></button>
                             </div>
 
-                            <div className="padding" >
-                                <form >
-                                    <div className="mb-3">
-                                        <input type="number" className="form-control" name="phone" id="phone" placeholder="Phone Number*" aria-describedby="emailHelp" value={phone} onChange={(e) => setphone(e.target.value)} />
-                                    </div>
-                                    <div id='sign-in-button' className='d-none'>ss</div>
-                                    {/* <div className="mb-3">
+                            <div className="modal-body">
+
+                                <div className="padding" >
+                                    <form method="POST">
+                                        <div className="mb-3">
+                                            <input type="email" className="form-control" name="email" id="email" placeholder="Email address*" aria-describedby="emailHelp" value={email} onChange={(e) => setemail(e.target.value)} />
+                                        </div>
+                                        <div className="mb-3">
+                                            <input type="password" className="form-control" id="password" name="password" placeholder="Password*" value={password} onChange={(e) => setpassword(e.target.value)} />
+                                        </div>
+                                        <button type="submit" className="btn btn-outline-warning w-100" onClick={loginuser}>SIGN IN</button>
+                                    </form>
+                                </div>
+
+                                <div className="padding" >
+                                    <form >
+                                        <div className="mb-3">
+                                            <input type="number" className="form-control" name="phone" id="phone" placeholder="Phone Number*" aria-describedby="emailHelp" value={phone} onChange={(e) => setphone(e.target.value)} />
+                                        </div>
+                                        <div id='sign-in-button' className='d-none'>ss</div>
+                                        {/* <div className="mb-3">
                                         <input type="password" className="form-control" id="password" name="password" placeholder="Password*" value={password} onChange={(e) => setpassword(e.target.value)} />
                                     </div> */}
-                                    <div className="position-relative">
-                                        <div className="p-2 text-center">
-                                            <h6>Please enter the one time password <br /> to verify your account</h6>
-                                            <div> <span>A code has been sent to</span> <small>*******9897</small> </div>
-                                            <div id="otp" className="inputs d-flex flex-row justify-content-center mt-2" onClick={e => OTPInput(e)}>
-                                                <input className="m-2 text-center form-control rounded" type="text" id="first" maxLength="1" />
-                                                <input className="m-2 text-center form-control rounded" type="text" id="second" maxLength="1" />
-                                                <input className="m-2 text-center form-control rounded" type="text" id="third" maxLength="1" />
-                                                <input className="m-2 text-center form-control rounded" type="text" id="fourth" maxLength="1" />
-                                                <input className="m-2 text-center form-control rounded" type="text" id="fifth" maxLength="1" />
-                                                <input className="m-2 text-center form-control rounded" type="text" id="sixth" maxLength="1" />
+                                        <div className="position-relative">
+                                            <div className="p-2 text-center">
+                                                <h6>Please enter the one time password <br /> to verify your account</h6>
+                                                <div> <span>A code has been sent to</span> <small>*******9897</small> </div>
+                                                <div id="otp" className="inputs d-flex flex-row justify-content-center mt-2" onClick={e => OTPInput(e)}>
+                                                    <input className="m-2 text-center form-control rounded" type="text" id="first" maxLength="1" />
+                                                    <input className="m-2 text-center form-control rounded" type="text" id="second" maxLength="1" />
+                                                    <input className="m-2 text-center form-control rounded" type="text" id="third" maxLength="1" />
+                                                    <input className="m-2 text-center form-control rounded" type="text" id="fourth" maxLength="1" />
+                                                    <input className="m-2 text-center form-control rounded" type="text" id="fifth" maxLength="1" />
+                                                    <input className="m-2 text-center form-control rounded" type="text" id="sixth" maxLength="1" />
+                                                </div>
+                                                <div className="mt-4"> <button className="btn btn-danger px-4 validate" onClick={e => onValidate(e)}>Validate</button> </div>
                                             </div>
-                                            <div className="mt-4"> <button className="btn btn-danger px-4 validate" onClick={e => onValidate(e)}>Validate</button> </div>
                                         </div>
-                                    </div>
 
-                                    <button className="btn btn-outline-warning w-100" onClick={loginWithNumber}>LOG IN</button>
-                                </form>
+                                        <button className="btn btn-outline-warning w-100" onClick={loginWithNumber}>LOG IN</button>
+                                    </form>
+                                </div>
+
+
                             </div>
-
-
+                            <div className="modal-footer">
+                                <a data-bs-target="#exampleModalToggle2" href="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">New to Shopp-itt? create new account</a>
+                            </div>
                         </div>
 
-                        <div className="modal-footer">
-                            <a data-bs-target="#exampleModalToggle2" href="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">New to Shopp-itt? create new account</a>
-                        </div>
+
                     </div>
                 </div>
             </div>
