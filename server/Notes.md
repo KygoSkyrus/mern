@@ -1,11 +1,18 @@
 
 
 ### todo
+
+- addd category in header
+- fill the homepage iwth banners and products
+- us the categories in db
+- check add to cart and payment, redirectio  to succes and failure page
+
 1. first complete the add product feature,,
 2. delete product and diable product all stuff..all basic things that were in skyblog,,just copy
 3. get rid of unecessary stuff
 4. once all its done,,upload all the product with detials to the homepage can be designed
 
+- categories should be visible on hover
 - finish homepage,,
 - we dont need the image upload progress in here,,instead add a loader to shoup product add status
 - add user account compo
@@ -23,7 +30,6 @@
 
 - https://codepen.io/syrizaldev/pen/MWqJzXY
 
-- mdc https://codepen.io/RaduBratan/pen/LYPzwNe , https://codepen.io/RaduBratan/pen/BaBmEYE
 
 - ***PRODUCT PAGE*** https://codepen.io/filipdanisko/pen/VadXXq
 
@@ -33,10 +39,23 @@ http://preview.themeforest.net/item/ella-multipurpose-shopify-theme-os-20/full_s
 https://new-ella-demo.myshopify.com/pages/landing-2
 
 
+# CATEGORY
+- we can have categories like in skyblog,,but whats the point of repeating the same stuff,,
+the new approact is to use ref,,what ref does is that for a specific document it refers to the documents from other collections,
+if we do this in category documnet for like laptop category document we will have to list of all the laptop products from the product collection,,so wehn you fetch caetgiry laptop from db then youll have everything that you need at once- to do this one you will quesy the category collection and get the required caegory,, and if you dont do that then you will, query the prodcuct collectction for the required castegory and filter product from the category...they both are same  but the first approach we neevr used..
+
+-- about subcategory,,
+in each categoyr documnet there shoudl be field 'subcategory',,and this subcategory-- this will help in to show the heirrachy of categories,,
+--but the subcategoires  will have their own document in categories collection and their sub will be empty
+- these category and subcategory can have similar products 
+
+- in product document their will be a category
+- the main thing to conclude every subcategory problem is that we will never show products on parent category(the topmost,,only when it is searched,,when searched will  look for that word) ..we will only show the direct category ... 
+
 
 ### w/o IP
 - fix admin filter 
-- stocky navbar in admin dasboard
+- sticky navbar in admin dasboard
 - image preview background
 
 

@@ -18,6 +18,7 @@ const stripe = require('stripe')(sk);
 
 /************* SCHEMA ***************/
 const PRODUCT = require('../models/product')
+const CATEGORY = require('../models/category')
 
 
 
@@ -173,14 +174,14 @@ router.post('/getemail', async (req, res) => {
 
 router.get('/api/getproducts', async (req, res) => {
 
-        await PRODUCT.find({})
-        .then(response=>{
+    await PRODUCT.find({})
+        .then(response => {
             // console.log(response)
             res.send(response)
         })
-        .catch(error=>{
+        .catch(error => {
             console.log(error)
-            res.send({error:error})
+            res.send({ error: error })
         })
 
 })
@@ -189,15 +190,15 @@ router.get('/api/getproducts', async (req, res) => {
 
 router.post('/api/addproducts', async (req, res) => {
 
-    const {name,price,description,category,image,stock} = req.body;
-    console.log('dd',name,price,description,category,image,stock)
+    const { name, price, description, category, image, stock } = req.body;
+    console.log('dd', name, price, description, category, image, stock)
 
     //const data= JSON.parse(req.body)
 
-    console.log("data :>",req.body )
+    console.log("data :>", req.body)
 
     const product = new PRODUCT({
-        name:name,
+        name: name,
         price: price,
         description: description,
         category: category,
@@ -206,13 +207,13 @@ router.post('/api/addproducts', async (req, res) => {
     })
 
     product.save()
-    .then(response => {
-        console.log('response', response)
-        res.send({ is_product_added: true });
-      })
+        .then(response => {
+            console.log('response', response)
+            res.send({ is_product_added: true });
+        })
         .catch(err => {
-          console.log(err)
-          res.send({ is_product_added: false });
+            console.log(err)
+            res.send({ is_product_added: false });
         })
 
 })
@@ -221,21 +222,97 @@ router.post('/api/addproducts', async (req, res) => {
 
 router.post('/api/editproduct', async (req, res) => {
 
-    const {name,price,description,category,image,stock,id} = req.body;
-    console.log('dd',name,price,description,category,image,stock,id)
+    const { name, price, description, category, image, stock, id } = req.body;
+    console.log('dd', name, price, description, category, image, stock, id)
 
     //const data= JSON.parse(req.body)
 
-try{
-    const result =await PRODUCT.findOneAndUpdate({_id:id}, { $set: { name,price,description,category,image,stock } },{ new: true })
-    if (result) {
-        res.send({ isProductEdited: true })
-      } else {
-        res.send({ isProductEdited: false })
-      }
-    }catch(error){
+    try {
+        const result = await PRODUCT.findOneAndUpdate({ _id: id }, { $set: { name, price, description, category, image, stock } }, { new: true })
+        if (result) {
+            res.send({ isProductEdited: true })
+        } else {
+            res.send({ isProductEdited: false })
+        }
+    } catch (error) {
         console.log(error)
     }
+})
+
+async function xxx() {
+    console.log('xxx')
+
+    // let arr = []
+    // await PRODUCT.find({})
+    //     .then(response => {
+
+    //         response.map(x => {
+    //             if (!arr.includes(x.category)) {
+    //                 const category = new CATEGORY({
+    //                     name: x.category,
+    //                     subCategory: ""
+    //                 })
+
+    //                 category.save()
+    //                     .then(resp => {
+    //                         console.log('response', resp)
+    //                         // arr.push(x.category)
+    //                     })
+    //                     .catch(err1 => {
+    //                         console.log(err1)
+    //                     })
+    //                 arr.push(x.category)
+    //             }
+    //         })
+    //         console.log('aaaaaaaaaaaa', arr)
+    //     })
+    //     .catch(error => {
+    //         console.log(error)
+    //     })
+
+
+    //  CATEGORY
+    //     .findOne({ name: 'speakers' })
+    //     .populate('products') // only works if we pushed refs to person.eventsAttended
+    //     .exec(function (err, person) {
+    //         if (err) console.log(err);
+    //         console.log(person);
+    //     });
+
+
+    //  'smartphones',
+    //  'laptops',
+    //  'Tablets & iPads',
+    //  'Headphones & Earphones',
+    //  'cameras',
+    //  'Video Game Accessories',
+    //  'printers & scanners',
+    //  'Speakers',
+    //  'smartwatches',
+    //  'Wearable Devices',
+    //  'desktop computers',
+    //  'Televisions',
+    //  'computer accessories',
+    //  'computer processors',
+    //  'speakers',
+    //  'Fitness Trackers',
+    //  'VR Headsets',
+    //  'MP3 Player',
+    //  'Storage Devices',
+    //  'Gaming Consoles',
+    //  'Drones',
+    //  'Networking Devices',
+    //  'Power bank',
+    //  'Projectors',
+    //  'Home Appliances',
+    //  'Air Conditioners & Heaters',
+    //  'Computer Software',
+    //  'Graphics Cards',
+    //  'Smart Speakers & Voice Assistants'
+
+}
+router.get("/xyz", async (req, res) => {
+    xxx()
 })
 
 
@@ -243,35 +320,35 @@ try{
 //seeting blogs visibility
 router.post("/productvisibility", async (req, res) => {
     const details = req.body;
-  console.log("s--s-s-s-s",details)
+    console.log("s--s-s-s-s", details)
     try {
-      //findByIdAndUpdate: is the alternatice to directly use id
-      let result = await PRODUCT.findOneAndUpdate({ _id: details.id }, { visibility: details.visibility }, { new: true })
-      if (result) {
-        res.send({ isSet: true })
-      } else {
-        res.send({ isSet: false })
-      }
+        //findByIdAndUpdate: is the alternatice to directly use id
+        let result = await PRODUCT.findOneAndUpdate({ _id: details.id }, { visibility: details.visibility }, { new: true })
+        if (result) {
+            res.send({ isSet: true })
+        } else {
+            res.send({ isSet: false })
+        }
     } catch (err) {
-      console.log(err);
+        console.log(err);
     }
-  });
+});
 
 
-  //deleting blog record
+//deleting blog record
 router.post("/deleteblog", async (req, res) => {
     const details = req.body;
-  
+
     try {
-      let result = await BLOG.deleteOne({ _id: details.id })
-      if(result.deletedCount>0){
-        res.send({ isDeleted: true });
-        console.log('result',result)
-      }
+        let result = await BLOG.deleteOne({ _id: details.id })
+        if (result.deletedCount > 0) {
+            res.send({ isDeleted: true });
+            console.log('result', result)
+        }
     } catch (err) {
-      console.log(err);
+        console.log(err);
     }
-  });
+});
 
 
 

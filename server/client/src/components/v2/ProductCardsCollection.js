@@ -3,7 +3,11 @@ import React from 'react'
 import products from './dummy'
 import SliderComponent from './SliderComponent.jsx'
 
+import CategoryStripSlider from './CategoryStripSlider'
+
 import img1 from './../../assets/images/newImg/products/bluePhone.png'
+import headphone1 from './../../assets/images/newImg/collections/headphone1.webp'
+
 
 
 const ProductCardsCollection = () => {
@@ -64,7 +68,7 @@ const ProductCardsCollection = () => {
               <p class="other">inclusive of all taxes</p>
             </div>
           </div>
-
+{/* 
           <div class="right">
             <div class="product_description">
               <h4>PRODUCT DESCRIPTION</h4>
@@ -84,7 +88,7 @@ const ProductCardsCollection = () => {
               <p><span class="highlight">Sold By -</span> Next Tree Private Limited
               </p>
             </div>
-          </div>
+          </div> */}
 
         </div>
       </section>
@@ -94,8 +98,11 @@ const ProductCardsCollection = () => {
 
 
       {/* PRODUCT 2 */}
-      {/* <div class='cardN'>
-        <img src='https://raw.githubusercontent.com/mohammadjarabah/codepen-assets/main/pens/mdwvNJP/images/shoes.png' class='card__img' alt='' />
+      <div class='cardN'>
+        <img 
+        // src='https://raw.githubusercontent.com/mohammadjarabah/codepen-assets/main/pens/mdwvNJP/images/shoes.png'
+        src={headphone1}
+         class='card__img' alt='' />
         <h2 class='card__title'>Nike Shoes</h2>
         <div class='card__content'>
           <div class='card__sizeContainer'>
@@ -113,7 +120,7 @@ const ProductCardsCollection = () => {
           </div>
         </div>
         <a href='/#' class='card__link'>Buy Now</a>
-      </div> */}
+      </div>
       {/* PRODUCT 2 */}
 
 
@@ -122,6 +129,7 @@ const ProductCardsCollection = () => {
 
       {/* PRODUCT 3 */}
       <div class="container">
+
         <div class="card-3">
           <img src={img1} class="card-img-top" alt="..." />
           <div class="card3-body">
@@ -145,8 +153,6 @@ const ProductCardsCollection = () => {
 
 
       {/* PRODUCT 4 */}
-
-
       <div className='container'>
         <div className='row'>
           <div className='col-12'>
@@ -155,7 +161,6 @@ const ProductCardsCollection = () => {
                 return (
                   <div className='col-md-6 col-lg-4'>
                     <div class="mini-card mdc-elevation--z4" >
-                      <div class="mdc-card__primary-action">
                         <div class="media-image mdc-card__media mdc-card__media--square">
                           <div class="mdc-card__media-content">
                             <div class="card-info">
@@ -164,7 +169,7 @@ const ProductCardsCollection = () => {
                               <h3>HEADPHONES</h3>
                             </div>
                           </div>
-                        </div>
+
                       </div>
                     </div>
                   </div>
@@ -202,7 +207,7 @@ const ProductCardsCollection = () => {
       {/* PRODUCT 7 */}
       <main class="main">
         {/* <!-- Wrapper Section --> */}
-        <section class="section wrapper wrapper-section">
+        <section class="section wrapper wrapper-section py-3">
           <div class="container wrapper-column">
             <div class="wrapper-figure">
               <img src="https://i.ibb.co/3msVHYZ/sneaker-image.png" class="wrapper-image" loading="lazy" alt="Sneaker" />
@@ -287,13 +292,39 @@ const ProductCardsCollection = () => {
       {/* MACINTOX BANNER */}
 
 
+{/* PRODUCT 9 */}
+
+<div class="product-card">
+        <div class="badge-pc">New Product</div>
+        <div class="product-tumb">
+            <img src="https://cdn-icons-png.flaticon.com/512/2806/2806251.png" alt=''/>
+        </div>
+        <div class="product-details">
+            <span class="product-catagory">T-Shirt</span>
+            <h4><a href="/#">New T-Shirt For Man</a></h4>
+            <p>New Import T-Shirt For Man Very Rare Collection, If You Want Order Right Now</p>
+            <div class="product-bottom-details">
+                <div class="product-price"><small>$15.10</small>$7.99</div>
+                <div class="product-links">
+                    <a href="/#"><i class="fa fa-heart"></i></a>
+                    <a href="/#"><i class="fa fa-shopping-cart"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+   {/* PRODUCT 9 */}
 
 
+<div></div>
 
-<SliderComponent/>
+<div>
+  Shop by category
+</div>
+
+{/* <SliderComponent/> */}
 
 
-
+<CategoryStripSlider/>
 
 
 

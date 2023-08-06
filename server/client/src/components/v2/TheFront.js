@@ -6,19 +6,22 @@ import Homepage from "./Homepage"
 import Toast from './Toast';
 import Footer from './Footer';
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 const TheFront = ({ dl }) => {
     return (
         <>
             <Navbar data={dl} />
 
-            <div className='bag-container'>
+            {/* <div className='bag-container'>
                 <div style={{ position: "relative" }}>
                     <div className='bag'>
                     </div>
                     <div className='handle'></div>
                 </div>
                 <div className='glass'></div>
-            </div>
+            </div> */}
 
             <Routes>
                 <Route path="/" exact element={<Homepage />} />

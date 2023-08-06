@@ -9,9 +9,9 @@ const Footer = (props) => {
 		<>
 			<footer className="t-bg-secondary footer">
 				<div className="container">
-					<div className="footer-top t-pt-40 t-pb-40">
+					<div className="footer-top t-pt-40 t-pb-40 ">
 						<div className="row align-items-center justify-content-center justify-content-md-between">
-							<div className="t-mb-30 mb-md-0 px-3">
+							<div className="col-md-6 t-mb-30 mb-md-0 px-3">
 								<div className="brand mx-auto mr-md-auto ml-md-0">
 									<Link to="" className="t-link">
 										<section className="logo"></section>

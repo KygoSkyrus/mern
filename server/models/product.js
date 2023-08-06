@@ -55,13 +55,5 @@ const productSchema = new Schema({
 //     required: true,
 //   },
 //   orderItems: [{
-  const CategorySchema = new Schema({
-    name: { type: String, required: true },
-    slug: { type: String, required: true, unique: true },
-    description: { type: String, required: true },
-    products: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
-    createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now }
-  },{collection:"category"});
 
 module.exports = mongoose.model('PRODUCT', productSchema); 

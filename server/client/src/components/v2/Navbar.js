@@ -15,11 +15,11 @@ const Navbar = (props) => {
 
   return (
     <>
-     {/* <div className='header-top'>
+      {/* <div className='header-top'>
           header top
         </div> */}
       <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm" >
-        
+
         <div className="container-fluid px-4">
           <Link to="/" className="navbar-brand" >
             <div className="logo ">
@@ -43,6 +43,69 @@ const Navbar = (props) => {
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 justify-content-end w-100 ">
 
               <li className="nav-item">
+                <input type='search' className="nav-link " placeholder='search in shopp-itt' />
+              </li>
+
+              <li className="nav-item position-relative dropdown">
+
+                <button type="button" 
+                // className="nav-link" id="dropdownCategory" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside"
+                class="btn btn-primary dropdown-toggle"
+                id="dropdownCategory"
+                data-mdb-toggle="dropdown"
+                aria-expanded="false"
+                >
+                  Category
+                </button>
+{/* here put the categoires dynamicaaly and on hover of these categpries there will be the subcategpry will be shown only if the subcategory is avaible and put the subcategory there on hover,,,have to create the subcategory dropdown manuallty though */}
+                <ul className="dropdown-menu shadow" aria-labelledby="dropdownCategory">
+                  <li>
+                    <a className="dropdown-item gap-2 d-flex" href="/#">
+                      Edit this Task
+                    </a>
+                  </li>
+                  <li>
+                    <a className="dropdown-item gap-2 d-flex" href="/#">
+                      Edit this Task
+                    </a>
+                  </li>
+                  <li>
+                    <a className="dropdown-item gap-2 d-flex" href="/#">
+                      Edit this Task
+                    </a>
+                  </li>
+                  <li>
+                    <a className="dropdown-item gap-2 d-flex" href="/#">
+                      Edit this Task
+                    </a>
+                  </li>
+                  <ul className='child-category dropdown-menu shadow'>
+                <li>
+                    <a className="dropdown-item gap-2 d-flex" href="/#">
+                      c category
+                    </a>
+                  </li>
+                  <li>
+                    <a className="dropdown-item gap-2 d-flex" href="/#">
+                      c category
+                    </a>
+                  </li>
+                  <li>
+                    <a className="dropdown-item gap-2 d-flex" href="/#">
+                      c category
+                    </a>
+                  </li>
+                  <li>
+                    <a className="dropdown-item gap-2 d-flex" href="/#">
+                      c category
+                    </a>
+                  </li>
+                </ul>
+                </ul>
+                
+              </li>
+
+              <li className="nav-item">
                 <a className="nav-link " data-bs-toggle="modal" href="#exampleModalToggle" role="button">
                   SignIn
                 </a>
@@ -51,7 +114,7 @@ const Navbar = (props) => {
               <li className="nav-item position-relative">
                 <Link to="/cart" className="nav-link">
                   <i className='fa fa-shopping-cart'></i>
-                 <span>Cart</span>  
+                  <span>Cart</span>
                   <Badge />
                 </Link>
               </li>
@@ -61,16 +124,16 @@ const Navbar = (props) => {
                 </Link>
               </li>
               <li className="nav-item ">
-              <Link to="/admin/dashboard" className="nav-link">
+                <Link to="/admin/dashboard" className="nav-link">
                   Admin
                 </Link>
-                </li>
-                <li className="nav-item position-relative">
-              <Link to="/admin/profile" className="nav-link">
+              </li>
+              <li className="nav-item position-relative">
+                <Link to="/admin/profile" className="nav-link">
                   <span>Profile</span>
                   <i className='fa fa-user'></i>
                 </Link>
-                </li>
+              </li>
             </ul>
           </div>
         </div>
