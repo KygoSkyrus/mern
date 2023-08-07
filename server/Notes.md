@@ -1,3 +1,28 @@
+# WORKFLOW:::
+
+- hompgae stuff
+  - add by category options
+  - put in layout all the individual component
+  - category in navbar
+
+  -the check add to cart of procut
+  - also adding to wishlight 
+
+  - once all this done than we will put things in my orders section,thta if delivered, or pending 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ### todo

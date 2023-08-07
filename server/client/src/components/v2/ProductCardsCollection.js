@@ -1,7 +1,7 @@
 import React from 'react'
 
 import products from './dummy'
-import SliderComponent from './SliderComponent.jsx'
+import BannerSlider from './BannerSlider.jsx'
 
 import CategoryStripSlider from './CategoryStripSlider'
 

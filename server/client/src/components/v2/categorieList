@@ -1,29 +1,50 @@
+
+
+so there will be a document for each category and any categjoyr has child and child can also has child
+- the product will have category directly connected to lowermost child and obvously the product will also fall for the parent category
+
+
+
+
+
+
+
+- Headphones & Earphones(headphones, earphones)
+- Wearable Devices (-Fitness Trackers,-Smartwatch, -Smart Band,-headphones)
+
+
+- Cameras (-Digital Camera, -DSLR, -camcorder)
+
+
+- Speakers (-Bluetooth Speakers, -Home Audio)
+- Smart Speakers & Voice Assistants (-Amazon Echo, -Google Home)
+
+- Networking Devices (-Routers, -Modems)
+
+- Home Appliances (-Refrigerators, -Washing Machines, -Microwaves)
+
+- Air Conditioners & Heaters (-Air Conditioners ,-Heaters )
+- Computer Software (-Operating System, -MS office,-Antivirus)
+
+- Gaming Consoles (-PlayStation,-Xbox)
+- Video Game Accessories (-Controllers,-VR headsets)
+
+- Storage Devices (-RAM,-SSDs, -pendrive)
+- Computer Accessories (-Keyboards, -Mouse, -Monitors)
+- Tablets & iPads(-Tablets ,- iPads)
+
 - Smartphones
 - Laptops
-- Tablets & iPads
 - Desktop Computers
-- Smartwatches/Wearable Devices (-Fitness Trackers, Smart Bands,headphones)
-- Headphones & Earphones
-- Cameras (Digital Cameras, DSLRs, Mirrorless, camcorder)
-- Televisions (LED, OLED, QLED)
-- MP3 Player
-- Gaming Consoles (PlayStation, Xbox, Nintendo)
-- Speakers (-Bluetooth Speakers, -Home Audio)
-- Smart Speakers & Voice Assistants (Amazon Echo, Google Home)
 - Drones
 - VR Headsets
-- Printers & Scanners
-- Computer Accessories (Keyboards, -Mouse, Monitors)
-- Networking Devices (Routers, Modems)
+- Printers
+- Televisions
+- MP3 Player
 - Power Banks
 - Projectors
-- Home Appliances (Refrigerators, Washing Machines, Microwaves)
-- Air Conditioners & Heaters
-- Computer Software (Operating Systems, MS office,Antivirus)
 - Graphics Cards
 - Computer Processors (CPUs)
-- Video Game Accessories (Controllers, VR Accessories)
-- Storage Devices (RAM,SSDs, HDDs, pendrive)
 
 
 - not used

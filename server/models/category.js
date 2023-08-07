@@ -6,7 +6,7 @@ const CategorySchema = new Schema({
     // slug: { type: String, required: true, unique: true },
     // description: { type: String, required: true },
     products: [{ type: Schema.Types.ObjectId, ref: 'PRODUCT' }],
-    subCategory:{ type: String ,default:"" },
+    subCategory:{ type: [String] ,required:false },
   },{collection:"category"});
 
 module.exports = mongoose.model('CATEGORY', CategorySchema); 

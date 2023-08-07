@@ -191,11 +191,10 @@ router.get('/api/getproducts', async (req, res) => {
 router.post('/api/addproducts', async (req, res) => {
 
     const { name, price, description, category, image, stock } = req.body;
-    console.log('dd', name, price, description, category, image, stock)
+    //console.log('dd', name, price, description, category, image, stock)
 
     //const data= JSON.parse(req.body)
 
-    console.log("data :>", req.body)
 
     const product = new PRODUCT({
         name: name,
@@ -280,40 +279,58 @@ async function xxx() {
     //     });
 
 
-    //  'smartphones',
-    //  'laptops',
-    //  'Tablets & iPads',
-    //  'Headphones & Earphones',
-    //  'cameras',
-    //  'Video Game Accessories',
-    //  'printers & scanners',
-    //  'Speakers',
-    //  'smartwatches',
-    //  'Wearable Devices',
-    //  'desktop computers',
-    //  'Televisions',
-    //  'computer accessories',
-    //  'computer processors',
-    //  'speakers',
-    //  'Fitness Trackers',
-    //  'VR Headsets',
-    //  'MP3 Player',
-    //  'Storage Devices',
-    //  'Gaming Consoles',
-    //  'Drones',
-    //  'Networking Devices',
-    //  'Power bank',
-    //  'Projectors',
-    //  'Home Appliances',
-    //  'Air Conditioners & Heaters',
-    //  'Computer Software',
-    //  'Graphics Cards',
-    //  'Smart Speakers & Voice Assistants'
+    // [
+    //     'smartphones',         'laptops',            'iPads',
+    //     'Tablets',             'Headphones',         'Earphones',
+    //     'DSLR',                'controllers',        'printers',
+    //     'home audio',          'smartwatch',         'smart band',
+    //     'desktop computers',   'Televisions',        'mouse',
+    //     'computer processors', 'bluetooth speakers', 'Fitness Trackers',
+    //     'VR Headsets',         'Wearable Devices',   'MP3 Player',
+    //     'Camcorder ',          'pendrive',           'xbox',
+    //     'playstation',         'Drones',             'Routers',
+    //     'Modems',              'Power bank',         'Projectors',
+    //     'refrigerator',        'Washing Machine',    'microwave',
+    //     'Air Conditioner',     'Heaters',            'operating system',
+    //     'antivirus',           'MS office',          'Graphics Cards',
+    //     'RAM',                 'SSDs',               'amazon echo',
+    //     'google home',         'Digital Camera',     'keyboards',
+    //     'monitors'
+    // ]
 
 }
 router.get("/xyz", async (req, res) => {
     xxx()
 })
+
+
+
+
+
+router.post('/api/addcategory', async (req, res) => {
+
+    const { name,subCategory } = req.body;
+    console.log('cat api',  name,subCategory )
+
+
+    const catagory = new CATEGORY({
+        name: name,
+        subCategory:subCategory
+    })
+
+    catagory.save()
+        .then(response => {
+            res.send({ data: true });
+        })
+        .catch(err => {
+            console.log(err)
+            res.send({ data: false });
+        })
+
+})
+
+
+
 
 
 

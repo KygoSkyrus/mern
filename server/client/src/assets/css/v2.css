@@ -425,35 +425,56 @@ backdrop-filter: blur(3.7px);
 /*-------------------------- HOMEPAGE -------------------------------------*/
 /*-------------------------- HOMEPAGE -------------------------------------*/
 /*-------------------------- HOMEPAGE -------------------------------------*/
+/* BANNER SLIDER */
 .main-banner {
   height: 70vh;
-  background:var(--teal);
 }
 .main-banner .slide{
   height: inherit;
+  display: flex !important;
+  justify-content: space-around;
+  align-items: center;
 }
 .main-banner .slide img{
   height: inherit;
   width: fit-content;
   height: 70vh;
 }
-/* .main-banner .slide{
-  height: 70vh;
-  background-position: center;
-  background-size: cover;
-}
 .main-banner .slide1{
- background-image: url('./../images/newImg/collections/electro-grey.jpg');
+  background-color: #00abe1;
 }
 .main-banner .slide2{
-  background-image: url('./../images/newImg/collections/electro-yellow.jpg');
- }
- .main-banner .slide3{
-  background-image: url('./../images/newImg/collections/friday-sale.jpg');
- }
- .main-banner .slide4{
-  background-image: url('./../images/newImg/collections/smartwatch.jpg');
- } */
+  background-color: var(--color-yellow);
+}
+.main-banner .slide3{
+  background-color: var(--color3);
+}
+
+.slide1 h2{
+  color: #262626;
+  color: #4a4a4a;
+}
+.slide1 p span{
+  color: var(--yellow);
+  font-weight: 500;
+  text-wrap: wrap;
+}
+
+
+/* dots customized */
+.main-banner .slick-dots{
+  bottom: 12px;
+  background: grey;
+  width: fit-content;
+  left: calc(50% - 45px);
+  border-radius: 28px;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  display: flex !important;
+}
+/* BANNER SLIDER */
+
 
 
 .hero-bg {

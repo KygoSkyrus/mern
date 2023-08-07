@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 // import {util} from '@material/ripple/index';
 
 import ProductCardsCollection from './ProductCardsCollection.js'
-import SliderComponent from './SliderComponent.jsx'
+import BannerSlider from './BannerSlider.jsx'
 
 const Homepage = () => {
 
@@ -26,7 +26,7 @@ const Homepage = () => {
     <>
 
       <div className='mb-5'>
-        <SliderComponent />
+        <BannerSlider />
       </div>
 
 

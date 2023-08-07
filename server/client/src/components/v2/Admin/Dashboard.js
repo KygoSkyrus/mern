@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
- import { isProductUpdated } from './../redux/todoSlice'
+import { isProductUpdated } from './../redux/todoSlice'
 
 
 
@@ -16,7 +16,10 @@ const Dashboard = () => {
     const visibility = useSelector(state => state.productFormVisibility.visibility)// modal's visibility 
     const isUpdated = useSelector(state => state.isUpdated.product)
 
-    const dispatch =useDispatch()
+    const [category, setCategory] = useState()
+    const [subCategory, setSubCategory] = useState()
+
+    const dispatch = useDispatch()
 
     useEffect(() => {
         console.log('ue in hp')
@@ -41,9 +44,47 @@ const Dashboard = () => {
 
 
 
+    function addcategory() {
+
+
+        // let temp=
+        // console.log('sub',temp)
+
+        
+        fetch('/api/addcategory', {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                name:category,
+                subCategory:subCategory.split(",")
+            }),
+        }).then(response => response.json())
+            .then(data => {
+                 console.log('catgeory respinse',data.data)
+                 if(data.data){
+                    setCategory("")
+                    setSubCategory("")
+                 }
+            })
+
+    }
+
+
 
     return (
         <>
+
+
+            <div>
+                <input type="text" className="form-control" name="category"
+                    placeholder="category" required value={category} onChange={e => setCategory(e.target.value)} />
+                <input type="text" className="form-control" name="subCategory"
+                    placeholder="subcategory" required value={subCategory} onChange={e => setSubCategory(e.target.value)} />
+                <button onClick={e => addcategory(e)}> ADD</button>
+            </div>
+
+
+
             <div id="x"></div>
             <div >
 
@@ -170,7 +211,7 @@ const Dashboard = () => {
                                     <th scope="col" className="small fw-normal"></th>
                                 </tr>
                             </thead>
-                            <tbody>                      
+                            <tbody>
                                 {products ?
                                     products.map(x => {
                                         return (
