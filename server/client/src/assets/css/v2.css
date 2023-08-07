@@ -1,6 +1,6 @@
 *,
 *::before,
-*::after{
+*::after {
   --darkBlue: #011627;
   --red: #f71735;
   --teal: #41ead4;
@@ -22,7 +22,6 @@
   /* product 4 */
   --color-blue: #4285f4;
   /* product 4 */
-
 
   /* product 7 */
   --white-100: #fff;
@@ -58,7 +57,7 @@
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-large: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05);
-/* product 7 */
+  /* product 7 */
 
   /* notused but can be useful */
   --color-red: #db4437;
@@ -66,13 +65,9 @@
   --color-green: #0f9d58;
   /* notused but can be useful */
 
-
-
-    list-style: none;
-    list-style-type: none;
-    text-decoration: none;
-  
-
+  list-style: none;
+  list-style-type: none;
+  text-decoration: none;
 }
 
 /*********************************************** basics COMMON *************************************************************/
@@ -175,7 +170,7 @@ img {
   animation: scrolldown 2s infinite linear;
   right: 5%;
 }
-.slow3{
+.slow3 {
   animation: scrolldown 2s infinite linear;
   left: 5%;
 }
@@ -289,16 +284,16 @@ img {
   left: 13%;
   border: 3px solid black;
 }
-.glass{
+.glass {
   width: inherit;
   height: inherit;
   position: absolute;
   z-index: 2;
-background: rgba(255, 255, 255, 0.13);
-border-radius: 16px;
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-backdrop-filter: blur(3.7px);
--webkit-backdrop-filter: blur(3.7px);
+  background: rgba(255, 255, 255, 0.13);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.7px);
+  -webkit-backdrop-filter: blur(3.7px);
 }
 /************************************************ BAG LOGO ************************************************/
 
@@ -314,7 +309,7 @@ backdrop-filter: blur(3.7px);
   transform: translate(0, 0);
   transition: all 0.3s ease-in-out;
 }
-.nav-item input[type="search"]{
+.nav-item input[type="search"] {
   min-width: 400px;
   border-radius: 8px;
   border: 1px solid grey;
@@ -336,50 +331,57 @@ backdrop-filter: blur(3.7px);
   opacity: 0;
 }
 
-.child-category{
+.child-category {
   display: block;
+  width: 150px;
   position: absolute;
-    top: 0;
-    right: -145px;
+  top: 0;
+  right: -148px;
+  height: 100%;
+  transform: translateZ(-10px);
+}
+.child-category li a {
+  text-transform: capitalize;
+}
+.dropdownCategoryUL {
+  right: 0;
+  transform-style: preserve-3d;
 }
 /* to make dropdown visible on hover */
-.dropdown:hover>.dropdown-menu {
+.dropdown:hover > .dropdown-menu {
   display: block;
 }
-
-.dropdown>.dropdown-toggle:active {
+.dropdown > .dropdown-toggle:active {
   /*Without this, clicking will make it sticky*/
-    pointer-events: none;
+  pointer-events: none;
 }
 /*---------------------------------------------- NAVBAR ---------------------------------------------------*/
 
-
-
 /*---------------------------------------------- FOOTER ---------------------------------------------------*/
-.t-bg-secondary{
+.t-bg-secondary {
   background: var(--darkBlue);
 }
 .footer-mid,
 .footer-top {
   border-bottom: 1px solid rgba(217, 217, 217, 0.2);
 }
-.footer-mid ul{
+.footer-mid ul {
   padding-left: 0;
 }
-.footer-mid a:hover{
+.footer-mid a:hover {
   color: #4396da;
 }
-.follow{
+.follow {
   justify-content: space-between;
-  }
-  .t-follow-link{
-    padding: 10px;
-    /* background-color: #4396da; */
-    border-radius: 4px;
-    border: 1px solid #4396da;
-    color: white;
-    transition: all 0.3s;
-  }
+}
+.t-follow-link {
+  padding: 10px;
+  /* background-color: #4396da; */
+  border-radius: 4px;
+  border: 1px solid #4396da;
+  color: white;
+  transition: all 0.3s;
+}
 
 .t-pt-40 {
   padding-top: 40px;
@@ -394,8 +396,6 @@ backdrop-filter: blur(3.7px);
   margin-right: 16px;
 }
 /*---------------------------------------------- FOOTER ---------------------------------------------------*/
-
-
 
 /*-------------------====================------- TOAST --------------------------==============-----------*/
 .toastContainer {
@@ -429,42 +429,41 @@ backdrop-filter: blur(3.7px);
 .main-banner {
   height: 70vh;
 }
-.main-banner .slide{
+.main-banner .slide {
   height: inherit;
   display: flex !important;
   justify-content: space-around;
   align-items: center;
 }
-.main-banner .slide img{
+.main-banner .slide img {
   height: inherit;
   width: fit-content;
   height: 70vh;
 }
-.main-banner .slide1{
+.main-banner .slide1 {
   background-color: #00abe1;
 }
-.main-banner .slide2{
+.main-banner .slide2 {
   background-color: var(--color-yellow);
 }
-.main-banner .slide3{
+.main-banner .slide3 {
   background-color: var(--color3);
 }
 
-.slide1 h2{
+.slide1 h2 {
   color: #262626;
   color: #4a4a4a;
 }
-.slide1 p span{
+.slide1 p span {
   color: var(--yellow);
   font-weight: 500;
   text-wrap: wrap;
 }
 
-
 /* dots customized */
-.main-banner .slick-dots{
+.main-banner .slick-dots {
   bottom: 12px;
-  background: grey;
+  background: #80808052;
   width: fit-content;
   left: calc(50% - 45px);
   border-radius: 28px;
@@ -473,9 +472,11 @@ backdrop-filter: blur(3.7px);
   align-items: center;
   display: flex !important;
 }
+.slick-dots li button:before {
+  line-height: 21px !important;
+  font-size: 10px !important;
+}
 /* BANNER SLIDER */
-
-
 
 .hero-bg {
   /* background-image: url("./../images/bg.jpg"); */
@@ -705,7 +706,7 @@ backdrop-filter: blur(3.7px);
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%) ;
+  transform: translate(-50%, -50%);
 }
 
 .cardN:hover .card__img {
@@ -871,7 +872,6 @@ backdrop-filter: blur(3.7px);
 /*,,,,,,,,,,,,,,,,,,,,,,,/ product 3 \,,,,,,,,,,,,,,,,,,,,,,,,*/
 
 /*,,,,,,,,,,,,,,,,,,,,,,,/ product 4 \,,,,,,,,,,,,,,,,,,,,,,,,*/
-
 
 .mini-card {
   user-select: none;
@@ -1057,7 +1057,7 @@ span.ripple {
   font-weight: 400;
   font-size: 13px;
   font-family: "Lexend Deca", sans-serif;
-  color:  #bdc4c9;
+  color: #bdc4c9;
   line-height: 2rem;
   margin: auto;
 }
@@ -1071,8 +1071,6 @@ span.ripple {
   margin: auto;
 }
 /* PRODUCT 6 */
-
-
 
 /* PRODUCT 7 */
 main {
@@ -1304,13 +1302,12 @@ main {
 }
 /* PRODUCT 7 */
 
-
-
 /* XBOX */
 .xbox {
   width: 100%;
   height: 350px;
-  background: url(https://i.ibb.co/tBJGPD9/xbox.png) no-repeat center center/cover;
+  background: url(https://i.ibb.co/tBJGPD9/xbox.png) no-repeat center
+    center/cover;
   margin-bottom: 20px;
 }
 .xbox-content {
@@ -1328,9 +1325,6 @@ main {
 }
 /* XBOX */
 
-
-
-
 /* MACINTOSH */
 .page {
   height: 70vh;
@@ -1346,7 +1340,7 @@ main {
   border-radius: 100% 0 0 0;
 }
 .page h1 {
-  font-family: 'Red Hat Mono', monospace;
+  font-family: "Red Hat Mono", monospace;
   color: #534935;
   position: absolute;
   top: 40%;
@@ -1356,7 +1350,7 @@ main {
   font-size: 3rem;
 }
 .page-text {
-  font-family: 'Red Hat Mono', monospace;
+  font-family: "Red Hat Mono", monospace;
   color: #534935;
   position: absolute;
   top: 58%;
@@ -1402,13 +1396,12 @@ main {
 .page .right ul li {
   margin: 8px;
   color: white;
-  font-family: 'Red Hat Mono', monospace;
+  font-family: "Red Hat Mono", monospace;
   transform: uppercase;
   font-size: 10px;
 }
 
 /* MACINTOSH */
-
 
 /* PRODUCT 9 */
 .product-card {
@@ -1469,7 +1462,7 @@ main {
 }
 
 .product-details h4 a:hover {
-  color: #F52544;
+  color: #f52544;
 }
 
 .product-details p {
@@ -1492,7 +1485,7 @@ main {
 
 .product-price {
   font-size: 18px;
-  color: #F52544;
+  color: #f52544;
   font-weight: 600;
 }
 
@@ -1517,18 +1510,17 @@ main {
 }
 
 .product-links a:hover {
-  color: #F52544;
+  color: #f52544;
 }
 /* PRODUCT 9 */
 
-
 /* CATEGORGORY STRIPS */
-.category-strip{
+.category-strip {
   /* display: flex;
   overflow: hidden;
   grid-gap: 10px; */
 }
-.category-pebble{
+.category-pebble {
   /* width: -moz-fit-content;
   width: fit-content; */
   box-shadow: -2px 3px 10px 0px #7c7c7c;
@@ -1538,19 +1530,16 @@ main {
 }
 /* CATEGORGORY STRIPS */
 
-
 /*-------------------------- HOMEPAGE -------------------------------------*/
 /*-------------------------- HOMEPAGE -------------------------------------*/
 /*-------------------------- HOMEPAGE -------------------------------------*/
-
-
 
 /* RESPONSIVE */
-@media (max-width:768px) {
+@media (max-width: 768px) {
   .follow {
     justify-content: flex-start;
   }
-  .follow li{
+  .follow li {
     margin-right: 10px;
   }
 }

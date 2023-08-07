@@ -241,6 +241,19 @@ router.post('/api/editproduct', async (req, res) => {
 async function xxx() {
     console.log('xxx')
 
+    // CATEGORY.updateMany(
+    //     { subCategory: '' }, // Filter documents with empty strings in the array
+    //     { $pull: { subCategory: '' } } // Pull (remove) empty strings from the array
+    // )
+    //     .then((result) => {
+    //         console.log(`${result.nModified} documents updated`);
+    //     })
+    //     .catch((error) => {
+    //         console.error('Error updating documents:', error);
+    //     });
+
+
+
     // let arr = []
     // await PRODUCT.find({})
     //     .then(response => {
@@ -309,13 +322,13 @@ router.get("/xyz", async (req, res) => {
 
 router.post('/api/addcategory', async (req, res) => {
 
-    const { name,subCategory } = req.body;
-    console.log('cat api',  name,subCategory )
+    const { name, subCategory } = req.body;
+    console.log('cat api', name, subCategory)
 
 
     const catagory = new CATEGORY({
         name: name,
-        subCategory:subCategory
+        subCategory: subCategory
     })
 
     catagory.save()
@@ -330,8 +343,39 @@ router.post('/api/addcategory', async (req, res) => {
 })
 
 
+router.get('/api/getcategory', async (req, res) => {
+
+    await CATEGORY.find({})
+        .then(response => {
+            // console.log(response)
+            res.send(response)
+        })
+        .catch(error => {
+            console.log(error)
+            res.send({ error: error })
+        })
+
+})
 
 
+// router.post('/api/editcategory', async (req, res) => {
+
+//     const { name,subCategory,id } = req.body;
+//     console.log('dd', name,subCategory )
+
+//     //const data= JSON.parse(req.body)
+
+//     try {
+//         const result = await PRODUCT.findOneAndUpdate({ _id: id }, { $set: { name, price, description, category, image, stock } }, { new: true })
+//         if (result) {
+//             res.send({ isProductEdited: true })
+//         } else {
+//             res.send({ isProductEdited: false })
+//         }
+//     } catch (error) {
+//         console.log(error)
+//     }
+// })
 
 
 //seeting blogs visibility
