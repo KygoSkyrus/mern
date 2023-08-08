@@ -8,7 +8,7 @@ import CategoryStripSlider from './CategoryStripSlider'
 import img1 from './../../assets/images/newImg/products/bluePhone.png'
 import headphone1 from './../../assets/images/newImg/collections/headphone1.webp'
 
-
+import controller from "./../../assets/images/newImg/collections/controller.png";
 
 const ProductCardsCollection = () => {
 
@@ -49,18 +49,21 @@ const ProductCardsCollection = () => {
 
 
 
-      {/* <div className='hero-bg'>
-        <img src={img1} alt='' width={"30%"} />
-      </div> */}
-
+    
 
 
       {/* <!-- Product 1 --> */}
-      <section class="box">
+      <div className='container bx'>
+        <div className='row'>
+          <div className='col-12'>
+            <div className='row'>
+
+            <div className='col-md-6 col-lg-4'>
+      <section class="box bx1">
         <div class="content">
 
           <div class="left">
-            <div class="product_img"></div>
+            <div class="product_img pimg1"></div>
             <div class="product_details">
               <h4 class="title">Woakers</h4>
               <p class="discription">Men's White Printed Sneakers</p>
@@ -92,39 +95,112 @@ const ProductCardsCollection = () => {
 
         </div>
       </section>
+      </div>
+
+
+      <div className='col-md-6 col-lg-4'>
+      <section class="box bx2">
+        <div class="content">
+          <div class="left">
+            <div className='p1-bg'>
+            <div class="product_img pimg2"></div></div>
+            <div class="product_details">
+              <h4 class="title">Woakers</h4>
+              <p class="discription">Men's White Printed Sneakers</p>
+              <p class="pricing">₹824 <span class="price_original">₹4000</span> <span class="offer"> 79% OFF</span></p>
+              <p class="other">inclusive of all taxes</p>
+            </div>
+          </div>
+          </div>
+          </section>
+          </div>
+
+          <div className='col-md-6 col-lg-4'>
+      <section class="box bx3">
+        <div class="content">
+          <div class="left">
+            <div class="product_img pimg3"></div>
+            <div class="product_details">
+              <h4 class="title">Woakers</h4>
+              <p class="discription">Men's White Printed Sneakers</p>
+              <p class="pricing">₹824 <span class="price_original">₹4000</span> <span class="offer"> 79% OFF</span></p>
+              <p class="other">inclusive of all taxes</p>
+            </div>
+          </div>
+          </div>
+          </section>
+          </div>
+
+      </div>
+      </div>
+      </div>
+      </div>
       {/* <!-- Product 1 --> */}
 
 
 
-
-      {/* PRODUCT 2 */}
-      <div class='cardN'>
-        <img 
-        // src='https://raw.githubusercontent.com/mohammadjarabah/codepen-assets/main/pens/mdwvNJP/images/shoes.png'
-        src={headphone1}
-         class='card__img' alt='' />
-        <h2 class='card__title'>Nike Shoes</h2>
-        <div class='card__content'>
-          <div class='card__sizeContainer'>
-            <p class='card__sizeTitle'>Size:</p>
-            <span class='card__sizeNumber'>7</span>
-            <span class='card__sizeNumber'>8</span>
-            <span class='card__sizeNumber'>9</span>
-            <span class='card__sizeNumber'>10</span>
-          </div>
-          <div class='card__colorContainer'>
-            <p class='card__colorTitle'>Color:</p>
-            <span class='card__colorCircle' style={{ backgroundColor: '#9bdc28' }}></span>
-            <span class='card__colorCircle' style={{ backgroundColor: '#03a9f4' }}></span>
-            <span class='card__colorCircle' style={{ backgroundColor: '#e91e63' }}></span>
-          </div>
-        </div>
-        <a href='/#' class='card__link'>Buy Now</a>
+      <nav class="menu position-relative">
+  <div class="menu__item">
+    <div class="marquee">
+      <div class="marquee__inner">
+        <span>Shopp-itt</span>
+        <span>Shopp-itt</span>
+        <span>Shopp-itt</span>
+        <span>Shopp-itt</span>
       </div>
-      {/* PRODUCT 2 */}
+    </div>
+  </div>
+</nav>
+
+something wide must go here
 
 
-
+ {/* PRODUCT 7 */}
+ <main class="main">
+        {/* <!-- Wrapper Section --> */}
+        <section class="section wrapper wrapper-section py-3">
+          <div class="container wrapper-column">
+            <div class="wrapper-figure">
+              <img 
+              src={controller}
+              // src="https://i.ibb.co/3msVHYZ/sneaker-image.png"
+               class="wrapper-image" loading="lazy" alt="Sneaker" />
+            </div>
+            <div class="wrapper-content">
+              <div class="wrapper-inform">
+                <span class="badge badge-darken">Man's Shoes</span>
+                <h1 class="heading-sm font-bold text-dark">Nike Air Motion Max</h1>
+                <p class="text-md font-regular">
+                  The combine of breathable mesh without seams for a traditional and
+                  modern style to add the perfect amount of flash to make you shine.
+                </p>
+              </div>
+              <div class="wrapper-detail">
+                <div class="price">
+                  <span class="text-md font-semi text-dark">Price:</span>
+                  <h3 class="text-xxl font-bold text-dark">$99.00</h3>
+                </div>
+                <div class="sizes">
+                  <span class="text-md font-semi text-dark">Sizes:</span>
+                  <ul class="sizes-list p-0">
+                    <li class="sizes-item is-select">37</li>
+                    <li class="sizes-item">38</li>
+                    <li class="sizes-item">39</li>
+                    <li class="sizes-item">40</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="wrapper-action">
+                <button class="btn btn-darken">Add to Bag</button>
+                <button class="btn btn-neutral">
+                  <i class="fa fa-heart"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+      {/* PRODUCT 7 */}
 
 
       {/* PRODUCT 3 */}
@@ -204,49 +280,66 @@ const ProductCardsCollection = () => {
 
 
 
-      {/* PRODUCT 7 */}
-      <main class="main">
-        {/* <!-- Wrapper Section --> */}
-        <section class="section wrapper wrapper-section py-3">
-          <div class="container wrapper-column">
-            <div class="wrapper-figure">
-              <img src="https://i.ibb.co/3msVHYZ/sneaker-image.png" class="wrapper-image" loading="lazy" alt="Sneaker" />
-            </div>
-            <div class="wrapper-content">
-              <div class="wrapper-inform">
-                <span class="badge badge-darken">Man's Shoes</span>
-                <h1 class="heading-sm font-bold text-dark">Nike Air Motion Max</h1>
-                <p class="text-md font-regular">
-                  The combine of breathable mesh without seams for a traditional and
-                  modern style to add the perfect amount of flash to make you shine.
-                </p>
-              </div>
-              <div class="wrapper-detail">
-                <div class="price">
-                  <span class="text-md font-semi text-dark">Price:</span>
-                  <h3 class="text-xxl font-bold text-dark">$99.00</h3>
-                </div>
-                <div class="sizes">
-                  <span class="text-md font-semi text-dark">Sizes:</span>
-                  <ul class="sizes-list p-0">
-                    <li class="sizes-item is-select">37</li>
-                    <li class="sizes-item">38</li>
-                    <li class="sizes-item">39</li>
-                    <li class="sizes-item">40</li>
-                  </ul>
-                </div>
-              </div>
-              <div class="wrapper-action">
-                <button class="btn btn-darken">Add to Bag</button>
-                <button class="btn btn-neutral">
-                  <i class="fa fa-heart"></i>
-                </button>
-              </div>
-            </div>
+           {/* PRODUCT 2 */}
+           <div class='cardN'>
+        <img 
+        // src='https://raw.githubusercontent.com/mohammadjarabah/codepen-assets/main/pens/mdwvNJP/images/shoes.png'
+        src={headphone1}
+         class='card__img' alt='' />
+        <h2 class='card__title'>Nike Shoes</h2>
+        <div class='card__content'>
+          <div class='card__sizeContainer'>
+            <p class='card__sizeTitle'>Size:</p>
+            <span class='card__sizeNumber'>7</span>
+            <span class='card__sizeNumber'>8</span>
+            <span class='card__sizeNumber'>9</span>
+            <span class='card__sizeNumber'>10</span>
           </div>
-        </section>
-      </main>
-      {/* PRODUCT 7 */}
+          <div class='card__colorContainer'>
+            <p class='card__colorTitle'>Color:</p>
+            <span class='card__colorCircle' style={{ backgroundColor: '#9bdc28' }}></span>
+            <span class='card__colorCircle' style={{ backgroundColor: '#03a9f4' }}></span>
+            <span class='card__colorCircle' style={{ backgroundColor: '#e91e63' }}></span>
+          </div>
+        </div>
+        <a href='/#' class='card__link'>Buy Now</a>
+      </div>
+      {/* PRODUCT 2 */}
+
+
+
+<div className='cgh' >
+<div className='holder-cgh'>
+  <section>Laptops</section>
+  <div className='circle-cgh'></div>
+</div>
+<div className='holder-cgh'>
+  <section>Tablets</section>
+  <div className='circle-cgh'></div>
+</div>
+<div className='holder-cgh'>
+  <section>Smartwatches</section>
+  <div className='circle-cgh'></div>
+</div>
+<div className='holder-cgh'>
+  <section>Camera</section>
+  <div className='circle-cgh'></div>
+</div>
+<div className='holder-cgh'>
+  <section>Desktop</section>
+  <div className='circle-cgh'></div>
+</div>
+<div className='holder-cgh'>
+  <section>Gaming Consoles</section>
+  <div className='circle-cgh'></div>
+</div>
+<div className='holder-cgh'>
+  <section>Accessories</section>
+  <div className='circle-cgh'></div>
+</div>
+</div>
+
+
 
 
 
@@ -326,18 +419,7 @@ const ProductCardsCollection = () => {
 
 <CategoryStripSlider/>
 
-<nav class="menu">
-  <div class="menu__item">
-    <div class="marquee">
-      <div class="marquee__inner">
-        <span>Showreel</span>
-        <span>Showreel</span>
-        <span>Showreel</span>
-        <span>Showreel</span>
-      </div>
-    </div>
-  </div>
-</nav>
+
 
 
 

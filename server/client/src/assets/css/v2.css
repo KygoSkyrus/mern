@@ -482,14 +482,7 @@ img {
 }
 /* BANNER SLIDER */
 
-.hero-bg {
-  /* background-image: url("./../images/bg.jpg"); */
-  background: linear-gradient(330deg, #07ffa3, #ffc1074f);
-  height: 75vh;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-}
+
 
 /*-------------------------- products --------------------------*/
 .card2 .card-body {
@@ -524,11 +517,29 @@ img {
 /*,,,,,,,,,,,,,,,,,,,,,,,/ product 1 \,,,,,,,,,,,,,,,,,,,,,,,,*/
 
 .box {
-  background: #fbeceb;
-  width: fit-content;
+  background: var(--bs-gray-200);
+  width: 100%;
   border-radius: 5px;
+  box-shadow: var(--shadow-medium);
+  transition: var(--transition);
 }
-
+.bx1,
+.bx3{
+  z-index: -1;
+  position: relative;
+}
+.bx1{
+  transform: scale(0.9) translateX(130px);
+}
+.bx3{
+  transform: scale(0.9) translateX(-130px);
+}
+.bx:hover .bx1{
+  transform: scale(1) translateX(0px);
+}
+.bx:hover .bx3{
+  transform: scale(1) translateX(0px);
+}
 .content {
   display: flex;
   justify-content: space-between;
@@ -537,17 +548,32 @@ img {
 /* Left Side:Start */
 .left {
   display: block;
+  width: 100%;
   height: fit-content;
   min-width: 250px;
 }
 .left .product_img {
-  height: 250px;
-  width: 230px;
+  height: 300px;
+  /* width: 230px; */
   margin: 10px;
   border-radius: 5px;
-  background: url("https://i.postimg.cc/X799Yjd4/product-1.jpg") no-repeat;
-  background-position: center;
   background-size: cover;
+}
+.pimg1{
+  background: url("./../images/newImg//collections/electronics-yellow1.jpg") no-repeat;
+  background-position: center;
+}
+.p1-bg{
+  background: #fcc21a;
+  margin: 10px;
+  border-radius: 5px;
+}
+.pimg2{
+  background: url("./../images/newImg//collections/electro-grey-removebg-preview.png");
+}
+.pimg3{
+  background: url("./../images/newImg//collections/electronics-yellow2.jpg") no-repeat;
+  background-position: center;
 }
 .product_details {
   text-align: left;
@@ -641,6 +667,38 @@ img {
 }
 /* Responsiveness:End */
 /*,,,,,,,,,,,,,,,,,,,,,,,/ product 1 \,,,,,,,,,,,,,,,,,,,,,,,,*/
+
+
+
+/* cgh */
+.cgh{
+  background-color: #e3e3e3;
+  display: flex;
+  gap: 30px;
+  padding: 40px 10px;
+  margin: 50px 0;
+}
+.holder-cgh{
+  position: relative;
+}
+.holder-cgh section{
+  font-size: 41px;
+  position: relative;
+  z-index: 1;
+  color: #b2b2b2;
+  text-wrap:nowrap;
+}
+.circle-cgh{
+  background-color: #151515;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: calc(50% - 42px);
+    left: calc(50% - 50px);
+    z-index: 0;
+}
+/* cgh */
 
 /*,,,,,,,,,,,,,,,,,,,,,,,/ product 2 \,,,,,,,,,,,,,,,,,,,,,,,,*/
 .cardN {
@@ -1204,7 +1262,8 @@ main {
     grid-template-columns: repeat(2, minmax(0, 26rem));
     align-content: center;
     justify-content: center;
-    column-gap: 4rem;
+    /* column-gap: 4rem; */
+    column-gap: 6rem;
     margin-top: 2rem;
   }
 }
@@ -1228,12 +1287,12 @@ main {
 }
 .wrapper-image {
   display: block;
-  max-width: 17rem;
-  height: auto;
-  scale: 1.25;
-  rotate: 30deg;
-  translate: 1rem;
-  filter: drop-shadow(0px 8px 8px rgba(15, 15, 15, 0.4));
+    max-width: 17rem;
+    height: auto;
+    scale: 1.55;
+    rotate: 336deg;
+    /* translate: 1rem; */
+    filter: drop-shadow(0px 8px 8px rgba(15, 15, 15, 0.4));
 }
 @media only screen and (min-width: 48rem) {
   .wrapper-image {

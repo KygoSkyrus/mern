@@ -27,11 +27,11 @@ const BannerSlider = () => {
     speed: 500,
     slidesToShow: 1, //how many slides will be shown
     slidesToScroll: 1, //at onescroll how many slide will be slid
-    // initialSlide: 1, //tells from where to start
     fade: true, //slide fades on change
+    // autoplay: true,autoplaySpeed: 2000,cssEase: "linear",// to keep playing automatically
+    // initialSlide: 1, //tells from where to start
     //lazyLoad: true,
     // adaptiveHeight: true,//for unequal heights
-    //autoplay: true,autoplaySpeed: 2000,cssEase: "linear",// to keep playing automatically
     //pauseOnHover: true//works with autoplay and stops on hover
 
     responsive: [

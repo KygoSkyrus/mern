@@ -8,43 +8,42 @@ const CategoryStripSlider = () => {
  
       const settings = {
         dots: true,
+        arrows:true,
         infinite: true,
-        speed: 4000,
+        speed: 9000,
         slidesToShow: 3,
         slidesToScroll: 3,
-        autoplay: true,autoplaySpeed: 100,cssEase: "linear",
+        autoplay: true,autoplaySpeed: 1000,cssEase: "linear",
       };
   return (
-    <div>
-        <h2> Multiple items </h2>
+    <div className='category-strip'>
         <Slider {...settings}>
-          <div>
+          <div className='category-pebble'>
             <h3>1</h3>
           </div>
-          <div>
-            <h3>2</h3>
+          <div className='category-pebble'>
+            <h3>1j</h3>
           </div>
-          <div>
-            <h3>3</h3>
+
+          <div className='category-pebble'>
+            <h3>19</h3>
           </div>
-          <div>
+          <div className='category-pebble'>
+            <h3>81</h3>
+          </div>
+          <div className='category-pebble'>
+            <h3>71</h3>
+          </div>
+          <div className='category-pebble'>
+            <h3>21</h3>
+          </div>
+          <div className='category-pebble'>
+            <h3>31</h3>
+          </div>
+          <div className='category-pebble'>
             <h3>4</h3>
           </div>
-          <div>
-            <h3>5</h3>
-          </div>
-          <div>
-            <h3>6</h3>
-          </div>
-          <div>
-            <h3>7</h3>
-          </div>
-          <div>
-            <h3>8</h3>
-          </div>
-          <div>
-            <h3>9</h3>
-          </div>
+
         </Slider>
       </div>
   )
