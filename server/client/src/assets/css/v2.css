@@ -89,6 +89,9 @@
 .display-block {
   display: block !important;
 }
+.display-none{
+  display: none !important;
+}
 
 .clr-red {
   color: var(--red) !important;
@@ -442,6 +445,7 @@ img {
 }
 .main-banner .slide1 {
   background-color: #00abe1;
+  background: linear-gradient(180deg, #c4c4c4, transparent);
 }
 .main-banner .slide2 {
   background-color: var(--color-yellow);
@@ -473,7 +477,7 @@ img {
   display: flex !important;
 }
 .slick-dots li button:before {
-  line-height: 21px !important;
+  line-height: 23.3px !important;
   font-size: 10px !important;
 }
 /* BANNER SLIDER */
@@ -1528,6 +1532,77 @@ main {
   border-radius: 4px;
   /* width: fit-content; */
 }
+
+
+/* horizontal strip animation */
+.menu {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	padding: 10vh 0 25vh;
+	--marquee-width: 100vw;
+	--offset: 20vw;
+	--move-initial: calc(-25% + var(--offset));
+	--move-final: calc(-50% + var(--offset));
+	--item-font-size: 10vw;
+	counter-reset: menu;
+}
+
+/* Make sure 3 items are visible in the viewport by setting suitable font size. */
+
+.marquee {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: var(--marquee-width);
+	overflow: hidden;
+	pointer-events: none;
+	mix-blend-mode: color-burn;
+}
+
+.marquee__inner {
+	width: fit-content;
+	display: flex;
+	position: relative;
+	transform: translate3d(var(--move-initial), 0, 0);
+	animation: marquee 5s linear infinite;
+	animation-play-state: paused;
+	opacity: 0;
+	transition: opacity 0.1s;
+}
+
+.marquee .marquee__inner {
+	animation-play-state: running;
+	opacity: 1;
+	transition-duration: 0.4s;
+}
+
+.marquee span {
+  text-align: center;
+	white-space: nowrap;
+	font-size: var(--item-font-size);
+	padding: 0 1vw;
+	font-weight: 900;
+	line-height: 1.15;
+  font-style: italic;
+}
+
+@keyframes marquee {
+	0% {
+		transform: translate3d(var(--move-initial), 0, 0);
+	}
+
+	100% {
+		transform: translate3d(var(--move-final), 0, 0);
+	}
+}
+/* horixonal catgeory strip animation */
+
+
+
+
 /* CATEGORGORY STRIPS */
 
 /*-------------------------- HOMEPAGE -------------------------------------*/

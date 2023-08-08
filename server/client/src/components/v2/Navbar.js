@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Navbar = (props) => {
 
   const [categories, setCategories] = useState()
-
+  const [categoriesAndID, setCategoriesAndID] = useState({})
   const Badge = () => {
     if (props.data > 0) {
       return (
@@ -21,27 +21,42 @@ const Navbar = (props) => {
       .then(res => {
         console.log('res', res)
         setCategories(res)
+        let tempObject = {}
+        res.map(x => {
+          tempObject[x.name.toLowerCase()] = x._id//bcz some of categories are capitalized
+        })
+        setCategoriesAndID({ ...categoriesAndID, ...tempObject })
       })
   }, [])
 
-
+  //can put this in usememo
   const populateSubCategory = (e) => {
-    // console.log('populateSubCategory', e.target.innerText)
+    // console.log('populateSubCategory', categoriesAndID)
 
     let childCategoryElem = document.querySelector('.child-category')
+   
     childCategoryElem.innerHTML = ''//clearing the previous subCat
-    // console.log(e.target.innerText, e.target.dataset.index)
+    // if(childCategoryElem.innerHTML===""){
+    //   console.log('is empty')
+    //   childCategoryElem.classList.add('display-none')
+    //   }
     categories[e.target.dataset.index].subCategory.map(x => {
-      console.log('s', x)
       let li = document.createElement('li')
       let a = document.createElement('a')
-      a.href = "/#"//change this later
+      a.href = `/category/${categoriesAndID[x.toLowerCase()]}`//change this later
       a.innerHTML = x
       a.classList.add('dropdown-item', 'gap-2', 'd-flex')
       li.appendChild(a)
       childCategoryElem.appendChild(li)
+        // childCategoryElem.classList.remove('display-none')
     })
   }
+
+  // const clearSubCategory=(e)=>{
+  //   console.log('jkajdjs')
+  //   let childCategoryElem = document.querySelector('.child-category')
+  //   childCategoryElem.innerHTML = ''//clearing the previous subCat
+  // }
 
   return (
     <>
@@ -76,11 +91,13 @@ const Navbar = (props) => {
                 <input type='search' className="nav-link " placeholder='search in shopp-itt' />
               </li>
 
-              <li className="nav-item position-relative dropdown">
+              <li className="nav-item position-relative dropdown"  
+              // onMouseOut={e=>clearSubCategory(e)}
+              >
 
                 <button type="button"
                   // className="nav-link" id="dropdownCategory" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside"
-                  class="btn dropdown-toggle"
+                  class="nav-link dropdown-toggle"
                   id="dropdownCategory"
                   data-mdb-toggle="dropdown"
                   aria-expanded="false"
@@ -89,7 +106,9 @@ const Navbar = (props) => {
                 </button>
                 {/* here put the categoires dynamicaaly and on hover of these categpries there will be the subcategpry will be shown only if the subcategory is avaible and put the subcategory there on hover,,,have to create the subcategory dropdown manuallty though */}
                 <ul className="dropdown-menu shadow dropdownCategoryUL" aria-labelledby="dropdownCategory">
-                  {categories?.map((x, i) => {
+                  {
+                  categories? 
+                  categories?.map((x, i) => {
                     if (x.subCategory.length > 0) {
                       return (
                         <li onMouseOver={e => populateSubCategory(e)}>
@@ -99,30 +118,10 @@ const Navbar = (props) => {
                         </li>
                       )
                     }
-                  })}
-
-                  <ul className='child-category dropdown-menu shadow'>
-                    <li>
-                      <a className="dropdown-item gap-2 d-flex" href="/#">
-                        c category
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item gap-2 d-flex" href="/#">
-                        c category
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item gap-2 d-flex" href="/#">
-                        c category
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item gap-2 d-flex" href="/#">
-                        c category
-                      </a>
-                    </li>
-                  </ul>
+                  })
+                :
+                <section className='text-center'>...Loading</section>}
+                  <ul className='child-category display-none dropdown-menu shadow'></ul>
                 </ul>
 
               </li>

@@ -8,6 +8,7 @@ import Footer from './Footer';
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Category from './Category';
 
 const TheFront = ({ dl }) => {
     return (
@@ -25,7 +26,7 @@ const TheFront = ({ dl }) => {
 
             <Routes>
                 <Route path="/" exact element={<Homepage />} />
-
+                <Route path="/category/:categoryId" exact element={<Category />} />
                 {/* <Route path="/:id" exact element={<SingleBlog  />} /> */}
             </Routes>
 

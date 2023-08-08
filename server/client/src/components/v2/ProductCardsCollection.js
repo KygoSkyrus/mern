@@ -326,6 +326,21 @@ const ProductCardsCollection = () => {
 
 <CategoryStripSlider/>
 
+<nav class="menu">
+  <div class="menu__item">
+    <div class="marquee">
+      <div class="marquee__inner">
+        <span>Showreel</span>
+        <span>Showreel</span>
+        <span>Showreel</span>
+        <span>Showreel</span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+
 
 
       {/* try adding word flip things on all these letters from hyperplexed */}
