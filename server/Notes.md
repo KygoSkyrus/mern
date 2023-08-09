@@ -6,11 +6,20 @@
   - put in layout all the individual component
   - category in navbar
 
+
+- add user stuff and then user db ,,the wishlist cart order will go there
+
+
+
   - add toast when addeed to cart or whishlist ;;finihs th homepage layout howeever it looks,,need to get done with that and then check add product payement cart orders etc and also the user account form and firebase login
 
   -the check add to cart of procut
 
   - also adding to wishlight
+
+
+
+
 
   - once all this done than we will put things in my orders section,thta if delivered, or pending
 
@@ -103,10 +112,12 @@ NOTE;:::the issue that withou internet you are not abke to acces db,,,setup the 
 https://www.freepik.com/free-photos-vectors/sale-png
 
 ### forever notes
-
+- when you have to put a stick position to a navabar or any element remember that the parent shoudl hav emore height than the element to be sticky and on sticky element give top properyty ,,only sticky wont do anything you need top,,
 - https://codepen.io/polypane/full/LYdvPze
 - https://polypane.app/css-3d-transform-examples/
   https://3dtransforms.desandro.com/carousel
   https://codepen.io/blazit/pen/BaGmmaP
 
 - chamnging div can be implemented with this https://codepen.io/TheMOZZARELLA/pen/dyZZKqE
+
+

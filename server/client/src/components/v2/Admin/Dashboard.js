@@ -3,21 +3,15 @@ import { useSelector, useDispatch } from 'react-redux'
 import { isProductUpdated } from './../redux/todoSlice'
 
 
-
-
 import Modal from './../Modal'
 import Product from './ProductList'
-// import okayIcon from "./../../../assets/images/okay-icon.png"
 
 const Dashboard = () => {
 
     const [products, setProducts] = useState(false) //to set products fetched from server
-    //const [isUpdated,setIsUpdated]=useState()
     const visibility = useSelector(state => state.productFormVisibility.visibility)// modal's visibility 
     const isUpdated = useSelector(state => state.isUpdated.product)
 
-    const [category, setCategory] = useState()
-    const [subCategory, setSubCategory] = useState()
 
     const dispatch = useDispatch()
 
@@ -36,61 +30,14 @@ const Dashboard = () => {
     }, [isUpdated])
 
 
-
-
-    const productState = {
-        name: "xx", url: "xx", price: 2, description: "x", category: "first", image: ["https:/?njdsj"], stock: 0
-    }
-
-
-
-    function addcategory() {
-
-
-        // let temp=
-        // console.log('sub',temp)
-
-        
-        fetch('/api/addcategory', {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                name:category,
-                subCategory:subCategory.split(",")
-            }),
-        }).then(response => response.json())
-            .then(data => {
-                 console.log('catgeory respinse',data.data)
-                 if(data.data){
-                    setCategory("")
-                    setSubCategory("")
-                 }
-            })
-
-    }
-
-
-
     return (
         <>
 
 
-            <div>
-                <input type="text" className="form-control" name="category"
-                    placeholder="category" required value={category} onChange={e => setCategory(e.target.value)} />
-                <input type="text" className="form-control" name="subCategory"
-                    placeholder="subcategory" required value={subCategory} onChange={e => setSubCategory(e.target.value)} />
-                <button onClick={e => addcategory(e)}> ADD</button>
-            </div>
-
-
-
-            <div id="x"></div>
             <div >
-
-
                 {/* THE HEADER */}
-                <div className="p-3 overflow-auto d-flex  bg-white-custom border-bottom shadow-sm ">
+                <div className=' dash-header'>
+                <div className="p-3 overflow-auto d-flex bg-white-custom border-bottom shadow-sm">
 
                     {/* <!-- Left Side--> */}
                     <div className="d-flex flex-grow-1 align-items-center">
@@ -140,7 +87,7 @@ const Dashboard = () => {
                     </div>
                 </div>
 
-                <div className="px-3 py-2 hstack gap-1 overflow-auto bg-white-custom border-bottom shadow-sm ">
+                <div className="px-3 py-2 hstack gap-1 overflow-auto bg-white-custom border-bottom shadow-sm">
                     <span className="badge rounded-pill py-2 pe-2 badge-add-filter" data-bs-toggle="modal" href="#modalStart" role="button">
                         Select Filter <i className="fa fa-plus ms-1"></i>
                     </span>
@@ -189,6 +136,7 @@ const Dashboard = () => {
                         </a>
                     </span>
 
+                </div>
                 </div>
 
                 {/* FILTER ROW */}

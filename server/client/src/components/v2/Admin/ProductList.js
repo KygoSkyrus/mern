@@ -19,9 +19,11 @@ const Product = ({ details }) => {
     const imagePreview = (e) => {
         e.target.nextElementSibling.style.backgroundImage = e.target.style['background-image']//placing the same image to the hover preview
         e.target.nextElementSibling.classList.add('display-block')
+        e.target.parentElement.querySelector('.bg-img-preview').classList.add('display-block')
     }
     const hideImagePreview = (e) => {
         e.target.nextElementSibling.classList.remove('display-block')
+        e.target.parentElement.querySelector('.bg-img-preview').classList.remove('display-block')//hiding the image backgorund
     }
 
     //set product visibility
@@ -90,16 +92,12 @@ const Product = ({ details }) => {
                     <div className="avatars d-flex position-relative">
                         {details.image.map(x => {
                             return (<>
-                                <div className="avatars__item pointer" onMouseEnter={(e) => imagePreview(e)} onMouseLeave={(e) => hideImagePreview(e)} style={{ background: `url(${x})`, backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat", }}>
-                                    {/* <img className="rounded-3" src={x} alt="" width={"100%"} height={"100%"} /> */}
-                                </div>
-                                <div className='image-preview'>
-                                    {/* here create anm img and put the preview here ,,when there will be png images this will solve the issue */}
-                                    {/* <section className='xxx'></section> */}
-                                    </div>
+                                <div className="avatars__item pointer" onMouseEnter={(e) => imagePreview(e)} onMouseLeave={(e) => hideImagePreview(e)} style={{ background: `url(${x})`, backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat", }}></div>
+                                <div className='image-preview'></div>
                             </>
                             )
                         })}
+                        <section className='bg-img-preview'></section>
                     </div>
                 </div>
             </td>

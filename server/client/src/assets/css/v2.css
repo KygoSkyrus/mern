@@ -144,6 +144,11 @@ img {
   height: 270px;
   overflow: hidden;
 }
+.text-stroke-container:hover .slow1,
+.text-stroke-container:hover .slow2,
+.text-stroke-container:hover .slow3{
+  animation-play-state: paused;
+}
 .text-stroke-style {
   -webkit-text-stroke: 2px aquamarine;
   text-shadow: -4px 2px #fd0000;
