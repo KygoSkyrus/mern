@@ -5,6 +5,7 @@ const Navbar = (props) => {
 
   const [categories, setCategories] = useState()
   const [categoriesAndID, setCategoriesAndID] = useState({})
+  const [childWithoutParent, setChildWithoutParent] = useState([])
   const Badge = () => {
     if (props.data > 0) {
       return (
@@ -22,10 +23,30 @@ const Navbar = (props) => {
         console.log('res', res)
         setCategories(res)
         let tempObject = {}
+        let tempArray = []
         res.map(x => {
           tempObject[x.name.toLowerCase()] = x._id//bcz some of categories are capitalized
+          tempArray.push(x.name.toLowerCase())
         })
+
+        //total - 59
+        //with parent - 34
+        //without parent - 11
+        // parent category - 14
+        //this can be moved to down in jsx
+        res.map(x => {
+          if (x.subCategory.length > 0) {
+            x.subCategory.map((y, i) => {
+              if (tempArray.includes(y.toLowerCase())) {
+                tempArray.splice(tempArray.indexOf(y.toLowerCase()), 1)//removing subcat
+              }
+            })
+            tempArray.splice(tempArray.indexOf(x.name.toLowerCase()), 1)//finally removing the parent category after subcat is removed
+          }
+        })
+        console.log('s', tempArray)
         setCategoriesAndID({ ...categoriesAndID, ...tempObject })
+        setChildWithoutParent([...childWithoutParent, ...tempArray])
       })
   }, [])
 
@@ -34,12 +55,13 @@ const Navbar = (props) => {
     // console.log('populateSubCategory', categoriesAndID)
 
     let childCategoryElem = document.querySelector('.child-category')
-   
+
     childCategoryElem.innerHTML = ''//clearing the previous subCat
     // if(childCategoryElem.innerHTML===""){
     //   console.log('is empty')
-    //   childCategoryElem.classList.add('display-none')
+    childCategoryElem.classList.remove('display-none')
     //   }
+    console.log('f', childCategoryElem)
     categories[e.target.dataset.index].subCategory.map(x => {
       let li = document.createElement('li')
       let a = document.createElement('a')
@@ -48,15 +70,15 @@ const Navbar = (props) => {
       a.classList.add('dropdown-item', 'gap-2', 'd-flex')
       li.appendChild(a)
       childCategoryElem.appendChild(li)
-        // childCategoryElem.classList.remove('display-none')
     })
   }
 
-  // const clearSubCategory=(e)=>{
-  //   console.log('jkajdjs')
-  //   let childCategoryElem = document.querySelector('.child-category')
-  //   childCategoryElem.innerHTML = ''//clearing the previous subCat
-  // }
+  //const clearSubCategory=(e)=>{
+  //cant do this bcz as sson as y=the cursor goes off the list the sub will be emptied and hidden
+  // let childCategoryElem = document.querySelector('.child-category')
+  // // childCategoryElem.innerHTML = ''//clearing the previous subCat
+  // childCategoryElem.classList.add('display-none')//and hiding it
+  //}
 
   return (
     <>
@@ -91,9 +113,7 @@ const Navbar = (props) => {
                 <input type='search' className="nav-link " placeholder='search in shopp-itt' />
               </li>
 
-              <li className="nav-item position-relative dropdown"  
-              // onMouseOut={e=>clearSubCategory(e)}
-              >
+              <li className="nav-item position-relative dropdown">
 
                 <button type="button"
                   // className="nav-link" id="dropdownCategory" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside"
@@ -107,20 +127,35 @@ const Navbar = (props) => {
                 {/* here put the categoires dynamicaaly and on hover of these categpries there will be the subcategpry will be shown only if the subcategory is avaible and put the subcategory there on hover,,,have to create the subcategory dropdown manuallty though */}
                 <ul className="dropdown-menu shadow dropdownCategoryUL" aria-labelledby="dropdownCategory">
                   {
-                  categories? 
-                  categories?.map((x, i) => {
-                    if (x.subCategory.length > 0) {
-                      return (
-                        <li onMouseOver={e => populateSubCategory(e)}>
-                          <a className="dropdown-item gap-2 d-flex" href="/#" data-index={i} >
-                            {x.name}
-                          </a>
-                        </li>
-                      )
-                    }
-                  })
-                :
-                <section className='text-center'>...Loading</section>}
+                    categories ?
+                      categories?.map((x, i) => {
+                        if (x.subCategory.length > 0) {
+                          return (
+                            <li className='parentCategoryList' onMouseOver={e => populateSubCategory(e)}
+                            // onMouseOut={e=>clearSubCategory(e)}
+                            >
+                              <a className="dropdown-item gap-2 d-flex" href="/#" data-index={i} >
+                                {x.name}
+                              </a>
+                            </li>
+                          )
+                        } else {
+                          // console.log('djdjd', childWithoutParent)
+                          if (childWithoutParent.includes(x.name.toLowerCase())) {
+                            return (
+                              <li onMouseOver={e => populateSubCategory(e)}
+                              // onMouseOut={e=>clearSubCategory(e)}
+                              >
+                                <a className="dropdown-item gap-2 d-flex" href="/#" data-index={i} >
+                                  {x.name}
+                                </a>
+                              </li>
+                            )
+                          }
+                        }
+                      })
+                      :
+                      <section className='text-center'>...Loading</section>}
                   <ul className='child-category display-none dropdown-menu shadow'></ul>
                 </ul>
 
