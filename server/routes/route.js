@@ -194,9 +194,9 @@ router.get('/api/getprodbycategory', async (req, res) => {
     console.log('categoryID', category)
 
     PRODUCT.find({ category: category })
-        .then(res => {
-            console.log('sss', res)
-            res.send(res)
+        .then(response => {
+            console.log('sss', response)
+            res.send({products:response})
         })
         .catch(err => {
             console.log(err)

@@ -359,7 +359,7 @@ img {
 .dropdownCategoryUL li:hover {
   background-color: #e9ecef;
 }
-.dropdownCategoryUL li a:hover{
+.dropdownCategoryUL li a:hover {
   background-color: unset !important;
 }
 /* .categoryWithoutParent:nth-child(n+0){
@@ -379,7 +379,7 @@ grid-column: 1;
   position: absolute;
   top: 50%;
   left: 0;
-  transform: translate(16px,-50%);
+  transform: translate(16px, -50%);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 512' style='fill: %23adadad'%3E%3Cpath d='M96 480c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L242.8 256L73.38 86.63c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25l-192 192C112.4 476.9 104.2 480 96 480z'/%3E%3C/svg%3E");
   width: 6px;
   height: 9px;
@@ -388,7 +388,7 @@ grid-column: 1;
   z-index: 1;
   transition: var(--transition);
 }
-.parentCategoryList a{
+.parentCategoryList a {
   /* transform: translateX(0); */
 }
 .parentCategoryList:hover a::before {
@@ -396,9 +396,9 @@ grid-column: 1;
   opacity: 1;
   /* transform: translate(0px,-50%); */
 }
-.parentCategoryList:hover a{
+.parentCategoryList:hover a {
   /* transform: translateX(16px); */
-  padding-left: 26px
+  padding-left: 26px;
 }
 .dropdownCategoryUL li a {
   text-transform: capitalize;
@@ -537,8 +537,8 @@ grid-column: 1;
 /* BANNER SLIDER */
 
 /*-------------------------- products --------------------------*/
-.card2{
-  border:none !important;
+.card2 {
+  border: none !important;
   /* box-shadow: var(--shadow-medium) !important; */
   background-color: inherit;
   padding-bottom: 25px;
@@ -564,7 +564,19 @@ grid-column: 1;
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
-  margin-bottom: 6px;
+  margin-top: 12px;
+  margin-bottom: -2px;
+}
+.card2 .card-body .title {
+  text-wrap: unset;
+  color: unset;
+}
+
+.card2 .card-body .title a {
+  display: inherit;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .card2 .product-details h4 a {
   font-weight: 500;
@@ -608,7 +620,7 @@ grid-column: 1;
 .card2 .product-links a:nth-child(2):hover {
   color: var(--yellow);
 }
-       /* rating stars starts */
+/* rating stars starts */
 /* .rating-stars {
   width: 100%;
   background: #00000082;
@@ -629,7 +641,7 @@ grid-column: 1;
 .fa-star-half-stroke {
   color: var(--yellow);
 } */
-    /* rating stars starts */
+/* rating stars starts */
 /*-------------------------- products --------------------------*/
 
 /*,,,,,,,,,,,,,,,,,,,,,,,/ product 1 \,,,,,,,,,,,,,,,,,,,,,,,,*/

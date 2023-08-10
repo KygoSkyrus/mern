@@ -66,7 +66,7 @@ const Navbar = (props) => {
       let li = document.createElement('li')
       let a = document.createElement('a')
       console.log('fff',x.toLowerCase())
-      a.href = `/category/${x.toLowerCase()}`
+      a.href = `/category/${x}`
       a.innerHTML = x
       a.classList.add('dropdown-item', 'gap-2', 'd-flex')
       li.appendChild(a)
@@ -147,7 +147,7 @@ const Navbar = (props) => {
                               <li className='categoryWithoutParent' onMouseOver={e => populateSubCategory(e)}
                               // onMouseOut={e=>clearSubCategory(e)}
                               >
-                                <a className="dropdown-item gap-2 d-flex" href="/#" data-index={i} >
+                                <a className="dropdown-item gap-2 d-flex" href={`/category/${x.name}`} data-index={i} >
                                   {x.name}
                                 </a>
                               </li>

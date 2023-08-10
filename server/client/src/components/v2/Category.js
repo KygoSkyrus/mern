@@ -1,23 +1,25 @@
-import React, { useEffect } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import dummyImg from "./../../assets/images/newImg/products/goldPhone_4d019155-e7a9-4072-8d7a-df659785f41705c1.png"
 
 const Category = () => {
     const { categoryId } = useParams()
+    const [products, setProducts] = useState()
+    const [randomNum, setRandomNum] = useState()
 
     console.log('in cat', categoryId)
-
-    useEffect(()=>{
+    useEffect(() => {
         fetch(`/api/getprodbycategory/?category=${categoryId}`)
-        .then(response => response.json())
-        .then(res => res.json())
-        .then(response=>{
-            console.log('response',response.products)
-        })
-          
-  
-    },[])
+            .then(response => response.json())
+            .then(res => {
+                console.log('response', res.products)
+                setProducts(res.products)
+                setRandomNum(Math.floor(Math.random() * (res.products?.length - 1 + 1)) + 0)
+            })
+
+    }, [])
 
 
     return (
@@ -28,33 +30,37 @@ const Category = () => {
                 <div className='row'>
                     <div className='col-12'>
                         <div className='row'>
-
-                            <div className='col-md-6 col-lg-4'>
-                                <div className='card2 card'>
-                                    <div class="card-tag">New Product</div>
-                                    <div style={{background:"whitesmoke"}}>
-                                      <img src={dummyImg} className="card-img-top" alt="..." />
-                                    </div>
-                                    <div className="card-body border-none p-0">                                  
-                                        <section className='product-catagory'>category</section>
-                                        <h4><a href="/#">New T-Shirt For Man</a></h4>
-                                        <div class="product-bottom-details">
-                                            <div class="product-price">
-                                                <small>$15.10</small>$7.99
+                            {products?.map((x, i) => {
+                                return (
+                                    <div className='col-md-6 col-lg-4'>
+                                        <div className='card2 card'>
+                                            {i + 1 === randomNum && <div class="card-tag">New Product</div>}
+                                            <div style={{ background: "#fff" }}>
+                                                <img src={x.image} className="card-img-top" alt="..." />
+                                            </div>
+                                            <div className="card-body border-none p-0">
+                                                <section className='product-catagory'>{x.category}</section>
+                                                <h4 className='title'><a href="/#">{x.name}</a></h4>
+                                                <div class="product-bottom-details">
+                                                    <div class="product-price">
+                                                        <small>${x.price}</small>${x.price - randomNum * 10 * x.price / 100}&nbsp;{randomNum * 10}% OFF
+                                                    </div>
+                                                    <div class="product-links">
+                                                        <a href="/#"><i class="fa fa-heart"></i></a>
+                                                        <a href="/#"><i class="fa fa-shopping-cart"></i></a>
+                                                    </div>
                                                 </div>
-                                            <div class="product-links">
-                                                <a href="/#"><i class="fa fa-heart"></i></a>
-                                                <a href="/#"><i class="fa fa-shopping-cart"></i></a>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-
+                                )
+                            })}
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div>Explore more</div>
 
         </>
     )
