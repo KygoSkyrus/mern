@@ -188,6 +188,23 @@ router.get('/api/getproducts', async (req, res) => {
 
 
 
+router.get('/api/getprodbycategory', async (req, res) => {
+
+    const { category } = req.query
+    console.log('categoryID', category)
+
+    PRODUCT.find({ category: category })
+        .then(res => {
+            console.log('sss', res)
+            res.send(res)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+
+})
+
+
 router.post('/api/addproducts', async (req, res) => {
 
     const { name, price, description, category, image, stock } = req.body;

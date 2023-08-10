@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Navbar = (props) => {
 
   const [categories, setCategories] = useState()
-  const [categoriesAndID, setCategoriesAndID] = useState({})
+  // const [categoriesAndID, setCategoriesAndID] = useState({})
   const [childWithoutParent, setChildWithoutParent] = useState([])
   const Badge = () => {
     if (props.data > 0) {
@@ -16,16 +16,18 @@ const Navbar = (props) => {
     }
   }
 
+//NOTE::: cannot have two columns for categories as on over on lement ffrom 1st col ypu wont be able to react the subcategory,,either put all of your subcate at theright side or separate the prent cat and cate without parent
+
   useEffect(() => {
     fetch("/api/getcategory")
       .then(response => response.json())
       .then(res => {
         console.log('res', res)
         setCategories(res)
-        let tempObject = {}
+        // let tempObject = {}
         let tempArray = []
         res.map(x => {
-          tempObject[x.name.toLowerCase()] = x._id//bcz some of categories are capitalized
+          // tempObject[x.name.toLowerCase()] = x._id//bcz some of categories are capitalized
           tempArray.push(x.name.toLowerCase())
         })
 
@@ -45,27 +47,26 @@ const Navbar = (props) => {
           }
         })
         console.log('s', tempArray)
-        setCategoriesAndID({ ...categoriesAndID, ...tempObject })
+        // setCategoriesAndID({ ...categoriesAndID, ...tempObject })//it has all categories and their id in an object, if to remove alos reove tempobj
         setChildWithoutParent([...childWithoutParent, ...tempArray])
       })
   }, [])
 
   //can put this in usememo
   const populateSubCategory = (e) => {
-    // console.log('populateSubCategory', categoriesAndID)
+     console.log('populateSubCategory',e.target, e.target.dataset.index)
 
     let childCategoryElem = document.querySelector('.child-category')
 
     childCategoryElem.innerHTML = ''//clearing the previous subCat
-    // if(childCategoryElem.innerHTML===""){
-    //   console.log('is empty')
     childCategoryElem.classList.remove('display-none')
-    //   }
-    console.log('f', childCategoryElem)
+
+   
     categories[e.target.dataset.index].subCategory.map(x => {
       let li = document.createElement('li')
       let a = document.createElement('a')
-      a.href = `/category/${categoriesAndID[x.toLowerCase()]}`//change this later
+      console.log('fff',x.toLowerCase())
+      a.href = `/category/${x.toLowerCase()}`
       a.innerHTML = x
       a.classList.add('dropdown-item', 'gap-2', 'd-flex')
       li.appendChild(a)
@@ -143,7 +144,7 @@ const Navbar = (props) => {
                           // console.log('djdjd', childWithoutParent)
                           if (childWithoutParent.includes(x.name.toLowerCase())) {
                             return (
-                              <li onMouseOver={e => populateSubCategory(e)}
+                              <li className='categoryWithoutParent' onMouseOver={e => populateSubCategory(e)}
                               // onMouseOut={e=>clearSubCategory(e)}
                               >
                                 <a className="dropdown-item gap-2 d-flex" href="/#" data-index={i} >

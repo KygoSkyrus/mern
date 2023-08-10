@@ -386,8 +386,7 @@ something wide must go here
 
 
 {/* PRODUCT 9 */}
-
-<div class="product-card">
+{/* <div class="product-card">
         <div class="badge-pc">New Product</div>
         <div class="product-tumb">
             <img src="https://cdn-icons-png.flaticon.com/512/2806/2806251.png" alt=''/>
@@ -404,7 +403,7 @@ something wide must go here
                 </div>
             </div>
         </div>
-    </div>
+    </div> */}
    {/* PRODUCT 9 */}
 
 

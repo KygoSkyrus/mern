@@ -354,21 +354,51 @@ img {
 .dropdownCategoryUL {
   right: 0;
   transform-style: preserve-3d;
+  min-width: 540px;
 }
+.dropdownCategoryUL li:hover {
+  background-color: #e9ecef;
+}
+.dropdownCategoryUL li a:hover{
+  background-color: unset !important;
+}
+/* .categoryWithoutParent:nth-child(n+0){
+grid-column: 1;
+}
+.parentCategoryList:nth-child(n+12){
+  grid-column: 2;
+  } */
 .parentCategoryList {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.parentCategoryList::after {
-  display: inline-block;
-  margin-left: 0.255em;
-  vertical-align: 0.255em;
+.parentCategoryList a::before {
   content: "";
-  border-top: 0.3em solid #adadad;
-  border-right: 0.3em solid transparent;
-  border-bottom: 0;
-  border-left: 0.3em solid transparent;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(16px,-50%);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 512' style='fill: %23adadad'%3E%3Cpath d='M96 480c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L242.8 256L73.38 86.63c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25l-192 192C112.4 476.9 104.2 480 96 480z'/%3E%3C/svg%3E");
+  width: 6px;
+  height: 9px;
+  visibility: hidden;
+  opacity: 0;
+  z-index: 1;
+  transition: var(--transition);
+}
+.parentCategoryList a{
+  /* transform: translateX(0); */
+}
+.parentCategoryList:hover a::before {
+  visibility: visible;
+  opacity: 1;
+  /* transform: translate(0px,-50%); */
+}
+.parentCategoryList:hover a{
+  /* transform: translateX(16px); */
+  padding-left: 26px
 }
 .dropdownCategoryUL li a {
   text-transform: capitalize;
@@ -507,13 +537,79 @@ img {
 /* BANNER SLIDER */
 
 /*-------------------------- products --------------------------*/
+.card2{
+  border:none !important;
+  /* box-shadow: var(--shadow-medium) !important; */
+  background-color: inherit;
+  padding-bottom: 25px;
+}
+.card-tag {
+  position: absolute;
+  left: 0;
+  top: 20px;
+  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 700;
+  background: #ec3b3b;
+  color: #ffffff;
+  padding: 3px 10px;
+}
+
 .card2 .card-body {
   position: relative;
+  padding: 10px;
 }
-.card-body .card-title {
-  font-size: 14px;
+.card2 .product-catagory {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 6px;
 }
-.rating-stars {
+.card2 .product-details h4 a {
+  font-weight: 500;
+  display: block;
+  margin-bottom: 18px;
+  text-transform: uppercase;
+  color: var(--black-300);
+  text-decoration: none;
+  transition: 0.3s;
+}
+.card2 .product-bottom-details {
+  border-top: 1px solid #d6d6d6;
+  padding-top: 3px;
+  margin-top: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.card2 .product-price {
+  font-size: 18px;
+  color: #f52544;
+  font-weight: 600;
+}
+.card2 .product-price small {
+  font-size: 80%;
+  font-weight: 400;
+  text-decoration: line-through;
+  display: inline-block;
+  margin-right: 5px;
+}
+.card2 .product-links a {
+  display: inline-block;
+  margin-left: 5px;
+  color: var(--white-400);
+  transition: 0.3s;
+  font-size: 17px;
+}
+.card2 .product-links a:nth-child(1):hover {
+  color: #f52544;
+}
+.card2 .product-links a:nth-child(2):hover {
+  color: var(--yellow);
+}
+       /* rating stars starts */
+/* .rating-stars {
   width: 100%;
   background: #00000082;
   display: flex;
@@ -529,11 +625,11 @@ img {
   top: -26px;
   z-index: 0;
 }
-
 .fa-star,
 .fa-star-half-stroke {
   color: var(--yellow);
-}
+} */
+    /* rating stars starts */
 /*-------------------------- products --------------------------*/
 
 /*,,,,,,,,,,,,,,,,,,,,,,,/ product 1 \,,,,,,,,,,,,,,,,,,,,,,,,*/
@@ -1489,7 +1585,7 @@ main {
 /* MACINTOSH */
 
 /* PRODUCT 9 */
-.product-card {
+/* .product-card {
   width: 380px;
   position: relative;
   box-shadow: 0 2px 5px #333;
@@ -1596,7 +1692,7 @@ main {
 
 .product-links a:hover {
   color: #f52544;
-}
+} */
 /* PRODUCT 9 */
 
 /* CATEGORGORY STRIPS */
