@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-import dummyImg from "./../../assets/images/newImg/products/goldPhone_4d019155-e7a9-4072-8d7a-df659785f41705c1.png"
 
 const Category = () => {
     const { categoryId } = useParams()
@@ -16,7 +15,7 @@ const Category = () => {
             .then(res => {
                 console.log('response', res.products)
                 setProducts(res.products)
-                setRandomNum(Math.floor(Math.random() * (res.products?.length - 1 + 1)) + 0)
+                setRandomNum(Math.floor(Math.random() * (res.products?.length - 1 + 1)) + 1)
             })
 
     }, [])
@@ -40,10 +39,10 @@ const Category = () => {
                                             </div>
                                             <div className="card-body border-none p-0">
                                                 <section className='product-catagory'>{x.category}</section>
-                                                <h4 className='title'><a href="/#">{x.name}</a></h4>
+                                                <h4 className='title'><a href={`/product/${x._id}`}>{x.name}</a></h4>
                                                 <div class="product-bottom-details">
                                                     <div class="product-price">
-                                                        <small>${x.price}</small>${x.price - randomNum * 10 * x.price / 100}&nbsp;{randomNum * 10}% OFF
+                                                        <small>${x.price}</small>${Math.floor(x.price - randomNum * 10 * x.price / 100)}&nbsp;{randomNum * 10}% OFF
                                                     </div>
                                                     <div class="product-links">
                                                         <a href="/#"><i class="fa fa-heart"></i></a>

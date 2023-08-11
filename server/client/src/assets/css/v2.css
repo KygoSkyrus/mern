@@ -116,6 +116,7 @@ button {
   outline: none;
   background: none;
   text-decoration: none;
+  color: #414141;
 }
 h1,
 h2,
@@ -562,8 +563,8 @@ grid-column: 1;
 .card2 .product-catagory {
   display: block;
   font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
+  /* font-weight: 700; */
+  text-transform: capitalize;
   margin-top: 12px;
   margin-bottom: -2px;
 }

@@ -19,7 +19,7 @@
 
 
 
-
+- add a message that selling fast or something when stock is less than 5
 
   - once all this done than we will put things in my orders section,thta if delivered, or pending
 
@@ -46,12 +46,9 @@
 - grey out when products when they are out of stocks
 - when new image is added,,refresh the list
 - when searching for products in the db donts send "s" ,,like only send speaker in query not speakers
-  `https://codepen.io/tag/product-card`
-- extra card [https://codepen.io/toufiq-gilani/pen/xxaVBgz]
+
 
 - for signin inputs there is a layoout img in assets folder
-
-- https://codepen.io/syrizaldev/pen/MWqJzXY
 
 - **_PRODUCT PAGE_** https://codepen.io/filipdanisko/pen/VadXXq
 
@@ -81,7 +78,7 @@ in each categoyr documnet there shoudl be field 'subcategory',,and this subcateg
 - image preview background
 
 ### DEFECTS
-
+- dont focus on discount now,, let irt as it is,,later add  a field in product form where seller will update discount
 - one backspaceing in otp inputs,,two digits are getting erased
 - if product has more tha one image sthen its not uploading the other images on slow network,,its an issue
 - there should be an option to delete a prooduct but before deleting chekc thta produict is is an anyone's cart or is pending to be deleived, if not only than let it be deleted
