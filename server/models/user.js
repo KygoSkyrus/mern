@@ -5,9 +5,13 @@ const jwt = require('jsonwebtoken');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    name: {
+    firstname: {
         type: String,
         required: true,
+    },
+    lastname: {
+        type: String,
+        required: false,
     },
     email: {
         type: String,
@@ -18,20 +22,35 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
+    phone: {
+        type: Number,
+        required: false,
+    },
+    address: {
+        house: String,
+        street: String,
+        city: String,
+        pincode: String,
+        state: String,
+        country: String,
+    },
     role: {
         type: String,
         enum: ['user', 'admin'],
         default: 'user',
     },
+    wishlist: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'PRODUCT',
+    }],
     cart: [{
         productId: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Product',
+            ref: 'PRODUCT',
             required: true,
         },
         quantity: {
             type: Number,
-            required: true,
             default: 1,
         },
     }],
@@ -39,7 +58,7 @@ const userSchema = new Schema({
         products: [{
             productId: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: 'Product',
+                ref: 'PRODUCT',
                 required: true,
             },
             quantity: {
@@ -64,7 +83,7 @@ const userSchema = new Schema({
             }
         }
     ]
-},{collection:"users"});
+}, { collection: "users" });
 
 //hashing password
 userSchema.pre('save', async function (next) {
@@ -87,4 +106,4 @@ userSchema.methods.generateAuthToken = async function () {
 }
 
 //connecting with collection
-module.exports = mongoose.model('USER', userSchema); 
+module.exports = mongoose.model('USER', userSchema);

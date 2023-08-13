@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 router.use(cookieParser());
 
-const User = require('../models/user');
+const USER = require('../models/user');
 
 const dotenv = require('dotenv');
 dotenv.config({ path: './env/config.env' });
@@ -196,13 +196,14 @@ router.get('/api/getprodbycategory', async (req, res) => {
     PRODUCT.find({ category: category })
         .then(response => {
             console.log('sss', response)
-            res.send({products:response})
+            res.send({ products: response })
         })
         .catch(err => {
             console.log(err)
         })
 
 })
+
 
 
 router.get('/api/getprodbyid', async (req, res) => {
@@ -213,7 +214,7 @@ router.get('/api/getprodbyid', async (req, res) => {
     PRODUCT.find({ _id: prodId })
         .then(response => {
             console.log('sss', response)
-            res.send({product:response})
+            res.send({ product: response })
         })
         .catch(err => {
             console.log(err)
@@ -428,6 +429,85 @@ router.post("/productvisibility", async (req, res) => {
         console.log(err);
     }
 });
+
+
+///USER----
+// router.post("/api/newuser", async (req, res) => {
+// })
+async function aaa() {
+
+
+    let user = new USER({
+        firstname: "dummy",
+        lastname: "",
+        email: "dummy@email.com",
+        password: "dummy",
+        phone: "9999777888",
+        address: {
+            house: "511",
+            street: "Mapel street",
+            city: "Amsterdam",
+            pincode: "163301",
+            state: "New Orleans",
+            country: "USA",
+        },
+        role: "user",
+        wishlist: ['64c698900ef6832aa59e93bb'],
+        cart: [{
+            productId: "64c68fbe2dd4e9cac1dcf1d7",
+        }],
+        orders: [{
+            products: [{
+                productId: "64c698900ef6832aa59e93bb",
+                quantity: "3",
+            }],
+            total: 358894,
+        }],
+
+    })
+
+
+    user.save()
+        .then(res => console.log('ressss;d;d;d', res))
+
+    // USER.find({})
+    //     .then(res => {
+    //         console.log("-3-3-", res)
+    //     })
+
+    // USER
+    //     .findOne({ email: 'dummy@email.com' })
+    //     .populate({
+    //         path: 'wishlist',
+    //         // select:
+    //         //     'firstnname lastname phone',//this will return only required stuff from referred document
+    //     }) // only works if we pushed refs to person.eventsAttended
+    //     .exec(function (err, person) {
+    //         if (err) console.log(err);
+    //         console.log(person);
+    //     });
+
+}
+
+router.get("/aaa", async (req, res) => {
+    aaa()
+})
+
+
+
+router.post('/api/getcartitems', async (req, res) => {
+
+    const { user } = req.body;
+    console.log('user', user)
+    USER.findOne({ email: user })
+        .populate('cart.productId') // only works if we pushed refs to person.eventsAttended
+        .exec(function (err, person) {
+            if (err) console.log(err);
+            console.log(person);
+        });
+
+})
+
 
 
 //deleting blog record

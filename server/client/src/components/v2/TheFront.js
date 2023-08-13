@@ -10,6 +10,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Category from './Category';
 import ProductPage from './ProductPage';
+import Cart from './Cart';
 
 const TheFront = ({ dl }) => {
     return (
@@ -29,6 +30,7 @@ const TheFront = ({ dl }) => {
                 <Route path="/" exact element={<Homepage />} />
                 <Route path="/category/:categoryId" exact element={<Category />} />
                 <Route path="/product/:productId" exact element={<ProductPage />} />
+                <Route path="/cart" exact element={<Cart />} />
 
                 {/* <Route path="/:id" exact element={<SingleBlog  />} /> */}
             </Routes>

@@ -38,11 +38,22 @@ const Category = () => {
                                                 <img src={x.image} className="card-img-top" alt="..." />
                                             </div>
                                             <div className="card-body border-none p-0">
+                                                {/* this is not needed the caegory,,instead at the top show the whole heirarchy */}
                                                 <section className='product-catagory'>{x.category}</section>
-                                                <h4 className='title'><a href={`/product/${x._id}`}>{x.name}</a></h4>
+                                                <h4 className='title' title={x.name}><a href={`/product/${x._id}`}>{x.name}</a></h4>
                                                 <div class="product-bottom-details">
                                                     <div class="product-price">
-                                                        <small>${x.price}</small>${Math.floor(x.price - randomNum * 10 * x.price / 100)}&nbsp;{randomNum * 10}% OFF
+                                                        <span className='extra-small' style={{ color: "#ec3b3b" }}>&#8377;</span>
+                                                        <small>
+                                                            {x.price}
+                                                        </small>
+                                                        <span>
+                                                            <span style={{ fontSize: "12px" }}>&#8377;</span>
+                                                            {Math.floor(x.price - randomNum * 10 * x.price / 100)}
+                                                        </span>
+                                                        <span className='discount-percent mx-2'>
+                                                            {randomNum * 10}% off
+                                                        </span>
                                                     </div>
                                                     <div class="product-links">
                                                         <a href="/#"><i class="fa fa-heart"></i></a>

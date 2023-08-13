@@ -6,18 +6,13 @@
   - put in layout all the individual component
   - category in navbar
 
-
 - add user stuff and then user db ,,the wishlist cart order will go there
-
-
 
   - add toast when addeed to cart or whishlist ;;finihs th homepage layout howeever it looks,,need to get done with that and then check add product payement cart orders etc and also the user account form and firebase login
 
   -the check add to cart of procut
 
   - also adding to wishlight
-
-
 
 - add a message that selling fast or something when stock is less than 5
 
@@ -47,6 +42,8 @@
 - when new image is added,,refresh the list
 - when searching for products in the db donts send "s" ,,like only send speaker in query not speakers
 
+**_product page_** thick about converting the navbar into a small cicle hovering and on click it expands and become the navbar
+s
 
 - for signin inputs there is a layoout img in assets folder
 
@@ -78,7 +75,8 @@ in each categoyr documnet there shoudl be field 'subcategory',,and this subcateg
 - image preview background
 
 ### DEFECTS
-- dont focus on discount now,, let irt as it is,,later add  a field in product form where seller will update discount
+
+- dont focus on discount now,, let irt as it is,,later add a field in product form where seller will update discount
 - one backspaceing in otp inputs,,two digits are getting erased
 - if product has more tha one image sthen its not uploading the other images on slow network,,its an issue
 - there should be an option to delete a prooduct but before deleting chekc thta produict is is an anyone's cart or is pending to be deleived, if not only than let it be deleted
@@ -109,6 +107,7 @@ NOTE;:::the issue that withou internet you are not abke to acces db,,,setup the 
 https://www.freepik.com/free-photos-vectors/sale-png
 
 ### forever notes
+
 - when you have to put a stick position to a navabar or any element remember that the parent shoudl hav emore height than the element to be sticky and on sticky element give top properyty ,,only sticky wont do anything you need top,,
 - https://codepen.io/polypane/full/LYdvPze
 - https://polypane.app/css-3d-transform-examples/
@@ -116,5 +115,3 @@ https://www.freepik.com/free-photos-vectors/sale-png
   https://codepen.io/blazit/pen/BaGmmaP
 
 - chamnging div can be implemented with this https://codepen.io/TheMOZZARELLA/pen/dyZZKqE
-
-

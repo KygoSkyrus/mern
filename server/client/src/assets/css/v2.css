@@ -66,7 +66,7 @@
   /* notused but can be useful */
 
   list-style: none;
-  list-style-type: none;
+  /* list-style-type: none; */
   text-decoration: none;
 }
 
@@ -598,7 +598,6 @@ grid-column: 1;
 }
 .card2 .product-price {
   font-size: 18px;
-  color: #f52544;
   font-weight: 600;
 }
 .card2 .product-price small {
@@ -607,6 +606,18 @@ grid-column: 1;
   text-decoration: line-through;
   display: inline-block;
   margin-right: 5px;
+  color: #f52544;
+}
+.extra-small {
+  font-size: 10px;
+}
+.discount-percent {
+  background-color: var(--yellow);
+  color: #fff;
+  font-size: 14px;
+  padding: 0 4px;
+  display: inline-flex;
+  border-radius: 1px;
 }
 .card2 .product-links a {
   display: inline-block;
@@ -644,6 +655,50 @@ grid-column: 1;
 } */
 /* rating stars starts */
 /*-------------------------- products --------------------------*/
+
+/* PRODUCT PAGE */
+.p-img-sticky {
+  position: sticky;
+  top: 70px;
+  height: fit-content;
+}
+.additional-images {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.selected-border {
+  border: 1px solid var(--yellow);
+  box-shadow: var(--shadow-large);
+}
+
+.buy-btn,
+.cart-btn {
+  background-color: var(--color-yellow);
+  color: #fff;
+}
+.wishlist-btn {
+  background-color: white;
+  color: grey;
+}
+.offers p,
+.services p {
+  text-wrap: nowrap;
+}
+.offers h5,
+.services h6,
+.description h5 {
+  text-decoration: underline;
+}
+
+.description li {
+  display: flex;
+}
+.description .disc {
+  transform: translateX(-12px);
+}
+/* PRODUCT PAGE */
 
 /*,,,,,,,,,,,,,,,,,,,,,,,/ product 1 \,,,,,,,,,,,,,,,,,,,,,,,,*/
 
