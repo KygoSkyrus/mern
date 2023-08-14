@@ -3,10 +3,30 @@ import React, { useState } from 'react'
 
 
 import { initializeApp } from 'firebase/app';
-import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import { getAuth, RecaptchaVerifier, signInWithPhoneNumber , sendSignInLinkToEmail } from "firebase/auth";
 
 
 import loginImg from "./../../assets/images/login-cover.svg"
+
+
+
+//FIREBASE_________________________________
+const firebaseConfig = {
+    apiKey: "AIzaSyD356cys4X2N0DHboL4T8MZCDR1BuN2n88",
+    authDomain: "shopp-itt.firebaseapp.com",
+    projectId: "shopp-itt",
+    storageBucket: "shopp-itt.appspot.com",
+    messagingSenderId: "500784370915",
+    appId: "1:500784370915:web:5433a992ab3e3229daa1d6",
+    measurementId: "G-DVFRLB25DQ"
+};
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth();
+// To apply the default browser preference instead of explicitly setting it.
+
+
+
 
 const SignIn = () => {
 
@@ -100,21 +120,6 @@ const SignIn = () => {
     const loginWithNumber = async (e) => {
         e.preventDefault(e)
 
-        //FIREBASE_________________________________
-        const firebaseConfig = {
-            apiKey: "AIzaSyD356cys4X2N0DHboL4T8MZCDR1BuN2n88",
-            authDomain: "shopp-itt.firebaseapp.com",
-            projectId: "shopp-itt",
-            storageBucket: "shopp-itt.appspot.com",
-            messagingSenderId: "500784370915",
-            appId: "1:500784370915:web:5433a992ab3e3229daa1d6",
-            measurementId: "G-DVFRLB25DQ"
-        };
-        const app = initializeApp(firebaseConfig);
-
-        const auth = getAuth();
-        // To apply the default browser preference instead of explicitly setting it.
-
         auth.useDeviceLanguage();
         //FIREBASE_________________________________
 
@@ -166,28 +171,76 @@ const SignIn = () => {
     }
 
 
+    const emailVerification=()=>{
+        const actionCodeSettings = {
+            // URL you want to redirect back to. The domain (www.example.com) for this
+            // URL must be in the authorized domains list in the Firebase Console.
+            url: 'https://www.example.com/finishSignUp?cartId=1234',
+            // This must be true.
+            handleCodeInApp: true,
+            iOS: {
+              bundleId: 'com.example.ios'
+            },
+            android: {
+              packageName: 'com.example.android',
+              installApp: true,
+              minimumVersion: '12'
+            },
+            dynamicLinkDomain: 'example.page.link'
+          };
+
+          sendSignInLinkToEmail(auth, email, actionCodeSettings)
+  .then(() => {
+    // The link was successfully sent. Inform the user.
+    // Save the email locally so you don't need to ask the user for it again
+    // if they open the link on the same device.
+    window.localStorage.setItem('emailForSignIn', email);
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ...
+  });
+
+
+    }
+
+
 
 
     /////////////////
     return (
         <>
-            <div className="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
-                <div className="modal-dialog modal-dialog-centered w-75" style={{maxWidth:"80%"}}>
+            <div className="modal fade signin" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
+                <div className="modal-dialog modal-dialog-centered w-75" style={{ maxWidth: "80%" }}>
                     <div className="modal-content d-flex flex-row">
                         <div className='w-50 d-flex bg-dark'>
                             <img src={loginImg} alt='' />
                         </div>
                         <div className='w-50'>
-                            <div className="modal-header">
+                            {/* <div className="modal-header">
                                 <h5 className="modal-title" id="exampleModalToggleLabel">SIGN IN</h5>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeSignin"></button>
-                            </div>
+                            </div> */}
 
-                            <div className="modal-body">
+                            <div className="modal-body h-100">
 
-                                <div className="padding" >
+
+                                <div className='d-flex justify-content-center align-items-center flex-column h-100'>
+                                    <h5 className='text-dark'>Create an account</h5>
+                                    <section>Enter your email below to create your account</section>
+                                    <input type="email" className="form-control my-2" name="email" id="email" placeholder="Email address" aria-describedby="emailHelp" value={email} onChange={(e) => setemail(e.target.value)} />
+                                    <button className='btn btn-outline-warning w-100' onClick={()=>}>Create account</button>
+                                    <section className='my-3 text-end w-100'>Exsiting user? Signin</section>
+
+                                    <section className='continue-with'>OR CONTINUE WITH</section>
+
+                                </div>
+
+                                {/* <div className="padding" >
                                     <form method="POST">
-                                        <div className="mb-3">
+                                        <div className= "mb-3">
                                             <input type="email" className="form-control" name="email" id="email" placeholder="Email address*" aria-describedby="emailHelp" value={email} onChange={(e) => setemail(e.target.value)} />
                                         </div>
                                         <div className="mb-3">
@@ -195,17 +248,14 @@ const SignIn = () => {
                                         </div>
                                         <button type="submit" className="btn btn-outline-warning w-100" onClick={loginuser}>SIGN IN</button>
                                     </form>
-                                </div>
+                                </div> */}
 
-                                <div className="padding" >
+                                {/* <div className="padding" >
                                     <form >
                                         <div className="mb-3">
                                             <input type="number" className="form-control" name="phone" id="phone" placeholder="Phone Number*" aria-describedby="emailHelp" value={phone} onChange={(e) => setphone(e.target.value)} />
                                         </div>
-                                        <div id='sign-in-button' className='d-none'>ss</div>
-                                        {/* <div className="mb-3">
-                                        <input type="password" className="form-control" id="password" name="password" placeholder="Password*" value={password} onChange={(e) => setpassword(e.target.value)} />
-                                    </div> */}
+                                        <div id='sign-in-button' className='d-none'>ss</div>                             
                                         <div className="position-relative">
                                             <div className="p-2 text-center">
                                                 <h6>Please enter the one time password <br /> to verify your account</h6>
@@ -224,13 +274,13 @@ const SignIn = () => {
 
                                         <button className="btn btn-outline-warning w-100" onClick={loginWithNumber}>LOG IN</button>
                                     </form>
-                                </div>
+                                </div> */}
 
 
                             </div>
-                            <div className="modal-footer">
+                            {/* <div className="modal-footer">
                                 <a data-bs-target="#exampleModalToggle2" href="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">New to Shopp-itt? create new account</a>
-                            </div>
+                            </div> */}
                         </div>
 
 

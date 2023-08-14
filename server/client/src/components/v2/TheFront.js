@@ -13,6 +13,11 @@ import ProductPage from './ProductPage';
 import Cart from './Cart';
 
 const TheFront = ({ dl }) => {
+
+
+    
+
+
     return (
         <>
             <Navbar data={dl} />
