@@ -3,10 +3,11 @@ import React, { useState } from 'react'
 
 
 import { initializeApp } from 'firebase/app';
-import { getAuth, RecaptchaVerifier, signInWithPhoneNumber , sendSignInLinkToEmail } from "firebase/auth";
+import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, sendSignInLinkToEmail, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 
 import loginImg from "./../../assets/images/login-cover.svg"
+import { Navigate, useNavigate } from 'react-router-dom';
 
 
 
@@ -23,6 +24,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth();
+const provider = new GoogleAuthProvider();
 // To apply the default browser preference instead of explicitly setting it.
 
 
@@ -35,6 +37,8 @@ const SignIn = () => {
 
     const [phone, setphone] = useState();
     const [otp, setOtp] = useState(["", "", "", "", "", ""])
+
+    const navigate = useNavigate()
 
     const loginuser = async (e) => {
         e.preventDefault();
@@ -76,6 +80,7 @@ const SignIn = () => {
         const newOtpValues = [...otp]
 
         const inputs = document.querySelectorAll('#otp > *[id]');
+        console.log('inp', inputs)
 
         for (let i = 0; i < inputs.length; i++) {
 
@@ -90,9 +95,10 @@ const SignIn = () => {
                     }
                 } else {
                     //for the last input and if its not empty
-                    if (i === inputs.length - 1 && inputs[i].value !== '') {
-                        return true;
-                    } else if (event.keyCode > 47 && event.keyCode < 58) {
+                    // if (i === inputs.length - 1 && inputs[i].value !== '') {
+                    //     return true;
+                    // } else 
+                    if (event.keyCode > 47 && event.keyCode < 58) {
                         //if user enters any digits
                         inputs[i].value = event.key;
                         newOtpValues[i] = event.key;//setting otp state
@@ -158,6 +164,7 @@ const SignIn = () => {
     }
 
     function onValidate(e) {
+        console.log('mmm', otp)
         window.confirmationResult.confirm(otp.join("")).then((result) => {
             const user = result.user;
             console.log('User signed in successfully.', user)//returned data from firebase on confirmation
@@ -171,42 +178,88 @@ const SignIn = () => {
     }
 
 
-    const emailVerification=()=>{
+    const emailVerification = () => {
+        console.log('eeee', email)
         const actionCodeSettings = {
             // URL you want to redirect back to. The domain (www.example.com) for this
             // URL must be in the authorized domains list in the Firebase Console.
-            url: 'https://www.example.com/finishSignUp?cartId=1234',
+            url: 'https://shopp-itt.firebaseapp.com',
             // This must be true.
             handleCodeInApp: true,
-            iOS: {
-              bundleId: 'com.example.ios'
-            },
-            android: {
-              packageName: 'com.example.android',
-              installApp: true,
-              minimumVersion: '12'
-            },
-            dynamicLinkDomain: 'example.page.link'
-          };
+            // iOS: {
+            //     bundleId: 'com.example.ios'
+            // },
+            // android: {
+            //     packageName: 'com.example.android',
+            //     installApp: true,
+            //     minimumVersion: '12'
+            // },
+            // dynamicLinkDomain: 'http://shopp-itt.firebaseapp.com'
+        };
 
-          sendSignInLinkToEmail(auth, email, actionCodeSettings)
-  .then(() => {
-    // The link was successfully sent. Inform the user.
-    // Save the email locally so you don't need to ask the user for it again
-    // if they open the link on the same device.
-    window.localStorage.setItem('emailForSignIn', email);
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // ...
-  });
+        sendSignInLinkToEmail(auth, email, actionCodeSettings)
+            .then(() => {
+                // The link was successfully sent. Inform the user.
+                // Save the email locally so you don't need to ask the user for it again
+                // if they open the link on the same device.
+                window.localStorage.setItem('emailForSignIn', email);
+                // ...
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // ...
+            });
 
 
     }
 
 
+    const loginWithGoogle = () => {
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                console.log(result)
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
+                // The signed-in user info.
+                console.log(token, result.user);//save this in cookie from the seever so that it will be httponly
+                //setuser(result.user);//will set the user state in redux(call api)
+
+                //setting cookies to later to identify if the user has signed in (have to set a reasonablke expiry time)
+                document.cookie = `name=${result.user.displayName};  max-age=3600; path=/`;
+                document.cookie = `email=${result.user.email};  max-age=3600; path=/`;
+
+                sessionStorage.setItem("Auth Token", token);
+
+                //when login is done
+                if (token) {
+                    //send to user profile page
+                    navigate('/user')
+                }
+
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                const email = error.email;
+                const credential = GoogleAuthProvider.credentialFromError(error);
+                console.log(
+                    "errorCode:",
+                    errorCode,
+                    ",",
+                    "errorMessage: ",
+                    errorMessage,
+                    ",",
+                    "email: ",
+                    email,
+                    ",",
+                    "credential:",
+                    credential
+                );
+            });
+
+    }
 
 
     /////////////////
@@ -231,16 +284,21 @@ const SignIn = () => {
                                     <h5 className='text-dark'>Create an account</h5>
                                     <section>Enter your email below to create your account</section>
                                     <input type="email" className="form-control my-2" name="email" id="email" placeholder="Email address" aria-describedby="emailHelp" value={email} onChange={(e) => setemail(e.target.value)} />
-                                    <button className='btn btn-outline-warning w-100' onClick={()=>}>Create account</button>
+                                    <button className='btn btn-outline-warning w-100' onClick={emailVerification}>Create account</button>
                                     <section className='my-3 text-end w-100'>Exsiting user? Signin</section>
 
-                                    <section className='continue-with'>OR CONTINUE WITH</section>
+                                    <section className='continue-with position-relative w-100 text-center'>
+                                        <span >OR CONTINUE WITH</span>
+                                        <section></section>
+                                    </section>
+
+                                    <button className='btn btn-outline-info w-100 m-2' onClick={loginWithGoogle}>Google</button>
 
                                 </div>
 
                                 {/* <div className="padding" >
                                     <form method="POST">
-                                        <div className= "mb-3">
+                                        <div className="mb-3">
                                             <input type="email" className="form-control" name="email" id="email" placeholder="Email address*" aria-describedby="emailHelp" value={email} onChange={(e) => setemail(e.target.value)} />
                                         </div>
                                         <div className="mb-3">
@@ -255,7 +313,7 @@ const SignIn = () => {
                                         <div className="mb-3">
                                             <input type="number" className="form-control" name="phone" id="phone" placeholder="Phone Number*" aria-describedby="emailHelp" value={phone} onChange={(e) => setphone(e.target.value)} />
                                         </div>
-                                        <div id='sign-in-button' className='d-none'>ss</div>                             
+                                        <div id='sign-in-button' className='d-none'>ss</div>
                                         <div className="position-relative">
                                             <div className="p-2 text-center">
                                                 <h6>Please enter the one time password <br /> to verify your account</h6>
