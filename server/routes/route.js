@@ -25,28 +25,30 @@ const CATEGORY = require('../models/category')
 /*************routes***************/
 
 //signup 
-router.post('/signup', async (req, res) => {
+router.post('/api/signup', async (req, res) => {
 
-    const { firstName, lastName, email, password } = req.body;
+    const {firstname, lastname, email,
+        photo } = req.body;
 
     //console.log(firstName, lastName, email, password);
 
-    if (!firstName || !lastName || !email || !password) {
-        return res.status(422).json({ error: "fill all details" });
-    }
+    // if (!firstName || !lastName || !email || !password) {
+    //     return res.status(422).json({ error: "fill all details" });
+    // }
 
     try {
-        const userExist = await User.findOne({ email: email });
+        const userExist = await USER.findOne({ email: email });
 
         if (userExist) {
             return res.status(422).json({ error: "email already exists" });
         }
 
-        const user = new User({ firstName, lastName, email, password });
+        const user = new USER({ firstname:firstname, lastname:lastname, email:email,  avtar:photo  });
 
         //hashing password
 
-        await user.save();
+        const response = await user.save();
+        console.log('dddd',response)
 
         const token = await user.generateAuthToken();
         //console.log(token);
@@ -59,7 +61,7 @@ router.post('/signup', async (req, res) => {
             httpOnly: true
         });
 
-        res.status(201).json({ message: "user register successfully" })
+        res.status(201).json({ is_user_created: true })
 
     } catch (err) {
         console.log(err);

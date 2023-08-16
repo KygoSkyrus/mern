@@ -13,14 +13,18 @@ const userSchema = new Schema({
         type: String,
         required: false,
     },
+    avtar: {
+        type: String,
+        required: false,
+    },
     email: {
         type: String,
         required: true,
-        unique: true,
+        // unique: true,
     },
     password: {
         type: String,
-        required: true,
+        required: false,
     },
     phone: {
         type: Number,
@@ -47,7 +51,7 @@ const userSchema = new Schema({
         productId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'PRODUCT',
-            required: true,
+            required: false,
         },
         quantity: {
             type: Number,
@@ -59,16 +63,16 @@ const userSchema = new Schema({
             productId: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'PRODUCT',
-                required: true,
+                required: false,
             },
             quantity: {
                 type: Number,
-                required: true,
+                required: false,
             },
         }],
         total: {
             type: Number,
-            required: true,
+            required: false,
         },
         createdAt: {
             type: Date,
@@ -98,6 +102,7 @@ userSchema.methods.generateAuthToken = async function () {
     try {
         let token = jwt.sign({ _id: this._id }, process.env.SECRETKEY);//to generrate token
         this.tokens = this.tokens.concat({ token: token });//here the second token is the token generated in the above line
+        console.log('did i ran')
         await this.save();
         return token;
     } catch (err) {

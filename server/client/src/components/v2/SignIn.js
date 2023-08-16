@@ -216,6 +216,10 @@ const SignIn = () => {
 
 
     const loginWithGoogle = () => {
+
+
+
+
         signInWithPopup(auth, provider)
             .then((result) => {
                 console.log(result)
@@ -225,17 +229,51 @@ const SignIn = () => {
                 // The signed-in user info.
                 console.log(token, result.user);//save this in cookie from the seever so that it will be httponly
                 //setuser(result.user);//will set the user state in redux(call api)
+                const photoURL = result.user.photoURL;
+                console.log('phot',photoURL)
 
                 //setting cookies to later to identify if the user has signed in (have to set a reasonablke expiry time)
-                document.cookie = `name=${result.user.displayName};  max-age=3600; path=/`;
-                document.cookie = `email=${result.user.email};  max-age=3600; path=/`;
+                // document.cookie = `name=${result.user.displayName};  max-age=3600; path=/`;
+                // document.cookie = `email=${result.user.email};  max-age=3600; path=/`;
 
                 sessionStorage.setItem("Auth Token", token);
 
                 //when login is done
                 if (token) {
-                    //send to user profile page
-                    navigate('/user')
+                    console.log('before tokem')
+
+                    let dname = result.user.displayName.split(" ")
+        let lastname = ''
+        let firstname=dname[0]
+        if (dname.length > 1) {
+            lastname = dname[dname.length - 1]
+        }
+                    
+        fetch('/api/signup', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                firstname,
+                lastname,
+                email:result.user.email,
+                photo:result.user.photoURL,
+            })
+        })
+        .then(response=>response.json())
+        .then(res=>{
+            console.log('signup res',res)
+            
+
+        })
+
+
+
+
+                    //document.querySelector('.modal-backdrop').click()//not working use disptach
+                    // navigate('/user', { state: { displayName:result.user.displayName, email:result.user.email,photo:result.user.photoURL} });//insead of using navigate,save the necessary info in state
+                    //user should be saved here with basic details and when the serrver responsds successfully then navigate to user page for furter info
                 }
 
             })
