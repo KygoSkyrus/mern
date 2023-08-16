@@ -24,11 +24,38 @@ const CATEGORY = require('../models/category')
 
 /*************routes***************/
 
+// const expiresIn = 3600; // 1 hour
+// // Generate the JWT
+// const token = jwt.sign(userData, 'your_secret_key', { expiresIn });
+router.get('/api/getUserInfo', (req, res) => {
+    const token = req.cookies.jwt;
+    if (!token) {
+        return res.status(401).json({ message: 'No token provided.' });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.SECRETKEY);
+        console.log('decoded', decoded)
+        // Check if the token is expired
+        if (decoded.exp <= Date.now() / 1000) {
+            return res.status(401).json({ message: 'Token has expired.' });
+        }
+
+        // Token is valid, user is signed in
+        res.json({ message: 'Access granted.' });//do the thing here...get theuser from db from the user id decoded from token
+    } catch (error) {
+        // Invalid token
+        res.status(401).json({ message: 'Invalid token.' });
+    }
+});
+
+
+
 //signup 
+//i dont think jwt is doing anything here
 router.post('/api/signup', async (req, res) => {
 
-    const {firstname, lastname, email,
-        photo } = req.body;
+    const { firstname, lastname, email, photo } = req.body;
 
     //console.log(firstName, lastName, email, password);
 
@@ -43,12 +70,12 @@ router.post('/api/signup', async (req, res) => {
             return res.status(422).json({ error: "email already exists" });
         }
 
-        const user = new USER({ firstname:firstname, lastname:lastname, email:email,  avtar:photo  });
+        const user = new USER({ firstname: firstname, lastname: lastname, email: email, avtar: photo });
 
         //hashing password
 
         const response = await user.save();
-        console.log('dddd',response)
+        console.log('dddd', response)
 
         const token = await user.generateAuthToken();
         //console.log(token);
@@ -277,8 +304,9 @@ router.post('/api/editproduct', async (req, res) => {
 
 async function xxx() {
     console.log('xxx')
+    USER.find({}).then(res => console.log('xxxxx', res))
 
-    // CATEGORY.updateMany(
+    // CATEGORY.updateMany( 
     //     { subCategory: '' }, // Filter documents with empty strings in the array
     //     { $pull: { subCategory: '' } } // Pull (remove) empty strings from the array
     // )

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // import SignUp from './SignUp';
 
 
@@ -39,6 +39,24 @@ const SignIn = () => {
     const [otp, setOtp] = useState(["", "", "", "", "", ""])
 
     const navigate = useNavigate()
+
+
+    useEffect(() => {
+        isUserLoggedIn()
+    }, [])
+
+    ///inside this set the user state,,and this state will be put in store and from navbar and wherre ever user loggedin isneeded than get that user
+    const isUserLoggedIn = () => {
+
+        fetch('/api/getUserInfo',)
+            .then(response => response.json())
+            .then(res => {
+                console.log('userindo', res)
+
+
+            })
+    }
+
 
     const loginuser = async (e) => {
         e.preventDefault();
@@ -229,8 +247,6 @@ const SignIn = () => {
                 // The signed-in user info.
                 console.log(token, result.user);//save this in cookie from the seever so that it will be httponly
                 //setuser(result.user);//will set the user state in redux(call api)
-                const photoURL = result.user.photoURL;
-                console.log('phot',photoURL)
 
                 //setting cookies to later to identify if the user has signed in (have to set a reasonablke expiry time)
                 // document.cookie = `name=${result.user.displayName};  max-age=3600; path=/`;
@@ -243,30 +259,31 @@ const SignIn = () => {
                     console.log('before tokem')
 
                     let dname = result.user.displayName.split(" ")
-        let lastname = ''
-        let firstname=dname[0]
-        if (dname.length > 1) {
-            lastname = dname[dname.length - 1]
-        }
-                    
-        fetch('/api/signup', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                firstname,
-                lastname,
-                email:result.user.email,
-                photo:result.user.photoURL,
-            })
-        })
-        .then(response=>response.json())
-        .then(res=>{
-            console.log('signup res',res)
-            
+                    let lastname = ''
+                    let firstname = dname[0]
+                    if (dname.length > 1) {
+                        lastname = dname[dname.length - 1]
+                    }
 
-        })
+                    //there will be two google btn for signin and signup whihc will call two different api
+                    fetch('/api/signup', {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            firstname,
+                            lastname,
+                            email: result.user.email,
+                            photo: result.user.photoURL,
+                        })
+                    })
+                        .then(response => response.json())
+                        .then(res => {
+                            console.log('signup res', res)
+
+
+                        })
 
 
 
