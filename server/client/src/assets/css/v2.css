@@ -515,6 +515,21 @@ input[type="number"] {
   top: 50%;
 }
 
+.signup-form,
+.signin-form {
+  transition: var(--transition);
+}
+.signin-form {
+  transform: translate(0, -100%);
+  opacity: 1;
+}
+.hideLoginForm {
+  position: relative;
+  transform: translate(0, 0);
+  z-index: -1;
+  opacity: 0;
+}
+
 /******************************************** signin.js **********************************************/
 
 /******************************************** phone otp **********************************************/
@@ -594,20 +609,18 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 /******************************************** phone otp **********************************************/
 
-
 /*********************** USER ************************************ */
-.user-form{
+.user-form {
   box-shadow: var(--shadow-small);
   background-color: #fff;
 }
-.skip{
+.skip {
   position: absolute;
   right: 0;
   top: -22px;
   cursor: pointer;
 }
 /*********************** USER ************************************ */
-
 
 /*-------------------------- HOMEPAGE -------------------------------------*/
 /*-------------------------- HOMEPAGE -------------------------------------*/

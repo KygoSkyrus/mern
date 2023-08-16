@@ -317,13 +317,26 @@ const SignIn = () => {
     }
 
 
+    const toggleSignIn = (form) => {
+        console.log('djdj')
+        let signin = document.querySelector('.signin-form')
+        let signup = document.querySelector('.signup-form')
+        if (form === 'signin') {
+            signin.classList.remove('hideLoginForm')
+            signup.classList.add('hideLoginForm')
+        } else {
+            signup.classList.remove('hideLoginForm')
+            signin.classList.add('hideLoginForm')
+        }
+    }
+
     /////////////////
     return (
         <>
             <div className="modal fade signin" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
                 <div className="modal-dialog modal-dialog-centered w-75" style={{ maxWidth: "80%" }}>
                     <div className="modal-content d-flex flex-row">
-                        <div className='w-50 d-flex bg-dark'>
+                        <div className='w-50 d-flex bg-dark' style={{ zIndex: 1 }}>
                             <img src={loginImg} alt='' />
                         </div>
                         <div className='w-50'>
@@ -335,20 +348,35 @@ const SignIn = () => {
                             <div className="modal-body h-100">
 
 
-                                <div className='d-flex justify-content-center align-items-center flex-column h-100'>
+                                <div className='signup-form d-flex justify-content-center align-items-center flex-column h-100'>
                                     <h5 className='text-dark'>Create an account</h5>
                                     <section>Enter your email below to create your account</section>
                                     <input type="email" className="form-control my-2" name="email" id="email" placeholder="Email address" aria-describedby="emailHelp" value={email} onChange={(e) => setemail(e.target.value)} />
                                     <button className='btn btn-outline-warning w-100' onClick={emailVerification}>Create account</button>
-                                    <section className='my-3 text-end w-100'>Exsiting user? Signin</section>
 
+                                    <section className='my-3 text-end w-100' onClick={() => toggleSignIn('signin')}>Exsiting user? Signin</section>
                                     <section className='continue-with position-relative w-100 text-center'>
                                         <span >OR CONTINUE WITH</span>
                                         <section></section>
                                     </section>
 
                                     <button className='btn btn-outline-info w-100 m-2' onClick={loginWithGoogle}>Google</button>
+                                </div>
 
+                                <div className='signin-form hideLoginForm d-flex justify-content-center align-items-center flex-column h-100'>
+                                    <h5 className='text-dark'>SignIn to your account</h5>
+                                    <section>Enter your email below to create your account</section>
+                                    <input type="email" className="form-control my-2" name="email" id="email" placeholder="Email address" aria-describedby="emailHelp" value={email} onChange={(e) => setemail(e.target.value)} />
+                                    <input type="password" className="form-control" id="password" name="password" placeholder="Password*" value={password} onChange={(e) => setpassword(e.target.value)} />
+                                    <button className='btn btn-outline-warning w-100' onClick={emailVerification}>Sign In</button>
+
+                                    <section className='my-3 text-end w-100' onClick={() => toggleSignIn('signup')}>New user? Create an account</section>
+                                    <section className='continue-with position-relative w-100 text-center'>
+                                        <span >OR CONTINUE WITH</span>
+                                        <section></section>
+                                    </section>
+
+                                    <button className='btn btn-outline-info w-100 m-2' onClick={loginWithGoogle}>Google</button>
                                 </div>
 
                                 {/* <div className="padding" >
