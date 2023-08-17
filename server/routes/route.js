@@ -27,10 +27,10 @@ const CATEGORY = require('../models/category')
 // const expiresIn = 3600; // 1 hour
 // // Generate the JWT
 // const token = jwt.sign(userData, 'your_secret_key', { expiresIn });
-router.get('/api/getUserInfo', (req, res) => {
+router.get('/api/getUserInfo',async (req, res) => {
     const token = req.cookies.jwt;
     if (!token) {
-        return res.status(401).json({ message: 'No token provided.' });
+        return res.status(401).json({ message: 'No token provided.',is_user_logged_in:false });
     }
 
     try {
@@ -38,16 +38,27 @@ router.get('/api/getUserInfo', (req, res) => {
         console.log('decoded', decoded)
         // Check if the token is expired
         if (decoded.exp <= Date.now() / 1000) {
-            return res.status(401).json({ message: 'Token has expired.' });
+            return res.status(401).json({ message: 'Token has expired.',is_user_logged_in:false });
         }
 
+        const user = await USER.findOne({ _id: "id" });
+       
         // Token is valid, user is signed in
-        res.json({ message: 'Access granted.' });//do the thing here...get theuser from db from the user id decoded from token
+        res.json({ message: 'Access granted.', is_user_logged_in:true,user});//do the thing here...get theuser from db from the user id decoded from token
     } catch (error) {
         // Invalid token
-        res.status(401).json({ message: 'Invalid token.' });
+        res.status(401).json({ message: 'Invalid token.',is_user_logged_in:false });
     }
 });
+ 
+
+router.get('/api/signmeout', async (req, res) => {
+
+    res.clearCookie('jwt')
+    res.clearCookie('email')
+    res.send({message:"User logged out!!!"})
+
+})
 
 
 
@@ -67,7 +78,7 @@ router.post('/api/signup', async (req, res) => {
         const userExist = await USER.findOne({ email: email });
 
         if (userExist) {
-            return res.status(422).json({ error: "email already exists" });
+            return res.status(422).json({ error: "User already exists!!! Try signing in instead" });
         }
 
         const user = new USER({ firstname: firstname, lastname: lastname, email: email, avtar: photo });
@@ -77,6 +88,7 @@ router.post('/api/signup', async (req, res) => {
         const response = await user.save();
         console.log('dddd', response)
 
+        //this and next cookie creatingis same as in signin,,create a commn function for this
         const token = await user.generateAuthToken();
         //console.log(token);
         res.cookie('jwt', token, {
@@ -88,7 +100,7 @@ router.post('/api/signup', async (req, res) => {
             httpOnly: true
         });
 
-        res.status(201).json({ is_user_created: true })
+        res.status(201).json({ is_user_created: true })//send the user data
 
     } catch (err) {
         console.log(err);
@@ -98,21 +110,20 @@ router.post('/api/signup', async (req, res) => {
 
 
 //signin
-router.post('/signin', async (req, res) => {
+router.post('/api/signin', async (req, res) => {
 
     try {
-        const { email, password } = req.body;
+        const { email } = req.body;
 
-        if (!email || !password) {
-            return res.status(400).json({ error: "fill all details" });
-        }
+        // if (!email || !password) {
+        //     return res.status(400).json({ error: "fill all details" });
+        // }
 
-        const userLogin = await User.findOne({ email: email });
+        const user = await USER.findOne({ email: email });
 
-        //console.log(userLogin);
 
-        if (userLogin) {
-            const isMatch = await bcrypt.compare(password, userLogin.password);
+        if (user) {
+            // const isMatch = await bcrypt.compare(password, userLogin.password);
 
             const token = await userLogin.generateAuthToken();
             //console.log(token);
@@ -126,11 +137,11 @@ router.post('/signin', async (req, res) => {
                 httpOnly: true
             });
 
-            if (!isMatch) {
-                res.status(400).json({ error: "invalid credentials" });
-            } else {
-                res.status(400).json({ message: "user logged in successfully" });
-            }
+            res.status(400).json({ message: "user logged in successfully" });//send the user data alsong with the message
+            // if (!isMatch) {
+            //     res.status(400).json({ error: "invalid credentials" });
+            // } else {
+            // }
         } else {
             res.status(200).json({ error: "account doesn't exists" });
         }

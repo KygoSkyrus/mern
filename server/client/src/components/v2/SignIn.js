@@ -32,7 +32,7 @@ const provider = new GoogleAuthProvider();
 
 const SignIn = () => {
 
-    const [email, setemail] = useState('');
+    const [email, setemail] = useState({});
     const [password, setpassword] = useState('');
 
     const [phone, setphone] = useState();
@@ -41,21 +41,10 @@ const SignIn = () => {
     const navigate = useNavigate()
 
 
-    useEffect(() => {
-        isUserLoggedIn()
-    }, [])
-
-    ///inside this set the user state,,and this state will be put in store and from navbar and wherre ever user loggedin isneeded than get that user
-    const isUserLoggedIn = () => {
-
-        fetch('/api/getUserInfo',)
-            .then(response => response.json())
-            .then(res => {
-                console.log('userindo', res)
 
 
-            })
-    }
+    //hide the sign fom navbar is user is logged in
+
 
 
     const loginuser = async (e) => {
@@ -233,11 +222,17 @@ const SignIn = () => {
     }
 
 
-    const loginWithGoogle = () => {
+
+  
+
+    const signinWithGoogle = () => {
 
 
+    }
 
+    const signupWithGoogle = () => {
 
+        //with this the two things that google does forus is that it authentiicates the email id and make sure that no on uses soeonelse's id ,on signup you will have to chekc is the account already exist,,if dont only then create theaccount ,,,,on signin you have to check the same if the user even exist and if it does exist then resturn response that user exist and set the jwt
         signInWithPopup(auth, provider)
             .then((result) => {
                 console.log(result)
@@ -285,9 +280,6 @@ const SignIn = () => {
 
                         })
 
-
-
-
                     //document.querySelector('.modal-backdrop').click()//not working use disptach
                     // navigate('/user', { state: { displayName:result.user.displayName, email:result.user.email,photo:result.user.photoURL} });//insead of using navigate,save the necessary info in state
                     //user should be saved here with basic details and when the serrver responsds successfully then navigate to user page for furter info
@@ -323,9 +315,9 @@ const SignIn = () => {
         let signup = document.querySelector('.signup-form')
         if (form === 'signin') {
             signin.classList.remove('hideLoginForm')
-            signup.classList.add('hideLoginForm')
+            signup.classList.add('hideSignupForm')
         } else {
-            signup.classList.remove('hideLoginForm')
+            signup.classList.remove('hideSignupForm')
             signin.classList.add('hideLoginForm')
         }
     }
@@ -346,37 +338,35 @@ const SignIn = () => {
                             </div> */}
 
                             <div className="modal-body h-100">
-
-
                                 <div className='signup-form d-flex justify-content-center align-items-center flex-column h-100'>
                                     <h5 className='text-dark'>Create an account</h5>
                                     <section>Enter your email below to create your account</section>
-                                    <input type="email" className="form-control my-2" name="email" id="email" placeholder="Email address" aria-describedby="emailHelp" value={email} onChange={(e) => setemail(e.target.value)} />
+                                    <input type="email" className="form-control my-2" name="email" id="email" placeholder="Email address" aria-describedby="emailHelp" value={email.signupEmail} onChange={(e) => setemail({ ...email, signupEmail: e.target.value })} />
                                     <button className='btn btn-outline-warning w-100' onClick={emailVerification}>Create account</button>
 
-                                    <section className='my-3 text-end w-100' onClick={() => toggleSignIn('signin')}>Exsiting user? Signin</section>
+                                    <section className='my-3 text-end w-100 pointer' onClick={() => toggleSignIn('signin')}>Exsiting user? Signin</section>
                                     <section className='continue-with position-relative w-100 text-center'>
                                         <span >OR CONTINUE WITH</span>
                                         <section></section>
                                     </section>
 
-                                    <button className='btn btn-outline-info w-100 m-2' onClick={loginWithGoogle}>Google</button>
+                                    <button className='btn btn-outline-info w-100 m-2' onClick={signupWithGoogle}>Google</button>
                                 </div>
 
                                 <div className='signin-form hideLoginForm d-flex justify-content-center align-items-center flex-column h-100'>
                                     <h5 className='text-dark'>SignIn to your account</h5>
                                     <section>Enter your email below to create your account</section>
-                                    <input type="email" className="form-control my-2" name="email" id="email" placeholder="Email address" aria-describedby="emailHelp" value={email} onChange={(e) => setemail(e.target.value)} />
+                                    <input type="email" className="form-control my-2" name="email" id="email" placeholder="Email address" aria-describedby="emailHelp" value={email.signinEmail} onChange={(e) => setemail({ ...email, signinEmail: e.target.value })} />
                                     <input type="password" className="form-control" id="password" name="password" placeholder="Password*" value={password} onChange={(e) => setpassword(e.target.value)} />
                                     <button className='btn btn-outline-warning w-100' onClick={emailVerification}>Sign In</button>
 
-                                    <section className='my-3 text-end w-100' onClick={() => toggleSignIn('signup')}>New user? Create an account</section>
+                                    <section className='my-3 text-end w-100 pointer' onClick={() => toggleSignIn('signup')}>New user? Create an account</section>
                                     <section className='continue-with position-relative w-100 text-center'>
                                         <span >OR CONTINUE WITH</span>
                                         <section></section>
                                     </section>
 
-                                    <button className='btn btn-outline-info w-100 m-2' onClick={loginWithGoogle}>Google</button>
+                                    <button className='btn btn-outline-info w-100 m-2' onClick={signinWithGoogle}>Google</button>
                                 </div>
 
                                 {/* <div className="padding" >

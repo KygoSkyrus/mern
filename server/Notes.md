@@ -53,6 +53,10 @@ http://preview.themeforest.net/item/ella-multipurpose-shopify-theme-os-20/full_s
 
 https://new-ella-demo.myshopify.com/pages/landing-2
 
+...citi state country db
+https://dr5hn.github.io/countries-states-cities-database/
+
+
 # CATEGORY
 
 - we can have categories like in skyblog,,but whats the point of repeating the same stuff,,

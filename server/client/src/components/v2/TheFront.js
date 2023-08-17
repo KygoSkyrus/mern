@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Route, Routes } from "react-router-dom";
 
 import Navbar from "./Navbar"
@@ -16,6 +16,22 @@ import User from './User';
 const TheFront = ({ dl }) => {
 
 
+
+    useEffect(()=>{
+        getUser()
+    },[])
+
+        ///inside this set the user state,,and this state will be put in store and from navbar and wherre ever user loggedin isneeded than get that user
+        const getUser = () => {
+
+            fetch('/api/getUserInfo',)
+                .then(response => response.json())
+                .then(res => {
+                    console.log('userindo', res)
+    
+    
+                })
+        }
 
 
 
