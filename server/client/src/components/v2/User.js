@@ -3,33 +3,36 @@ import { useLocation } from 'react-router-dom'
 
 
 import LoginImg from "./../../assets/images/newImg/collections/login.png"
+import { useSelector } from 'react-redux';
 
 const User = () => {
 
 
     const { state } = useLocation();
     const [user, setUser] = useState({})
+    const userDetail = useSelector(state => state.user.user)
+    console.log('jask', userDetail)
 
 
     useEffect(() => {
-        if (state) {//it should fetch this feom store is user is signed in  
-            const { displayName, email, photo } = state;
-            console.log('user in u com[p', displayName, email, photo)
 
-            let names = displayName.split(" ")
-            console.log(names)
-            let lastname = ''
-            if (names.length > 1) {
-                lastname = names[names.length - 1]
-            }
+        if (userDetail) {//it should fetch this feom store is user is signed in  
+            // const { displayName, email, photo } = state;
+            // console.log('user in u com[p', displayName, email, photo)
+            // let names = displayName.split(" ")
+            // console.log(names)
+            // let lastname = ''
+            // if (names.length > 1) {
+            //     lastname = names[names.length - 1]
+            // }
 
-            setUser({ ...user, displayName, email, photo, firstname: names[0], lastname })
+            setUser({ ...user, email: userDetail.email, photo: userDetail.avtar, firstname: userDetail.firstname, lastname: userDetail.lastname })
             console.log(user)
         } else {
             setUser(undefined)
         }
     }, [])
-
+    console.log(user)
 
     const signOut = () => {
         //clear the jwt token 
@@ -55,7 +58,7 @@ const User = () => {
                         <div class="col-md-4 " >
                             <div className='row'>
                                 <div className='col-md-9 m-auto text-center'>
-                                    <img src={user.photo} alt="" class="img-fluid w-100 t-minw-215 rounded" />
+                                    <img src={userDetail.avtar} alt="" class="img-fluid w-100 t-minw-215 rounded" />
                                     <h5 className='my-2 text-capitalize'>{user.displayName}</h5>
                                     <button className='btn' onClick={signOut}>Sign out</button>
                                 </div>
@@ -68,15 +71,15 @@ const User = () => {
                             <form class="row g-3">
                                 <div class="col-md-6">
                                     <label for="inputEmail4" class="form-label">First name</label>
-                                    <input type="text" value={user.firstname} class="form-control" id="inputEmail4" />
+                                    <input type="text" value={userDetail.firstname} class="form-control" id="inputEmail4" />
                                 </div>
                                 <div class="col-md-6">
                                     <label for="inputPassword4" class="form-label">Last name</label>
-                                    <input type="text" value={user.lastname} class="form-control" id="inputPassword4" />
+                                    <input type="text" value={userDetail.lastname} class="form-control" id="inputPassword4" />
                                 </div>
                                 <div class="col-md-6">
                                     <label for="inputEmail4" class="form-label">Email</label>
-                                    <input type="email" value={user.email} class="form-control" id="inputEmail4" />
+                                    <input type="email" value={userDetail.email} class="form-control" id="inputEmail4" />
                                 </div>
                                 <div class="col-md-6">
                                     <label for="inputEmail4" class="form-label">Phone</label>
@@ -132,7 +135,7 @@ const User = () => {
 
                 :
                 <div className='container my-5'>
-                    <div className='d-flex flex-column align-items-center m-auto' style={{width:"fit-content"}}>
+                    <div className='d-flex flex-column align-items-center m-auto' style={{ width: "fit-content" }}>
 
                         <div><img src={LoginImg} alt='' />
                         </div>

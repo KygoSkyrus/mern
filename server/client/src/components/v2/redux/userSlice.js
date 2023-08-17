@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const userSlice=createSlice({
-	name:"user",
-	initialState:{
-		user:{
+export const userSlice = createSlice({
+    name: "user",
+    initialState: {
+        user: {
             firstname: '',
             lastname: '',
             avtar: '',
@@ -24,15 +24,18 @@ export const userSlice=createSlice({
             cart: [],
             orders: [],
         },
-        isUserLoggedIn:false,
-	},
-	reducers:{ 
-		isProductUpdated:(state,action)=>{
-			state.product=action.payload.updateProduct
-		}
-	}
+        isUserLoggedIn: false,
+    },
+    reducers: {
+        isUserLoggedIn: (state, action) => {
+            state.isUserLoggedIn = action.payload.value
+        },
+        setUserDetails: (state, action) => {
+            state.user = action.payload.user
+        }
+    }
 })
 
 
-export const {isProductUpdated}=userSlice.actions;
-export const userReducer=userSlice.reducer
+export const { isUserLoggedIn, setUserDetails } = userSlice.actions;
+export const userReducer = userSlice.reducer

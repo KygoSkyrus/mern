@@ -13,25 +13,30 @@ import ProductPage from './ProductPage';
 import Cart from './Cart';
 import User from './User';
 
+import { setUserDetails, isUserLoggedIn } from './redux/userSlice';
+import { useDispatch } from 'react-redux';
+
+
 const TheFront = ({ dl }) => {
 
+    const disptach = useDispatch()
 
 
-    useEffect(()=>{
+    useEffect(() => {
         getUser()
-    },[])
+    }, [])
 
-        ///inside this set the user state,,and this state will be put in store and from navbar and wherre ever user loggedin isneeded than get that user
-        const getUser = () => {
+    ///inside this set the user state,,and this state will be put in store and from navbar and wherre ever user loggedin isneeded than get that user
+    const getUser = () => {
 
-            fetch('/api/getUserInfo',)
-                .then(response => response.json())
-                .then(res => {
-                    console.log('userindo', res)
-    
-    
-                })
-        }
+        fetch('/api/getUserInfo',)
+            .then(response => response.json())
+            .then(res => {
+                console.log('userindo', res)
+                disptach(isUserLoggedIn({ value: true }))
+                disptach(setUserDetails({ user: res.user }))
+            })
+    }
 
 
 

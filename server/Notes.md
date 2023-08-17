@@ -30,6 +30,7 @@
 3. get rid of unecessary stuff
 4. once all its done,,upload all the product with detials to the homepage can be designed
 
+- add the part where user can add items to cart without logging in,,use cookies to store cart items
 - categories should be visible on hover
 - finish homepage,,
 - we dont need the image upload progress in here,,instead add a loader to shoup product add status
@@ -55,7 +56,6 @@ https://new-ella-demo.myshopify.com/pages/landing-2
 
 ...citi state country db
 https://dr5hn.github.io/countries-states-cities-database/
-
 
 # CATEGORY
 

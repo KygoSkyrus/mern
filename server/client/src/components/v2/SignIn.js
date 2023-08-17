@@ -40,44 +40,7 @@ const SignIn = () => {
 
     const navigate = useNavigate()
 
-
-
-
     //hide the sign fom navbar is user is logged in
-
-
-
-    const loginuser = async (e) => {
-        e.preventDefault();
-
-        const res = await fetch('/signin', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                email, password
-            })
-        });
-
-        const data = await res.json();
-
-        //console.log(data);
-        if (data.error === "account doesn't exists") {
-            window.alert("account doesn't exists");
-        } else if (data.error === "fill all details") {
-            window.alert("fill all details");
-        } else if (data.error === "invalid credentials") {
-            window.alert("invalid credentials");
-        } else if (data.message === "user logged in successfully") {
-            window.alert("user logged in successfully");
-            document.getElementById('closeSignin').click();
-        } else {
-            window.alert("login success");
-            console.log("login success");
-        }
-    }
-
 
     function OTPInput() {
 
@@ -127,8 +90,6 @@ const SignIn = () => {
 
 
     }
-
-
 
     const loginWithNumber = async (e) => {
         e.preventDefault(e)
@@ -184,7 +145,6 @@ const SignIn = () => {
         e.preventDefault()
     }
 
-
     const emailVerification = () => {
         console.log('eeee', email)
         const actionCodeSettings = {
@@ -223,14 +183,28 @@ const SignIn = () => {
 
 
 
-  
-
-    const signinWithGoogle = () => {
 
 
+    const signinAPI = (val, email, firstname, lastname, photo) => {
+        //there will be two google btn for signin and signup whihc will call two different api
+        fetch(`/api/${val}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                firstname, lastname, email, photo
+            })
+        })
+            .then(response => response.json())
+            .then(res => {
+                console.log('signup res', res.is_user_created, res.user)
+                //call the toast from here and send the message
+                //and set the user store
+            })
     }
 
-    const signupWithGoogle = () => {
+    const goWithGoogle = (val) => {
 
         //with this the two things that google does forus is that it authentiicates the email id and make sure that no on uses soeonelse's id ,on signup you will have to chekc is the account already exist,,if dont only then create theaccount ,,,,on signin you have to check the same if the user even exist and if it does exist then resturn response that user exist and set the jwt
         signInWithPopup(auth, provider)
@@ -260,25 +234,12 @@ const SignIn = () => {
                         lastname = dname[dname.length - 1]
                     }
 
-                    //there will be two google btn for signin and signup whihc will call two different api
-                    fetch('/api/signup', {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            firstname,
-                            lastname,
-                            email: result.user.email,
-                            photo: result.user.photoURL,
-                        })
-                    })
-                        .then(response => response.json())
-                        .then(res => {
-                            console.log('signup res', res)
+                    if (val === 'signup') {
+                        signinAPI('signup', result.user.email, firstname, lastname, result.user.photoURL)
+                    } else {
+                        signinAPI('signin', result.user.email)
+                    }
 
-
-                        })
 
                     //document.querySelector('.modal-backdrop').click()//not working use disptach
                     // navigate('/user', { state: { displayName:result.user.displayName, email:result.user.email,photo:result.user.photoURL} });//insead of using navigate,save the necessary info in state
@@ -350,7 +311,7 @@ const SignIn = () => {
                                         <section></section>
                                     </section>
 
-                                    <button className='btn btn-outline-info w-100 m-2' onClick={signupWithGoogle}>Google</button>
+                                    <button className='btn btn-outline-info w-100 m-2' onClick={() => goWithGoogle('signup')}>Google</button>
                                 </div>
 
                                 <div className='signin-form hideLoginForm d-flex justify-content-center align-items-center flex-column h-100'>
@@ -366,7 +327,7 @@ const SignIn = () => {
                                         <section></section>
                                     </section>
 
-                                    <button className='btn btn-outline-info w-100 m-2' onClick={signinWithGoogle}>Google</button>
+                                    <button className='btn btn-outline-info w-100 m-2' onClick={() => goWithGoogle('signin')}>Google</button>
                                 </div>
 
                                 {/* <div className="padding" >

@@ -27,36 +27,39 @@ const CATEGORY = require('../models/category')
 // const expiresIn = 3600; // 1 hour
 // // Generate the JWT
 // const token = jwt.sign(userData, 'your_secret_key', { expiresIn });
-router.get('/api/getUserInfo',async (req, res) => {
+router.get('/api/getUserInfo', async (req, res) => {
     const token = req.cookies.jwt;
     if (!token) {
-        return res.status(401).json({ message: 'No token provided.',is_user_logged_in:false });
+        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
     }
-
+    //cookie timezone is fucked up,,
+    // console.log(new Date(Date.now() + 3600000))
     try {
         const decoded = jwt.verify(token, process.env.SECRETKEY);
         console.log('decoded', decoded)
         // Check if the token is expired
-        if (decoded.exp <= Date.now() / 1000) {
-            return res.status(401).json({ message: 'Token has expired.',is_user_logged_in:false });
-        }
 
-        const user = await USER.findOne({ _id: "id" });
-       
+        //this can be avoided as the expiry time is set on cookies
+        // if (decoded.exp <= Date.now() / 1000) {
+        //     return res.status(401).json({ message: 'Token has expired.', is_user_logged_in: false });
+        // }
+
+        const user = await USER.findOne({ _id: decoded._id });
+        console.log(user)
         // Token is valid, user is signed in
-        res.json({ message: 'Access granted.', is_user_logged_in:true,user});//do the thing here...get theuser from db from the user id decoded from token
+        res.json({ message: 'Access granted.', is_user_logged_in: true, user });//do the thing here...get theuser from db from the user id decoded from token
     } catch (error) {
         // Invalid token
-        res.status(401).json({ message: 'Invalid token.',is_user_logged_in:false });
+        res.status(401).json({ message: 'Invalid token.', is_user_logged_in: false });
     }
 });
- 
+
 
 router.get('/api/signmeout', async (req, res) => {
 
     res.clearCookie('jwt')
     res.clearCookie('email')
-    res.send({message:"User logged out!!!"})
+    res.send({ message: "User logged out!!!" })
 
 })
 
@@ -78,7 +81,7 @@ router.post('/api/signup', async (req, res) => {
         const userExist = await USER.findOne({ email: email });
 
         if (userExist) {
-            return res.status(422).json({ error: "User already exists!!! Try signing in instead" });
+            return res.status(422).json({ message: "User already exists!!! Try signing in instead", is_user_created: false });
         }
 
         const user = new USER({ firstname: firstname, lastname: lastname, email: email, avtar: photo });
@@ -100,7 +103,7 @@ router.post('/api/signup', async (req, res) => {
             httpOnly: true
         });
 
-        res.status(201).json({ is_user_created: true })//send the user data
+        res.status(201).json({ message: "Account created successfully", is_user_created: true, user: response })//send the user data
 
     } catch (err) {
         console.log(err);
@@ -125,7 +128,7 @@ router.post('/api/signin', async (req, res) => {
         if (user) {
             // const isMatch = await bcrypt.compare(password, userLogin.password);
 
-            const token = await userLogin.generateAuthToken();
+            const token = await user.generateAuthToken();
             //console.log(token);
 
             res.cookie('jwt', token, {
@@ -137,13 +140,13 @@ router.post('/api/signin', async (req, res) => {
                 httpOnly: true
             });
 
-            res.status(400).json({ message: "user logged in successfully" });//send the user data alsong with the message
+            res.status(200).json({ message: "User logged in successfully", is_user_logged_in: true, user });//send the user data alsong with the message
             // if (!isMatch) {
             //     res.status(400).json({ error: "invalid credentials" });
             // } else {
             // }
         } else {
-            res.status(200).json({ error: "account doesn't exists" });
+            res.status(400).json({ message: "Account doesn't exists", is_user_logged_in: false, });
         }
 
     } catch (err) {
