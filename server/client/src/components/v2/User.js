@@ -11,12 +11,14 @@ const User = () => {
     const { state } = useLocation();
     const [user, setUser] = useState({})
     const userDetail = useSelector(state => state.user.user)
-    console.log('jask', userDetail)
+    const isUserLoggedIn = useSelector(state => state.user.isUserLoggedIn)
+
+    console.log('jask', userDetail,isUserLoggedIn)
 
 
     useEffect(() => {
 
-        if (userDetail) {//it should fetch this feom store is user is signed in  
+        if (userDetail ) {//it should fetch this feom store is user is signed in  
             // const { displayName, email, photo } = state;
             // console.log('user in u com[p', displayName, email, photo)
             // let names = displayName.split(" ")
@@ -44,13 +46,9 @@ const User = () => {
     }
 
 
-    //     position: absolute;
-    // top: -17%;
-    // left: 25px;
-    // background: #f9fafc;
     return (
         <>
-            {user ?
+            {userDetail && isUserLoggedIn ?
                 <div className='container my-5 user-form py-3 rounded'>
 
                     <section className='text-primary skip'>Skip for later</section>
@@ -58,8 +56,8 @@ const User = () => {
                         <div class="col-md-4 " >
                             <div className='row'>
                                 <div className='col-md-9 m-auto text-center'>
-                                    <img src={userDetail.avtar} alt="" class="img-fluid w-100 t-minw-215 rounded" />
-                                    <h5 className='my-2 text-capitalize'>{user.displayName}</h5>
+                                    <img src={userDetail?.avtar} alt="" class="img-fluid w-100 t-minw-215 rounded" />
+                                    <h5 className='my-2 text-capitalize'>{userDetail?.firstname}&nbsp;{userDetail?.lastname}</h5>
                                     <button className='btn' onClick={signOut}>Sign out</button>
                                 </div>
                             </div>
@@ -71,15 +69,15 @@ const User = () => {
                             <form class="row g-3">
                                 <div class="col-md-6">
                                     <label for="inputEmail4" class="form-label">First name</label>
-                                    <input type="text" value={userDetail.firstname} class="form-control" id="inputEmail4" />
+                                    <input type="text" value={userDetail?.firstname} class="form-control" id="inputEmail4" />
                                 </div>
                                 <div class="col-md-6">
                                     <label for="inputPassword4" class="form-label">Last name</label>
-                                    <input type="text" value={userDetail.lastname} class="form-control" id="inputPassword4" />
+                                    <input type="text" value={userDetail?.lastname} class="form-control" id="inputPassword4" />
                                 </div>
                                 <div class="col-md-6">
                                     <label for="inputEmail4" class="form-label">Email</label>
-                                    <input type="email" value={userDetail.email} class="form-control" id="inputEmail4" />
+                                    <input type="email" value={userDetail?.email} class="form-control" id="inputEmail4" />
                                 </div>
                                 <div class="col-md-6">
                                     <label for="inputEmail4" class="form-label">Phone</label>

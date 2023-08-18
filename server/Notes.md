@@ -25,6 +25,8 @@
 - us the categories in db
 - check add to cart and payment, redirectio to succes and failure page
 
+- toast should have ignos for danger warning and info...can chnage toast design for user side
+
 1. first complete the add product feature,,
 2. delete product and diable product all stuff..all basic things that were in skyblog,,just copy
 3. get rid of unecessary stuff
@@ -56,6 +58,10 @@ https://new-ella-demo.myshopify.com/pages/landing-2
 
 ...citi state country db
 https://dr5hn.github.io/countries-states-cities-database/
+
+
+//    box-shadow: 1px 7px 14px -5px rgba(0,0,0,0.2);
+
 
 # CATEGORY
 

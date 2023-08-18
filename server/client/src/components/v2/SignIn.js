@@ -9,7 +9,9 @@ import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, sendSignInLinkToEmai
 import loginImg from "./../../assets/images/login-cover.svg"
 import { Navigate, useNavigate } from 'react-router-dom';
 
-
+import { useDispatch } from 'react-redux';
+import { toastVisibility,setToastContent } from './redux/todoSlice';
+import { isUserLoggedIn,setUserDetails } from './redux/userSlice';
 
 //FIREBASE_________________________________
 const firebaseConfig = {
@@ -39,6 +41,7 @@ const SignIn = () => {
     const [otp, setOtp] = useState(["", "", "", "", "", ""])
 
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     //hide the sign fom navbar is user is logged in
 
@@ -201,6 +204,16 @@ const SignIn = () => {
                 console.log('signup res', res.is_user_created, res.user)
                 //call the toast from here and send the message
                 //and set the user store
+
+                document.querySelector('.modal-backdrop').click()//not working use disptach
+                //user add the background to toast to     background: #d7d2d27a; with radius 4p
+                dispatch(toastVisibility({ toast: true }))
+                dispatch(setToastContent({ message: res.message }))
+                if(res.is_user_logged_in){
+                    //check response message here...dont sent true is session has expired
+                    dispatch(isUserLoggedIn({ value: true }))
+                    dispatch(setUserDetails({ user: res.user }))
+                }
             })
     }
 

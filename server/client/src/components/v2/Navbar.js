@@ -132,7 +132,7 @@ const Navbar = (props) => {
                       categories?.map((x, i) => {
                         if (x.subCategory.length > 0) {
                           return (
-                            <li className='parentCategoryList' onMouseOver={e => populateSubCategory(e)}
+                            <li key={i} className='parentCategoryList' onMouseOver={e => populateSubCategory(e)}
                             // onMouseOut={e=>clearSubCategory(e)}
                             >
                               <a className="dropdown-item gap-2 d-flex" href="/#" data-index={i} >
@@ -144,7 +144,7 @@ const Navbar = (props) => {
                           // console.log('djdjd', childWithoutParent)
                           if (childWithoutParent.includes(x.name.toLowerCase())) {
                             return (
-                              <li className='categoryWithoutParent' onMouseOver={e => populateSubCategory(e)}
+                              <li key={i} className='categoryWithoutParent' onMouseOver={e => populateSubCategory(e)}
                               // onMouseOut={e=>clearSubCategory(e)}
                               >
                                 <a className="dropdown-item gap-2 d-flex" href={`/category/${x.name}`} data-index={i} >

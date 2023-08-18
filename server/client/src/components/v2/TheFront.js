@@ -13,13 +13,14 @@ import ProductPage from './ProductPage';
 import Cart from './Cart';
 import User from './User';
 
-import { setUserDetails, isUserLoggedIn } from './redux/userSlice';
 import { useDispatch } from 'react-redux';
+import { setUserDetails, isUserLoggedIn } from './redux/userSlice';
+import { toastVisibility,setToastContent } from './redux/todoSlice';
 
 
 const TheFront = ({ dl }) => {
 
-    const disptach = useDispatch()
+    const dispatch = useDispatch()
 
 
     useEffect(() => {
@@ -28,13 +29,24 @@ const TheFront = ({ dl }) => {
 
     ///inside this set the user state,,and this state will be put in store and from navbar and wherre ever user loggedin isneeded than get that user
     const getUser = () => {
+        let resp;
 
         fetch('/api/getUserInfo',)
-            .then(response => response.json())
+            .then(response => {
+                resp=response
+               return response.json()})
             .then(res => {
-                console.log('userindo', res)
-                disptach(isUserLoggedIn({ value: true }))
-                disptach(setUserDetails({ user: res.user }))
+                console.log('userindo', res,resp.status)
+
+                //dont show the text when user is logged in ,,the permission granted one
+                //user add the background to toast to     background: #d7d2d27a; with radius 4p
+                dispatch(toastVisibility({ toast: true }))
+                dispatch(setToastContent({ message: res.message }))
+                if(res.is_user_logged_in){
+                    //check response message here...dont sent true is session has expired
+                    dispatch(isUserLoggedIn({ value: true }))
+                    dispatch(setUserDetails({ user: res.user }))
+                }
             })
     }
 

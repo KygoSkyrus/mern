@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Toast, ToastContainer } from 'react-bootstrap'
+// import { Toast, ToastContainer } from 'react-bootstrap'
 
 import './assets/css/App.css';
 import './assets/css/v2.css'
@@ -15,35 +15,36 @@ import SignIn from './components/v2/SignIn'
 import Admin from './components/v2/Admin';
 import TheFront from './components/v2/TheFront';
 
+import Toast from './components/v2/Toast';
 
 function App() {
 
   const [show, setShow] = useState(false);
 
-  const Notification = (props) => {
-    //console.log(props.show);
-    //console.log(props.itemName);
-    if (props.show === true) {
-      return (
-        <>
-          <ToastContainer className="p-3 mt-5 tst">
-            <Toast onClose={() => setShow(false)} show={show} delay={3000} autohide bg="danger" >
-              <Toast.Header>
-                <img
-                  src=""
-                  className="rounded me-2"
-                  alt=""
-                />
-                <strong className="me-auto">Shopp-itt</strong>
-                <small className="text-muted">just now</small>
-              </Toast.Header>
-              <Toast.Body className="text-light">{props.itemName}, has been aded to your cart.</Toast.Body>
-            </Toast>
-          </ToastContainer>
-        </>
-      );
-    } else return null
-  }
+  // const Notification = (props) => {
+  //   //console.log(props.show);
+  //   //console.log(props.itemName);
+  //   if (props.show === true) {
+  //     return (
+  //       <>
+  //         <ToastContainer className="p-3 mt-5 tst">
+  //           <Toast onClose={() => setShow(false)} show={show} delay={3000} autohide bg="danger" >
+  //             <Toast.Header>
+  //               <img
+  //                 src=""
+  //                 className="rounded me-2"
+  //                 alt=""
+  //               />
+  //               <strong className="me-auto">Shopp-itt</strong>
+  //               <small className="text-muted">just now</small>
+  //             </Toast.Header>
+  //             <Toast.Body className="text-light">{props.itemName}, has been aded to your cart.</Toast.Body>
+  //           </Toast>
+  //         </ToastContainer>
+  //       </>
+  //     );
+  //   } else return null
+  // }
 
   const [data, setdata] = useState([]);
   const [itemName, setitemName] = useState();
@@ -96,7 +97,7 @@ function App() {
       <div className="App">
         <SignIn />
 
-        
+        <Toast />
 
 
         <Routes>

@@ -27,8 +27,7 @@ const Admin = () => {
                 </div>
             </div>
 
-
-            <Toast />
+      
             <Loader/>
 
         </>

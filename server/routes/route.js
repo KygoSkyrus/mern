@@ -124,7 +124,6 @@ router.post('/api/signin', async (req, res) => {
 
         const user = await USER.findOne({ email: email });
 
-
         if (user) {
             // const isMatch = await bcrypt.compare(password, userLogin.password);
 
