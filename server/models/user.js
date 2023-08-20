@@ -11,11 +11,9 @@ const userSchema = new Schema({
     },
     lastname: {
         type: String,
-        required: false,
     },
     avtar: {
         type: String,
-        required: false,
     },
     email: {
         type: String,
@@ -24,11 +22,9 @@ const userSchema = new Schema({
     },
     password: {
         type: String,
-        required: false,
     },
     phone: {
         type: Number,
-        required: false,
     },
     address: {
         house: String,
@@ -51,7 +47,6 @@ const userSchema = new Schema({
         productId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'PRODUCT',
-            required: false,
         },
         quantity: {
             type: Number,
@@ -63,16 +58,13 @@ const userSchema = new Schema({
             productId: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'PRODUCT',
-                required: false,
             },
             quantity: {
                 type: Number,
-                required: false,
             },
         }],
         total: {
             type: Number,
-            required: false,
         },
         createdAt: {
             type: Date,
@@ -88,6 +80,28 @@ const userSchema = new Schema({
         }
     ]
 }, { collection: "users" });
+
+
+//mongoose virtual to minimize performance overhead created by frequently calling populate
+//technincally mongose virtual dont wont on field with array so it will creeate another field and populate them
+userSchema.virtual('cartProducts', {
+    ref: 'PRODUCT',
+    localField: 'cart.productId',
+    foreignField: '_id',
+    justOne: false, // Set to true if you want only one item in the array
+    options: { autopopulate: true }, // Enable automatic population
+});
+
+userSchema.set('toObject', { virtuals: true });
+userSchema.set('toJSON', { virtuals: true });
+
+
+// userSchema.virtual('wishlistProducts', {
+//     ref: 'Product',
+//     localField: 'wishlist.productId',
+//     foreignField: '_id',
+//     justOne: false
+// });
 
 //hashing password
 userSchema.pre('save', async function (next) {

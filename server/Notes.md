@@ -1,5 +1,18 @@
 # WORKFLOW:::
 
+-- show signin only if not logged in
+-- try creating utility function,, for like toast,,,instead of writing those 3 lines everywhere
+-- wishlist etc
+-- fix the toast position
+-- clear unneccsary stuff
+-- find a layout for cart and order page
+-- cateory display??
+-- search page
+
+## bugs
+
+- modals height is morr than vh
+
 - hompgae stuff
 
   - add by category options
@@ -32,6 +45,7 @@
 3. get rid of unecessary stuff
 4. once all its done,,upload all the product with detials to the homepage can be designed
 
+- for now there is no option to update queantity from profuct page ,,it willl be only be done from cart page
 - add the part where user can add items to cart without logging in,,use cookies to store cart items
 - categories should be visible on hover
 - finish homepage,,
@@ -59,9 +73,7 @@ https://new-ella-demo.myshopify.com/pages/landing-2
 ...citi state country db
 https://dr5hn.github.io/countries-states-cities-database/
 
-
-//    box-shadow: 1px 7px 14px -5px rgba(0,0,0,0.2);
-
+// box-shadow: 1px 7px 14px -5px rgba(0,0,0,0.2);
 
 # CATEGORY
 

@@ -4,11 +4,10 @@ import { toastVisibility } from "./redux/todoSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const Toast = () => {
-
   let timer;
-  const toastContainer =useRef()
-  const dispatch=useDispatch()
-  
+  const toastContainer = useRef();
+  const dispatch = useDispatch();
+
   const hideToast = () => {
     toastContainer.current.classList.remove("active");
     clearTimeout(timer);
@@ -18,23 +17,49 @@ const Toast = () => {
     toastContainer.current.classList.add("active");
     timer = setTimeout(() => {
       toastContainer.current.classList.remove("active");
-      dispatch(toastVisibility({ toast: false }))//setting visibility to flase
+      dispatch(toastVisibility({ toast: false })); //setting visibility to flase
     }, 3500);
   };
-  
-  const isToastVisible= useSelector(state=>state.productFormVisibility.toast)
-  const message = useSelector(state=>state.productFormVisibility.toastContent)
 
-  if(isToastVisible){
-    showToast()
+  const isToastVisible = useSelector(
+    (state) => state.productFormVisibility.toast
+  );
+  const isSuccess = useSelector(
+    (state) => state.productFormVisibility.isSuccess
+  );
+  const message = useSelector(
+    (state) => state.productFormVisibility.toastContent
+  );
+
+  if (isToastVisible) {
+    showToast();
   }
- 
+
   return (
     <>
-      <div className="toastContainer" ref={toastContainer} onClick={hideToast}>
+      <div
+        className="toastContainer"
+        ref={toastContainer}
+        onClick={hideToast}
+        style={{
+          borderLeft: isSuccess
+            ? "6px solid var(--color-green)"
+            : "6px solid var(--color-red)",
+        }}
+      >
+        {isSuccess ? (
+          <span>
+            <i class="fa-solid fa-circle-check me-3"></i>
+          </span>
+        ) : (
+          <span>
+            <i class="fa-solid fa-triangle-exclamation me-3"></i>
+          </span>
+        )}
+
         <section className="toast-inner">{message}</section>
         <span onClick={hideToast}>
-          <i className="fa-solid fa-xmark close"></i>
+          <i className="fa-solid fa-xmark close ms-5"></i>
         </span>
       </div>
     </>

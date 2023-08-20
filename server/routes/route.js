@@ -39,17 +39,24 @@ router.get('/api/getUserInfo', async (req, res) => {
         console.log('decoded', decoded)
         // Check if the token is expired
 
-        //this can be avoided as the expiry time is set on cookies
-        // if (decoded.exp <= Date.now() / 1000) {
-        //     return res.status(401).json({ message: 'Token has expired.', is_user_logged_in: false });
-        // }
 
-        const user = await USER.findOne({ _id: decoded._id });
+        //populating with regular populate which can cause performnace overhead
+        // const user = await USER.findById(decoded._id)
+        //     .populate('cart.productId')
+        //   .populate('wishlist.productId');
+
+        //by mongoose virtual
+        const user = await USER.findById(decoded._id).populate('cartProducts');
         console.log(user)
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
         // Token is valid, user is signed in
-        res.json({ message: 'Access granted.', is_user_logged_in: true, user });//do the thing here...get theuser from db from the user id decoded from token
+        res.status(200).json({ message: 'Access granted.', is_user_logged_in: true, user });
     } catch (error) {
         // Invalid token
+        console.log(error)
         res.status(401).json({ message: 'Invalid token.', is_user_logged_in: false });
     }
 });
@@ -153,6 +160,82 @@ router.post('/api/signin', async (req, res) => {
     }
 })
 
+
+
+router.post('/api/addtocart', async (req, res) => {
+    const token = req.cookies.jwt;
+    if (!token) {
+        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
+    }
+    try {
+        const { productId } = req.body;
+        const decoded = jwt.verify(token, process.env.SECRETKEY);
+
+        const user = await USER.findById(decoded._id);
+        //  if (!user) {
+        //    return res.status(404).json({ message: 'User not found.' });
+        //  }
+
+        const product = await PRODUCT.findById(productId);
+        //  if (!product) {
+        //    return res.status(404).json({ message: 'Product not found.' });
+        //  }
+
+        // Find the product in the user's cart
+        const cartItem = user.cart.find(item => item.productId.toString() === productId);
+
+        if (cartItem) {
+            // If the product is already in the cart, increment the quantity
+            cartItem.quantity += 1;
+        } else {
+            // If the product is not in the cart, add it with quantity 1
+            user.cart.push({ productId });
+        }
+
+        // Save the updated user
+        await user.save()
+
+        res.status(200).json({ message: 'Product added to cart.', user });
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+})
+
+
+
+//remove from cart
+router.post('/api/removefromcart', async (req, res) => {
+    const token = req.cookies.jwt;
+    //thi is common for most user actions ,so create a middleware function instead
+    if (!token) {
+        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
+    }
+    try {
+        const { productId } = req.body;
+        const decoded = jwt.verify(token, process.env.SECRETKEY);
+
+        // Update the user's cart by removing the specified product
+        const updatedUser = await USER.findByIdAndUpdate(
+            decoded._id,
+            { $pull: { cart: { productId } } },
+            { new: true }
+        ).populate('cartProducts');//to send the user populated with cart field
+
+        console.log('remove fromcart-', updatedUser)
+        if (!updatedUser) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        res.status(200).json({ message: 'Product removed from cart.', user: updatedUser });
+    } catch (error) {
+        console.error('Error removing product from cart:', error);
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+});
+
+
 //stripe
 router.post('/checkout', async (req, res) => {
 
@@ -237,7 +320,7 @@ router.get('/api/getprodbycategory', async (req, res) => {
 
     PRODUCT.find({ category: category })
         .then(response => {
-            console.log('sss', response)
+            // console.log('sss', response)
             res.send({ products: response })
         })
         .catch(err => {
@@ -255,7 +338,7 @@ router.get('/api/getprodbyid', async (req, res) => {
 
     PRODUCT.find({ _id: prodId })
         .then(response => {
-            console.log('sss', response)
+            // console.log('sss', response)
             res.send({ product: response })
         })
         .catch(err => {

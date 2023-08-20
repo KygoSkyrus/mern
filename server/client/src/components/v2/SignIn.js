@@ -10,8 +10,8 @@ import loginImg from "./../../assets/images/login-cover.svg"
 import { Navigate, useNavigate } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
-import { toastVisibility,setToastContent } from './redux/todoSlice';
-import { isUserLoggedIn,setUserDetails } from './redux/userSlice';
+import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSlice';
+import { isUserLoggedIn, setUserDetails } from './redux/userSlice';
 
 //FIREBASE_________________________________
 const firebaseConfig = {
@@ -189,6 +189,7 @@ const SignIn = () => {
 
 
     const signinAPI = (val, email, firstname, lastname, photo) => {
+        let resp;
         //there will be two google btn for signin and signup whihc will call two different api
         fetch(`/api/${val}`, {
             method: "POST",
@@ -199,17 +200,24 @@ const SignIn = () => {
                 firstname, lastname, email, photo
             })
         })
-            .then(response => response.json())
+            .then(response => {
+                resp = response;
+                return response.json()
+            })
             .then(res => {
-                console.log('signup res', res.is_user_created, res.user)
-                //call the toast from here and send the message
-                //and set the user store
+                //console.log('signup res', res.is_user_created, res.user)
 
+                if (resp.status === 200) {
+                    dispatch(setToastStatus({ isSuccess: true }))
+                } else {
+                    dispatch(setToastStatus({ isSuccess: false }))
+                }
+                //on account createtion also set the user so instead of sending usercreated frommsignuo send userloggedin to keep things on same page for bith signup and signin
                 document.querySelector('.modal-backdrop').click()//not working use disptach
-                //user add the background to toast to     background: #d7d2d27a; with radius 4p
+
                 dispatch(toastVisibility({ toast: true }))
                 dispatch(setToastContent({ message: res.message }))
-                if(res.is_user_logged_in){
+                if (res.is_user_logged_in) {
                     //check response message here...dont sent true is session has expired
                     dispatch(isUserLoggedIn({ value: true }))
                     dispatch(setUserDetails({ user: res.user }))

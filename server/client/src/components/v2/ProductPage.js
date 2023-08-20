@@ -1,10 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
-
+import { useDispatch } from 'react-redux';
+import { setUserDetails } from './redux/userSlice';
+import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSlice';
 const ProductPage = () => {
 
     const { productId } = useParams()
     const prodImage = useRef()
+    const dispatch = useDispatch()
     const [product, setProduct] = useState()
 
     console.log('product id', productId)
@@ -28,6 +31,32 @@ const ProductPage = () => {
                 x.classList.remove("selected-border")
             }
         })
+    }
+
+    const addToCart = () => {
+        let resp;
+        fetch(`/api/addtocart`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                productId
+            }),
+        })
+            .then(response => {
+                resp = response
+                return response.json()
+            })
+            .then(res => {
+                if (resp.status === 200) {
+                    dispatch(setToastStatus({ isSuccess: true }))
+                    dispatch(setUserDetails({ user: res.user }))
+                } else {
+                    dispatch(setToastStatus({ isSuccess: false }))
+                }
+                dispatch(toastVisibility({ toast: true }))
+                dispatch(setToastContent({ message: res.message }))
+                console.log('response add tocart', res)
+            })
     }
 
     return (
@@ -94,7 +123,7 @@ const ProductPage = () => {
 
                                 <div className='d-flex gap-2 mt-3'>
                                     <button className='btn buy-btn'>Buy Now</button>
-                                    <button className='btn cart-btn'>Add to cart</button>
+                                    <button className='btn cart-btn' onClick={addToCart}>Add to cart</button>
                                     <button className='btn wishlist-btn'><i class="fa fa-heart"></i></button>
                                 </div>
 

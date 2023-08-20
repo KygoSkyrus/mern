@@ -475,9 +475,15 @@ grid-column: 1;
 .toastContainer.active {
   transform: translateX(0%);
 }
-.toastContainer i {
-  margin-left: 20px;
+.fa-circle-check {
+  color: var(--color-green);
 }
+.fa-triangle-exclamation {
+  color: var(--color-red);
+}
+/* .toastContainer i {
+  margin-left: 20px;
+} */
 /*---------------=====================----------- TOAST --------------------======================----------------*/
 
 /******************************************** signin.js **********************************************/

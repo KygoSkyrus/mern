@@ -15,7 +15,7 @@ import User from './User';
 
 import { useDispatch } from 'react-redux';
 import { setUserDetails, isUserLoggedIn } from './redux/userSlice';
-import { toastVisibility,setToastContent } from './redux/todoSlice';
+import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSlice';
 
 
 const TheFront = ({ dl }) => {
@@ -33,16 +33,22 @@ const TheFront = ({ dl }) => {
 
         fetch('/api/getUserInfo',)
             .then(response => {
-                resp=response
-               return response.json()})
+                resp = response
+                return response.json()
+            })
             .then(res => {
-                console.log('userindo', res,resp.status)
+                console.log('userindo', res, resp.status)
 
                 //dont show the text when user is logged in ,,the permission granted one
                 //user add the background to toast to     background: #d7d2d27a; with radius 4p
+                if (resp.status === 200) {
+                    dispatch(setToastStatus({ isSuccess: true }))
+                } else {
+                    dispatch(setToastStatus({ isSuccess: false }))
+                }
                 dispatch(toastVisibility({ toast: true }))
                 dispatch(setToastContent({ message: res.message }))
-                if(res.is_user_logged_in){
+                if (res.is_user_logged_in) {
                     //check response message here...dont sent true is session has expired
                     dispatch(isUserLoggedIn({ value: true }))
                     dispatch(setUserDetails({ user: res.user }))
