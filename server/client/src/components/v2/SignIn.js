@@ -1,17 +1,14 @@
-import React, { useEffect, useState } from 'react'
-// import SignUp from './SignUp';
-
+import React, { useState } from 'react'
 
 import { initializeApp } from 'firebase/app';
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, sendSignInLinkToEmail, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
-
-import loginImg from "./../../assets/images/login-cover.svg"
-import { Navigate, useNavigate } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSlice';
 import { isUserLoggedIn, setUserDetails } from './redux/userSlice';
+
+import loginImg from "./../../assets/images/login-cover.svg"
 
 //FIREBASE_________________________________
 const firebaseConfig = {
@@ -24,12 +21,8 @@ const firebaseConfig = {
     measurementId: "G-DVFRLB25DQ"
 };
 const app = initializeApp(firebaseConfig);
-
 const auth = getAuth();
 const provider = new GoogleAuthProvider();
-// To apply the default browser preference instead of explicitly setting it.
-
-
 
 
 const SignIn = () => {
@@ -43,7 +36,7 @@ const SignIn = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    //hide the sign fom navbar is user is logged in
+    //hide the sign fom navbar if user is logged in
 
     function OTPInput() {
 
@@ -190,7 +183,6 @@ const SignIn = () => {
 
     const signinAPI = (val, email, firstname, lastname, photo) => {
         let resp;
-        //there will be two google btn for signin and signup whihc will call two different api
         fetch(`/api/${val}`, {
             method: "POST",
             headers: {
@@ -205,20 +197,16 @@ const SignIn = () => {
                 return response.json()
             })
             .then(res => {
-                //console.log('signup res', res.is_user_created, res.user)
-
                 if (resp.status === 200) {
                     dispatch(setToastStatus({ isSuccess: true }))
                 } else {
                     dispatch(setToastStatus({ isSuccess: false }))
                 }
-                //on account createtion also set the user so instead of sending usercreated frommsignuo send userloggedin to keep things on same page for bith signup and signin
-                document.querySelector('.modal-backdrop').click()//not working use disptach
+                document.getElementById('closeSignin').click()//closing the modal
 
                 dispatch(toastVisibility({ toast: true }))
                 dispatch(setToastContent({ message: res.message }))
                 if (res.is_user_logged_in) {
-                    //check response message here...dont sent true is session has expired
                     dispatch(isUserLoggedIn({ value: true }))
                     dispatch(setUserDetails({ user: res.user }))
                 }
@@ -227,27 +215,17 @@ const SignIn = () => {
 
     const goWithGoogle = (val) => {
 
-        //with this the two things that google does forus is that it authentiicates the email id and make sure that no on uses soeonelse's id ,on signup you will have to chekc is the account already exist,,if dont only then create theaccount ,,,,on signin you have to check the same if the user even exist and if it does exist then resturn response that user exist and set the jwt
+        //with this the two things that google does for us is that it authentiicates the email id and make sure that no on uses soeonelse's id ,on signup you will have to chekc is the account already exist,,if dont only then create the account ,,,,on signin you have to check the same if the user even exist and if it does exist then resturn response that user exist and set the jwt
         signInWithPopup(auth, provider)
             .then((result) => {
                 console.log(result)
                 // This gives you a Google Access Token. You can use it to access the Google API.
                 const credential = GoogleAuthProvider.credentialFromResult(result);
                 const token = credential.accessToken;
-                // The signed-in user info.
-                console.log(token, result.user);//save this in cookie from the seever so that it will be httponly
-                //setuser(result.user);//will set the user state in redux(call api)
+                //console.log(token, result.user);// The signed-in user info.
 
-                //setting cookies to later to identify if the user has signed in (have to set a reasonablke expiry time)
-                // document.cookie = `name=${result.user.displayName};  max-age=3600; path=/`;
-                // document.cookie = `email=${result.user.email};  max-age=3600; path=/`;
-
-                sessionStorage.setItem("Auth Token", token);
-
-                //when login is done
+                //after google authentication
                 if (token) {
-                    console.log('before tokem')
-
                     let dname = result.user.displayName.split(" ")
                     let lastname = ''
                     let firstname = dname[0]
@@ -257,14 +235,10 @@ const SignIn = () => {
 
                     if (val === 'signup') {
                         signinAPI('signup', result.user.email, firstname, lastname, result.user.photoURL)
+                        navigate('/user');//sending user to user page for filling out other details
                     } else {
                         signinAPI('signin', result.user.email)
                     }
-
-
-                    //document.querySelector('.modal-backdrop').click()//not working use disptach
-                    // navigate('/user', { state: { displayName:result.user.displayName, email:result.user.email,photo:result.user.photoURL} });//insead of using navigate,save the necessary info in state
-                    //user should be saved here with basic details and when the serrver responsds successfully then navigate to user page for furter info
                 }
 
             })
@@ -304,7 +278,6 @@ const SignIn = () => {
         }
     }
 
-    /////////////////
     return (
         <>
             <div className="modal fade signin" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
@@ -314,10 +287,7 @@ const SignIn = () => {
                             <img src={loginImg} alt='' />
                         </div>
                         <div className='w-50'>
-                            {/* <div className="modal-header">
-                                <h5 className="modal-title" id="exampleModalToggleLabel">SIGN IN</h5>
-                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeSignin"></button>
-                            </div> */}
+                            <button type="button" className="d-none" data-bs-dismiss="modal" aria-label="Close" id="closeSignin"></button>
 
                             <div className="modal-body h-100">
                                 <div className='signup-form d-flex justify-content-center align-items-center flex-column h-100'>
@@ -391,18 +361,9 @@ const SignIn = () => {
 
 
                             </div>
-                            {/* <div className="modal-footer">
-                                <a data-bs-target="#exampleModalToggle2" href="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">New to Shopp-itt? create new account</a>
-                            </div> */}
                         </div>
-
-
                     </div>
                 </div>
-            </div>
-
-            <div className="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabIndex="-1">
-                {/* <SignUp /> */}
             </div>
         </>
     )

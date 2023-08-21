@@ -63,11 +63,13 @@ router.get('/api/getUserInfo', async (req, res) => {
 
 
 router.get('/api/signmeout', async (req, res) => {
-
+    try {
     res.clearCookie('jwt')
     res.clearCookie('email')
-    res.send({ message: "User logged out!!!" })
-
+    res.status(200).json({ message: "User logged out!!!" })
+    }catch (error){
+        res.status(500).json({ message: 'Internal server error.' });
+    }
 })
 
 
@@ -88,15 +90,15 @@ router.post('/api/signup', async (req, res) => {
         const userExist = await USER.findOne({ email: email });
 
         if (userExist) {
-            return res.status(422).json({ message: "User already exists!!! Try signing in instead", is_user_created: false });
+            return res.status(422).json({ message: "User already exists!!! Try signing in instead", is_user_created: false,is_user_logged_in: false });
         }
 
         const user = new USER({ firstname: firstname, lastname: lastname, email: email, avtar: photo });
 
         //hashing password
 
-        const response = await user.save();
-        console.log('dddd', response)
+        const newUser = await user.save();
+        console.log('dddd', newUser)
 
         //this and next cookie creatingis same as in signin,,create a commn function for this
         const token = await user.generateAuthToken();
@@ -110,7 +112,7 @@ router.post('/api/signup', async (req, res) => {
             httpOnly: true
         });
 
-        res.status(201).json({ message: "Account created successfully", is_user_created: true, user: response })//send the user data
+        res.status(201).json({ message: "Account created successfully", is_user_created: true, is_user_logged_in: true, user: newUser})//send the user data
 
     } catch (err) {
         console.log(err);
@@ -193,8 +195,10 @@ router.post('/api/addtocart', async (req, res) => {
         }
 
         // Save the updated user
-        await user.save()
-
+        let aa=await user.save()
+        let bb=aa.populate('cartProducts');
+console.log('aa',aa)
+console.log('bb',bb)
         res.status(200).json({ message: 'Product added to cart.', user });
 
     } catch (err) {

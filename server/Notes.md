@@ -1,17 +1,23 @@
 # WORKFLOW:::
 
 -- show signin only if not logged in
--- try creating utility function,, for like toast,,,instead of writing those 3 lines everywhere
+-- try creating utility function,, for like toast,,,instead of writing those 3 lines everywhere//settoaststatus,content and visibility are three action that wil be dispatched from multiple componnets ,,instead create a common function and call it
+-- on add to cart update the user stte with cart items//things are not in order//call a function to get current user details from utility on every chnage in user documnet,like art wishlist,order etc
 -- wishlist etc
--- fix the toast position
 -- clear unneccsary stuff
 -- find a layout for cart and order page
 -- cateory display??
+-- modals height is morr than vh
 -- search page
+-- add delete account option //later remove it on production
+-- need to add toast status on admin side and also at the server response
+
+done--
+-- fix the toast position
+
 
 ## bugs
 
-- modals height is morr than vh
 
 - hompgae stuff
 

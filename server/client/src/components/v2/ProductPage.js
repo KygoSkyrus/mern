@@ -47,6 +47,7 @@ const ProductPage = () => {
                 return response.json()
             })
             .then(res => {
+                console.log('res add to cart',res)
                 if (resp.status === 200) {
                     dispatch(setToastStatus({ isSuccess: true }))
                     dispatch(setUserDetails({ user: res.user }))

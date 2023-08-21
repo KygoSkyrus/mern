@@ -1,6 +1,6 @@
 import React from "react";
 import { useRef } from "react";
-import { toastVisibility } from "./redux/todoSlice";
+import { toastVisibility,setToastContent } from "./redux/todoSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const Toast = () => {
@@ -18,6 +18,7 @@ const Toast = () => {
     timer = setTimeout(() => {
       toastContainer.current.classList.remove("active");
       dispatch(toastVisibility({ toast: false })); //setting visibility to flase
+      dispatch(setToastContent({ message: "" }))//and content empty
     }, 3500);
   };
 

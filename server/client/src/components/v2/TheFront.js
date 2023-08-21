@@ -18,43 +18,19 @@ import { setUserDetails, isUserLoggedIn } from './redux/userSlice';
 import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSlice';
 
 
+import getUser from './Utility';
+
 const TheFront = ({ dl }) => {
 
     const dispatch = useDispatch()
 
 
     useEffect(() => {
-        getUser()
+        getUser(dispatch)
     }, [])
 
     ///inside this set the user state,,and this state will be put in store and from navbar and wherre ever user loggedin isneeded than get that user
-    const getUser = () => {
-        let resp;
-
-        fetch('/api/getUserInfo',)
-            .then(response => {
-                resp = response
-                return response.json()
-            })
-            .then(res => {
-                console.log('userindo', res, resp.status)
-
-                //dont show the text when user is logged in ,,the permission granted one
-                //user add the background to toast to     background: #d7d2d27a; with radius 4p
-                if (resp.status === 200) {
-                    dispatch(setToastStatus({ isSuccess: true }))
-                } else {
-                    dispatch(setToastStatus({ isSuccess: false }))
-                }
-                dispatch(toastVisibility({ toast: true }))
-                dispatch(setToastContent({ message: res.message }))
-                if (res.is_user_logged_in) {
-                    //check response message here...dont sent true is session has expired
-                    dispatch(isUserLoggedIn({ value: true }))
-                    dispatch(setUserDetails({ user: res.user }))
-                }
-            })
-    }
+    
 
 
 

@@ -1,33 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
 
+import { setToastStatus,setToastContent,toastVisibility } from './redux/todoSlice';
+import { isUserLoggedIn ,setUserDetails} from './redux/userSlice';
 
 import LoginImg from "./../../assets/images/newImg/collections/login.png"
-import { useSelector } from 'react-redux';
 
 const User = () => {
 
 
-    const { state } = useLocation();
+    const dispatch=useDispatch();
     const [user, setUser] = useState({})
     const userDetail = useSelector(state => state.user.user)
-    const isUserLoggedIn = useSelector(state => state.user.isUserLoggedIn)
+    const userLoggedIn = useSelector(state => state.user.isUserLoggedIn)
 
-    console.log('jask', userDetail,isUserLoggedIn)
+    console.log('jask', userDetail,userLoggedIn)
 
 
     useEffect(() => {
 
-        if (userDetail ) {//it should fetch this feom store is user is signed in  
-            // const { displayName, email, photo } = state;
-            // console.log('user in u com[p', displayName, email, photo)
-            // let names = displayName.split(" ")
-            // console.log(names)
-            // let lastname = ''
-            // if (names.length > 1) {
-            //     lastname = names[names.length - 1]
-            // }
-
+        if (userDetail ) {
             setUser({ ...user, email: userDetail.email, photo: userDetail.avtar, firstname: userDetail.firstname, lastname: userDetail.lastname })
             console.log(user)
         } else {
@@ -37,18 +29,30 @@ const User = () => {
     console.log(user)
 
     const signOut = () => {
-        //clear the jwt token 
+        console.log('sign')
+        let resp;
         fetch('/api/signmeout')
-            .then(response => response.json())
+            .then(response => {
+                resp=response;
+                return response.json()})
             .then(res => {
-                console.log('ueuqw', res)
+                console.log('sign me out response', res)
+                if (resp.status === 200) {
+                    dispatch(isUserLoggedIn({ value: false }))
+                    dispatch(setUserDetails({ user: undefined }))//clearing user details
+                    dispatch(setToastStatus({ isSuccess: true }))
+                }else{
+                    dispatch(setToastStatus({ isSuccess: false }))
+                }
+                dispatch(setToastContent({ message: res.message }))
+                dispatch(toastVisibility({ toast: true }))
             })
     }
 
 
-    return (
+    return (    
         <>
-            {userDetail && isUserLoggedIn ?
+            {userDetail  && userLoggedIn?
                 <div className='container my-5 user-form py-3 rounded'>
 
                     <section className='text-primary skip'>Skip for later</section>
@@ -130,7 +134,6 @@ const User = () => {
 
                     </div>
                 </div>
-
                 :
                 <div className='container my-5'>
                     <div className='d-flex flex-column align-items-center m-auto' style={{ width: "fit-content" }}>
