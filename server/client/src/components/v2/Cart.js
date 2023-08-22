@@ -62,21 +62,43 @@ const Cart = () => {
 
         </div> :
 
- <div className='container my-5'>
- <div class="row t-mb-30">
-     <div class="col-md-12 " >
-
-          {cartItems.map(x => {
-            return (
-              <div key={x._id} className='m-3 bg-light'>
-                <p>{x.name}</p>
-                <button onClick={() => removeFromCart(x._id)} className='btn btn-primary'>remove from cart</button>
+        <div className='container my-5'>
+          <div class="row ">
+            <div class="col-lg-8 t-mb-30 mb-lg-0 theSection" >
+              <div class="row ">
+                <div class="col-12">
+                  <div class="row ">
+                    {cartItems.map(x => {
+                      return (
+                        <div key={x._id} className='row mb-3 p-2 bg-white '>
+                          <div class="col-md-2">
+                            <div>
+                              <img src={x.image} alt='' className='img-fluid w-100 t-minw-215' />
+                            </div>
+                          </div>
+                          <div class="col-md-10">
+                            <h5>
+                              {x.name}
+                            </h5>
+                            <h5>{x.price}</h5>
+                            <span onClick={() => removeFromCart(x._id)} className=''>Remove from cart</span>
+                            <span>Add to wishlist</span>
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
               </div>
-            )
-          })}
+
+            </div>
+            <div className='col-lg-4 mb-3  bg-white'>
+              <div className='row'>
+                CHECKOUT
+              </div>
+            </div>
+          </div>
         </div>
-</div>
-</div>
       }
     </>
   )

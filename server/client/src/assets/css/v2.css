@@ -82,6 +82,15 @@
   color: #fff;
 }
 
+.shadow-s {
+  box-shadow: var(--shadow-small);
+}
+.shadow-m {
+  box-shadow: var(--shadow-medium);
+}
+.shadow-l {
+  box-shadow: var(--shadow-large);
+}
 .pointer {
   cursor: pointer;
 }
@@ -417,7 +426,7 @@ grid-column: 1;
 .dropdown:hover > .profileDropdownUL {
   display: block;
 }
-.profileDropdownUL{
+.profileDropdownUL {
   right: 0;
 }
 /*---------------------------------------------- NAVBAR ---------------------------------------------------*/
