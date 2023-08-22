@@ -11,6 +11,15 @@ const Cart = () => {
   const cartItems = useSelector(state => state.user.user.cartProducts)
   console.log('ffkhf', cartItems)
 
+  // useEffect(()=>{
+  //   fetch('/api/getcartitems')
+  //   .then(res=>res.json())
+  //   .then(response=>{
+  //     console.log('response',response)
+  //   })
+
+  // },[])
+
   const removeFromCart = (productId) => {
     let resp;
     fetch(`/api/removefromcart`, {
@@ -52,7 +61,11 @@ const Cart = () => {
           <button className='btn my-4 btn-outline-warning'>Continue shopping</button>
 
         </div> :
-        <div className='container'>
+
+ <div className='container my-5'>
+ <div class="row t-mb-30">
+     <div class="col-md-12 " >
+
           {cartItems.map(x => {
             return (
               <div key={x._id} className='m-3 bg-light'>
@@ -62,6 +75,8 @@ const Cart = () => {
             )
           })}
         </div>
+</div>
+</div>
       }
     </>
   )

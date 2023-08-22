@@ -197,6 +197,7 @@ const SignIn = () => {
                 return response.json()
             })
             .then(res => {
+                console.log("res.user",res.user)
                 if (resp.status === 200) {
                     dispatch(setToastStatus({ isSuccess: true }))
                 } else {

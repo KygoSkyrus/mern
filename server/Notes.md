@@ -1,18 +1,26 @@
 # WORKFLOW:::
 
--- show signin only if not logged in
--- try creating utility function,, for like toast,,,instead of writing those 3 lines everywhere//settoaststatus,content and visibility are three action that wil be dispatched from multiple componnets ,,instead create a common function and call it
--- on add to cart update the user stte with cart items//things are not in order//call a function to get current user details from utility on every chnage in user documnet,like art wishlist,order etc
+
 -- wishlist etc
 -- clear unneccsary stuff
 -- find a layout for cart and order page
 -- cateory display??
 -- modals height is morr than vh
--- search page
+-- search page  
 -- add delete account option //later remove it on production
 -- need to add toast status on admin side and also at the server response
 
+
+-- we have to populat the ref field on signin and signup and also at getuserinfo//--not sure --->>and just call cart products and orders on their respective page,,cart ietms number badge number on navbar can be taken care by the cart length whihc is product id only>>>>the proble is aboout calling ten api to get cart order and sihslist on each page or keep them in app in advance from other actions,,which can be unneccesary though
+------FINAL DECISON-- call the api on dedicated page ..on signin dont populate anithing...neither onget userdetails>>>>with this approach we wont need the getuseindo to send user indo also,,,ww will have the useefect on age in user component to gte user details,,,gthere might be somepage where we will need more than that,,for that we can eidt the getuseinfo to reurn bassic info like email and name after just checking the cookie presence>>>>>STILL NOT SURE ABOUT THIS,,,every render will call this dedicated api and it linds of eleiminates redux and makes it like server side rendering
+
+-- check each and every categoryes..for example playstation is not showing up
+-- try creating utility function,, for like toast,,,instead of writing those 3 lines everywhere//settoaststatus,content and visibility are three action that wil be dispatched from multiple componnets ,,instead create a common function and call it
+
+-- cureently the categoyr page is breaking the Link chaain an dreloading the appp
+
 done--
+-- show signin only if not logged in
 -- fix the toast position
 
 

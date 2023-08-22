@@ -405,13 +405,20 @@ grid-column: 1;
   text-transform: capitalize;
 }
 /* to make dropdown visible on hover */
-.dropdown:hover > .dropdown-menu {
+.dropdown:hover > .dropdownCategoryUL {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
 .dropdown > .dropdown-toggle:active {
   /*Without this, clicking will make it sticky*/
   pointer-events: none;
+}
+
+.dropdown:hover > .profileDropdownUL {
+  display: block;
+}
+.profileDropdownUL{
+  right: 0;
 }
 /*---------------------------------------------- NAVBAR ---------------------------------------------------*/
 
@@ -777,7 +784,7 @@ input[type="number"]::-webkit-outer-spin-button {
   text-decoration: line-through;
   display: inline-block;
   margin-right: 5px;
-  color: #f52544;
+  color: #ff4460;
 }
 .extra-small {
   font-size: 10px;

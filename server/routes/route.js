@@ -131,7 +131,7 @@ router.post('/api/signin', async (req, res) => {
         //     return res.status(400).json({ error: "fill all details" });
         // }
 
-        const user = await USER.findOne({ email: email });
+        const user = await USER.findOne({ email: email }).populate('cartProducts');
 
         if (user) {
             // const isMatch = await bcrypt.compare(password, userLogin.password);
@@ -195,11 +195,10 @@ router.post('/api/addtocart', async (req, res) => {
         }
 
         // Save the updated user
-        let aa=await user.save()
-        let bb=aa.populate('cartProducts');
-console.log('aa',aa)
-console.log('bb',bb)
-        res.status(200).json({ message: 'Product added to cart.', user });
+        await user.save()
+        const populatedDoc = await USER.findById(decoded._id).populate('cartProducts');
+
+        res.status(200).json({ message: 'Product added to cart.', user:populatedDoc });
 
     } catch (err) {
         console.log(err)
@@ -238,6 +237,35 @@ router.post('/api/removefromcart', async (req, res) => {
         res.status(500).json({ message: 'Internal server error.' });
     }
 });
+
+
+
+//get cart items
+router.get('/api/getcartitems', async (req, res) => {
+    const token = req.cookies.jwt;
+    //thi is common for most user actions ,so create a middleware function instead
+    if (!token) {
+        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
+    }
+    try {
+
+        const decoded = jwt.verify(token, process.env.SECRETKEY);
+        const user = await USER.findById(decoded._id).populate('cartProducts');
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        // Token is valid, user is signed in
+        res.status(200).json({ message: 'Access granted.', cartItems:user.cartProducts });
+   
+    } catch (error) {
+        console.error('Error removing product from cart:', error);
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+
+})
+
 
 
 //stripe
@@ -624,19 +652,6 @@ router.get("/aaa", async (req, res) => {
 })
 
 
-
-router.post('/api/getcartitems', async (req, res) => {
-
-    const { user } = req.body;
-    console.log('user', user)
-    USER.findOne({ email: user })
-        .populate('cart.productId') // only works if we pushed refs to person.eventsAttended
-        .exec(function (err, person) {
-            if (err) console.log(err);
-            console.log(person);
-        });
-
-})
 
 
 

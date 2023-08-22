@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from "react-router-dom";
+import { useSelector } from 'react-redux';
 
 const Navbar = (props) => {
 
   const [categories, setCategories] = useState()
-  // const [categoriesAndID, setCategoriesAndID] = useState({})
   const [childWithoutParent, setChildWithoutParent] = useState([])
+  const isUserLoggedIn = useSelector(state => state.user.isUserLoggedIn)
+
   const Badge = () => {
     if (props.data > 0) {
       return (
@@ -16,7 +18,7 @@ const Navbar = (props) => {
     }
   }
 
-//NOTE::: cannot have two columns for categories as on over on lement ffrom 1st col ypu wont be able to react the subcategory,,either put all of your subcate at theright side or separate the prent cat and cate without parent
+  //NOTE::: cannot have two columns for categories as on over on lement ffrom 1st col ypu wont be able to react the subcategory,,either put all of your subcate at theright side or separate the prent cat and cate without parent
 
   useEffect(() => {
     fetch("/api/getcategory")
@@ -54,18 +56,18 @@ const Navbar = (props) => {
 
   //can put this in usememo
   const populateSubCategory = (e) => {
-     console.log('populateSubCategory',e.target, e.target.dataset.index)
+    console.log('populateSubCategory', e.target, e.target.dataset.index)
 
     let childCategoryElem = document.querySelector('.child-category')
 
     childCategoryElem.innerHTML = ''//clearing the previous subCat
     childCategoryElem.classList.remove('display-none')
 
-   
+
     categories[e.target.dataset.index].subCategory.map(x => {
       let li = document.createElement('li')
       let a = document.createElement('a')
-      console.log('fff',x.toLowerCase())
+      console.log('fff', x.toLowerCase())
       a.href = `/category/${x}`
       a.innerHTML = x
       a.classList.add('dropdown-item', 'gap-2', 'd-flex')
@@ -161,12 +163,13 @@ const Navbar = (props) => {
                 </ul>
 
               </li>
-
-              <li className="nav-item">
-                <a className="nav-link " data-bs-toggle="modal" href="#exampleModalToggle" role="button">
-                  SignIn
-                </a>
-              </li>
+              {!isUserLoggedIn &&
+                <li className="nav-item">
+                  <a className="nav-link " data-bs-toggle="modal" href="#exampleModalToggle" role="button">
+                    SignIn
+                  </a>
+                </li>
+              }
 
               <li className="nav-item position-relative">
                 <Link to="/cart" className="nav-link">
@@ -175,21 +178,41 @@ const Navbar = (props) => {
                   <Badge />
                 </Link>
               </li>
-              <li className="nav-item ">
+              {/* <li className="nav-item ">
                 <Link to="/orders" className="nav-link">
                   Orders
                 </Link>
-              </li>
+              </li> */}
               <li className="nav-item ">
                 <Link to="/admin/dashboard" className="nav-link">
                   Admin
                 </Link>
               </li>
-              <li className="nav-item position-relative">
-                <Link to="/admin/profile" className="nav-link">
+              <li className="nav-item position-relative dropdown">
+                <button type="button"
+                  // className="nav-link" id="dropdownCategory" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside"
+                  class="nav-link dropdown-toggle"
+                  id="profileDropdown"
+                  data-mdb-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  profile
+                </button>
+                <ul className="dropdown-menu shadow profileDropdownUL" aria-labelledby="profileDropdown">
+                  <li className='' >
+                    <Link className="dropdown-item gap-2 d-flex" to="/user" >Account</Link>
+                  </li>
+                  <li className='' >
+                    <Link className="dropdown-item gap-2 d-flex" to="/wishlist" >Wishlist</Link>
+                  </li>
+                  <li className='' >
+                    <Link className="dropdown-item gap-2 d-flex" to="/orders" >Orders</Link>
+                  </li>
+                </ul>
+                {/* <Link to="/user" className="nav-link">
                   <span>Profile</span>
                   <i className='fa fa-user'></i>
-                </Link>
+                </Link> */}
               </li>
             </ul>
           </div>
