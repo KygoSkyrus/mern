@@ -64,26 +64,55 @@ const Cart = () => {
 
         <div className='container my-5'>
           <div class="row ">
-            <div class="col-lg-8 t-mb-30 mb-lg-0 theSection" >
+            <div class="col-lg-9 t-mb-30 mb-lg-0 theSection" >
               <div class="row ">
                 <div class="col-12">
                   <div class="row ">
                     {cartItems.map(x => {
                       return (
-                        <div key={x._id} className='row mb-3 p-2 bg-white '>
+                        <div key={x._id} className='row mb-3 p-2 border-bottom'>
                           <div class="col-md-2">
                             <div>
                               <img src={x.image} alt='' className='img-fluid w-100 t-minw-215' />
                             </div>
                           </div>
+
                           <div class="col-md-10">
-                            <h5>
-                              {x.name}
-                            </h5>
-                            <h5>{x.price}</h5>
-                            <span onClick={() => removeFromCart(x._id)} className=''>Remove from cart</span>
-                            <span>Add to wishlist</span>
+                            <div className='d-flex flex-column justify-content-between h-100'>
+                              <div className='row d-flex justify-content-between'>
+
+                                <div class="col-md-4">
+                                  <h6>
+                                    {x.name}
+                                  </h6>
+                                </div>
+                                <div class="col-md-2">
+                                  price
+                                  <h6>{x.price}</h6>
+                                </div>
+                                <div class="col-md-3">
+                                  <div>
+                                    quantity
+                                  </div>
+                                  <div className='border d-flex row' style={{width:"fit-content"}}>
+                                    <span className='py-1 col-4'>-</span>
+                                    <span className='py-1 col-4'>3</span>
+                                    <span className='py-1 col-4'>+</span>
+                                  </div>
+                                </div>
+                                <div class="col-md-2">
+                                  <div>
+                                    total
+                                  </div>
+                                </div>
+                              </div>
+                              <div className='d-flex justify-content-end'>
+                                <span onClick={() => removeFromCart(x._id)} className=''>Remove <i class="fa fa-trash"></i></span>
+                                <span>Move to wishlist <i class="fa fa-heart"></i></span>
+                              </div>
+                            </div>
                           </div>
+
                         </div>
                       )
                     })}
@@ -92,14 +121,42 @@ const Cart = () => {
               </div>
 
             </div>
-            <div className='col-lg-4 mb-3  bg-white'>
+            <div className='col-lg-3 mb-3 '>
               <div className='row'>
+                <h5>Summary</h5>
+
+                <section>Do you have a Promo Code?</section>
+
+<div className='d-flex justify-content-between'>
+    <span>Subtotal <i class="fa fa-question-circle fa-sm" aria-hidden="true"></i>
+</span>
+    <span>463</span>
+</div>
+
+<div className='d-flex justify-content-between'>
+    <span>Estimated Shipping & Handling <i class="fa fa-question-circle fa-sm" aria-hidden="true"></i></span>
+    <span>463</span>
+</div>
+
+<div className='d-flex justify-content-between'>
+    <span>Estimated Tax <i class="fa fa-question-circle fa-sm" aria-hidden="true"></i></span>
+    <span>463</span>
+</div>
+
+<div className='d-flex justify-content-between'>
+    <span>Total</span>
+    <span>46653</span>
+</div>
+                
+
+
                 CHECKOUT
               </div>
             </div>
           </div>
         </div>
       }
+      <div>Recommended products</div>
     </>
   )
 }

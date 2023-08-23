@@ -1,6 +1,26 @@
 # WORKFLOW:::
 
 
+inidividual 
+- caling api on their own and populate cart
+- 
+- have to update the user on signin/- no need only user data
+- on reload - only check
+- on add prod - no need to populate cart items
+- on remove prod 
+
+
+
+existing
+- have to update the user on signin/
+- on reload
+- on add prod
+- on remove prod 
+
+- same thing willl be doen for wishlist orders 
+
+
+
 -- wishlist etc
 -- clear unneccsary stuff
 -- find a layout for cart and order page
@@ -38,7 +58,7 @@ done--
   - add toast when addeed to cart or whishlist ;;finihs th homepage layout howeever it looks,,need to get done with that and then check add product payement cart orders etc and also the user account form and firebase login
 
   -the check add to cart of procut
-
+- can add on hover cart show cart items with two option of view cart and checkout oprtion
   - also adding to wishlight
 
 - add a message that selling fast or something when stock is less than 5
