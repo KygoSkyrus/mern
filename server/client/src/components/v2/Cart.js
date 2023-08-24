@@ -35,6 +35,7 @@ const Cart = () => {
       })
       .then(res => {
         if (resp.status === 200) {
+          console.log('updated user object',res.user)
           dispatch(setToastStatus({ isSuccess: true }))
           dispatch(setUserDetails({ user: res.user }))
         } else {
@@ -68,6 +69,37 @@ const Cart = () => {
               <div class="row ">
                 <div class="col-12">
                   <div class="row ">
+                  <div className='row mb-3 p-2 pb-0 border-bottom'>
+                          <div class="col-md-2"></div>
+                          <div class="col-md-10">
+                            <div className='d-flex flex-column justify-content-between h-100'>
+                              <div className='row d-flex justify-content-between'>
+                                <div class="col-md-4">
+                                  <h6>
+                                    Item
+                                  </h6>
+                                </div>
+                                <div class="col-md-2">
+                                  <h6>
+                                  Price
+                                  </h6>
+                                </div>
+                                <div class="col-md-3">
+                                  <h6>
+                                    Quantity
+                                  </h6>
+                        
+                                </div>
+                                <div class="col-md-2">
+                                  <h6>
+                                    Total
+                                  </h6>
+                                </div>
+                              </div>                            
+                            </div>
+                          </div>
+
+                        </div>
                     {cartItems.map(x => {
                       return (
                         <div key={x._id} className='row mb-3 p-2 border-bottom'>
@@ -87,14 +119,12 @@ const Cart = () => {
                                   </h6>
                                 </div>
                                 <div class="col-md-2">
-                                  price
                                   <h6>{x.price}</h6>
                                 </div>
                                 <div class="col-md-3">
                                   <div>
-                                    quantity
                                   </div>
-                                  <div className='border d-flex row' style={{width:"fit-content"}}>
+                                  <div className='border d-flex row' style={{ width: "fit-content" }}>
                                     <span className='py-1 col-4'>-</span>
                                     <span className='py-1 col-4'>3</span>
                                     <span className='py-1 col-4'>+</span>
@@ -102,7 +132,7 @@ const Cart = () => {
                                 </div>
                                 <div class="col-md-2">
                                   <div>
-                                    total
+                                    43834
                                   </div>
                                 </div>
                               </div>
@@ -121,36 +151,37 @@ const Cart = () => {
               </div>
 
             </div>
-            <div className='col-lg-3 mb-3 '>
+            <div className='col-lg-3 mb-3 p-img-sticky '>
               <div className='row'>
                 <h5>Summary</h5>
 
                 <section>Do you have a Promo Code?</section>
 
-<div className='d-flex justify-content-between'>
-    <span>Subtotal <i class="fa fa-question-circle fa-sm" aria-hidden="true"></i>
-</span>
-    <span>463</span>
-</div>
+                <div className='d-flex justify-content-between'>
+                  <span>Subtotal <i class="fa fa-question-circle fa-sm" aria-hidden="true"></i>
+                  </span>
+                  <span>463</span>
+                </div>
 
-<div className='d-flex justify-content-between'>
-    <span>Estimated Shipping & Handling <i class="fa fa-question-circle fa-sm" aria-hidden="true"></i></span>
-    <span>463</span>
-</div>
+                <div className='d-flex justify-content-between'>
+                  <span>Estimated Shipping & Handling <i class="fa fa-question-circle fa-sm" aria-hidden="true"></i></span>
+                  <span>463</span>
+                </div>
 
-<div className='d-flex justify-content-between'>
-    <span>Estimated Tax <i class="fa fa-question-circle fa-sm" aria-hidden="true"></i></span>
-    <span>463</span>
-</div>
+                <div className='d-flex justify-content-between'>
+                  <span>Estimated Tax <i class="fa fa-question-circle fa-sm" aria-hidden="true"></i></span>
+                  <span>463</span>
+                </div>
 
-<div className='d-flex justify-content-between'>
-    <span>Total</span>
-    <span>46653</span>
-</div>
-                
+                <div className='d-flex justify-content-between'>
+                  <span>Total</span>
+                  <span>46653</span>
+                </div>
 
+                <form action="/create-checkout-session" method="POST">
+      <button className='btn btn-outline-warning w-100 my-2' type="submit">Checkout</button>
+    </form>
 
-                CHECKOUT
               </div>
             </div>
           </div>

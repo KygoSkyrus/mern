@@ -268,6 +268,33 @@ router.get('/api/getcartitems', async (req, res) => {
 
 
 
+router.post('/create-checkout-session', async (req, res) => {
+    console.log('checkout-----------')
+    const session = await stripe.checkout.sessions.create({
+      line_items: [
+        {
+          price_data: {
+            currency: 'inr',
+            product_data: {
+              name: 'T-shirt',
+            },
+            unit_amount: 2000,
+          },
+          quantity: 1,
+        },
+      ],
+      mode: 'payment',
+      success_url: 'http://localhost:3006/orders',
+      cancel_url: 'http://localhost:3006/user',
+    });
+  
+    res.redirect(303, session.url);
+  });
+
+
+
+
+
 //stripe
 router.post('/checkout', async (req, res) => {
 

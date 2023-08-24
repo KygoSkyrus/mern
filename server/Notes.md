@@ -20,7 +20,7 @@ existing
 - same thing willl be doen for wishlist orders 
 
 
-
+-- remove to cart isnt rel time ,,no showng deleted items
 -- wishlist etc
 -- clear unneccsary stuff
 -- find a layout for cart and order page
