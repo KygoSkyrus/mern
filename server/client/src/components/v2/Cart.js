@@ -179,8 +179,8 @@ const Cart = () => {
                 </div>
 
                 <form action="/create-checkout-session" method="POST">
-      <button className='btn btn-outline-warning w-100 my-2' type="submit">Checkout</button>
-    </form>
+                  <button className='btn btn-outline-warning w-100 my-2' type="submit">Checkout</button>
+               </form>
 
               </div>
             </div>

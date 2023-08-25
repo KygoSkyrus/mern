@@ -267,7 +267,7 @@ router.get('/api/getcartitems', async (req, res) => {
 })
 
 
-
+//IF the stirpe accont is activated than there may be a way to send invoice to user
 router.post('/create-checkout-session', async (req, res) => {
     console.log('checkout-----------')
     const session = await stripe.checkout.sessions.create({
@@ -278,21 +278,40 @@ router.post('/create-checkout-session', async (req, res) => {
             product_data: {
               name: 'T-shirt',
             },
-            unit_amount: 2000,
+            unit_amount: 30000,
           },
-          quantity: 1,
+          quantity: 3,
+          adjustable_quantity:{
+             enabled:true,
+             minimum:1,
+             maximum:50,
+          }
         },
+        {
+            price_data: {
+              currency: 'inr',
+              product_data: {
+                name: 'Bag',
+              },
+              unit_amount: 720000,
+            },
+            quantity: 1,
+          },
       ],
       mode: 'payment',
       success_url: 'http://localhost:3006/orders',
       cancel_url: 'http://localhost:3006/user',
+      customer_email:'xyz@email.com',
     });
+
+    console.log('session - ',session)
   
-    res.redirect(303, session.url);
+    res.redirect(303, session.url);//redirects to checkout page
   });
 
 
-
+  //   GET /v1/checkout/sessions
+//using this uoy cann show all the checkout session whteher failed or succeed in admin panel
 
 
 //stripe

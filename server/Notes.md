@@ -34,6 +34,14 @@ existing
 -- we have to populat the ref field on signin and signup and also at getuserinfo//--not sure --->>and just call cart products and orders on their respective page,,cart ietms number badge number on navbar can be taken care by the cart length whihc is product id only>>>>the proble is aboout calling ten api to get cart order and sihslist on each page or keep them in app in advance from other actions,,which can be unneccesary though
 ------FINAL DECISON-- call the api on dedicated page ..on signin dont populate anithing...neither onget userdetails>>>>with this approach we wont need the getuseindo to send user indo also,,,ww will have the useefect on age in user component to gte user details,,,gthere might be somepage where we will need more than that,,for that we can eidt the getuseinfo to reurn bassic info like email and name after just checking the cookie presence>>>>>STILL NOT SURE ABOUT THIS,,,every render will call this dedicated api and it linds of eleiminates redux and makes it like server side rendering
 
+- there should pe a page to show the transaction and every details
+- the amount of gross sale
+- https://stripe.com/docs/api/checkout/sessions/create
+- fullfill orders https://stripe.com/docs/payments/checkout/fulfill-orders
+- if this fulfilled webhpook is used than webhook needed to b regeristerd also
+- in stripe https://dashboard.stripe.com/test/payouts at this url there will be a exapmle how to cretae filter for admin in nav
+
+
 -- check each and every categoryes..for example playstation is not showing up
 -- try creating utility function,, for like toast,,,instead of writing those 3 lines everywhere//settoaststatus,content and visibility are three action that wil be dispatched from multiple componnets ,,instead create a common function and call it
 
