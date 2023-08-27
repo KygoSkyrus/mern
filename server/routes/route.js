@@ -16,6 +16,9 @@ const { v4: uuidv4 } = require('uuid');
 const stripe = require('stripe')(sk);
 
 
+
+router.use(express.json({verify: (req,res,buf) => { req.rawBody = buf }}));
+
 /************* SCHEMA ***************/
 const PRODUCT = require('../models/product')
 const CATEGORY = require('../models/category')
@@ -64,10 +67,10 @@ router.get('/api/getUserInfo', async (req, res) => {
 
 router.get('/api/signmeout', async (req, res) => {
     try {
-    res.clearCookie('jwt')
-    res.clearCookie('email')
-    res.status(200).json({ message: "User logged out!!!" })
-    }catch (error){
+        res.clearCookie('jwt')
+        res.clearCookie('email')
+        res.status(200).json({ message: "User logged out!!!" })
+    } catch (error) {
         res.status(500).json({ message: 'Internal server error.' });
     }
 })
@@ -90,7 +93,7 @@ router.post('/api/signup', async (req, res) => {
         const userExist = await USER.findOne({ email: email });
 
         if (userExist) {
-            return res.status(422).json({ message: "User already exists!!! Try signing in instead", is_user_created: false,is_user_logged_in: false });
+            return res.status(422).json({ message: "User already exists!!! Try signing in instead", is_user_created: false, is_user_logged_in: false });
         }
 
         const user = new USER({ firstname: firstname, lastname: lastname, email: email, avtar: photo });
@@ -112,7 +115,7 @@ router.post('/api/signup', async (req, res) => {
             httpOnly: true
         });
 
-        res.status(201).json({ message: "Account created successfully", is_user_created: true, is_user_logged_in: true, user: newUser})//send the user data
+        res.status(201).json({ message: "Account created successfully", is_user_created: true, is_user_logged_in: true, user: newUser })//send the user data
 
     } catch (err) {
         console.log(err);
@@ -198,7 +201,7 @@ router.post('/api/addtocart', async (req, res) => {
         await user.save()
         const populatedDoc = await USER.findById(decoded._id).populate('cartProducts');
 
-        res.status(200).json({ message: 'Product added to cart.', user:populatedDoc });
+        res.status(200).json({ message: 'Product added to cart.', user: populatedDoc });
 
     } catch (err) {
         console.log(err)
@@ -257,8 +260,8 @@ router.get('/api/getcartitems', async (req, res) => {
         }
 
         // Token is valid, user is signed in
-        res.status(200).json({ message: 'Access granted.', cartItems:user.cartProducts });
-   
+        res.status(200).json({ message: 'Access granted.', cartItems: user.cartProducts });
+
     } catch (error) {
         console.error('Error removing product from cart:', error);
         res.status(500).json({ message: 'Internal server error.' });
@@ -271,47 +274,81 @@ router.get('/api/getcartitems', async (req, res) => {
 router.post('/create-checkout-session', async (req, res) => {
     console.log('checkout-----------')
     const session = await stripe.checkout.sessions.create({
-      line_items: [
-        {
-          price_data: {
-            currency: 'inr',
-            product_data: {
-              name: 'T-shirt',
+        line_items: [
+            {
+                price_data: {
+                    currency: 'inr',
+                    product_data: {
+                        name: 'T-shirt',
+                    },
+                    unit_amount: 30000,
+                },
+                quantity: 3,
+                adjustable_quantity: {
+                    enabled: true,
+                    minimum: 1,
+                    maximum: 50,
+                }
             },
-            unit_amount: 30000,
-          },
-          quantity: 3,
-          adjustable_quantity:{
-             enabled:true,
-             minimum:1,
-             maximum:50,
-          }
-        },
-        {
-            price_data: {
-              currency: 'inr',
-              product_data: {
-                name: 'Bag',
-              },
-              unit_amount: 720000,
+            {
+                price_data: {
+                    currency: 'inr',
+                    product_data: {
+                        name: 'Bag',
+                    },
+                    unit_amount: 720000,
+                },
+                quantity: 1,
             },
-            quantity: 1,
-          },
-      ],
-      mode: 'payment',
-      success_url: 'http://localhost:3006/orders',
-      cancel_url: 'http://localhost:3006/user',
-      customer_email:'xyz@email.com',
+        ],
+        mode: 'payment',
+        success_url: 'http://localhost:3006/orders',
+        cancel_url: 'http://localhost:3006/user',
+        customer_email: 'xyz@email.com',
     });
 
-    console.log('session - ',session)
-  
+    console.log('session - ', session)
+
     res.redirect(303, session.url);//redirects to checkout page
-  });
+});
 
 
-  //   GET /v1/checkout/sessions
+//   GET /v1/checkout/sessions
 //using this uoy cann show all the checkout session whteher failed or succeed in admin panel
+
+
+// This is your Stripe CLI webhook secret for testing your endpoint locally.
+const endpointSecret = "whsec_5601d477da26790e09849aeeb567342bf53dbe96229fd3accbf27163f19c5476";
+
+//there are different keys and code for webhook in prod
+router.post('/webhook', express.raw({ type: 'application/json' }), (request, response) => {
+    const payload = request.body;
+    const sig = request.headers['stripe-signature'];
+    console.log("webhook api")
+    let event;
+
+    try {
+        event = stripe.webhooks.constructEvent(request.rawBody, sig, endpointSecret);
+        console.log('e-', event)
+    } catch (err) {
+        console.log('eeeeerrrr',err)//bug here
+        return response.status(400).send(`Webhook Error: ${err.message}`);
+    }
+
+    // Handle the event
+    console.log(`Unhandled event type ${event.type}`);
+    switch (event.type) {
+        case 'payment_intent.succeeded':
+            const paymentIntentSucceeded = event.data.object;
+            console.log('edatobj', event.data)
+            // Then define and call a function to handle the event payment_intent.succeeded
+            break;
+        // ... handle other event types
+        default:
+            console.log(`Unhandled event type ${event.type}`);
+    }
+    response.send();
+});
 
 
 //stripe
