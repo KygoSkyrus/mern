@@ -17,7 +17,6 @@ const stripe = require('stripe')(sk);
 
 
 
-router.use(express.json({verify: (req,res,buf) => { req.rawBody = buf }}));
 
 /************* SCHEMA ***************/
 const PRODUCT = require('../models/product')
@@ -39,7 +38,7 @@ router.get('/api/getUserInfo', async (req, res) => {
     // console.log(new Date(Date.now() + 3600000))
     try {
         const decoded = jwt.verify(token, process.env.SECRETKEY);
-        console.log('decoded', decoded)
+        //console.log('decoded', decoded)
         // Check if the token is expired
 
 
@@ -50,7 +49,7 @@ router.get('/api/getUserInfo', async (req, res) => {
 
         //by mongoose virtual
         const user = await USER.findById(decoded._id).populate('cartProducts');
-        console.log(user)
+        //console.log(user)
         if (!user) {
             return res.status(404).json({ message: 'User not found.' });
         }
@@ -317,38 +316,7 @@ router.post('/create-checkout-session', async (req, res) => {
 //using this uoy cann show all the checkout session whteher failed or succeed in admin panel
 
 
-// This is your Stripe CLI webhook secret for testing your endpoint locally.
-const endpointSecret = "whsec_5601d477da26790e09849aeeb567342bf53dbe96229fd3accbf27163f19c5476";
 
-//there are different keys and code for webhook in prod
-router.post('/webhook', express.raw({ type: 'application/json' }), (request, response) => {
-    const payload = request.body;
-    const sig = request.headers['stripe-signature'];
-    console.log("webhook api")
-    let event;
-
-    try {
-        event = stripe.webhooks.constructEvent(request.rawBody, sig, endpointSecret);
-        console.log('e-', event)
-    } catch (err) {
-        console.log('eeeeerrrr',err)//bug here
-        return response.status(400).send(`Webhook Error: ${err.message}`);
-    }
-
-    // Handle the event
-    console.log(`Unhandled event type ${event.type}`);
-    switch (event.type) {
-        case 'payment_intent.succeeded':
-            const paymentIntentSucceeded = event.data.object;
-            console.log('edatobj', event.data)
-            // Then define and call a function to handle the event payment_intent.succeeded
-            break;
-        // ... handle other event types
-        default:
-            console.log(`Unhandled event type ${event.type}`);
-    }
-    response.send();
-});
 
 
 //stripe
