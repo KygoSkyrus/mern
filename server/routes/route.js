@@ -3,6 +3,16 @@ const router = express('router');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+const bodyParser=require('body-parser')
+// Use JSON parser for all non-webhook routes
+router.use((req, res, next) => {
+    if (req.originalUrl === "/webhook") {
+      next();
+    } else {
+      bodyParser.json()(req, res, next);
+    }
+  });
+
 const cookieParser = require('cookie-parser');
 router.use(cookieParser());
 
@@ -17,6 +27,7 @@ const stripe = require('stripe')(sk);
 
 
 
+router.use(express.json({verify: (req,res,buf) => { req.rawBody = buf }}));
 
 /************* SCHEMA ***************/
 const PRODUCT = require('../models/product')

@@ -12,6 +12,15 @@ app.use(express.static('public'));
 dotenv.config({ path: './env/config.env' });
 
 
+// // Use JSON parser for all non-webhook routes
+// app.use((req, res, next) => {
+//   if (req.originalUrl === "/webhook") {
+//     next();
+//   } else {
+//     bodyParser.json()(req, res, next);
+//   }
+// });
+ 
 app.use(require('./routes/route'));
 app.use(express.json());
 app.use((req, res, next) => {

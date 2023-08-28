@@ -41,6 +41,7 @@ existing
 - if this fulfilled webhpook is used than webhook needed to b regeristerd also
 - in stripe https://dashboard.stripe.com/test/payouts at this url there will be a exapmle how to cretae filter for admin in nav
 
+- cart example https://www.optimonk.com/10-impressive-ecommerce-shopping-cart-design-examples-online/
 
 -- check each and every categoryes..for example playstation is not showing up
 -- try creating utility function,, for like toast,,,instead of writing those 3 lines everywhere//settoaststatus,content and visibility are three action that wil be dispatched from multiple componnets ,,instead create a common function and call it
