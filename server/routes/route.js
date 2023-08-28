@@ -3,6 +3,16 @@ const router = express('router');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+const bodyParser=require('body-parser')
+// Use JSON parser for all non-webhook routes
+router.use((req, res, next) => {
+    if (req.originalUrl === "/webhook") {
+      next();
+    } else {
+      bodyParser.json()(req, res, next);
+    }
+  });
+
 const cookieParser = require('cookie-parser');
 router.use(cookieParser());
 
@@ -17,7 +27,7 @@ const stripe = require('stripe')(sk);
 
 
 
-router.use(express.json({verify: (req,res,buf) => { req.rawBody = buf }}));
+// router.use(express.json({verify: (req,res,buf) => { req.rawBody = buf }}));
 
 /************* SCHEMA ***************/
 const PRODUCT = require('../models/product')
@@ -321,14 +331,14 @@ router.post('/create-checkout-session', async (req, res) => {
 const endpointSecret = "whsec_5601d477da26790e09849aeeb567342bf53dbe96229fd3accbf27163f19c5476";
 
 //there are different keys and code for webhook in prod
-router.post('/webhook', express.raw({ type: 'application/json' }), (request, response) => {
+router.post('/webhook', bodyParser.raw({type: 'application/json'}), (request, response) => {
     const payload = request.body;
     const sig = request.headers['stripe-signature'];
     console.log("webhook api")
     let event;
 
     try {
-        event = stripe.webhooks.constructEvent(request.rawBody, sig, endpointSecret);
+        event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
         console.log('e-', event)
     } catch (err) {
         console.log('eeeeerrrr',err)//bug here

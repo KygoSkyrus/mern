@@ -3,13 +3,21 @@ const mongoose = require('mongoose');
 const app = express();
 const dotenv = require('dotenv');
 
-
 app.use(express.static('public'));
 
 dotenv.config({ path: './env/config.env' });
 
 app.use(express.json());
 
+// // Use JSON parser for all non-webhook routes
+// app.use((req, res, next) => {
+//   if (req.originalUrl === "/webhook") {
+//     next();
+//   } else {
+//     bodyParser.json()(req, res, next);
+//   }
+// });
+ 
 app.use(require('./routes/route'));
 
  
