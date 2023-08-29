@@ -8,8 +8,10 @@ import emptyCartImg from "./../../assets/images/newImg/collections/emptycart.png
 const Cart = () => {
 
   const dispatch = useDispatch()
+  const [quantity,setQuantity]=useState();
   const cartItems = useSelector(state => state.user.user.cartProducts)
-  console.log('ffkhf', cartItems)
+  const cart = useSelector(state => state.user.user.cart)
+  console.log('ffkhf', cartItems,cart)
 
   // useEffect(()=>{
   //   fetch('/api/getcartitems')
@@ -19,6 +21,25 @@ const Cart = () => {
   //   })
 
   // },[])
+
+  useEffect(()=>{
+    let tempObj;
+    cart.map(x=>{
+      tempObj[x.productId] = x.quantity
+    })
+    console.log('temp obj',tempObj)
+    // setQuantity({...quantity,[x.productId] : x.quantity})
+    setQuantity(tempObj)
+  },[])
+  
+  const updateQuantity =(id,val)=>{
+    if(val==="inc"){
+      setQuantity({...quantity,id : quantity.id+1})
+    }
+    
+  }
+  
+  console.log('quan',quantity)
 
   const removeFromCart = (productId) => {
     let resp;
@@ -125,9 +146,9 @@ const Cart = () => {
                                   <div>
                                   </div>
                                   <div className='border d-flex row' style={{ width: "fit-content" }}>
-                                    <span className='py-1 col-4'>-</span>
-                                    <span className='py-1 col-4'>3</span>
-                                    <span className='py-1 col-4'>+</span>
+                                    <span className='py-1 col-4' onClick={()=>updateQuantity(x._id,'dec')}>-</span>
+                                    <span className='py-1 col-4'>{quantity?.[x._id]}</span>
+                                    <span className='py-1 col-4' onClick={()=>updateQuantity(x._id,'inc')}>+</span>
                                   </div>
                                 </div>
                                 <div class="col-md-2">
@@ -137,8 +158,8 @@ const Cart = () => {
                                 </div>
                               </div>
                               <div className='d-flex justify-content-end'>
-                                <span onClick={() => removeFromCart(x._id)} className=''>Remove <i class="fa fa-trash"></i></span>
-                                <span>Move to wishlist <i class="fa fa-heart"></i></span>
+                                <u><span onClick={() => removeFromCart(x._id)} className=''>Remove <i class="fa fa-trash"></i></span></u>
+                                <u><span>Move to wishlist <i class="fa fa-heart"></i></span></u>
                               </div>
                             </div>
                           </div>

@@ -311,7 +311,7 @@ const SignIn = () => {
                                     <section>Enter your email below to create your account</section>
                                     <input type="email" className="form-control my-2" name="email" id="email" placeholder="Email address" aria-describedby="emailHelp" value={email.signinEmail} onChange={(e) => setemail({ ...email, signinEmail: e.target.value })} />
                                     <input type="password" className="form-control" id="password" name="password" placeholder="Password*" value={password} onChange={(e) => setpassword(e.target.value)} />
-                                    <button className='btn btn-outline-warning w-100' onClick={emailVerification}>Sign In</button>
+                                    <button className='btn btn-outline-warning w-100 my-2' onClick={emailVerification}>Sign In</button>
 
                                     <section className='my-3 text-end w-100 pointer' onClick={() => toggleSignIn('signup')}>New user? Create an account</section>
                                     <section className='continue-with position-relative w-100 text-center'>
