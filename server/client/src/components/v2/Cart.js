@@ -11,7 +11,68 @@ const Cart = () => {
   const [quantity,setQuantity]=useState();
   const cartItems = useSelector(state => state.user.user.cartProducts)
   const cart = useSelector(state => state.user.user.cart)
-  console.log('ffkhf', cartItems,cart)
+  console.log('cartItems', cartItems)
+  console.log('cart', cart)
+
+
+  //debouce and debug
+  /*
+// Simulated API function to update cart item quantities
+function updateCartItemQuantities(cartItems) {
+  // Replace with actual API call using fetch
+  return fetch('/api/updateCart', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(cartItems),
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Updating cart item quantities on the server:', data);
+      return data;
+    });
+}
+
+// Debounce function to delay API calls by a specified time
+function debounce(func, wait) {
+  let timeout;
+  return function (...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      func.apply(this, args);
+    }, wait);
+  };
+}
+
+// Batch function to batch API calls within a specified time
+function batch(func, delay) {
+  let timeout;
+  let batchedArgs = [];
+  return function (...args) {
+    batchedArgs.push(args);
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      func(batchedArgs);
+      batchedArgs = [];
+    }, delay);
+  };
+}
+
+// Function to update cart item quantities on the server using debouncing and batching
+const debouncedBatchedUpdate = batch(debounce(updateCartItemQuantities, 1000), 2000);
+
+// Simulate user interactions
+function simulateUserInteractions() {
+  debouncedBatchedUpdate([{ productId: 'prod123', quantity: 2 }]);
+  debouncedBatchedUpdate([{ productId: 'prod456', quantity: 5 }]);
+  debouncedBatchedUpdate([{ productId: 'prod123', quantity: 4 }]);
+  debouncedBatchedUpdate([{ productId: 'prod789', quantity: 3 }]);
+}
+
+simulateUserInteractions();
+
+  */
 
   // useEffect(()=>{
   //   fetch('/api/getcartitems')
@@ -21,16 +82,12 @@ const Cart = () => {
   //   })
 
   // },[])
-
-  useEffect(()=>{
-    let tempObj;
-    cart.map(x=>{
-      tempObj[x.productId] = x.quantity
-    })
-    console.log('temp obj',tempObj)
-    // setQuantity({...quantity,[x.productId] : x.quantity})
-    setQuantity(tempObj)
-  },[])
+  // let tempObj;
+  // cart.map(x=>{
+  //   tempObj[x.productId] = x.quantity
+  // })
+  
+ //have to update the wuantity in store
   
   const updateQuantity =(id,val)=>{
     if(val==="inc"){
