@@ -219,6 +219,48 @@ router.post('/api/addtocart', async (req, res) => {
     }
 })
 
+router.post('/api/updatecart', async (req, res) => {
+    const token = req.cookies.jwt;
+    if (!token) {
+        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
+    }
+    try {
+        const { productId } = req.body;
+        const decoded = jwt.verify(token, process.env.SECRETKEY);
+
+        const user = await USER.findById(decoded._id);
+        //  if (!user) {
+        //    return res.status(404).json({ message: 'User not found.' });
+        //  }
+
+        const product = await PRODUCT.findById(productId);
+        //  if (!product) {
+        //    return res.status(404).json({ message: 'Product not found.' });
+        //  }
+
+        // Find the product in the user's cart
+        const cartItem = user.cart.find(item => item.productId.toString() === productId);
+
+        if (cartItem) {
+            // If the product is already in the cart, increment the quantity
+            cartItem.quantity += 1;
+        } else {
+            // If the product is not in the cart, add it with quantity 1
+            user.cart.push({ productId });
+        }
+
+        // Save the updated user
+        await user.save()
+        const populatedDoc = await USER.findById(decoded._id).populate('cartProducts');
+
+        res.status(200).json({ message: 'Product added to cart.', user: populatedDoc });
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+})
+
 
 
 //remove from cart

@@ -8,30 +8,38 @@ import emptyCartImg from "./../../assets/images/newImg/collections/emptycart.png
 const Cart = () => {
 
   const dispatch = useDispatch()
-  const [quantity,setQuantity]=useState();
+  // const [quantity,setQuantity]=useState();
   const cartItems = useSelector(state => state.user.user.cartProducts)
   const cart = useSelector(state => state.user.user.cart)
   console.log('cartItems', cartItems)
   console.log('cart', cart)
 
-
+  let tempObj={};
+  //getting the relevant quantity of items
+  cart.map(x=>{
+    tempObj[x.productId] = x.quantity
+  })
   //debouce and debug
-  /*
+  
 // Simulated API function to update cart item quantities
 function updateCartItemQuantities(cartItems) {
   // Replace with actual API call using fetch
-  return fetch('/api/updateCart', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(cartItems),
-  })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Updating cart item quantities on the server:', data);
-      return data;
-    });
+  console.log('ccc',cartItems)
+  // let xx= cartItems.filter(x=>x.productId)
+  // console.log('dd',xx)
+
+  // return fetch('/api/updateCart', {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
+  //   body: JSON.stringify(cartItems),
+  // })
+  //   .then(response => response.json())
+  //   .then(data => {
+  //     console.log('Updating cart item quantities on the server:', data);
+  //     return data;
+  //   });
 }
 
 // Debounce function to delay API calls by a specified time
@@ -63,16 +71,13 @@ function batch(func, delay) {
 const debouncedBatchedUpdate = batch(debounce(updateCartItemQuantities, 1000), 2000);
 
 // Simulate user interactions
-function simulateUserInteractions() {
-  debouncedBatchedUpdate([{ productId: 'prod123', quantity: 2 }]);
-  debouncedBatchedUpdate([{ productId: 'prod456', quantity: 5 }]);
-  debouncedBatchedUpdate([{ productId: 'prod123', quantity: 4 }]);
-  debouncedBatchedUpdate([{ productId: 'prod789', quantity: 3 }]);
+function updateQuantity(id,quantity) {
+  console.log('up',id,quantity)
+  debouncedBatchedUpdate({ productId: id, quantity });
 }
 
-simulateUserInteractions();
 
-  */
+  
 
   // useEffect(()=>{
   //   fetch('/api/getcartitems')
@@ -89,14 +94,13 @@ simulateUserInteractions();
   
  //have to update the wuantity in store
   
-  const updateQuantity =(id,val)=>{
-    if(val==="inc"){
-      setQuantity({...quantity,id : quantity.id+1})
-    }
+  // const updateQuantity =(id,val)=>{
+  //   if(val==="inc"){
+  //     setQuantity({...quantity,id : quantity.id+1})
+  //   }
     
-  }
+  // }
   
-  console.log('quan',quantity)
 
   const removeFromCart = (productId) => {
     let resp;
@@ -180,7 +184,8 @@ simulateUserInteractions();
                         </div>
                     {cartItems.map(x => {
                       return (
-                        <div key={x._id} className='row mb-3 p-2 border-bottom'>
+                        <>
+                        <div key={x._id} className='row  p-2 '>
                           <div class="col-md-2">
                             <div>
                               <img src={x.image} alt='' className='img-fluid w-100 t-minw-215' />
@@ -194,6 +199,7 @@ simulateUserInteractions();
                                 <div class="col-md-4">
                                   <h6>
                                     {x.name}
+                                    can show here other product details too like instock
                                   </h6>
                                 </div>
                                 <div class="col-md-2">
@@ -204,8 +210,8 @@ simulateUserInteractions();
                                   </div>
                                   <div className='border d-flex row' style={{ width: "fit-content" }}>
                                     <span className='py-1 col-4' onClick={()=>updateQuantity(x._id,'dec')}>-</span>
-                                    <span className='py-1 col-4'>{quantity?.[x._id]}</span>
-                                    <span className='py-1 col-4' onClick={()=>updateQuantity(x._id,'inc')}>+</span>
+                                    <span className='py-1 col-4'>{tempObj[x._id]}</span>
+                                    <span className='py-1 col-4' onClick={()=>updateQuantity(x._id,cart.length+1)}>+</span>
                                   </div>
                                 </div>
                                 <div class="col-md-2">
@@ -214,16 +220,19 @@ simulateUserInteractions();
                                   </div>
                                 </div>
                               </div>
-                              <div className='d-flex justify-content-end'>
-                                <u><span onClick={() => removeFromCart(x._id)} className=''>Remove <i class="fa fa-trash"></i></span></u>
-                                <u><span>Move to wishlist <i class="fa fa-heart"></i></span></u>
-                              </div>
+                              
                             </div>
                           </div>
 
                         </div>
+                        <div className='d-flex justify-content-end mb-3 border-bottom pb-3'>
+                        <u><span onClick={() => removeFromCart(x._id)} className='me-4'>Remove <i class="fa fa-trash fa-sm"></i></span></u>
+                        <u><span className='me-4'>Move to wishlist <i class="fa fa-heart fa-sm"></i></span></u>
+                      </div>
+                      </>
                       )
                     })}
+                    
                   </div>
                 </div>
               </div>
@@ -231,35 +240,36 @@ simulateUserInteractions();
             </div>
             <div className='col-lg-3 mb-3 p-img-sticky '>
               <div className='row'>
+                <div>
                 <h5>Summary</h5>
 
                 <section>Do you have a Promo Code?</section>
 
-                <div className='d-flex justify-content-between'>
+                <div className='d-flex justify-content-between my-2'>
                   <span>Subtotal <i class="fa fa-question-circle fa-sm" aria-hidden="true"></i>
                   </span>
                   <span>463</span>
                 </div>
 
-                <div className='d-flex justify-content-between'>
+                <div className='d-flex justify-content-between my-2'>
                   <span>Estimated Shipping & Handling <i class="fa fa-question-circle fa-sm" aria-hidden="true"></i></span>
                   <span>463</span>
                 </div>
 
-                <div className='d-flex justify-content-between'>
+                <div className='d-flex justify-content-between my-2'>
                   <span>Estimated Tax <i class="fa fa-question-circle fa-sm" aria-hidden="true"></i></span>
                   <span>463</span>
                 </div>
 
-                <div className='d-flex justify-content-between'>
-                  <span>Total</span>
-                  <span>46653</span>
+                <div className='d-flex justify-content-between py-2 my-4 text-dark' style={{borderBottom:"1px solid #dee2e6",borderTop:"1px solid #dee2e6"}}>
+                  <span><b>Total</b></span>
+                  <span><b>46653</b></span>
                 </div>
 
                 <form action="/create-checkout-session" method="POST">
                   <button className='btn btn-outline-warning w-100 my-2' type="submit">Checkout</button>
                </form>
-
+</div>
               </div>
             </div>
           </div>
