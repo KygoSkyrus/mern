@@ -3,15 +3,15 @@ const router = express('router');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const bodyParser=require('body-parser')
+const bodyParser = require('body-parser')
 // Use JSON parser for all non-webhook routes
 router.use((req, res, next) => {
     if (req.originalUrl === "/webhook") {
-      next();
+        next();
     } else {
-      bodyParser.json()(req, res, next);
+        bodyParser.json()(req, res, next);
     }
-  });
+});
 
 const cookieParser = require('cookie-parser');
 router.use(cookieParser());
@@ -27,7 +27,7 @@ const stripe = require('stripe')(sk);
 
 
 
-router.use(express.json({verify: (req,res,buf) => { req.rawBody = buf }}));
+router.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf } }));
 
 /************* SCHEMA ***************/
 const PRODUCT = require('../models/product')
@@ -225,35 +225,58 @@ router.post('/api/updatecart', async (req, res) => {
         return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
     }
     try {
-        const { productId } = req.body;
+        const cartItems = req.body;
         const decoded = jwt.verify(token, process.env.SECRETKEY);
+        console.log('caritem', cartItems)
+
 
         const user = await USER.findById(decoded._id);
-        //  if (!user) {
-        //    return res.status(404).json({ message: 'User not found.' });
-        //  }
 
-        const product = await PRODUCT.findById(productId);
-        //  if (!product) {
-        //    return res.status(404).json({ message: 'Product not found.' });
-        //  }
+        //this is not working 
+        let theCart= user.cart;
+        //console.log('thecart before',theCart)
+        const updatedCartItems = theCart.map((existingCartItem) => {
 
-        // Find the product in the user's cart
-        const cartItem = user.cart.find(item => item.productId.toString() === productId);
+            const matchingCartItem = cartItems.find((newCartItem) => {
+                console.log('fff', newCartItem.productId.toString() , "   ", existingCartItem.productId.toString() )
+                return newCartItem.productId.toString()  === existingCartItem.productId.toString() 
+            }
+            );
 
-        if (cartItem) {
-            // If the product is already in the cart, increment the quantity
-            cartItem.quantity += 1;
-        } else {
-            // If the product is not in the cart, add it with quantity 1
-            user.cart.push({ productId });
-        }
+            cartItems.map(x=>{
+                if(x.productId.toString()  === existingCartItem.productId.toString() ){
+                    existingCartItem.quantity=x.quantity;
+                }
+            })
 
-        // Save the updated user
-        await user.save()
-        const populatedDoc = await USER.findById(decoded._id).populate('cartProducts');
+            console.log('matchingcatritem', matchingCartItem)
 
-        res.status(200).json({ message: 'Product added to cart.', user: populatedDoc });
+            if (matchingCartItem) {
+                // Update the quantity of the existing cart item
+                return {
+                    ...existingCartItem,
+                    quantity: matchingCartItem.quantity,
+                };
+            } else {
+                // Keep the existing cart item as is
+                return existingCartItem;
+            }
+        });
+
+        //console.log('thecart after',theCart)
+
+       // console.log('updatedUser--',updatedCartItems)
+        const theUser=await USER.updateOne(
+            { _id: decoded._id },
+            { $set: { cart: theCart } }
+          );
+          console.log('theUser',theUser)
+        //await USER.findByIdAndUpdate(decoded._id, { cart: updatedCartItems });
+
+
+        const populatedDoc = await USER.findById(decoded._id)//.populate('cartProducts');//cat=rtitems may not be needed here to populate
+
+        res.status(200).json({ message: 'Quantity updated', user: populatedDoc });
 
     } catch (err) {
         console.log(err)
