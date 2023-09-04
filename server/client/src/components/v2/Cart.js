@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux';
-import { setUserDetails } from './redux/userSlice';
+import { setUserDetails,manageQuantity } from './redux/userSlice';
 import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSlice';
 import emptyCartImg from "./../../assets/images/newImg/collections/emptycart.png"
 
@@ -24,7 +24,7 @@ const Cart = () => {
   // Simulated API function to update cart item quantities
   function updateCartItemQuantities(cartItems) {
     // Replace with actual API call using fetch
-    console.log('ccc', cartItems)
+   // console.log('ccc', cartItems)
     const uniqueCartItems = [];
     const seenProductIds = new Set();
 
@@ -50,6 +50,10 @@ const Cart = () => {
       .then(data => {
         console.log('Updating cart item quantities on the server:', data);
         return data;
+      })
+      .catch(error => {
+        console.error('Failed to update cart item quantities:', error);
+        throw error; // Rethrow the error for error handling in the calling code
       });
   }
 
@@ -82,11 +86,35 @@ const Cart = () => {
   const debouncedBatchedUpdate = batch(debounce(updateCartItemQuantities, 1000), 2000);
 
   // Simulate user interactions
-  function updateQuantity(id, quantity) {
-    console.log('up', id, quantity)
-    debouncedBatchedUpdate({ productId: id, quantity });
-  }
+  // function updateQuantity(id, quantity) {
+  //   console.log('up', id, quantity)
+  //   debouncedBatchedUpdate({ productId: id, quantity });
+  // }
 
+
+
+// When the increment button is clicked
+function handleIncrementClick(productId, currentQuantity) {
+  const newQuantity = currentQuantity + 1;
+
+
+  // Use setTimeout to delay the store update
+  setTimeout(() => {
+    // Dispatch the new quantity to the store for a responsive UI
+    dispatch(manageQuantity({ id: productId, quantity: newQuantity }));
+  }, 1000);
+
+  // Trigger the batched update in the background
+  debouncedBatchedUpdate({ productId, quantity: newQuantity })
+    // .then(updatedItems => {
+    //   console.log('Batch update successful:', updatedItems);
+    //   // You can choose to update the UI again if needed based on updatedItems
+    // })
+    // .catch(error => {
+    //   console.error('Batch update failed:', error);
+    //   // Handle the error and potentially revert the UI changes here
+    // });
+}
 
 
 
@@ -220,9 +248,9 @@ const Cart = () => {
                                     <div>
                                     </div>
                                     <div className='border d-flex row' style={{ width: "fit-content" }}>
-                                      <span className='py-1 col-4 pointer' onClick={() => updateQuantity(x._id, 'dec')}>-</span>
+                                      <span className='py-1 col-4 pointer' >-</span>
                                       <span className='py-1 col-4'>{tempObj[x._id]}</span>
-                                      <span className='py-1 col-4 pointer' onClick={() => updateQuantity(x._id, cart.length + 1)}>+</span>
+                                      <span className='py-1 col-4 pointer' onClick={() => handleIncrementClick(x._id, tempObj[x._id])}>+</span>
                                     </div>
                                   </div>
                                   <div class="col-md-2">
