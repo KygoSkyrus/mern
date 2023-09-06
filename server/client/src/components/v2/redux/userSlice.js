@@ -45,7 +45,6 @@ export const userSlice = createSlice({
                     x.quantity=action.payload.quantity
                 }
             })
-
         }
     }
 })

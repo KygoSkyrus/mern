@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserDetails,manageQuantity } from './redux/userSlice';
@@ -8,31 +8,26 @@ import emptyCartImg from "./../../assets/images/newImg/collections/emptycart.png
 const Cart = () => {
 
   const dispatch = useDispatch()
-  const [quantity,setQuantity]=useState();
+  //const [quantity,setQuantity]=useState();
   const cartItems = useSelector(state => state.user.user.cartProducts)
   const cart = useSelector(state => state.user.user.cart)
-  console.log('cart', cart)
+  console.log('cart', cartItems)
 
-  useEffect(()=>{
-    let tempObj = {};
-    //getting the relevant quantity of items
-    cart.map(x => {
-      if(sessionStorage.getItem(x.productId)){
-        tempObj[x.productId] = sessionStorage.getItem(x.productId)
-      }else{
-        tempObj[x.productId] = x.quantity
-      }
-    })
-    setQuantity(tempObj)
-  },[cart])
-
+  const lineRefs = React.useRef([]);
+  lineRefs.current = cartItems?.map((_, i) =>  React.createRef()); //creating multiple ref for every product
+  
+  let tempObj = {};
+  //getting the relevant quantity of items
+  cart.map(x => {
+    tempObj[x.productId] = x.quantity
+  })
 
 
   //debouce and debug
   // Simulated API function to update cart item quantities
   function updateCartItemQuantities(cartItems) {
     // Replace with actual API call using fetch
-    console.log('ccc', cartItems)
+   // console.log('ccc', cartItems)
     const uniqueCartItems = [];
     const seenProductIds = new Set();
 
@@ -47,19 +42,22 @@ const Cart = () => {
     // Step 2: Create a new array with unique cart items
     const flattenedUniqueCartItems = uniqueCartItems.flat();
     console.log('flattened', flattenedUniqueCartItems)
-
-    // return fetch('/api/updateCart', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(flattenedUniqueCartItems),
-    // })
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     console.log('Updating cart item quantities on the server:', data);
-    //     return data;
-    //   });
+    return fetch('/api/updateCart', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(flattenedUniqueCartItems),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Updating cart item quantities on the server:', data);
+        return data;
+      })
+      .catch(error => {
+        console.error('Failed to update cart item quantities:', error);
+        throw error; // Rethrow the error for error handling in the calling code
+      });
   }
 
   // Debounce function to delay API calls by a specified time
@@ -91,25 +89,32 @@ const Cart = () => {
   const debouncedBatchedUpdate = batch(debounce(updateCartItemQuantities, 1000), 2000);
 
   // Simulate user interactions
-  function updateQuantity(id, quantity,val) {
-    console.log('up', id, quantity, sessionStorage.getItem(id))
+  // function updateQuantity(id, quantity) {
+  //   console.log('up', id, quantity)
+  //   debouncedBatchedUpdate({ productId: id, quantity });
+  // }
 
-    if(val==='inc'){
-      sessionStorage.setItem(id, parseInt(sessionStorage.getItem(id))+1)
-    }else{
-      sessionStorage.setItem(id,quantity)
-    }
 
-    debouncedBatchedUpdate({productId:id,quantity:parseInt(sessionStorage.getItem(id))+1})
 
-    let cartTemp =cart.map(x=>{return{...x}})//coping the cart 
-    cartTemp.find(x=>x.productId===id).quantity=quantity//updating the copied array
-    //console.log('carttemp',cartTemp)
-    //setQuantity(cartTemp)//updating the state
-    //dispatch(manageQuantity({id,quantity}))
-  }
+// When the increment button is clicked
+function handleIncrementClick(productId, currentQuantity) {
+  const newQuantity = currentQuantity + 1;
 
-  //console.log('qyannn',quantity)
+  console.log('befire',lineRefs.current)
+tempObj[productId]=currentQuantity+1;
+
+  // Use setTimeout to delay the store update
+  // setTimeout(() => {
+  //   // Dispatch the new quantity to the store for a responsive UI
+    //dispatch(manageQuantity({ id: productId, quantity: newQuantity }));
+  // }, 1000);
+
+  // Trigger the batched update in the background
+  debouncedBatchedUpdate({ productId, quantity: newQuantity })
+    
+}
+
+
 
   // useEffect(()=>{
   //   fetch('/api/getcartitems')
@@ -214,7 +219,7 @@ const Cart = () => {
                       </div>
 
                     </div>
-                    {cartItems.map(x => {
+                    {cartItems.map((x,i) => {
                       return (
                         <>
                           <div key={x._id} className='row  p-2 '>
@@ -235,20 +240,22 @@ const Cart = () => {
                                     </h6>
                                   </div>
                                   <div class="col-md-2">
-                                    <h6>{x.price}</h6>
+                                    <span style={{ fontSize: "12px" }}>&#8377;</span>
+                                    <span className='fs-6'>{x.price}</span>
                                   </div>
                                   <div class="col-md-3">
                                     <div>
                                     </div>
                                     <div className='border d-flex row' style={{ width: "fit-content" }}>
-                                      <span className='py-1 col-4 pointer' onClick={() => updateQuantity(x._id, 'dec')}>-</span>
-                                      <span className='py-1 col-4'>{sessionStorage.getItem(x._id)?sessionStorage.getItem(x._id):quantity[x._id]}</span>
-                                      <span className='py-1 col-4 pointer' onClick={() => updateQuantity(x._id, quantity[x._id] + 1,'inc')}>+</span>
+                                      <span className='py-1 col-4 pointer' >-</span>
+                                      <span className='py-1 col-4' ref={lineRefs.current[i]}>{tempObj[x._id]}</span>
+                                      <span className='py-1 col-4 pointer' onClick={() => handleIncrementClick(x._id, tempObj[x._id])}>+</span>
                                     </div>
                                   </div>
                                   <div class="col-md-2">
                                     <div>
-                                      43834
+                                    <span style={{ fontSize: "12px" }}>&#8377;</span>
+                                    <span className='fs-5'>{x.price}</span>
                                     </div>
                                   </div>
                                 </div>
@@ -299,7 +306,7 @@ const Cart = () => {
                   </div>
 
                   <form action="/create-checkout-session" method="POST">
-                    <button className='btn btn-outline-warning w-100 my-2' type="submit">Checkout</button>
+                    <button className='btn w-100 my-2' style={{border: "1px solid rgb(0 0 0 / 16%)",background:"#ebebeb",borderTop: "0"}} type="submit">Checkout</button>
                   </form>
                 </div>
               </div>

@@ -176,6 +176,7 @@ const Navbar = (props) => {
               <li className="nav-item position-relative">
                 <Link to="/cart" className="nav-link">
                   {/* <i className='fa fa-shopping-cart'></i> */}
+                  {/* if the cart value is zero than dont show badge */}
                   <img src={theBagLogo} alt='' height='19.7px' />
                   {/* <span>Cart</span> */}
                   <Badge />
