@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Link } from "react-router-dom";
 import { useSelector } from 'react-redux';
 
+import theBagLogo from "./../../assets/images/thebaglogo.png"
+
 const Navbar = (props) => {
 
   const [categories, setCategories] = useState()
@@ -9,9 +11,9 @@ const Navbar = (props) => {
   const isUserLoggedIn = useSelector(state => state.user.isUserLoggedIn)
 
   const Badge = () => {
-    if (props.data > 0) {
+    if (!props.data > 0) {
       return (
-        <span className="w3-badge w3-red w3-round">{props.data}</span>
+        <section className="w3-badge w3-red w3-round">{props.data}</section>
       )
     } else {
       return null
@@ -173,8 +175,9 @@ const Navbar = (props) => {
 
               <li className="nav-item position-relative">
                 <Link to="/cart" className="nav-link">
-                  <i className='fa fa-shopping-cart'></i>
-                  <span>Cart</span>
+                  {/* <i className='fa fa-shopping-cart'></i> */}
+                  <img src={theBagLogo} alt='' height='19.7px' />
+                  {/* <span>Cart</span> */}
                   <Badge />
                 </Link>
               </li>

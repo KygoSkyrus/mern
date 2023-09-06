@@ -348,6 +348,17 @@ img {
   transform: translate(0, -19px);
   opacity: 0;
 }
+.w3-badge{
+  position: absolute;
+  display: block;
+  transform: translate(13px, -28px);
+  transition: all 0.3s ease-in-out;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  font-size: 10px;
+  padding: 0;
+}
 
 .child-category {
   display: block;

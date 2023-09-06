@@ -38,10 +38,18 @@ export const userSlice = createSlice({
                 return       
             }
             state.user = action.payload.user
+        },
+        manageQuantity:(state,action)=>{
+            state.user.cart.map(x=>{
+                if(x.productId===action.payload.id){
+                    x.quantity=action.payload.quantity
+                }
+            })
+
         }
     }
 })
 
 
-export const { isUserLoggedIn, setUserDetails } = userSlice.actions;
+export const { isUserLoggedIn, setUserDetails,manageQuantity } = userSlice.actions;
 export const userReducer = userSlice.reducer
