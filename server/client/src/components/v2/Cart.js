@@ -1,3 +1,4 @@
+/* eslint-disable no-eval */
 import React, { useState, useEffect, useRef } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,41 +24,58 @@ const Cart = () => {
   })
 
 
-  //debouce and debug
+  //debouce and debug--------------------------------------------
   // Simulated API function to update cart item quantities
   function updateCartItemQuantities(cartItems) {
-    // Replace with actual API call using fetch
-   // console.log('ccc', cartItems)
+    // console.log('ccc', cartItems)
     const uniqueCartItems = [];
     const seenProductIds = new Set();
 
     cartItems.forEach((items) => {
       const productId = items[0].productId;
+      
+      items[0].quantity=eval(`${tempObj[productId]} ${items[0].upOrDown} ${1}`)
+      tempObj[productId]=eval(`${tempObj[productId]} ${items[0].upOrDown} ${1}`)
+      //other way of doing the above code
+      // if(items[0].upOrDown==="incre"){
+      //   items[0].quantity=tempObj[productId]+1
+      //   tempObj[productId]=tempObj[productId]+1
+      // }else{
+      //   items[0].quantity=tempObj.quantity-1
+      //   tempObj[productId]=tempObj[productId]-1
+      // }
+
       if (!seenProductIds.has(productId)) {
         uniqueCartItems.push(items);
-        seenProductIds.add(productId);
+        seenProductIds.add(productId);   
+      }else{
+        uniqueCartItems.map(x=>{
+          if(x[0].productId===productId){
+            x[0].quantity=tempObj[x[0].productId];
+          }
+        })
       }
     });
 
     // Step 2: Create a new array with unique cart items
     const flattenedUniqueCartItems = uniqueCartItems.flat();
     console.log('flattened', flattenedUniqueCartItems)
-    return fetch('/api/updateCart', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(flattenedUniqueCartItems),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Updating cart item quantities on the server:', data);
-        return data;
-      })
-      .catch(error => {
-        console.error('Failed to update cart item quantities:', error);
-        throw error; // Rethrow the error for error handling in the calling code
-      });
+    // return fetch('/api/updateCart', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(flattenedUniqueCartItems),
+    // })
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     console.log('Updating cart item quantities on the server:', data);
+    //     return data;
+    //   })
+    //   .catch(error => {
+    //     console.error('Failed to update cart item quantities:', error);
+    //     throw error; // Rethrow the error for error handling in the calling code
+    //   });
   }
 
   // Debounce function to delay API calls by a specified time
@@ -88,56 +106,17 @@ const Cart = () => {
   // Function to update cart item quantities on the server using debouncing and batching
   const debouncedBatchedUpdate = batch(debounce(updateCartItemQuantities, 1000), 2000);
 
-  // Simulate user interactions
-  // function updateQuantity(id, quantity) {
-  //   console.log('up', id, quantity)
-  //   debouncedBatchedUpdate({ productId: id, quantity });
-  // }
 
 
+function updateQuantity(productId,val,i) {
+  const newQuantity = eval(`${parseInt(lineRefs.current[i].current.dataset.quantity)} ${val} ${1}`);
 
-// When the increment button is clicked
-function handleIncrementClick(productId, currentQuantity) {
-  const newQuantity = currentQuantity + 1;
-
-  console.log('befire',lineRefs.current)
-tempObj[productId]=currentQuantity+1;
-
-  // Use setTimeout to delay the store update
-  // setTimeout(() => {
-  //   // Dispatch the new quantity to the store for a responsive UI
-    //dispatch(manageQuantity({ id: productId, quantity: newQuantity }));
-  // }, 1000);
+  lineRefs.current[i].current.innerText=newQuantity;//for showing in ui
+  lineRefs.current[i].current.dataset.quantity=newQuantity;//for keeping record for further updates
 
   // Trigger the batched update in the background
-  debouncedBatchedUpdate({ productId, quantity: newQuantity })
-    
+  debouncedBatchedUpdate({ productId, quantity: newQuantity, upOrDown:val })
 }
-
-
-
-  // useEffect(()=>{
-  //   fetch('/api/getcartitems')
-  //   .then(res=>res.json())
-  //   .then(response=>{
-  //     console.log('response',response)
-  //   })
-
-  // },[])
-  // let tempObj;
-  // cart.map(x=>{
-  //   tempObj[x.productId] = x.quantity
-  // })
-
-  //have to update the wuantity in store
-
-  // const updateQuantity =(id,val)=>{
-  //   if(val==="inc"){
-  //     setQuantity({...quantity,id : quantity.id+1})
-  //   }
-
-  // }
-
 
   const removeFromCart = (productId) => {
     let resp;
@@ -247,9 +226,9 @@ tempObj[productId]=currentQuantity+1;
                                     <div>
                                     </div>
                                     <div className='border d-flex row' style={{ width: "fit-content" }}>
-                                      <span className='py-1 col-4 pointer' >-</span>
-                                      <span className='py-1 col-4' ref={lineRefs.current[i]}>{tempObj[x._id]}</span>
-                                      <span className='py-1 col-4 pointer' onClick={() => handleIncrementClick(x._id, tempObj[x._id])}>+</span>
+                                      <span className='py-1 col-4 pointer'  onClick={() => updateQuantity(x._id, "-",i)} >-</span>
+                                      <span className='py-1 col-4' ref={lineRefs.current[i]} data-quantity={tempObj[x._id]} >{tempObj[x._id]}</span>
+                                      <span className='py-1 col-4 pointer' onClick={() => updateQuantity(x._id, "+",i)}>+</span>
                                     </div>
                                   </div>
                                   <div class="col-md-2">
@@ -265,8 +244,8 @@ tempObj[productId]=currentQuantity+1;
 
                           </div>
                           <div className='d-flex justify-content-end mb-3 border-bottom pb-3'>
-                            <u><span onClick={() => removeFromCart(x._id)} className='me-4'>Remove <i class="fa fa-trash fa-sm"></i></span></u>
-                            <u><span className='me-4'>Move to wishlist <i class="fa fa-heart fa-sm"></i></span></u>
+                            <u><span onClick={() => removeFromCart(x._id)} className='me-4 pointer'>Remove <i class="fa fa-trash fa-sm"></i></span></u>
+                            <u><span className='me-4 pointer'>Move to wishlist <i class="fa fa-heart fa-sm"></i></span></u>
                           </div>
                         </>
                       )
