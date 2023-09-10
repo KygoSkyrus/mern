@@ -36,7 +36,7 @@ const TheFront = ({ dl }) => {
 
     return (
         <>
-            <Navbar data={dl} />
+            <Navbar />
 
             {/* <div className='bag-container'>
                 <div style={{ position: "relative" }}>

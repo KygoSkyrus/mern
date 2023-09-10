@@ -81,6 +81,7 @@ const initialState = {
 		category: "",
 		image: null,
 		stock: 0,
+		discount: 0,
 		visibility: null,
 	}
 }

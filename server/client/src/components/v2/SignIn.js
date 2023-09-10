@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 
-import { initializeApp } from 'firebase/app';
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, sendSignInLinkToEmail, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 import { useNavigate } from 'react-router-dom';
@@ -10,22 +9,8 @@ import { isUserLoggedIn, setUserDetails } from './redux/userSlice';
 
 import loginImg from "./../../assets/images/login-cover.svg"
 
-//FIREBASE_________________________________
-const firebaseConfig = {
-    apiKey: "AIzaSyD356cys4X2N0DHboL4T8MZCDR1BuN2n88",
-    authDomain: "shopp-itt.firebaseapp.com",
-    projectId: "shopp-itt",
-    storageBucket: "shopp-itt.appspot.com",
-    messagingSenderId: "500784370915",
-    appId: "1:500784370915:web:5433a992ab3e3229daa1d6",
-    measurementId: "G-DVFRLB25DQ"
-};
-const app = initializeApp(firebaseConfig);
-const auth = getAuth();
-const provider = new GoogleAuthProvider();
 
-
-const SignIn = () => {
+const SignIn = ({ firebaseApp }) => {
 
     const [email, setemail] = useState({});
     const [password, setpassword] = useState('');
@@ -35,6 +20,13 @@ const SignIn = () => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
+
+
+    //FIREBASE_________________________________
+    // const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+    const provider = new GoogleAuthProvider();
+
 
     //hide the sign fom navbar if user is logged in
 
@@ -197,7 +189,7 @@ const SignIn = () => {
                 return response.json()
             })
             .then(res => {
-                console.log("res.user",res.user)
+                console.log("res.user", res.user)
                 if (resp.status === 200) {
                     dispatch(setToastStatus({ isSuccess: true }))
                 } else {

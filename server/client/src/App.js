@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 // import { Toast, ToastContainer } from 'react-bootstrap'
 
+import { initializeApp } from 'firebase/app';
+
 import './assets/css/App.css';
 import './assets/css/v2.css'
 
@@ -18,6 +20,21 @@ import TheFront from './components/v2/TheFront';
 import Toast from './components/v2/Toast';
 
 function App() {
+
+
+  //FIREBASE_________________________________
+const firebaseConfig = {
+  apiKey: "AIzaSyD356cys4X2N0DHboL4T8MZCDR1BuN2n88",
+  authDomain: "shopp-itt.firebaseapp.com",
+  projectId: "shopp-itt",
+  storageBucket: "shopp-itt.appspot.com",
+  messagingSenderId: "500784370915",
+  appId: "1:500784370915:web:5433a992ab3e3229daa1d6",
+  measurementId: "G-DVFRLB25DQ"
+};
+const firebaseApp = initializeApp(firebaseConfig);
+  //FIREBASE_________________________________
+
 
   const [show, setShow] = useState(false);
 
@@ -95,14 +112,14 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <SignIn />
+        <SignIn firebaseApp={firebaseApp} />
 
         <Toast />
 
 
         <Routes>
-          <Route path="/*" exact element={<TheFront dl={dl} />} />
-          <Route path="/admin/*" exact element={<Admin />} />
+          <Route path="/*" exact element={<TheFront />} />
+          <Route path="/admin/*" exact element={<Admin firebaseApp={firebaseApp} />} />
         </Routes>
 
 

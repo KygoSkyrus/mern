@@ -103,6 +103,10 @@ const Product = ({ details }) => {
             </td>
 
             <td className="ps-3 align-middle">
+                {details.discount}
+            </td>
+
+            <td className="ps-3 align-middle">
                 {details.stock}
             </td>
 

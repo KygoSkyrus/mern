@@ -540,13 +540,13 @@ router.post('/api/addproducts', async (req, res) => {
 
 router.post('/api/editproduct', async (req, res) => {
 
-    const { name, price, description, category, image, stock, id } = req.body;
-    console.log('dd', name, price, description, category, image, stock, id)
+    const { name, price, description, category, image, stock,discount, id } = req.body;
+    console.log('dd', name, price, description, category, image, stock,discount, id)
 
     //const data= JSON.parse(req.body)
 
     try {
-        const result = await PRODUCT.findOneAndUpdate({ _id: id }, { $set: { name, price, description, category, image, stock } }, { new: true })
+        const result = await PRODUCT.findOneAndUpdate({ _id: id }, { $set: { name, price, description, category, image, stock,discount } }, { new: true })
         if (result) {
             res.send({ isProductEdited: true })
         } else {

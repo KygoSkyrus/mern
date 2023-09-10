@@ -4,20 +4,24 @@ import { useSelector } from 'react-redux';
 
 import theBagLogo from "./../../assets/images/thebaglogo.png"
 
-const Navbar = (props) => {
+const Navbar = () => {
 
   const [categories, setCategories] = useState()
   const [childWithoutParent, setChildWithoutParent] = useState([])
+  // const[cartTotalQuantity,setCartTotalQuantity]=useState(0)
   const isUserLoggedIn = useSelector(state => state.user.isUserLoggedIn)
+  const cart = useSelector(state => state.user.user.cart)
+
+  let cartTotalQuantity=0;
+  cart.map(x => {
+    cartTotalQuantity=cartTotalQuantity+x.quantity;
+  })
 
   const Badge = () => {
-    if (!props.data > 0) {
       return (
-        <section className="w3-badge w3-red w3-round">{props.data}</section>
+        <section className="w3-badge w3-red w3-round">{cartTotalQuantity}</section>
       )
-    } else {
-      return null
-    }
+  
   }
 
   //NOTE::: cannot have two columns for categories as on over on lement ffrom 1st col ypu wont be able to react the subcategory,,either put all of your subcate at theright side or separate the prent cat and cate without parent
@@ -54,6 +58,7 @@ const Navbar = (props) => {
         // setCategoriesAndID({ ...categoriesAndID, ...tempObject })//it has all categories and their id in an object, if to remove alos reove tempobj
         setChildWithoutParent([...childWithoutParent, ...tempArray])
       })
+
   }, [])
 
   //can put this in usememo
@@ -179,7 +184,8 @@ const Navbar = (props) => {
                   {/* if the cart value is zero than dont show badge */}
                   <img src={theBagLogo} alt='' height='19.7px' />
                   {/* <span>Cart</span> */}
-                  <Badge />
+                  {cartTotalQuantity!==0 &&
+                  <Badge />}
                 </Link>
               </li>
               {/* <li className="nav-item ">
@@ -200,7 +206,7 @@ const Navbar = (props) => {
                   data-mdb-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  profile
+                  Profile
                 </button>
                 <ul className="dropdown-menu shadow profileDropdownUL" aria-labelledby="profileDropdown">
                   <li className='' >

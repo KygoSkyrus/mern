@@ -6,15 +6,11 @@ import { productFormVisibility, clearProductForm, toastVisibility, setToastConte
 // ADD PRODUCT --------------------------------------
 import { v4 as uuidv4 } from 'uuid';
 //firebase
-import { initializeApp } from 'firebase/app';
+// import { initializeApp } from 'firebase/app';
 import { getStorage, ref, uploadBytes, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 
 import okayIcon from "./../../../assets/images/okay-icon.png"
-// ADD PRODUCT --------------------------------------
 
-// const productState={
-//     name: "xx", url: "xx", price: 2, description: "x", category: "first", image: ["https://webrtc.github.io/samples/img.png","https://webrtc.github.io/samples/iii.jpg"], stock: 0
-// }
 
 const ProductForm = (props) => {
 
@@ -47,20 +43,9 @@ const ProductForm = (props) => {
 
 
 
-    //FROM ADDPRODUCT
-    //-------------------- FIREBASE INITIALIZE -----------------------
-    const firebaseConfig = {
-        apiKey: process.env.apiKey,
-        authDomain: "shopp-itt.firebaseapp.com",
-        projectId: "shopp-itt",
-        storageBucket: "shopp-itt.appspot.com",
-        messagingSenderId: process.env.messagingSenderId,
-        appId: process.env.appId,
-        measurementId: process.env.measurementId
-    };
-    const app = initializeApp(firebaseConfig);
-    const storage = getStorage(app);
-    //-------------------- FIREBASE INITIALIZE -----------------------
+    //-------------------- FIREBASE -----------------------
+    const storage = getStorage(props.firebaseApp);
+    //-------------------- FIREBASE -----------------------
 
 
 
@@ -159,6 +144,7 @@ const ProductForm = (props) => {
                 description: productData.description,
                 category: productData.category,
                 stock: productData.stock,
+                discount:productData.discount,
                 image: img,
                 id: productData._id
             }),
@@ -311,6 +297,12 @@ const ProductForm = (props) => {
                                             )
                                         }) : ""}
                                     </div>
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="discount" className="font-weight-600">Discount</label>
+                                    <input type='number' name="discount" placeholder="discount" className="form-control"
+                                        id="discount" required value={productData?.discount} onChange={e => handleInputChange(e)} />
                                 </div>
 
                                 <div className="form-group">

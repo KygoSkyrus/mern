@@ -46,6 +46,10 @@ existing
 -- check each and every categoryes..for example playstation is not showing up
 -- try creating utility function,, for like toast,,,instead of writing those 3 lines everywhere//settoaststatus,content and visibility are three action that wil be dispatched from multiple componnets ,,instead create a common function and call it
 
+//have to find a way to update the cart number at navabr whenevrr item added or incremented
+
+-- make the images for product  go slide in slide no just disapper and display
+
 -- cureently the categoyr page is breaking the Link chaain an dreloading the appp
 
 done--

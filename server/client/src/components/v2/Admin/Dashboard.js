@@ -153,6 +153,7 @@ const Dashboard = () => {
                                     <th scope="col" className="small fw-normal">Category</th>
                                     <th scope="col" className="small fw-normal">Price</th>
                                     <th scope="col" className="small fw-normal">Images</th>
+                                    <th scope="col" className="small fw-normal">Discount(%)</th>
                                     <th scope="col" className="small fw-normal">In stock</th>
                                     <th scope="col" className="small fw-normal text-end">Rating</th>
                                     <th scope="col" className="small fw-normal text-center">Visibility</th>

@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux';
-import { setUserDetails,manageQuantity } from './redux/userSlice';
+import { setUserDetails } from './redux/userSlice';
 import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSlice';
 import emptyCartImg from "./../../assets/images/newImg/collections/emptycart.png"
 
@@ -12,7 +12,7 @@ const Cart = () => {
   //const [quantity,setQuantity]=useState();
   const cartItems = useSelector(state => state.user.user.cartProducts)
   const cart = useSelector(state => state.user.user.cart)
-  console.log('cart', cartItems)
+  console.log('cart', cart)
 
   const lineRefs = React.useRef([]);
   lineRefs.current = cartItems?.map((_, i) =>  React.createRef()); //creating multiple ref for every product
