@@ -1,17 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+
+import store from './components/v2/redux/store';
+import { Provider } from 'react-redux'
+
 import './index.css';
 //import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import AppLoaded from './AppLoaded.js';
 import AppRoot from './AppRoot.js';
+import App from './App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <AppRoot>
+    <Provider store={store}>
+
+      {/* <AppRoot>
       <AppLoaded/>
-    </AppRoot>
+    </AppRoot> */}
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

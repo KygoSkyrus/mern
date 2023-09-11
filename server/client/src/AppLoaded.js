@@ -6,8 +6,8 @@ import {Route,HashRouter} from 'react-router-dom';
 //screens
 import App from './App';
 //css
-import './App.css'
-import mainlogo from './components/images/mainlogo1.png'
+import './assets/css/App.css'
+import mainlogo from './assets/images/mainlogo1.png'
 
 
 function AppLoaded(props) {

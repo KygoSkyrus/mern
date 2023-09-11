@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+      .container{
+        width: 100vw;
+        height: 100vh;
+        background-color: antiquewhite;
+      }
+      .vertical-col-container,
+      .horizontal-col-container{
+        width: inherit;
+        height: 50%;
+        display: flex;
+      }
+      .vertical-col,
+      .horizontal-col{
+        width: 10%;
+        height: 100%;
+        background-color: #fff;
+      }
+      .vertical-col:nth-child(even),
+      .horizontal-col:nth-child(even){
+        background-color: rgb(26, 25, 25);
+      }
+      .horizontal-col:nth-child(even){
+        background-color: #2d2a2a;
+      }
+     
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="vertical-col-container">
+            <section class="vertical-col"></section>
+            <section class="vertical-col"></section>
+            <section class="vertical-col"></section>
+            <section class="vertical-col"></section>
+            <section class="vertical-col"></section>
+            <section class="vertical-col"></section>
+            <section class="vertical-col"></section>
+            <section class="vertical-col"></section>
+            <section class="vertical-col"></section>
+            <section class="vertical-col"></section>
+            <section class="vertical-col"></section>
+            <section class="vertical-col"></section>
+        </div>
+
+        <div class="horizontal-col-container">
+            <section class="horizontal-col"></section>
+            <section class="horizontal-col"></section>
+            <section class="horizontal-col"></section>
+            <section class="horizontal-col"></section>
+            <section class="horizontal-col"></section>
+            <section class="horizontal-col"></section>
+            <section class="horizontal-col"></section>
+            <section class="horizontal-col"></section>
+            <section class="horizontal-col"></section>
+            <section class="horizontal-col"></section>
+            <section class="horizontal-col"></section>
+            <section class="horizontal-col"></section>
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,436 @@
+.adminContainer {
+  /* height: 100vh;
+  overflow: hidden; */
+  width: 100%;
+  overflow: auto;
+}
+
+.adminView {
+  background-color: #dce4e3;
+  background-color: var(--body-bg-color);
+  color: #084236;
+  color: var(--text-color);
+  width: 100vw;
+  height: 100vh;
+  font-family: "Poppins", sans-serif;
+  /* position: fixed; */
+  display: flex;
+}
+
+/****************************************** SIDE NAV **************************************************/
+.btn-trapezoid-outline {
+  height: 400px;
+  display: inline-block;
+  color: #fff;
+  transform-style: preserve-3d;
+  /* padding: 20px 20px; */
+  background-color: #ffc107;
+  border-radius: 0 8px 8px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* transform: perspective(200px) rotateX(35deg) translateZ(25px) translateY(5px); */
+  transform: perspective(314px) rotateY(11deg);
+  -webkit-backface-visibility: hidden;
+  transition: all 0.6s ease-out;
+  box-shadow: 0px 0px 15px rgb(23 22 22 / 32%), 0px 0px 6px -2px rgba(0, 0, 0, 0.05);
+}
+.btn-trapezoid-outline span {
+  font-size: 15px;
+  letter-spacing: 3px;
+  display: block;
+  transform: perspective(160px) rotateX(-18deg) translateZ(4px) translateY(4px);
+}
+.btn-trapezoid-outline:hover {
+  background: #ffc107;
+  color: #136377;
+  transition: all 0.6s ease-out;
+}
+
+.nav-icons {
+  padding: 6px 20px;
+  cursor: pointer;
+}
+/****************************************** SIDE NAV **************************************************/
+
+/********************************************* PROGRESS BAR **************************************************/
+/* NOT IN USE */
+.progressOverlay {
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  background: #000000b5;
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  place-items: center;
+}
+.progressOverlay .progressBar {
+  max-width: 70vw;
+  width: 70vw;
+  height: 6px;
+  background-color: rgb(223, 221, 119);
+  transition: all 0.3s;
+}
+.progressOverlay .progressBar #progress {
+  height: inherit;
+  width: 0%;
+  background-color: #ffc107;
+  transition: all 0.3s;
+}
+.imagePreview {
+  height: 50px;
+  width: 75px;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: grid;
+  place-items: center;
+  /* border: 1px solid #e5e5e5;
+    position: relative;
+    top: 9px;
+    border-radius: 4px; */
+}
+.imagePreview img {
+  display: none;
+  width: 24px;
+  height: 24px;
+}
+/********************************************* PROGRESS BAR **************************************************/
+
+/********************************************* DASHBOARD **************************************************/
+:root {
+  --bs-blue: #1eb7ff;
+  --bs-indigo: #6610f2;
+  --bs-purple: #ca8eff;
+  --bs-pink: #e83e8c;
+  --bs-red: #ed1c24;
+  --bs-orange: #f27212;
+  --bs-yellow: #f7bf47;
+  --bs-green: #1bb934;
+  --bs-teal: #20c997;
+  --bs-cyan: #33ae9a;
+  --bs-white: #fff;
+  --bs-gray: #868e96;
+  --bs-gray-dark: #3f4651;
+  --bs-gray-100: #f8f9fa;
+  --bs-gray-200: #e9ecef;
+  --bs-gray-300: #dee2e6;
+  --bs-gray-400: #ced4da;
+  --bs-gray-500: #adb5bd;
+  --bs-gray-600: #868e96;
+  --bs-gray-700: #5d636d;
+  --bs-gray-800: #3f4651;
+  --bs-gray-900: #353c48;
+  --bs-primary: #1eb7ff;
+  --bs-secondary: #8493a5;
+  --bs-success: #1bb934;
+  --bs-info: #33ae9a;
+  --bs-warning: #f7bf47;
+  --bs-danger: #ed1c24;
+  --bs-light: #f8f9fa;
+  --bs-dark: #353c48;
+  --bs-primary-rgb: 30, 183, 255;
+  --bs-secondary-rgb: 132, 147, 165;
+  --bs-success-rgb: 27, 185, 52;
+  --bs-info-rgb: 51, 174, 154;
+  --bs-warning-rgb: 247, 191, 71;
+  --bs-danger-rgb: 237, 28, 36;
+  --bs-light-rgb: 248, 249, 250;
+  --bs-dark-rgb: 53, 60, 72;
+  --bs-white-rgb: 255, 255, 255;
+  --bs-black-rgb: 31, 45, 61;
+  --bs-body-color-rgb: 132, 147, 165;
+  --bs-body-bg-rgb: 249, 250, 252;
+  --bs-font-sans-serif: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  --bs-gradient: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.15),
+    rgba(255, 255, 255, 0)
+  );
+  --bs-body-font-family: var(--bs-font-sans-serif);
+  --bs-body-font-size: 0.875rem;
+  --bs-body-font-weight: 400;
+  --bs-body-line-height: 1.5;
+  --bs-body-color: #8493a5;
+  --bs-body-bg: #f9fafc;
+
+  --background: #fafafa;
+  --bg-white-custom: rgba(255, 255, 255, 1);
+}
+
+.dash-header{
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.hstack {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-self: stretch;
+}
+.hstack::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+.badge-add-filter {
+  color: #353c48;
+  font-weight: 400;
+  border: dashed 1px #ced4da;
+  padding: 6px;
+  padding-left: 10px;
+}
+.badge-light-light {
+  background-color: #e9ecef;
+  border: 1px solid #e9ecef;
+  color: #3f4651;
+}
+.avatars {
+  display: flex;
+  list-style-type: none;
+  margin: auto;
+  padding: 0px;
+  flex-direction: row;
+}
+.avatars__item:first-child {
+  /* z-index: 5; */
+}
+.avatars__item {
+  background-color: rgb(233, 236, 239);
+  border: 2px solid rgb(217 217 217);
+  border-radius: 100%;
+  color: rgb(255, 255, 255);
+  display: block;
+  font-family: sans-serif;
+  font-size: 12px;
+  font-weight: 100;
+  height: 30px;
+  width: 30px;
+  line-height: 15px;
+  text-align: center;
+  overflow: hidden;
+  margin-right: -10px;
+}
+
+.bg-white-custom {
+  background-color: var(--bg-white-custom);
+}
+
+.image-preview {
+  width: 150px;
+  height: 120px;
+  border-radius: 4px;
+  position: absolute;
+  z-index: 2;
+  border: 1px solid grey;
+  top: 100%;
+  left: 12%;
+  background: url("./../images/backpack.jpg");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: all 0.3s ease-in-out;
+  display: none;
+}
+.bg-img-preview{
+  width: 150px;
+  height: 120px;
+  border-radius: 4px;
+  position: absolute;
+  background-color: #fafafa;
+  display: none;
+  z-index: 1;
+  top: 100%;
+  left: 12%;
+}
+/******************** DASHBOARD *************************/
+
+/******************** PRODUCT FORM MODAL *************************/
+.editProductContainer,
+.activeProductContainer {
+  position: absolute;
+  top: 0;
+  right: -40vw;
+  display: grid;
+  place-items: flex-end;
+  height: 100vh;
+  width: 100%;
+  padding: 30px;
+  z-index: 5;
+  background: #232323cc;
+  opacity: 1;
+  box-shadow: 0 0 12px #353333;
+  overflow: auto;
+  transition: 0.3s all;
+}
+.activeProductContainer {
+  right: 0;
+}
+.closeProductContainer {
+  position: absolute;
+  left: 0px;
+  top: 0;
+  padding: 10px;
+  background: none;
+  color: #fff;
+  cursor: pointer;
+}
+.productForm {
+  width: 50vw;
+  background-color: #00000080;
+  color: #fff;
+  box-shadow: 0 0 12px #000000b5;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  height: calc(100vh - 40px);
+  overflow: auto;
+  z-index: 5;
+}
+.productForm::-webkit-scrollbar {
+  width: 0;
+}
+.productForm:hover {
+  box-shadow: 0px 5px 20px 0px #000000ba;
+}
+/******************** PRODUCT FORM MODAL *************************/
+
+/************************************************ PRODUCT FORM INPUTS ************************************************/
+.form-group {
+  margin-bottom: 1rem;
+  position: relative;
+}
+label {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+.form-control {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border-radius: 0.25rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+#customLabel {
+  position: absolute;
+  top: 26px;
+  left: 0px;
+}
+#imageHolder {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2px;
+}
+.displayimg {
+  height: 100px;
+  /* max-width: 150px; */
+  /* display: none; */
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  border: 1px solid #e5e5e5;
+  /* position: relative;
+    top: 9px; */
+  border-radius: 4px;
+}
+/************************************************ PRODUCT FORM INPUTS ************************************************/
+
+
+
+
+
+/******************** Dark mode *************************/
+.toggle {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* width: 120px;
+  height: 60px; */
+  width: 24px;
+  height: 13px;
+  margin-bottom: 0;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: 0.2s;
+
+  /* for smaller size of icon */
+  /* transform: scale(0.2);
+  position: absolute;
+  left: -82px;
+  top: -16px; */
+}
+.checkbox {
+  display: none;
+}
+.icon {
+  width: 50%;
+  font-size: 32px;
+  line-height: 60px;
+  text-align: center;
+  z-index: 1;
+}
+.ball {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  margin: 2px;
+  transition: 0.2s;
+}
+/* ---- ---- Light Mode ---- ---- */
+.light {
+  /* background-color:  #fafafa; */
+  background-color: var(--background);
+}
+.light .toggle {
+  background: linear-gradient(145deg, #e1e1e1, #fff);
+  /* box-shadow: 3px 3px 4px #e6e6e6, -3px -3px 4px #fff; */
+  box-shadow: 1px 1px 1px #e6e6e6, 2px -1px 1px #fff;
+}
+.light .icon--light {
+  color: #fafafa;
+}
+.light .icon--dark {
+  color: #151d2a;
+}
+.light .ball {
+  background-color: #151d2a;
+}
+/* ---- ---- Dark Mode ---- ---- */
+.dark {
+  /* background-color: #151d2a; */
+  --background: var(--darkBlue);
+  --bg-white-custom: #090f19; /* for dashboard's header */
+}
+.dark .toggle {
+  background: #151d2a;
+  box-shadow: 3px 3px 3px #0e131b, -1px 0px 0px #1c2739;
+}
+.dark .icon--light {
+  color: #fafafa;
+}
+.dark .icon--dark {
+  color: #0e131b;
+}
+.dark .ball {
+  background-color: #fafafa;
+  transition: 0.3s;
+  transform: translateX(11px);
+}
+
+/******************** Dark mode *************************/
