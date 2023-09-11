@@ -12,16 +12,16 @@ const Navbar = () => {
   const isUserLoggedIn = useSelector(state => state.user.isUserLoggedIn)
   const cart = useSelector(state => state.user.user.cart)
 
-  let cartTotalQuantity=0;
+  let cartTotalQuantity = 0;
   cart.map(x => {
-    cartTotalQuantity=cartTotalQuantity+x.quantity;
+    cartTotalQuantity = cartTotalQuantity + x.quantity;
   })
 
   const Badge = () => {
-      return (
-        <section className="w3-badge w3-red w3-round">{cartTotalQuantity}</section>
-      )
-  
+    return (
+      <section className="w3-badge w3-red w3-round">{cartTotalQuantity}</section>
+    )
+
   }
 
   //NOTE::: cannot have two columns for categories as on over on lement ffrom 1st col ypu wont be able to react the subcategory,,either put all of your subcate at theright side or separate the prent cat and cate without parent
@@ -184,8 +184,8 @@ const Navbar = () => {
                   {/* if the cart value is zero than dont show badge */}
                   <img src={theBagLogo} alt='' height='19.7px' />
                   {/* <span>Cart</span> */}
-                  {cartTotalQuantity!==0 &&
-                  <Badge />}
+                  {cartTotalQuantity !== 0 &&
+                    <Badge />}
                 </Link>
               </li>
               {/* <li className="nav-item ">
