@@ -16,6 +16,7 @@ const Category = () => {
                 console.log('response', res.products)
                 setProducts(res.products)
                 setRandomNum(Math.floor(Math.random() * (res.products?.length - 1 + 1)) + 1)
+                console.log('ran',Math.floor(Math.random() * (res.products?.length - 1 + 1)) + 1)
             })
 
     }, [])
@@ -43,17 +44,23 @@ const Category = () => {
                                                 <h4 className='title' title={x.name}><a href={`/product/${x._id}`}>{x.name}</a></h4>
                                                 <div class="product-bottom-details">
                                                     <div class="product-price">
+                                                    {x.discount!==0 &&
+                                                    <>
                                                         <span className='extra-small' style={{ color: "#ec3b3b" }}>&#8377;</span>
                                                         <small>
                                                             {x.price}
                                                         </small>
+                                                        </>
+                                                    }
                                                         <span>
                                                             <span style={{ fontSize: "12px" }}>&#8377;</span>
-                                                            {Math.floor(x.price - randomNum * 10 * x.price / 100)}
+                                                            {Math.floor(x.price - x.discount * x.price / 100)}
                                                         </span>
+                                                        {x.discount!==0 &&
                                                         <span className='discount-percent mx-2'>
-                                                            {randomNum * 10}% off
+                                                            {x.discount}% off
                                                         </span>
+                                                        }
                                                     </div>
                                                     <div class="product-links">
                                                         <a href="/#"><i class="fa fa-heart"></i></a>

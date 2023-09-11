@@ -12,12 +12,15 @@ int main(){
     cin>>N;
 
     // to get i
-    int k=N;
-    while(k!=0){
-         i++;
-         k/=10;
-    }
-    i-=1;
+    // int k=N;
+    // while(k!=0){
+    //      i++;
+    //      k/=10;
+    // }
+    // i-=1;
+    //another way
+    i= log10(N) ;//to get the i 
+cout<<"i- "<<i<<endl;
 
     while(N!=0){
          digit=N%10;
