@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 
 const bodyParser = require('body-parser')
 // Use JSON parser for all non-webhook routes
+router.use(bodyParser.urlencoded({extended: true}));//for checkout passed values
 router.use((req, res, next) => {
     if (req.originalUrl === "/webhook") {
         next();
@@ -347,7 +348,12 @@ router.get('/api/getcartitems', async (req, res) => {
 
 //IF the stirpe accont is activated than there may be a way to send invoice to user
 router.post('/create-checkout-session', async (req, res) => {
-    console.log('checkout-----------')
+
+    //if this doesnt work remove router.use(bodyParser.urlencoded({extended: true})); from top
+
+
+    //const { priceObj } = req.body;
+    console.log('checkout-----------',req.body.priceObj)
     const session = await stripe.checkout.sessions.create({
         line_items: [
             {
@@ -382,7 +388,7 @@ router.post('/create-checkout-session', async (req, res) => {
         customer_email: 'xyz@email.com',
     });
 
-    console.log('session - ', session)
+    //console.log('session - ', session)
 
     res.redirect(303, session.url);//redirects to checkout page
 });

@@ -17,6 +17,8 @@ const Cart = () => {
   const subtotal = React.useRef()
   const shippingCharge = React.useRef()
   const tax = React.useRef()
+  const grandTotal=React.useRef()
+
   const lineRefs = React.useRef([]);
   const totalAmtRefs = React.useRef([]);
   lineRefs.current = cartItems?.map((_, i) => React.createRef()); //creating multiple ref for every product
@@ -29,17 +31,27 @@ const Cart = () => {
   })
 
   let priceObj = {}
-  priceObj.productTotal = {}
+  priceObj.productTotal = {}//has id:price*quantity
+  priceObj.productList = {}//has product details; id:{name,price,quantity}
   //to store total amount on inital load and later updated on every update
   let sub = 0;
   cartItems?.map(x => {
-    priceObj.productTotal[x._id] = tempObj[x._id] * Math.floor(x.price - x.discount * x.price / 100)
-    console.log('there', priceObj)
+    priceObj.productTotal[x._id] = tempObj[x._id] * Math.floor(x.price - x.discount * x.price / 100)//product total
     sub += tempObj[x._id] * Math.floor(x.price - x.discount * x.price / 100)
-    console.log('nan', sub)
+    //console.log('nan', sub)
+    
+    //product details
+    priceObj.productList[x._id]={}
+    priceObj.productList[x._id].name=x.name
+    priceObj.productList[x._id].price=x.price
+    priceObj.productList[x._id].quantity=tempObj[x._id]
   })
-
-  priceObj.shipping = (sub < 1999) ? 99 : 0
+  
+  priceObj.shipping = (sub < 1999) ? 99 : 0; //shipping
+  priceObj.tax=Math.round(sub * 0.1);//tax
+  priceObj.grandTotal=sub + (sub < 1999 ? 99 : 0) + Math.round(sub * 0.1)//grandtotal
+  console.log('priceObj', priceObj)
+  
 
 
   //debouce and debug--------------------------------------------
@@ -124,7 +136,7 @@ const Cart = () => {
   // Function to update cart item quantities on the server using debouncing and batching
   const debouncedBatchedUpdate = batch(debounce(updateCartItemQuantities, 1000), 2000);
 
-
+//NOTE:::: have to take care of object when item is removed from cart or moved to wishlist
 
   function updateQuantity(productId, val, i, price, discount) {
     const newQuantity = eval(`${parseInt(lineRefs.current[i].current.dataset.quantity)} ${val} ${1}`);
@@ -133,28 +145,56 @@ const Cart = () => {
       //updating quantity
       lineRefs.current[i].current.innerText = newQuantity;//for showing in ui
       lineRefs.current[i].current.dataset.quantity = newQuantity;//for keeping record for further updates
+      priceObj.productList[productId].quantity=newQuantity//updating quantiy in product details
 
-      //updating total price in checkout
+
+      //updating total price of product in priceobj and ui (price*quantity)
       priceObj.productTotal[productId] = newQuantity * Math.floor(price - discount * price / 100)
+      totalAmtRefs.current[i].current.innerText = newQuantity * Math.floor(price - discount * price / 100)
 
-      //updating subtotal
+      //updating subtotal (based on updated quantiy and new product total)
       let total = Object.keys(priceObj.productTotal).reduce((x, a) => {
         return priceObj.productTotal[x] + priceObj.productTotal[a]
       })
       subtotal.current.innerText = total;
 
-      //setting shipping if subtotal is less than 1999
+      //setting SHIPPING if subtotal is less than 1999
       shippingCharge.current.innerText = total < 1999 ? 99 : "-";
       priceObj.shipping = (total < 1999) ? 99 : 0
 
+      //setting the TAX (10%) on the subtotal
+      tax.current.innerText=Math.round(total * 0.1)
+      priceObj.tax=Math.round(total * 0.1);
 
-      //for showing total amount calculated based on quantity 
-      totalAmtRefs.current[i].current.innerText = newQuantity * Math.floor(price - discount * price / 100)
-
+      //setting GRANDTOTAL (adding subtotal/shipping/tax)
+      grandTotal.current.innerText=total + (total < 1999 ? 99 : 0) + Math.round(total * 0.1)
+      priceObj.grandTotal=total + (total < 1999 ? 99 : 0) + Math.round(total * 0.1)
+    
+console.log('priceObj in up',priceObj)
       // Trigger the batched update in the background
       debouncedBatchedUpdate({ productId, quantity: newQuantity, upOrDown: val })
     }
   }
+
+
+  const handleCheckout=()=>{
+    fetch('/create-checkout-session',{
+        method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({priceObj}),
+    })
+      // .then(response => response.json())
+      // .then(data => {
+      //   console.log('vhrvkouit resp', data);
+      // })
+      // .catch(error => {
+      //   console.error('Fcheckout err', error);
+      //   throw error; // Rethrow the error for error handling in the calling code
+      // });
+  }
+
 
   const removeFromCart = (productId) => {
     let resp;
@@ -326,7 +366,7 @@ const Cart = () => {
                   <div className='d-flex justify-content-between my-2'>
                     <span title='99 shipping & handling charge is applied under subtotal 1999'>Estimated Shipping & Handling <i class="fa fa-question-circle fa-sm" aria-hidden="true"></i>
                     </span>
-                    <span ref={shippingCharge}>{sub > 1999 ? 99 : "-"}</span>
+                    <span ref={shippingCharge}>{sub < 1999 ? 99 : "-"}</span>
                   </div>
 
                   <div className='d-flex justify-content-between my-2'>
@@ -336,12 +376,14 @@ const Cart = () => {
 
                   <div className='d-flex justify-content-between py-2 my-4 text-dark' style={{ borderBottom: "1px solid #dee2e6", borderTop: "1px solid #dee2e6" }}>
                     <span><b>Total</b></span>
-                    <span><b>{sub + (sub > 1999 ? 99 : 0) + Math.round(sub * 0.1) }</b></span>
+                    <span ref={grandTotal} className='fw-bolder'>{sub + (sub < 1999 ? 99 : 0) + Math.round(sub * 0.1) }</span>
                   </div>
 
                   <form action="/create-checkout-session" method="POST">
+                    <input type="hidden" name='priceObj'  value={priceObj} />
                     <button className='btn w-100 my-2' style={{ border: "1px solid rgb(0 0 0 / 16%)", background: "#ebebeb", borderTop: "0" }} type="submit">Checkout</button>
-                  </form>
+                  </form>                             
+                {/* <button className='btn w-100 my-2' style={{ border: "1px solid rgb(0 0 0 / 16%)", background: "#ebebeb", borderTop: "0" }} onClick={()=>handleCheckout()}>Checkout</button> */}
                 </div>
               </div>
             </div>
