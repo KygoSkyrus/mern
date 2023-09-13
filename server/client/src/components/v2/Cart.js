@@ -1,5 +1,5 @@
 /* eslint-disable no-eval */
-import React from 'react'
+import React, { useRef } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserDetails } from './redux/userSlice';
@@ -17,7 +17,7 @@ const Cart = () => {
   const subtotal = React.useRef()
   const shippingCharge = React.useRef()
   const tax = React.useRef()
-  const grandTotal=React.useRef()
+  const grandTotal = React.useRef()
 
   const lineRefs = React.useRef([]);
   const totalAmtRefs = React.useRef([]);
@@ -39,19 +39,21 @@ const Cart = () => {
     priceObj.productTotal[x._id] = tempObj[x._id] * Math.floor(x.price - x.discount * x.price / 100)//product total
     sub += tempObj[x._id] * Math.floor(x.price - x.discount * x.price / 100)
     //console.log('nan', sub)
-    
+
     //product details
-    priceObj.productList[x._id]={}
-    priceObj.productList[x._id].name=x.name
-    priceObj.productList[x._id].price=x.price
-    priceObj.productList[x._id].quantity=tempObj[x._id]
+    priceObj.productList[x._id] = {}
+    priceObj.productList[x._id].name = x.name
+    priceObj.productList[x._id].price = x.price
+    priceObj.productList[x._id].quantity = tempObj[x._id]
   })
-  
+
   priceObj.shipping = (sub < 1999) ? 99 : 0; //shipping
-  priceObj.tax=Math.round(sub * 0.1);//tax
-  priceObj.grandTotal=sub + (sub < 1999 ? 99 : 0) + Math.round(sub * 0.1)//grandtotal
+  priceObj.tax = Math.round(sub * 0.1);//tax
+  priceObj.grandTotal = sub + (sub < 1999 ? 99 : 0) + Math.round(sub * 0.1)//grandtotal
   console.log('priceObj', priceObj)
-  
+
+  // const dataField=useRef();
+  // if(dataField.current) dataField.current.value=priceObj
 
 
   //debouce and debug--------------------------------------------
@@ -90,22 +92,22 @@ const Cart = () => {
     // Step 2: Create a new array with unique cart items
     const flattenedUniqueCartItems = uniqueCartItems.flat();
     console.log('flattened', flattenedUniqueCartItems)
-    // return fetch('/api/updateCart', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(flattenedUniqueCartItems),
-    // })
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     console.log('Updating cart item quantities on the server:', data);
-    //     return data;
-    //   })
-    //   .catch(error => {
-    //     console.error('Failed to update cart item quantities:', error);
-    //     throw error; // Rethrow the error for error handling in the calling code
-    //   });
+    return fetch('/api/updateCart', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(flattenedUniqueCartItems),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Updating cart item quantities on the server:', data);
+        return data;
+      })
+      .catch(error => {
+        console.error('Failed to update cart item quantities:', error);
+        throw error; // Rethrow the error for error handling in the calling code
+      });
   }
 
   // Debounce function to delay API calls by a specified time
@@ -136,7 +138,8 @@ const Cart = () => {
   // Function to update cart item quantities on the server using debouncing and batching
   const debouncedBatchedUpdate = batch(debounce(updateCartItemQuantities, 1000), 2000);
 
-//NOTE:::: have to take care of object when item is removed from cart or moved to wishlist
+  //NOTE:::: have to take care of object when item is removed from cart or moved to wishlist
+  //NOTE:::: currently the real price is being sent to checkmout page and not the discounted one(fox this)
 
   function updateQuantity(productId, val, i, price, discount) {
     const newQuantity = eval(`${parseInt(lineRefs.current[i].current.dataset.quantity)} ${val} ${1}`);
@@ -145,7 +148,7 @@ const Cart = () => {
       //updating quantity
       lineRefs.current[i].current.innerText = newQuantity;//for showing in ui
       lineRefs.current[i].current.dataset.quantity = newQuantity;//for keeping record for further updates
-      priceObj.productList[productId].quantity=newQuantity//updating quantiy in product details
+      priceObj.productList[productId].quantity = newQuantity//updating quantiy in product details
 
 
       //updating total price of product in priceobj and ui (price*quantity)
@@ -163,36 +166,38 @@ const Cart = () => {
       priceObj.shipping = (total < 1999) ? 99 : 0
 
       //setting the TAX (10%) on the subtotal
-      tax.current.innerText=Math.round(total * 0.1)
-      priceObj.tax=Math.round(total * 0.1);
+      tax.current.innerText = Math.round(total * 0.1)
+      priceObj.tax = Math.round(total * 0.1);
 
       //setting GRANDTOTAL (adding subtotal/shipping/tax)
-      grandTotal.current.innerText=total + (total < 1999 ? 99 : 0) + Math.round(total * 0.1)
-      priceObj.grandTotal=total + (total < 1999 ? 99 : 0) + Math.round(total * 0.1)
-    
-console.log('priceObj in up',priceObj)
+      grandTotal.current.innerText = total + (total < 1999 ? 99 : 0) + Math.round(total * 0.1)
+      priceObj.grandTotal = total + (total < 1999 ? 99 : 0) + Math.round(total * 0.1)
+
+      document.querySelector('[name=priceObj]').value=JSON.stringify(priceObj)//update the inout with priceobj
+
+      console.log('priceObj in up', priceObj)
       // Trigger the batched update in the background
       debouncedBatchedUpdate({ productId, quantity: newQuantity, upOrDown: val })
     }
   }
 
 
-  const handleCheckout=()=>{
-    fetch('/create-checkout-session',{
-        method: 'POST',
+  const handleCheckout = () => {
+    fetch('/create-checkout-session', {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({priceObj}),
+      body: JSON.stringify({ priceObj }),
     })
-      // .then(response => response.json())
-      // .then(data => {
-      //   console.log('vhrvkouit resp', data);
-      // })
-      // .catch(error => {
-      //   console.error('Fcheckout err', error);
-      //   throw error; // Rethrow the error for error handling in the calling code
-      // });
+    // .then(response => response.json())
+    // .then(data => {
+    //   console.log('vhrvkouit resp', data);
+    // })
+    // .catch(error => {
+    //   console.error('Fcheckout err', error);
+    //   throw error; // Rethrow the error for error handling in the calling code
+    // });
   }
 
 
@@ -314,7 +319,7 @@ console.log('priceObj in up',priceObj)
                                   <div class="col-md-3">
                                     <div>
                                     </div>
-                                    <div className='border d-flex row' style={{ width: "fit-content" }}>
+                                    <div className='border d-flex row rounded-pill' style={{ width: "fit-content" }}>
                                       <span className='py-1 col-4 pointer' onClick={() => updateQuantity(x._id, "-", i, x.price, x.discount)} >-</span>
                                       <span className='py-1 col-4' ref={lineRefs.current[i]} data-quantity={tempObj[x._id]} >{tempObj[x._id]}</span>
                                       <span className='py-1 col-4 pointer' onClick={() => updateQuantity(x._id, "+", i, x.price, x.discount)}>+</span>
@@ -376,14 +381,14 @@ console.log('priceObj in up',priceObj)
 
                   <div className='d-flex justify-content-between py-2 my-4 text-dark' style={{ borderBottom: "1px solid #dee2e6", borderTop: "1px solid #dee2e6" }}>
                     <span><b>Total</b></span>
-                    <span ref={grandTotal} className='fw-bolder'>{sub + (sub < 1999 ? 99 : 0) + Math.round(sub * 0.1) }</span>
+                    <span ref={grandTotal} className='fw-bolder'>{sub + (sub < 1999 ? 99 : 0) + Math.round(sub * 0.1)}</span>
                   </div>
 
                   <form action="/create-checkout-session" method="POST">
-                    <input type="hidden" name='priceObj'  value={priceObj} />
+                    <input type="hidden" name='priceObj' value={JSON.stringify(priceObj)} />
                     <button className='btn w-100 my-2' style={{ border: "1px solid rgb(0 0 0 / 16%)", background: "#ebebeb", borderTop: "0" }} type="submit">Checkout</button>
-                  </form>                             
-                {/* <button className='btn w-100 my-2' style={{ border: "1px solid rgb(0 0 0 / 16%)", background: "#ebebeb", borderTop: "0" }} onClick={()=>handleCheckout()}>Checkout</button> */}
+                  </form>
+                  {/* <button className='btn w-100 my-2' style={{ border: "1px solid rgb(0 0 0 / 16%)", background: "#ebebeb", borderTop: "0" }} onClick={()=>handleCheckout()}>Checkout</button> */}
                 </div>
               </div>
             </div>

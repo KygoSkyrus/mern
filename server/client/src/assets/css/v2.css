@@ -857,7 +857,7 @@ input[type="number"]::-webkit-outer-spin-button {
 /* PRODUCT PAGE */
 .p-img-sticky {
   position: sticky;
-  top: 70px;
+  top: 90px;
   height: fit-content;
 }
 .additional-images {

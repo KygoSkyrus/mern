@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 const bodyParser = require('body-parser')
 // Use JSON parser for all non-webhook routes
-router.use(bodyParser.urlencoded({extended: true}));//for checkout passed values
+router.use(bodyParser.urlencoded({ extended: true }));//for checkout passed values
 router.use((req, res, next) => {
     if (req.originalUrl === "/webhook") {
         next();
@@ -234,19 +234,19 @@ router.post('/api/updatecart', async (req, res) => {
         const user = await USER.findById(decoded._id);
 
         //this is not working 
-        let theCart= user.cart;
+        let theCart = user.cart;
         //console.log('thecart before',theCart)
         const updatedCartItems = theCart.map((existingCartItem) => {
 
             const matchingCartItem = cartItems.find((newCartItem) => {
-                console.log('fff', newCartItem.productId.toString() , "   ", existingCartItem.productId.toString() )
-                return newCartItem.productId.toString()  === existingCartItem.productId.toString() 
+                console.log('fff', newCartItem.productId.toString(), "   ", existingCartItem.productId.toString())
+                return newCartItem.productId.toString() === existingCartItem.productId.toString()
             }
             );
 
-            cartItems.map(x=>{
-                if(x.productId.toString()  === existingCartItem.productId.toString() ){
-                    existingCartItem.quantity=x.quantity;
+            cartItems.map(x => {
+                if (x.productId.toString() === existingCartItem.productId.toString()) {
+                    existingCartItem.quantity = x.quantity;
                 }
             })
 
@@ -266,12 +266,12 @@ router.post('/api/updatecart', async (req, res) => {
 
         //console.log('thecart after',theCart)
 
-       // console.log('updatedUser--',updatedCartItems)
-        const theUser=await USER.updateOne(
+        // console.log('updatedUser--',updatedCartItems)
+        const theUser = await USER.updateOne(
             { _id: decoded._id },
             { $set: { cart: theCart } }
-          );
-          console.log('theUser',theUser)
+        );
+        console.log('theUser', theUser)
         //await USER.findByIdAndUpdate(decoded._id, { cart: updatedCartItems });
 
 
@@ -350,45 +350,73 @@ router.get('/api/getcartitems', async (req, res) => {
 router.post('/create-checkout-session', async (req, res) => {
 
     //if this doesnt work remove router.use(bodyParser.urlencoded({extended: true})); from top
+    const { priceObj } = req.body;
 
+    const data = JSON.parse(priceObj)
+    console.log('checkout-----------', data)
 
-    //const { priceObj } = req.body;
-    console.log('checkout-----------',req.body.priceObj)
+    let line_items = []
+    Object.keys(data.productList).forEach(x => {
+        console.log(data.productList[x].name)
+
+        let prod = {}
+
+        prod.price_data = {}
+        prod.price_data.currency = "inr"
+        prod.price_data.product_data = {}
+        prod.price_data.product_data.name = data.productList[x].name
+        if(data.grandTotal<999999){
+            prod.price_data.unit_amount = data.productList[x].price*100
+        }else{
+            prod.price_data.unit_amount = data.productList[x].price
+        }
+        prod.quantity = data.productList[x].quantity
+
+        prod.adjustable_quantity = {}
+        prod.adjustable_quantity.enabled = true
+        prod.adjustable_quantity.minimum = 1
+        prod.adjustable_quantity.maximum = 300
+
+        line_items.push(prod)
+    })
+    //console.log('ff',line_items)
     const session = await stripe.checkout.sessions.create({
-        line_items: [
-            {
-                price_data: {
-                    currency: 'inr',
-                    product_data: {
-                        name: 'T-shirt',
-                    },
-                    unit_amount: 30000,
-                },
-                quantity: 3,
-                adjustable_quantity: {
-                    enabled: true,
-                    minimum: 1,
-                    maximum: 50,
-                }
-            },
-            {
-                price_data: {
-                    currency: 'inr',
-                    product_data: {
-                        name: 'Bag',
-                    },
-                    unit_amount: 720000,
-                },
-                quantity: 1,
-            },
-        ],
+        line_items,
+        // : [
+        //     {
+        //         price_data: {
+        //             currency: 'inr',
+        //             product_data: {
+        //                 name: 'T-shirt',
+        //             },
+        //             unit_amount: 30000,
+        //         },
+        //         quantity: 3,
+        //         adjustable_quantity: {
+        //             enabled: true,
+        //             minimum: 1,
+        //             maximum: 50,
+        //         }
+        //     },
+        //     {
+        //         price_data: {
+        //             currency: 'inr',
+        //             product_data: {
+        //                 name: 'Bag',
+        //             },
+        //             unit_amount: 720000,
+        //         },
+        //         quantity: 1,
+        //     },
+        // ],
         mode: 'payment',
+        payment_method_types: ['card'],
         success_url: 'http://localhost:3006/orders',
         cancel_url: 'http://localhost:3006/user',
         customer_email: 'xyz@email.com',
     });
 
-    //console.log('session - ', session)
+    // //console.log('session - ', session)
 
     res.redirect(303, session.url);//redirects to checkout page
 });
@@ -546,13 +574,13 @@ router.post('/api/addproducts', async (req, res) => {
 
 router.post('/api/editproduct', async (req, res) => {
 
-    const { name, price, description, category, image, stock,discount, id } = req.body;
-    console.log('dd', name, price, description, category, image, stock,discount, id)
+    const { name, price, description, category, image, stock, discount, id } = req.body;
+    console.log('dd', name, price, description, category, image, stock, discount, id)
 
     //const data= JSON.parse(req.body)
 
     try {
-        const result = await PRODUCT.findOneAndUpdate({ _id: id }, { $set: { name, price, description, category, image, stock,discount } }, { new: true })
+        const result = await PRODUCT.findOneAndUpdate({ _id: id }, { $set: { name, price, description, category, image, stock, discount } }, { new: true })
         if (result) {
             res.send({ isProductEdited: true })
         } else {

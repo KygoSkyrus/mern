@@ -137,6 +137,8 @@ in each categoyr documnet there shoudl be field 'subcategory',,and this subcateg
 - in product document their will be a category
 - the main thing to conclude every subcategory problem is that we will never show products on parent category(the topmost,,only when it is searched,,when searched will look for that word) ..we will only show the direct category ...
 
+-stripe does not accept payemnt more than 999,999
+StripeInvalidRequestError: The Checkout Session's total amount due must be no more than ₹999,999.99.
 ### w/o IP
 
 - fix admin filter
@@ -176,6 +178,7 @@ NOTE;:::the issue that withou internet you are not abke to acces db,,,setup the 
 https://www.freepik.com/free-photos-vectors/sale-png
 
 ### forever notes
+- you cannot just send an object in post reuqest as it wiukd show [object] in backend as formdata doesnot accespt object as a value,,so always stringfy your object before posting 
 
 - when you have to put a stick position to a navabar or any element remember that the parent shoudl hav emore height than the element to be sticky and on sticky element give top properyty ,,only sticky wont do anything you need top,,
 - https://codepen.io/polypane/full/LYdvPze
