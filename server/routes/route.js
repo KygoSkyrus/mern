@@ -346,6 +346,44 @@ router.get('/api/getcartitems', async (req, res) => {
 })
 
 
+
+//WISHLIST
+
+//remove from cart
+router.post('/api/movetowishlist', async (req, res) => {
+    //this is mostly same as removefromcart just the adding to wishlist part
+    const token = req.cookies.jwt;
+    //thi is common for most user actions ,so create a middleware function instead
+    if (!token) {
+        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
+    }
+    try {
+        const { productId } = req.body;
+        const decoded = jwt.verify(token, process.env.SECRETKEY);
+
+        
+
+        // Update the user's cart by removing the specified product
+        const updatedUser = await USER.findByIdAndUpdate(
+            decoded._id,
+            { $pull: { cart: { productId } } },
+            { new: true }
+        ).populate('cartProducts');//to send the user populated with cart field
+
+        console.log('remove fromcart-', updatedUser)
+        if (!updatedUser) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        res.status(200).json({ message: 'Product removed from cart.', user: updatedUser });
+    } catch (error) {
+        console.error('Error removing product from cart:', error);
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+});
+
+
+
 //IF the stirpe accont is activated than there may be a way to send invoice to user
 router.post('/create-checkout-session', async (req, res) => {
 

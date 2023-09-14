@@ -1,5 +1,6 @@
 /* eslint-disable no-eval */
 import React, { useRef } from 'react'
+import {Link} from 'react-router-dom'
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserDetails } from './redux/userSlice';
@@ -211,20 +212,53 @@ const Cart = () => {
       }),
     })
       .then(response => {
-        resp = response.status;
+        resp = response;
         return response.json()
       })
       .then(res => {
+        console.log('resp',resp)
         if (resp.status === 200) {
+          console.log('2000')
           console.log('updated user object', res.user)
           dispatch(setToastStatus({ isSuccess: true }))
           dispatch(setUserDetails({ user: res.user }))
         } else {
+          console.log('not 2000')
           dispatch(setToastStatus({ isSuccess: false }))
         }
         dispatch(toastVisibility({ toast: true }))
         dispatch(setToastContent({ message: res.message }))
         console.log('remove from cart response', res)
+        //also update the user from here too or elese the result wont be seen immediately
+      })
+  }
+
+  const movetowishlist=(productId)=>{
+    let resp;
+    fetch(`/api/movetowishlist`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        productId
+      }),
+    })
+      .then(response => {
+        resp = response;
+        return response.json()
+      })
+      .then(res => {
+        console.log('resp',resp)
+        if (resp.status === 200) {
+          console.log('200')
+          dispatch(setToastStatus({ isSuccess: true }))
+          dispatch(setUserDetails({ user: res.user }))
+        } else {
+          console.log('not 200')
+          dispatch(setToastStatus({ isSuccess: false }))
+        }
+        dispatch(toastVisibility({ toast: true }))
+        dispatch(setToastContent({ message: res.message }))
+        console.log('movetowishlist response', res)
         //also update the user from here too or elese the result wont be seen immediately
       })
   }
@@ -296,10 +330,12 @@ const Cart = () => {
                                 <div className='row d-flex justify-content-between'>
 
                                   <div class="col-md-4">
+                                      <Link to={`/product/${x._id}`} style={{color:"inherit"}}>
                                     <h6>
-                                      {x.name}
+                                    {x.name}
                                       can show here other product details too like instock
                                     </h6>
+                                    </Link>
                                   </div>
                                   <div class="col-md-2">
                                     <div className='d-flex align-items-end flex-column' style={{ width: "fit-content" }}>
@@ -339,7 +375,7 @@ const Cart = () => {
                           </div>
                           <div className='d-flex justify-content-end mb-3 border-bottom pb-3'>
                             <u><span onClick={() => removeFromCart(x._id)} className='me-4 pointer'>Remove <i class="fa fa-trash fa-sm"></i></span></u>
-                            <u><span className='me-4 pointer'>Move to wishlist <i class="fa fa-heart fa-sm"></i></span></u>
+                            <u><span className='me-4 pointer' onClick={() => movetowishlist(x._id)}>Move to wishlist <i class="fa fa-heart fa-sm"></i></span></u>
                           </div>
                         </>
                       )
