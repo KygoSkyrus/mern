@@ -263,6 +263,11 @@ const Cart = () => {
       })
   }
 
+  //db.feed.find({ 
+    _id: {
+      $in: [ObjectId("55880c251df42d0466919268"), ObjectId("55bf528e69b70ae79be35006")]
+  }
+});
   return (
     <>
       {!cartItems?.length > 0 ?
