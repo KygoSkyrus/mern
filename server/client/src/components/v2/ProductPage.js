@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import { setUserDetails } from './redux/userSlice';
 import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSlice';
 const ProductPage = () => {
@@ -9,6 +9,8 @@ const ProductPage = () => {
     const prodImage = useRef()
     const dispatch = useDispatch()
     const [product, setProduct] = useState()
+
+    const wishlistItems = useSelector(state => state.user.user.wishlist)
 
     console.log('product id', productId)
     useEffect(() => {
@@ -57,6 +59,33 @@ const ProductPage = () => {
                 dispatch(toastVisibility({ toast: true }))
                 dispatch(setToastContent({ message: res.message }))
                 console.log('response add tocart', res)
+            })
+    }
+
+    const updatewishlist = () => {
+        let resp;
+        fetch(`/api/updatewishlist`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                productId
+            }),
+        })
+            .then(response => {
+                resp = response
+                return response.json()
+            })
+            .then(res => {
+                console.log('res add to wishlist',res)
+                if (resp.status === 200) {
+                    dispatch(setToastStatus({ isSuccess: true }))
+                    dispatch(setUserDetails({ user: res.user }))
+                } else {
+                    dispatch(setToastStatus({ isSuccess: false }))
+                }
+                dispatch(toastVisibility({ toast: true }))
+                dispatch(setToastContent({ message: res.message }))
+                console.log('response add wishlist', res)
             })
     }
 
@@ -125,7 +154,9 @@ const ProductPage = () => {
                                 <div className='d-flex gap-2 mt-3'>
                                     <button className='btn buy-btn'>Buy Now</button>
                                     <button className='btn cart-btn' onClick={addToCart}>Add to cart</button>
-                                    <button className='btn wishlist-btn'><i class="fa fa-heart"></i></button>
+                                    <button className='btn wishlist-btn' onClick={updatewishlist}>                                    
+                                        <i class={`fa fa-heart ${wishlistItems?.map(x=>(x===product._id) && "text-danger")}`}></i>
+                                        </button>
                                 </div>
 
                                 <div class="mt-4 offers">

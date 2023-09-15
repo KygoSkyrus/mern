@@ -348,6 +348,56 @@ router.get('/api/getcartitems', async (req, res) => {
 
 
 //WISHLIST
+//adding and removing from wishlist
+router.post('/api/updatewishlist', async (req, res) => {
+    const token = req.cookies.jwt;
+    if (!token) {
+        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
+    }
+    try {
+        const { productId } = req.body;
+        const decoded = jwt.verify(token, process.env.SECRETKEY);
+
+        const user = await USER.findById(decoded._id);
+         if (!user) {
+           return res.status(404).json({ message: 'User not found.' });
+         }
+
+        // const product = await PRODUCT.findById(productId);
+        //  if (!product) {
+        //    return res.status(404).json({ message: 'Product not found.' });
+        //  }
+
+        // Find the product in the user's cart
+        const wishlistItem = user.wishlist.find(item => item.toString() === productId);
+        console.log('wishlis',wishlistItem)
+
+        let updatedUser;
+        if(wishlistItem){
+            //adding the product to wishlist
+            updatedUser = await USER.findByIdAndUpdate(
+                decoded._id,
+                { $pull: { wishlist:  productId  } },
+                { new: true }
+            ).populate('cartProducts');
+            res.status(200).json({ message: 'Product removed from wishlist.', user: updatedUser });
+        }else{
+            //adding the product to wishlist
+            updatedUser = await USER.findByIdAndUpdate(
+                    decoded._id,
+                    { $push: { wishlist:  productId } },
+                    { new: true }
+                ).populate('cartProducts');      
+                res.status(200).json({ message: 'Product added to wishlist.', user: updatedUser });
+        }
+
+
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+})
 
 //remove from cart
 router.post('/api/movetowishlist', async (req, res) => {
@@ -361,7 +411,7 @@ router.post('/api/movetowishlist', async (req, res) => {
         const { productId } = req.body;
         const decoded = jwt.verify(token, process.env.SECRETKEY);
 
-        
+
 
         // Update the user's cart by removing the specified product
         const updatedUser = await USER.findByIdAndUpdate(

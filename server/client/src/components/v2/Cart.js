@@ -10,7 +10,7 @@ import emptyCartImg from "./../../assets/images/newImg/collections/emptycart.png
 const Cart = () => {
 
   const dispatch = useDispatch()
-  //const [quantity,setQuantity]=useState();
+  const wishlistItems = useSelector(state => state.user.user.wishlist)
   const cartItems = useSelector(state => state.user.user.cartProducts)
   const cart = useSelector(state => state.user.user.cart)
   console.log('cart', cart)
@@ -375,7 +375,7 @@ const Cart = () => {
                           </div>
                           <div className='d-flex justify-content-end mb-3 border-bottom pb-3'>
                             <u><span onClick={() => removeFromCart(x._id)} className='me-4 pointer'>Remove <i class="fa fa-trash fa-sm"></i></span></u>
-                            <u><span className='me-4 pointer' onClick={() => movetowishlist(x._id)}>Move to wishlist <i class="fa fa-heart fa-sm"></i></span></u>
+                            {wishlistItems?.map(y=>(y!==x._id) && <u><span className='me-4 pointer' onClick={() => movetowishlist(x._id)}>Move to wishlist <i class="fa fa-heart fa-sm"></i></span></u>)}                 
                           </div>
                         </>
                       )
