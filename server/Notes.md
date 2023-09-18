@@ -147,6 +147,7 @@ StripeInvalidRequestError: The Checkout Session's total amount due must be no mo
 
 ### DEFECTS
 
+- set isuserloggedin to false whenever session expired is returned bcz it needs to refersh to show s=the signin option back when expired while the app is running
 - dont focus on discount now,, let irt as it is,,later add a field in product form where seller will update discount
 - one backspaceing in otp inputs,,two digits are getting erased
 - if product has more tha one image sthen its not uploading the other images on slow network,,its an issue

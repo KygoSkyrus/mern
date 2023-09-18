@@ -154,8 +154,8 @@ const ProductPage = () => {
                                 <div className='d-flex gap-2 mt-3'>
                                     <button className='btn buy-btn'>Buy Now</button>
                                     <button className='btn cart-btn' onClick={addToCart}>Add to cart</button>
-                                    <button className='btn wishlist-btn' onClick={updatewishlist}>                                    
-                                        <i class={`fa fa-heart ${wishlistItems?.map(x=>(x===product._id) && "text-danger")}`}></i>
+                                    <button className='btn wishlist-btn' onClick={updatewishlist} title={wishlistItems?.includes(product._id)? "Remove from wishlist":"Add to wishlist"}>                                    
+                                        <i class={`fa fa-heart ${wishlistItems?.includes(product._id) && "text-danger"}`}></i>
                                         </button>
                                 </div>
 

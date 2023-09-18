@@ -19,6 +19,7 @@ import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSl
 
 
 import getUser from './Utility';
+import Wishlist from './Wishlist';
 
 const TheFront = ({ dl }) => {
 
@@ -52,6 +53,7 @@ const TheFront = ({ dl }) => {
                 <Route path="/category/:categoryId" exact element={<Category />} />
                 <Route path="/product/:productId" exact element={<ProductPage />} />
                 <Route path="/cart" exact element={<Cart />} />
+                <Route path="/wishlist" exact element={<Wishlist />} />
                 <Route path="/user" exact element={<User />} />
 
                 {/* <Route path="/:id" exact element={<SingleBlog  />} /> */}

@@ -233,7 +233,7 @@ const Cart = () => {
       })
   }
 
-  const movetowishlist=(productId)=>{
+  const movetowishlist = (productId)=>{
     let resp;
     fetch(`/api/movetowishlist`, {
       method: "POST",
@@ -263,11 +263,6 @@ const Cart = () => {
       })
   }
 
-  //db.feed.find({ 
-    _id: {
-      $in: [ObjectId("55880c251df42d0466919268"), ObjectId("55bf528e69b70ae79be35006")]
-  }
-});
   return (
     <>
       {!cartItems?.length > 0 ?
@@ -358,8 +353,7 @@ const Cart = () => {
                                     </div>
                                   </div>
                                   <div class="col-md-3">
-                                    <div>
-                                    </div>
+                                
                                     <div className='border d-flex row rounded-pill' style={{ width: "fit-content" }}>
                                       <span className='py-1 col-4 pointer' onClick={() => updateQuantity(x._id, "-", i, x.price, x.discount)} >-</span>
                                       <span className='py-1 col-4' ref={lineRefs.current[i]} data-quantity={tempObj[x._id]} >{tempObj[x._id]}</span>
@@ -380,7 +374,7 @@ const Cart = () => {
                           </div>
                           <div className='d-flex justify-content-end mb-3 border-bottom pb-3'>
                             <u><span onClick={() => removeFromCart(x._id)} className='me-4 pointer'>Remove <i class="fa fa-trash fa-sm"></i></span></u>
-                            {wishlistItems?.map(y=>(y!==x._id) && <u><span className='me-4 pointer' onClick={() => movetowishlist(x._id)}>Move to wishlist <i class="fa fa-heart fa-sm"></i></span></u>)}                 
+                            {!wishlistItems?.includes(x._id) && <u><span className='me-4 pointer' onClick={() => movetowishlist(x._id)}>Move to wishlist <i class="fa fa-heart fa-sm"></i></span></u>}                 
                           </div>
                         </>
                       )

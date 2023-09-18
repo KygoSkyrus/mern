@@ -359,9 +359,9 @@ router.post('/api/updatewishlist', async (req, res) => {
         const decoded = jwt.verify(token, process.env.SECRETKEY);
 
         const user = await USER.findById(decoded._id);
-         if (!user) {
-           return res.status(404).json({ message: 'User not found.' });
-         }
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
 
         // const product = await PRODUCT.findById(productId);
         //  if (!product) {
@@ -370,25 +370,25 @@ router.post('/api/updatewishlist', async (req, res) => {
 
         // Find the product in the user's cart
         const wishlistItem = user.wishlist.find(item => item.toString() === productId);
-        console.log('wishlis',wishlistItem)
+        console.log('wishlis', wishlistItem)
 
         let updatedUser;
-        if(wishlistItem){
-            //adding the product to wishlist
+        if (wishlistItem) {
+            //removing the product from wishlist if already there
             updatedUser = await USER.findByIdAndUpdate(
                 decoded._id,
-                { $pull: { wishlist:  productId  } },
+                { $pull: { wishlist: productId } },
                 { new: true }
             ).populate('cartProducts');
             res.status(200).json({ message: 'Product removed from wishlist.', user: updatedUser });
-        }else{
+        } else {
             //adding the product to wishlist
             updatedUser = await USER.findByIdAndUpdate(
-                    decoded._id,
-                    { $push: { wishlist:  productId } },
-                    { new: true }
-                ).populate('cartProducts');      
-                res.status(200).json({ message: 'Product added to wishlist.', user: updatedUser });
+                decoded._id,
+                { $push: { wishlist: productId } },
+                { new: true }
+            ).populate('cartProducts');
+            res.status(200).json({ message: 'Product added to wishlist.', user: updatedUser });
         }
 
 
@@ -410,28 +410,49 @@ router.post('/api/movetowishlist', async (req, res) => {
     try {
         const { productId } = req.body;
         const decoded = jwt.verify(token, process.env.SECRETKEY);
-
-
-
-        // Update the user's cart by removing the specified product
+        
         const updatedUser = await USER.findByIdAndUpdate(
             decoded._id,
-            { $pull: { cart: { productId } } },
+            {
+                $pull: { cart: { productId } },//removing from cart
+                $push: { wishlist: productId }//adding to wishlist
+            },
             { new: true }
         ).populate('cartProducts');//to send the user populated with cart field
 
-        console.log('remove fromcart-', updatedUser)
+        // console.log('moved to wishlist', updatedUser)
         if (!updatedUser) {
             return res.status(404).json({ message: 'User not found.' });
         }
 
-        res.status(200).json({ message: 'Product removed from cart.', user: updatedUser });
+        res.status(200).json({ message: 'Product moved to wishlist', user: updatedUser });
     } catch (error) {
         console.error('Error removing product from cart:', error);
         res.status(500).json({ message: 'Internal server error.' });
     }
 });
+//get wishlist items
+router.post('/api/getwishlistitems', async (req, res) => {
+    const token = req.cookies.jwt;
+    const { ids } = req.body
+    console.log('dd', ids, req.body)
+    if (!token) {
+        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
+    }
+    try {
 
+
+        const items = await PRODUCT.find({ _id: { $in: ids } });
+        console.log('uuu', items)
+
+        res.status(200).json({ items });
+
+    } catch (error) {
+        console.error('Error getting items from wishlist', error);
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+
+})
 
 
 //IF the stirpe accont is activated than there may be a way to send invoice to user
@@ -453,9 +474,9 @@ router.post('/create-checkout-session', async (req, res) => {
         prod.price_data.currency = "inr"
         prod.price_data.product_data = {}
         prod.price_data.product_data.name = data.productList[x].name
-        if(data.grandTotal<999999){
-            prod.price_data.unit_amount = data.productList[x].price*100
-        }else{
+        if (data.grandTotal < 999999) {
+            prod.price_data.unit_amount = data.productList[x].price * 100
+        } else {
             prod.price_data.unit_amount = data.productList[x].price
         }
         prod.quantity = data.productList[x].quantity
