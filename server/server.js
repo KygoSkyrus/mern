@@ -20,7 +20,7 @@ dotenv.config({ path: './env/config.env' });
 //     bodyParser.json()(req, res, next);
 //   }
 // });
- 
+
 app.use(require('./routes/route'));
 app.use(express.json());
 app.use((req, res, next) => {
@@ -43,42 +43,45 @@ mongoose.connect(db, {
 }).catch((err) => console.log(err));
 
 
-if(process.env.NODE_ENV ==="production"){
-  app.use(express.static("client/build"));
+let endpointSecret;
+if (process.env.NODE_ENV === "production") {
+  endpointSecret = "we_1Ns5wFSJDEVNzqXlNvgt2OSL";
+} else {
+  // This is your Stripe CLI webhook secret for testing your endpoint locally.
+  endpointSecret = "whsec_5601d477da26790e09849aeeb567342bf53dbe96229fd3accbf27163f19c5476";
 }
 
 
-// This is your Stripe CLI webhook secret for testing your endpoint locally.
-const endpointSecret = "whsec_5601d477da26790e09849aeeb567342bf53dbe96229fd3accbf27163f19c5476";
 
 //there are different keys and code for webhook in prod
 app.post('/webhook', express.raw({ type: 'application/json' }), (request, response) => {
-    const payload = request.body;
-    const sig = request.headers['stripe-signature'];
-    console.log("webhook api")
-    let event;
+  const payload = request.body;
+  const sig = request.headers['stripe-signature'];
+  console.log("webhook api")
+  let event;
 
-    try {
-        event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
-        console.log('e-', event)
-    } catch (err) {
-        console.log('eeeeerrrr', err)//bug here
-        return response.status(400).send(`Webhook Error: ${err.message}`);
-    }
+  try {
+    event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+    console.log('e-', event)
+  } catch (err) {
+    console.log('eeeeerrrr', err)//bug here
+    return response.status(400).send(`Webhook Error: ${err.message}`);
+  }
 
-    // Handle the event
-    console.log(`Unhandled event type ${event.type}`);
-    switch (event.type) {
-        case 'payment_intent.succeeded':
-            const paymentIntentSucceeded = event.data.object;
-            console.log('edatobj', event.data)
-            // Then define and call a function to handle the event payment_intent.succeeded
-            break;
-        // ... handle other event types
-        default:
-            console.log(`Unhandled event type ${event.type}`);
-    }
-    response.send();
+  // Handle the event
+  console.log(`Unhandled event type ${event.type}`);
+  switch (event.type) {
+    case 'payment_intent.succeeded':
+      const paymentIntentSucceeded = event.data.object;
+      console.log('edatobj', event.data)
+
+      // Then define and call a function to handle the event payment_intent.succeeded
+      break;
+    // ... handle other event types
+    default:
+      console.log(`Unhandled event type ${event.type}`);
+  }
+  response.send();
 });
 
 if (process.env.NODE_ENV === "production") {

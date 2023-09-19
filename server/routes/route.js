@@ -410,7 +410,7 @@ router.post('/api/movetowishlist', async (req, res) => {
     try {
         const { productId } = req.body;
         const decoded = jwt.verify(token, process.env.SECRETKEY);
-        
+
         const updatedUser = await USER.findByIdAndUpdate(
             decoded._id,
             {
@@ -459,65 +459,65 @@ router.post('/api/getwishlistitems', async (req, res) => {
 router.post('/create-checkout-session', async (req, res) => {
 
     //if this doesnt work remove router.use(bodyParser.urlencoded({extended: true})); from top
-    const { priceObj } = req.body;
+    // const { priceObj } = req.body;
 
-    const data = JSON.parse(priceObj)
-    console.log('checkout-----------', data)
+    // const data = JSON.parse(priceObj)
+    // console.log('checkout-----------', data)
 
-    let line_items = []
-    Object.keys(data.productList).forEach(x => {
-        console.log(data.productList[x].name)
+    // let line_items = []
+    // Object.keys(data.productList).forEach(x => {
+    //     console.log(data.productList[x].name)
 
-        let prod = {}
+    //     let prod = {}
 
-        prod.price_data = {}
-        prod.price_data.currency = "inr"
-        prod.price_data.product_data = {}
-        prod.price_data.product_data.name = data.productList[x].name
-        if (data.grandTotal < 999999) {
-            prod.price_data.unit_amount = data.productList[x].price * 100
-        } else {
-            prod.price_data.unit_amount = data.productList[x].price
-        }
-        prod.quantity = data.productList[x].quantity
+    //     prod.price_data = {}
+    //     prod.price_data.currency = "inr"
+    //     prod.price_data.product_data = {}
+    //     prod.price_data.product_data.name = data.productList[x].name
+    //     if (data.grandTotal < 999999) {
+    //         prod.price_data.unit_amount = data.productList[x].price * 100
+    //     } else {
+    //         prod.price_data.unit_amount = data.productList[x].price
+    //     }
+    //     prod.quantity = data.productList[x].quantity
 
-        prod.adjustable_quantity = {}
-        prod.adjustable_quantity.enabled = true
-        prod.adjustable_quantity.minimum = 1
-        prod.adjustable_quantity.maximum = 300
+    //     prod.adjustable_quantity = {}
+    //     prod.adjustable_quantity.enabled = true
+    //     prod.adjustable_quantity.minimum = 1
+    //     prod.adjustable_quantity.maximum = 300
 
-        line_items.push(prod)
-    })
+    //     line_items.push(prod)
+    // })
     //console.log('ff',line_items)
     const session = await stripe.checkout.sessions.create({
-        line_items,
-        // : [
-        //     {
-        //         price_data: {
-        //             currency: 'inr',
-        //             product_data: {
-        //                 name: 'T-shirt',
-        //             },
-        //             unit_amount: 30000,
-        //         },
-        //         quantity: 3,
-        //         adjustable_quantity: {
-        //             enabled: true,
-        //             minimum: 1,
-        //             maximum: 50,
-        //         }
-        //     },
-        //     {
-        //         price_data: {
-        //             currency: 'inr',
-        //             product_data: {
-        //                 name: 'Bag',
-        //             },
-        //             unit_amount: 720000,
-        //         },
-        //         quantity: 1,
-        //     },
-        // ],
+        line_items
+        : [
+            {
+                price_data: {
+                    currency: 'inr',
+                    product_data: {
+                        name: 'T-shirt',
+                    },
+                    unit_amount: 30000,
+                },
+                quantity: 3,
+                adjustable_quantity: {
+                    enabled: true,
+                    minimum: 1,
+                    maximum: 50,
+                }
+            },
+            {
+                price_data: {
+                    currency: 'inr',
+                    product_data: {
+                        name: 'Bag',
+                    },
+                    unit_amount: 720000,
+                },
+                quantity: 1,
+            },
+        ],
         mode: 'payment',
         payment_method_types: ['card'],
         success_url: 'http://localhost:3006/orders',
