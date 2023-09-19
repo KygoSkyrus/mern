@@ -156,9 +156,9 @@ const Cart = () => {
       priceObj.productTotal[productId] = newQuantity * Math.floor(price - discount * price / 100)
       totalAmtRefs.current[i].current.innerText = newQuantity * Math.floor(price - discount * price / 100)
 
-      //updating subtotal (based on updated quantiy and new product total)
-      let total = Object.keys(priceObj.productTotal).reduce((x, a) => {
-        return priceObj.productTotal[x] + priceObj.productTotal[a]
+      let total=0;
+      Object.keys(priceObj.productTotal).forEach(x=>{
+        total+= parseInt(priceObj.productTotal[x])
       })
       subtotal.current.innerText = total;
 
@@ -279,6 +279,7 @@ const Cart = () => {
         </div> :
 
         <div className='container my-5'>
+           <h6 className='text-center my-5'>My Cart</h6>
           <div class="row ">
             <div class="col-lg-9 t-mb-30 mb-lg-0 theSection" >
               <div class="row ">
@@ -410,14 +411,14 @@ const Cart = () => {
                   </div>
 
                   <div className='d-flex justify-content-between my-2'>
-                    <span title='levies 10% service tax'>Estimated Tax <i class="fa fa-question-circle fa-sm" aria-hidden="true"></i></span>
+                    <span title='levies 10% service tax'  data-bs-toggle="tooltip" data-bs-placement="right"  >Estimated Tax <i class="fa fa-question-circle fa-sm" aria-hidden="true"></i></span>
                     <span ref={tax}>{Math.round(sub * 0.1)}</span>
                   </div>
 
                   <div className='d-flex justify-content-between py-2 my-4 text-dark' style={{ borderBottom: "1px solid #dee2e6", borderTop: "1px solid #dee2e6" }}>
                     <span><b>Total</b></span>
                     <span ref={grandTotal} className='fw-bolder'>{sub + (sub < 1999 ? 99 : 0) + Math.round(sub * 0.1)}</span>
-                  </div>
+                  </div>        
 
                   <form action="/create-checkout-session" method="POST">
                     <input type="hidden" name='priceObj' value={JSON.stringify(priceObj)} />

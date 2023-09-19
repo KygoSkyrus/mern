@@ -385,6 +385,17 @@ img {
   padding: 0;
 }
 
+.withoutParentUl{
+  border-right: 0;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+.withParentUl{
+  border-left: 0;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  background-color: rgb(245, 245, 245);
+}
 .child-category {
   display: block;
   width: 150px;
@@ -400,7 +411,8 @@ img {
 .dropdownCategoryUL {
   right: 0;
   transform-style: preserve-3d;
-  min-width: 540px;
+  max-width: 540px;
+  position: static !important;
 }
 .dropdownCategoryUL li:hover {
   background-color: #e9ecef;
@@ -408,51 +420,45 @@ img {
 .dropdownCategoryUL li a:hover {
   background-color: unset !important;
 }
-/* .categoryWithoutParent:nth-child(n+0){
-grid-column: 1;
-}
-.parentCategoryList:nth-child(n+12){
-  grid-column: 2;
-  } */
 .parentCategoryList {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.parentCategoryList a::before {
+.parentCategoryList span {
   content: "";
   position: absolute;
   top: 50%;
-  left: 0;
+  left: -10px;
   transform: translate(16px, -50%);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 512' style='fill: %23adadad'%3E%3Cpath d='M96 480c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L242.8 256L73.38 86.63c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25l-192 192C112.4 476.9 104.2 480 96 480z'/%3E%3C/svg%3E");
   width: 6px;
   height: 9px;
-  visibility: hidden;
   opacity: 0;
   z-index: 1;
   transition: var(--transition);
 }
 .parentCategoryList a {
-  /* transform: translateX(0); */
+  transform: translateX(0);
+  transition: var(--transition);
 }
-.parentCategoryList:hover a::before {
-  visibility: visible;
+.parentCategoryList:hover span {
   opacity: 1;
+  left: 0;
   /* transform: translate(0px,-50%); */
 }
 .parentCategoryList:hover a {
-  /* transform: translateX(16px); */
-  padding-left: 26px;
+  transform: translateX(12px);
+  /* padding-left: 26px; */
 }
 .dropdownCategoryUL li a {
   text-transform: capitalize;
 }
 /* to make dropdown visible on hover */
-.dropdown:hover > .dropdownCategoryUL {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+.dropdown:hover > div .dropdownCategoryUL {
+  display: block;
+  /* grid-template-columns: repeat(2, 1fr); */
 }
 .dropdown > .dropdown-toggle:active {
   /*Without this, clicking will make it sticky*/

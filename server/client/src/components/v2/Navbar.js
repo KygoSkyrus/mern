@@ -8,7 +8,7 @@ const Navbar = () => {
 
   const [categories, setCategories] = useState()
   const [childWithoutParent, setChildWithoutParent] = useState([])
-  // const[cartTotalQuantity,setCartTotalQuantity]=useState(0)
+
   const isUserLoggedIn = useSelector(state => state.user.isUserLoggedIn)
   const cart = useSelector(state => state.user.user.cart)
 
@@ -18,10 +18,7 @@ const Navbar = () => {
   })
 
   const Badge = () => {
-    return (
-      <section className="w3-badge w3-red w3-round">{cartTotalQuantity}</section>
-    )
-
+    return <section className="w3-badge w3-red w3-round">{cartTotalQuantity}</section>
   }
 
   //NOTE::: cannot have two columns for categories as on over on lement ffrom 1st col ypu wont be able to react the subcategory,,either put all of your subcate at theright side or separate the prent cat and cate without parent
@@ -71,7 +68,7 @@ const Navbar = () => {
     childCategoryElem.classList.remove('display-none')
 
 
-    categories[e.target.dataset.index].subCategory.map(x => {
+    categories[e.target.dataset.index]?.subCategory?.map(x => {
       let li = document.createElement('li')
       let a = document.createElement('a')
       console.log('fff', x.toLowerCase())
@@ -83,19 +80,18 @@ const Navbar = () => {
     })
   }
 
-  //const clearSubCategory=(e)=>{
-  //cant do this bcz as sson as y=the cursor goes off the list the sub will be emptied and hidden
-  // let childCategoryElem = document.querySelector('.child-category')
-  // // childCategoryElem.innerHTML = ''//clearing the previous subCat
-  // childCategoryElem.classList.add('display-none')//and hiding it
-  //}
+  const clearSubCategory = (e) => {
+    let childCategoryElem = document.querySelector('.child-category')
+    childCategoryElem.classList.add('display-none')//and hiding it
+  }
+
 
   return (
     <>
       {/* <div className='header-top'>
           header top
         </div> */}
-      <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm" >
+      <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm m-2" style={{ boxShadow: "var(--shadow-small)", borderRadius: "6px", top: "0.5rem" }} >
 
         <div className="container-fluid px-4">
           <Link to="/" className="navbar-brand" >
@@ -123,7 +119,7 @@ const Navbar = () => {
                 <input type='search' className="nav-link " placeholder='search in shopp-itt' />
               </li>
 
-              <li className="nav-item position-relative dropdown">
+              <li className="nav-item position-relative dropdown" >
 
                 <button type="button"
                   // className="nav-link" id="dropdownCategory" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside"
@@ -135,40 +131,44 @@ const Navbar = () => {
                   Category
                 </button>
                 {/* here put the categoires dynamicaaly and on hover of these categpries there will be the subcategpry will be shown only if the subcategory is avaible and put the subcategory there on hover,,,have to create the subcategory dropdown manuallty though */}
-                <ul className="dropdown-menu shadow dropdownCategoryUL" aria-labelledby="dropdownCategory">
-                  {
-                    categories ?
-                      categories?.map((x, i) => {
-                        if (x.subCategory.length > 0) {
-                          return (
-                            <li key={i} className='parentCategoryList' onMouseOver={e => populateSubCategory(e)}
-                            // onMouseOut={e=>clearSubCategory(e)}
-                            >
-                              <a className="dropdown-item gap-2 d-flex" href="/#" data-index={i} >
-                                {x.name}
-                              </a>
-                            </li>
-                          )
-                        } else {
-                          // console.log('djdjd', childWithoutParent)
-                          if (childWithoutParent.includes(x.name.toLowerCase())) {
+                <div className='shadow' style={{ position: "absolute", right: 0, display: "flex" }} onMouseLeave={e=>clearSubCategory(e)}>
+                  <ul className="dropdown-menu dropdownCategoryUL withoutParentUl" aria-labelledby="dropdownCategory">                  
+                    {categories?.map((x, i) => {
+                      if (childWithoutParent.includes(x.name.toLowerCase())) {
+                        return (
+                          <li key={i} className='categoryWithoutParent' onMouseOver={e => clearSubCategory(e)}>
+                            <a className="dropdown-item gap-2 d-flex" href={`/category/${x.name}`} data-index={i} >
+                              {x.name}
+                            </a>
+                          </li>
+                        )
+                      }
+                    })}
+                  </ul>
+
+                  <ul className="dropdown-menu dropdownCategoryUL withParentUl" aria-labelledby="dropdownCategory">
+                    {
+                      categories ?
+                        categories?.map((x, i) => {
+                          if (x.subCategory.length > 0) {
                             return (
-                              <li key={i} className='categoryWithoutParent' onMouseOver={e => populateSubCategory(e)}
-                              // onMouseOut={e=>clearSubCategory(e)}
+                              <li key={i} className='parentCategoryList' onMouseOver={e => populateSubCategory(e)} 
+                              //onMouseOut={e => clearSubCategory(e)}
                               >
-                                <a className="dropdown-item gap-2 d-flex" href={`/category/${x.name}`} data-index={i} >
+                                <span></span>
+                                <a className="dropdown-item gap-2 d-flex" href="/#" data-index={i} >
                                   {x.name}
                                 </a>
                               </li>
                             )
                           }
-                        }
-                      })
-                      :
-                      <section className='text-center'>...Loading</section>}
-                  <ul className='child-category display-none dropdown-menu shadow'></ul>
-                </ul>
-
+                        })
+                        :
+                        <section className='text-center'>...Loading</section>
+                    }
+                    <ul className='child-category display-none dropdown-menu shadow'></ul>
+                  </ul>
+                </div>
               </li>
               {!isUserLoggedIn &&
                 <li className="nav-item">
