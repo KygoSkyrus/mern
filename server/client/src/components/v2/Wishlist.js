@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { useDispatch,useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setUserDetails } from './redux/userSlice';
 import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSlice';
 
@@ -48,56 +48,56 @@ const Wishlist = () => {
   const addToCart = (productId) => {
     let resp;
     fetch(`/api/addtocart`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            productId
-        }),
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        productId
+      }),
     })
-        .then(response => {
-            resp = response
-            return response.json()
-        })
-        .then(res => {
-            console.log('res add to cart',res)
-            if (resp.status === 200) {
-                dispatch(setToastStatus({ isSuccess: true }))
-                dispatch(setUserDetails({ user: res.user }))
-            } else {
-                dispatch(setToastStatus({ isSuccess: false }))
-            }
-            dispatch(toastVisibility({ toast: true }))
-            dispatch(setToastContent({ message: res.message }))
-            console.log('response add tocart', res)
-        })
-}
+      .then(response => {
+        resp = response
+        return response.json()
+      })
+      .then(res => {
+        console.log('res add to cart', res)
+        if (resp.status === 200) {
+          dispatch(setToastStatus({ isSuccess: true }))
+          dispatch(setUserDetails({ user: res.user }))
+        } else {
+          dispatch(setToastStatus({ isSuccess: false }))
+        }
+        dispatch(toastVisibility({ toast: true }))
+        dispatch(setToastContent({ message: res.message }))
+        console.log('response add tocart', res)
+      })
+  }
 
-const updatewishlist = (productId) => {
+  const updatewishlist = (productId) => {
     let resp;
     fetch(`/api/updatewishlist`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            productId
-        }),
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        productId
+      }),
     })
-        .then(response => {
-            resp = response
-            return response.json()
-        })
-        .then(res => {
-            console.log('res add to wishlist',res)
-            if (resp.status === 200) {
-                dispatch(setToastStatus({ isSuccess: true }))
-                dispatch(setUserDetails({ user: res.user }))
-            } else {
-                dispatch(setToastStatus({ isSuccess: false }))
-            }
-            dispatch(toastVisibility({ toast: true }))
-            dispatch(setToastContent({ message: res.message }))
-            console.log('response add wishlist', res)
-        })
-}
+      .then(response => {
+        resp = response
+        return response.json()
+      })
+      .then(res => {
+        console.log('res add to wishlist', res)
+        if (resp.status === 200) {
+          dispatch(setToastStatus({ isSuccess: true }))
+          dispatch(setUserDetails({ user: res.user }))
+        } else {
+          dispatch(setToastStatus({ isSuccess: false }))
+        }
+        dispatch(toastVisibility({ toast: true }))
+        dispatch(setToastContent({ message: res.message }))
+        console.log('response add wishlist', res)
+      })
+  }
 
   return (
     <>
@@ -196,7 +196,7 @@ const updatewishlist = (productId) => {
 
                                     <div className='d-flex justify-content-end mt-2 ' style={{ marginRight: "-41px" }}>
                                       <u><span
-                                         onClick={() => updatewishlist(x._id)} 
+                                        onClick={() => updatewishlist(x._id)}
                                         className='me-4 pointer'>Remove <i class="fa fa-trash fa-sm "></i></span></u>
                                     </div>
                                     {/* <button className="btn btn-danger ms-2 rounded-pill text-light"><i class="fa fa-trash fa-sm"></i></button> */}
