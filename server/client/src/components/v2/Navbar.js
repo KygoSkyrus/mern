@@ -1,102 +1,147 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
-import theBagLogo from "./../../assets/images/thebaglogo.png"
+import theBagLogo from "./../../assets/images/thebaglogo.png";
 
 const Navbar = () => {
+  const [categories, setCategories] = useState();
+  const [childWithoutParent, setChildWithoutParent] = useState([]);
 
-  const [categories, setCategories] = useState()
-  const [childWithoutParent, setChildWithoutParent] = useState([])
-
-  const isUserLoggedIn = useSelector(state => state.user.isUserLoggedIn)
-  const cart = useSelector(state => state.user.user.cart)
+  const isUserLoggedIn = useSelector((state) => state.user.isUserLoggedIn);
+  const cart = useSelector((state) => state.user.user.cart);
 
   let cartTotalQuantity = 0;
-  cart.map(x => {
+  cart.map((x) => {
     cartTotalQuantity = cartTotalQuantity + x.quantity;
-  })
+  });
 
   const Badge = () => {
-    return <section className="w3-badge w3-red w3-round">{cartTotalQuantity}</section>
-  }
+    return (
+      <section className="w3-badge w3-red w3-round">
+        {cartTotalQuantity}
+      </section>
+    );
+  };
 
   //NOTE::: cannot have two columns for categories as on over on lement ffrom 1st col ypu wont be able to react the subcategory,,either put all of your subcate at theright side or separate the prent cat and cate without parent
 
   useEffect(() => {
     fetch("/api/getcategory")
-      .then(response => response.json())
-      .then(res => {
-        console.log('res', res)
-        setCategories(res)
+      .then((response) => response.json())
+      .then((res) => {
+        console.log("res", res);
+        setCategories(res);
         // let tempObject = {}
-        let tempArray = []
-        res.map(x => {
+        let tempArray = [];
+        res.map((x) => {
           // tempObject[x.name.toLowerCase()] = x._id//bcz some of categories are capitalized
-          tempArray.push(x.name.toLowerCase())
-        })
+          tempArray.push(x.name.toLowerCase());
+        });
 
         //total - 59
         //with parent - 34
         //without parent - 11
         // parent category - 14
         //this can be moved to down in jsx
-        res.map(x => {
+        res.map((x) => {
           if (x.subCategory.length > 0) {
             x.subCategory.map((y, i) => {
               if (tempArray.includes(y.toLowerCase())) {
-                tempArray.splice(tempArray.indexOf(y.toLowerCase()), 1)//removing subcat
+                tempArray.splice(tempArray.indexOf(y.toLowerCase()), 1); //removing subcat
               }
-            })
-            tempArray.splice(tempArray.indexOf(x.name.toLowerCase()), 1)//finally removing the parent category after subcat is removed
+            });
+            tempArray.splice(tempArray.indexOf(x.name.toLowerCase()), 1); //finally removing the parent category after subcat is removed
           }
-        })
-        console.log('s', tempArray)
+        });
+        console.log("s", tempArray);
         // setCategoriesAndID({ ...categoriesAndID, ...tempObject })//it has all categories and their id in an object, if to remove alos reove tempobj
-        setChildWithoutParent([...childWithoutParent, ...tempArray])
-      })
-
-  }, [])
+        setChildWithoutParent([...childWithoutParent, ...tempArray]);
+      });
+  }, []);
 
   //can put this in usememo
   const populateSubCategory = (e) => {
-    console.log('populateSubCategory', e.target, e.target.dataset.index)
+    let childCategoryElem = document.querySelector(".child-category");
 
-    let childCategoryElem = document.querySelector('.child-category')
+    childCategoryElem.innerHTML = ""; //clearing the previous subCat
+    childCategoryElem.classList.remove("display-none");
 
-    childCategoryElem.innerHTML = ''//clearing the previous subCat
-    childCategoryElem.classList.remove('display-none')
-
-
-    categories[e.target.dataset.index]?.subCategory?.map(x => {
-      let li = document.createElement('li')
-      let a = document.createElement('a')
-      console.log('fff', x.toLowerCase())
-      a.href = `/category/${x}`
-      a.innerHTML = x
-      a.classList.add('dropdown-item', 'gap-2', 'd-flex')
-      li.appendChild(a)
-      childCategoryElem.appendChild(li)
-    })
-  }
+    categories[e.target.dataset.index]?.subCategory?.map((x) => {
+      let li = document.createElement("li");
+      let a = document.createElement("a");
+      console.log("fff", x.toLowerCase());
+      a.href = `/category/${x}`;
+      a.innerHTML = x;
+      a.classList.add("dropdown-item", "gap-2", "d-flex");
+      li.appendChild(a);
+      childCategoryElem.appendChild(li);
+    });
+  };
 
   const clearSubCategory = (e) => {
-    let childCategoryElem = document.querySelector('.child-category')
-    childCategoryElem.classList.add('display-none')//and hiding it
+    let childCategoryElem = document.querySelector(".child-category");
+    childCategoryElem.classList.add("display-none"); //and hiding it
+  };
+
+  function searchApi(cartItems) {
+    console.log("value", cartItems);
+
+    if (cartItems.value !== " ") {
+      return fetch("/api/searchprod", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ value: cartItems.value }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("query response", data);
+          return data;
+        })
+        .catch((error) => {
+          console.error("Failed to query server:", error);
+          throw error; // Rethrow the error for error handling in the calling code
+        });
+    }
   }
 
+  // Debounce function to delay API calls by a specified time
+  function debounce(func, wait) {
+    let timeout;
+    return function (...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        func.apply(this, args);
+      }, wait);
+    };
+  }
+
+  const debounceQuery = debounce(searchApi, 2500);
+  const handleChange = (e) => {
+    console.log("handleChange", e.target.value);
+
+    debounceQuery({ value: e.target.value });
+  };
 
   return (
     <>
       {/* <div className='header-top'>
           header top
         </div> */}
-      <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm m-2" style={{ boxShadow: "var(--shadow-small)", borderRadius: "6px", top: "0.5rem" }} >
-
+      <nav
+        className="navbar navbar-expand-lg navbar-light sticky-top shadow-sm m-2"
+        style={{
+          backgroundColor: "#ffffff",
+          boxShadow: "var(--shadow-small)",
+          borderRadius: "6px",
+          top: "0.5rem",
+        }}
+      >
         <div className="container-fluid px-4">
-          <Link to="/" className="navbar-brand" >
-            <div className="logo ">
-            </div>
+          <Link to="/" className="navbar-brand">
+            <div className="logo "></div>
           </Link>
           <button
             className="navbar-toggler"
@@ -114,14 +159,30 @@ const Navbar = () => {
             id="navbarSupportedContent"
           >
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 justify-content-end w-100 ">
-
+              
               <li className="nav-item">
-                <input type='search' className="nav-link " placeholder='search in shopp-itt' />
+                <input
+                  type="search"
+                  className="nav-link "
+                  placeholder="search in shopp-itt"
+                  onChange={(e) => handleChange(e)}
+                />
+
+                <div class="search-dropdown hide" id="searchdropdown">
+                  <a
+                    class="dropdown-item"
+                    href="/how-good-is-work-from-home-for-employees-as-well-for-employer"
+                  >
+                    How good is work from home for employees as well for
+                    employer?
+                  </a>                
+                </div>
+                
               </li>
 
-              <li className="nav-item position-relative dropdown" >
-
-                <button type="button"
+              <li className="nav-item position-relative dropdown">
+                <button
+                  type="button"
                   // className="nav-link" id="dropdownCategory" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside"
                   class="nav-link dropdown-toggle"
                   id="dropdownCategory"
@@ -131,61 +192,87 @@ const Navbar = () => {
                   Category
                 </button>
                 {/* here put the categoires dynamicaaly and on hover of these categpries there will be the subcategpry will be shown only if the subcategory is avaible and put the subcategory there on hover,,,have to create the subcategory dropdown manuallty though */}
-                <div className='shadow' style={{ position: "absolute", right: 0, display: "flex" }} onMouseLeave={e=>clearSubCategory(e)}>
-                  <ul className="dropdown-menu dropdownCategoryUL withoutParentUl" aria-labelledby="dropdownCategory">                  
+                <div
+                  className="shadow"
+                  style={{ position: "absolute", right: 0, display: "flex" }}
+                  onMouseLeave={(e) => clearSubCategory(e)}
+                >
+                  <ul
+                    className="dropdown-menu dropdownCategoryUL withoutParentUl"
+                    aria-labelledby="dropdownCategory"
+                  >
                     {categories?.map((x, i) => {
                       if (childWithoutParent.includes(x.name.toLowerCase())) {
                         return (
-                          <li key={i} className='categoryWithoutParent' onMouseOver={e => clearSubCategory(e)}>
-                            <a className="dropdown-item gap-2 d-flex" href={`/category/${x.name}`} data-index={i} >
+                          <li
+                            key={i}
+                            className="categoryWithoutParent"
+                            onMouseOver={(e) => clearSubCategory(e)}
+                          >
+                            <a
+                              className="dropdown-item gap-2 d-flex"
+                              href={`/category/${x.name}`}
+                              data-index={i}
+                            >
                               {x.name}
                             </a>
                           </li>
-                        )
+                        );
                       }
                     })}
                   </ul>
 
-                  <ul className="dropdown-menu dropdownCategoryUL withParentUl" aria-labelledby="dropdownCategory">
-                    {
-                      categories ?
-                        categories?.map((x, i) => {
-                          if (x.subCategory.length > 0) {
-                            return (
-                              <li key={i} className='parentCategoryList' onMouseOver={e => populateSubCategory(e)} 
-                              //onMouseOut={e => clearSubCategory(e)}
+                  <ul
+                    className="dropdown-menu dropdownCategoryUL withParentUl"
+                    aria-labelledby="dropdownCategory"
+                  >
+                    {categories ? (
+                      categories?.map((x, i) => {
+                        if (x.subCategory.length > 0) {
+                          return (
+                            <li
+                              key={i}
+                              className="parentCategoryList"
+                              onMouseOver={(e) => populateSubCategory(e)}
+                            >
+                              <span></span>
+                              <section
+                                className="dropdown-item gap-2 d-flex"
+                                data-index={i}
                               >
-                                <span></span>
-                                <a className="dropdown-item gap-2 d-flex" href="/#" data-index={i} >
-                                  {x.name}
-                                </a>
-                              </li>
-                            )
-                          }
-                        })
-                        :
-                        <section className='text-center'>...Loading</section>
-                    }
-                    <ul className='child-category display-none dropdown-menu shadow'></ul>
+                                {x.name}
+                              </section>
+                            </li>
+                          );
+                        }
+                      })
+                    ) : (
+                      <section className="text-center">...Loading</section>
+                    )}
+                    <ul className="child-category display-none dropdown-menu shadow"></ul>
                   </ul>
                 </div>
               </li>
-              {!isUserLoggedIn &&
+              {!isUserLoggedIn && (
                 <li className="nav-item">
-                  <a className="nav-link " data-bs-toggle="modal" href="#exampleModalToggle" role="button">
+                  <a
+                    className="nav-link "
+                    data-bs-toggle="modal"
+                    href="#exampleModalToggle"
+                    role="button"
+                  >
                     SignIn
                   </a>
                 </li>
-              }
+              )}
 
               <li className="nav-item position-relative">
                 <Link to="/cart" className="nav-link">
                   {/* <i className='fa fa-shopping-cart'></i> */}
                   {/* if the cart value is zero than dont show badge */}
-                  <img src={theBagLogo} alt='' height='19.7px' />
+                  <img src={theBagLogo} alt="" height="19.7px" />
                   {/* <span>Cart</span> */}
-                  {cartTotalQuantity !== 0 &&
-                    <Badge />}
+                  {cartTotalQuantity !== 0 && <Badge />}
                 </Link>
               </li>
               {/* <li className="nav-item ">
@@ -199,7 +286,8 @@ const Navbar = () => {
                 </Link>
               </li>
               <li className="nav-item position-relative dropdown">
-                <button type="button"
+                <button
+                  type="button"
                   // className="nav-link" id="dropdownCategory" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside"
                   class="nav-link dropdown-toggle"
                   id="profileDropdown"
@@ -208,15 +296,24 @@ const Navbar = () => {
                 >
                   Profile
                 </button>
-                <ul className="dropdown-menu shadow profileDropdownUL" aria-labelledby="profileDropdown">
-                  <li className='' >
-                    <Link className="dropdown-item gap-2 d-flex" to="/user" >Account</Link>
+                <ul
+                  className="dropdown-menu shadow profileDropdownUL"
+                  aria-labelledby="profileDropdown"
+                >
+                  <li className="">
+                    <Link className="dropdown-item gap-2 d-flex" to="/user">
+                      Account
+                    </Link>
                   </li>
-                  <li className='' >
-                    <Link className="dropdown-item gap-2 d-flex" to="/wishlist" >Wishlist</Link>
+                  <li className="">
+                    <Link className="dropdown-item gap-2 d-flex" to="/wishlist">
+                      Wishlist
+                    </Link>
                   </li>
-                  <li className='' >
-                    <Link className="dropdown-item gap-2 d-flex" to="/orders" >Orders</Link>
+                  <li className="">
+                    <Link className="dropdown-item gap-2 d-flex" to="/orders">
+                      Orders
+                    </Link>
                   </li>
                 </ul>
                 {/* <Link to="/user" className="nav-link">
@@ -229,7 +326,7 @@ const Navbar = () => {
         </div>
       </nav>
     </>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

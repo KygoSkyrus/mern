@@ -455,6 +455,28 @@ router.post('/api/getwishlistitems', async (req, res) => {
 })
 
 
+
+//SEARCH QUERY-----------------------------------------------
+//NOTE::: Not in use but this uses regex to get documents containing a specific word in db
+router.post("/api/searchprod", async (req, res) => {
+  const {value} = req.body;
+  console.log("dgd",value)
+
+  try {
+    if (value === "") {
+      res.send({}); //an empty data object is sent
+    } else {
+      let result = await PRODUCT.find({ "name": { "$regex": value, "$options": "i" } })
+      res.send(result);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+
+
+
 //IF the stirpe accont is activated than there may be a way to send invoice to user
 router.post('/create-checkout-session', async (req, res) => {
 
