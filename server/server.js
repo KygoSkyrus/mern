@@ -21,15 +21,14 @@ dotenv.config({ path: './env/config.env' });
 //   }
 // });
 
-app.use(require('./routes/route'));
-app.use(express.json());
-app.use((req, res, next) => {
-  if (req.originalUrl === '/webhook') {
-    next();
-  } else {
-    express.json()(req, res, next);
-  }
-});
+// app.use(express.json());
+// app.use((req, res, next) => {
+//   if (req.originalUrl === '/webhook') {
+//     next();
+//   } else {
+//     express.json()(req, res, next);
+//   }
+// });
 
 const db = process.env.dbURI;
 const port = process.env.PORT || 4000;
@@ -83,6 +82,9 @@ app.post('/webhook', express.raw({ type: 'application/json' }), (request, respon
   }
   response.send();
 });
+
+//moving it affter webhook api to prevent the bodyparser to have effect from router file
+app.use(require('./routes/route'));
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));

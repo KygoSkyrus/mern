@@ -1,11 +1,175 @@
- {
-  id: 'evt_3Nk8vFSJDEVNzqXl1q9Hz1JY',
+webhook api
+e- {
+  id: 'evt_3NsRsqSJDEVNzqXl1UbV2r07',
   object: 'event',
   api_version: '2020-08-27',
-  created: 1693242719,
+  created: 1695222008,
   data: {
     object: {
-      id: 'pi_3Nk8vFSJDEVNzqXl1dm8LDmN',
+      id: 'pi_3NsRsqSJDEVNzqXl1EBnW8HC',
+      object: 'payment_intent',
+      amount: 810000,
+      amount_capturable: 0,
+      amount_details: [Object],
+      amount_received: 0,
+      application: null,
+      application_fee_amount: null,
+      automatic_payment_methods: null,
+      canceled_at: null,
+      cancellation_reason: null,
+      capture_method: 'automatic',
+      charges: [Object],
+      client_secret: 'pi_3NsRsqSJDEVNzqXl1EBnW8HC_secret_u6bVsX8gPesC1QeaBrDYT0bN9',       
+      confirmation_method: 'automatic',
+      created: 1695222008,
+      currency: 'inr',
+      customer: null,
+      description: null,
+      invoice: null,
+      last_payment_error: null,
+      latest_charge: null,
+      livemode: false,
+      metadata: {},
+      next_action: null,
+      on_behalf_of: null,
+      payment_method: null,
+      payment_method_options: [Object],
+      payment_method_types: [Array],
+      processing: null,
+      receipt_email: null,
+      review: null,
+      setup_future_usage: null,
+      shipping: null,
+      source: null,
+      statement_descriptor: null,
+      statement_descriptor_suffix: null,
+      status: 'requires_payment_method',
+      transfer_data: null,
+      transfer_group: null
+    }
+  },
+  livemode: false,
+  pending_webhooks: 2,
+  request: {
+    id: 'req_IFMZFerKuS3kTU',
+    idempotency_key: 'eab1cfe5-7f07-4da0-9bad-2267f1fd40d7'
+  },
+  type: 'payment_intent.created'
+}
+Unhandled event type payment_intent.created
+Unhandled event type payment_intent.created
+webhook api
+e- {
+  id: 'evt_1NsRtRSJDEVNzqXllLLPS9K7',
+  object: 'event',
+  api_version: '2020-08-27',
+  created: 1695222044,
+  data: {
+    object: {
+      id: 'cus_OfnU5KteXxynod',
+      object: 'customer',
+      address: [Object],
+      balance: 0,
+      created: 1695222044,
+      currency: null,
+      default_currency: null,
+      default_source: null,
+      delinquent: false,
+      description: null,
+      discount: null,
+      email: 'xyz@email.com',
+      invoice_prefix: '0CF9C623',
+      invoice_settings: [Object],
+      livemode: false,
+      metadata: {},
+      name: 'hh',
+      next_invoice_sequence: 1,
+      phone: null,
+      preferred_locales: [Array],
+      shipping: null,
+      tax_exempt: 'none',
+      test_clock: null
+    }
+  },
+  livemode: false,
+  pending_webhooks: 2,
+  request: {
+    id: 'req_OhYaas7ARhnxfZ',
+    idempotency_key: 'f5869337-adb0-485e-9276-9ec16b727ff5'
+  },
+  type: 'customer.created'
+}
+Unhandled event type customer.created
+Unhandled event type customer.created
+webhook api
+e- {
+  id: 'evt_3NsRsqSJDEVNzqXl13RIJY3j',
+  object: 'event',
+  api_version: '2020-08-27',
+  created: 1695222045,
+  data: {
+    object: {
+      id: 'pi_3NsRsqSJDEVNzqXl1EBnW8HC',
+      object: 'payment_intent',
+      amount: 810000,
+      amount_capturable: 0,
+      amount_details: [Object],
+      amount_received: 0,
+      application: null,
+      application_fee_amount: null,
+      automatic_payment_methods: null,
+      canceled_at: null,
+      cancellation_reason: null,
+      capture_method: 'automatic',
+      charges: [Object],
+      client_secret: 'pi_3NsRsqSJDEVNzqXl1EBnW8HC_secret_u6bVsX8gPesC1QeaBrDYT0bN9',       
+      confirmation_method: 'automatic',
+      created: 1695222008,
+      currency: 'inr',
+      customer: 'cus_OfnU5KteXxynod',
+      description: null,
+      invoice: null,
+      last_payment_error: null,
+      latest_charge: null,
+      livemode: false,
+      metadata: {},
+      next_action: [Object],
+      on_behalf_of: null,
+      payment_method: 'pm_1NsRtPSJDEVNzqXlycGz26eh',
+      payment_method_options: [Object],
+      payment_method_types: [Array],
+      processing: null,
+      receipt_email: 'xyz@email.com',
+      review: null,
+      setup_future_usage: null,
+      shipping: null,
+      source: null,
+      statement_descriptor: null,
+      statement_descriptor_suffix: null,
+      status: 'requires_action',
+      transfer_data: null,
+      transfer_group: null
+    }
+  },
+  livemode: false,
+  pending_webhooks: 2,
+  request: {
+    id: 'req_OhYaas7ARhnxfZ',
+    idempotency_key: 'f5869337-adb0-485e-9276-9ec16b727ff5'
+  },
+  type: 'payment_intent.requires_action'
+}
+Unhandled event type payment_intent.requires_action
+Unhandled event type payment_intent.requires_action
+webhook api
+e- {
+  id: 'evt_3NsRsqSJDEVNzqXl16HE0NoG',
+  object: 'event',
+  api_version: '2020-08-27',
+  created: 1695222050,
+  data: {
+    object: {
+      id: 'pi_3NsRsqSJDEVNzqXl1EBnW8HC',
       object: 'payment_intent',
       amount: 810000,
       amount_capturable: 0,
@@ -18,20 +182,20 @@
       cancellation_reason: null,
       capture_method: 'automatic',
       charges: [Object],
-      client_secret: 'pi_3Nk8vFSJDEVNzqXl1dm8LDmN_secret_3536oJz4HIlLX2Bdni8BlDYnQ',
+      client_secret: 'pi_3NsRsqSJDEVNzqXl1EBnW8HC_secret_u6bVsX8gPesC1QeaBrDYT0bN9',       
       confirmation_method: 'automatic',
-      created: 1693242497,
+      created: 1695222008,
       currency: 'inr',
-      customer: 'cus_OXDPFVqgrxQDla',
+      customer: 'cus_OfnU5KteXxynod',
       description: null,
       invoice: null,
       last_payment_error: null,
-      latest_charge: 'ch_3Nk8vFSJDEVNzqXl1qyYvLVx',
+      latest_charge: 'ch_3NsRsqSJDEVNzqXl1pKK4r83',
       livemode: false,
       metadata: {},
       next_action: null,
       on_behalf_of: null,
-      payment_method: 'pm_1Nk8yiSJDEVNzqXlOTlu39uN',
+      payment_method: 'pm_1NsRtPSJDEVNzqXlycGz26eh',
       payment_method_options: [Object],
       payment_method_types: [Array],
       processing: null,
@@ -51,20 +215,70 @@
   pending_webhooks: 2,
   request: {
     id: null,
-    idempotency_key: 'pi_3Nk8vFSJDEVNzqXl1dm8LDmN-src_1Nk8ykSJDEVNzqXl19w2itC0'
+    idempotency_key: 'pi_3NsRsqSJDEVNzqXl1EBnW8HC-src_1NsRtRSJDEVNzqXlhSdChtP0'
   },
   type: 'payment_intent.succeeded'
 }
-✅ Success: evt_3Nk8vFSJDEVNzqXl1q9Hz1JY
-💰 PaymentIntent status: succeeded
-e {
-  id: 'evt_3Nk8vFSJDEVNzqXl1uxsIEYU',
+Unhandled event type payment_intent.succeeded
+edatobj {
+  object: {
+    id: 'pi_3NsRsqSJDEVNzqXl1EBnW8HC',
+    object: 'payment_intent',
+    amount: 810000,
+    amount_capturable: 0,
+    amount_details: { tip: {} },
+    amount_received: 810000,
+    application: null,
+    application_fee_amount: null,
+    automatic_payment_methods: null,
+    canceled_at: null,
+    cancellation_reason: null,
+    capture_method: 'automatic',
+    charges: {
+      object: 'list',
+      data: [Array],
+      has_more: false,
+      total_count: 1,
+      url: '/v1/charges?payment_intent=pi_3NsRsqSJDEVNzqXl1EBnW8HC'
+    },
+    client_secret: 'pi_3NsRsqSJDEVNzqXl1EBnW8HC_secret_u6bVsX8gPesC1QeaBrDYT0bN9',
+    confirmation_method: 'automatic',
+    created: 1695222008,
+    currency: 'inr',
+    customer: 'cus_OfnU5KteXxynod',
+    description: null,
+    invoice: null,
+    last_payment_error: null,
+    latest_charge: 'ch_3NsRsqSJDEVNzqXl1pKK4r83',
+    livemode: false,
+    metadata: {},
+    next_action: null,
+    on_behalf_of: null,
+    payment_method: 'pm_1NsRtPSJDEVNzqXlycGz26eh',
+    payment_method_options: { card: [Object] },
+    payment_method_types: [ 'card' ],
+    processing: null,
+    receipt_email: 'xyz@email.com',
+    review: null,
+    setup_future_usage: null,
+    shipping: null,
+    source: null,
+    statement_descriptor: null,
+    statement_descriptor_suffix: null,
+    status: 'succeeded',
+    transfer_data: null,
+    transfer_group: null
+  }
+}
+webhook api
+e- {
+  id: 'evt_3NsRsqSJDEVNzqXl1zTApjg7',
   object: 'event',
   api_version: '2020-08-27',
-  created: 1693242719,
+  created: 1695222050,
   data: {
     object: {
-      id: 'ch_3Nk8vFSJDEVNzqXl1qyYvLVx',
+      id: 'ch_3NsRsqSJDEVNzqXl1pKK4r83',
       object: 'charge',
       amount: 810000,
       amount_captured: 810000,
@@ -72,13 +286,13 @@ e {
       application: null,
       application_fee: null,
       application_fee_amount: null,
-      balance_transaction: 'txn_3Nk8vFSJDEVNzqXl1gjS1X5J',
+      balance_transaction: 'txn_3NsRsqSJDEVNzqXl15FkSdxf',
       billing_details: [Object],
       calculated_statement_descriptor: 'KYGOSKYRUS CORPORATION',
       captured: true,
-      created: 1693242718,
+      created: 1695222049,
       currency: 'inr',
-      customer: 'cus_OXDPFVqgrxQDla',
+      customer: 'cus_OfnU5KteXxynod',
       description: null,
       destination: null,
       dispute: null,
@@ -94,12 +308,12 @@ e {
       order: null,
       outcome: [Object],
       paid: true,
-      payment_intent: 'pi_3Nk8vFSJDEVNzqXl1dm8LDmN',
-      payment_method: 'pm_1Nk8yiSJDEVNzqXlOTlu39uN',
+      payment_intent: 'pi_3NsRsqSJDEVNzqXl1EBnW8HC',
+      payment_method: 'pm_1NsRtPSJDEVNzqXlycGz26eh',
       payment_method_details: [Object],
       receipt_email: 'xyz@email.com',
       receipt_number: null,
-      receipt_url: 'https://pay.stripe.com/receipts/payment/CAcaFwoVYWNjdF8xSmh2a3BTSkRFVk56cVhsKN-qs6cGMgaFo2mea4A6LBb0ZF91YGYXUG77y1HC3iLPK5Z8pMzdKW_gDaaiiY5w7VLfuxN74z8huAYG',
+      receipt_url: 'https://pay.stripe.com/receipts/payment/CAcaFwoVYWNjdF8xSmh2a3BTSkRFVk56cVhsKKKSrKgGMgbk0QH0KGU6LBawDYlK5Zwx5gyFuxtLySjzV8ixpBp-02jveDyzRRBjnJquH38gEACqZ5As',    
       refunded: false,
       refunds: [Object],
       review: null,
@@ -117,9 +331,73 @@ e {
   pending_webhooks: 2,
   request: {
     id: null,
-    idempotency_key: 'pi_3Nk8vFSJDEVNzqXl1dm8LDmN-src_1Nk8ykSJDEVNzqXl19w2itC0'
+    idempotency_key: 'pi_3NsRsqSJDEVNzqXl1EBnW8HC-src_1NsRtRSJDEVNzqXlhSdChtP0'
   },
   type: 'charge.succeeded'
 }
-✅ Success: evt_3Nk8vFSJDEVNzqXl1uxsIEYU
-💵 Charge id: ch_3Nk8vFSJDEVNzqXl1qyYvLVx
+Unhandled event type charge.succeeded
+Unhandled event type charge.succeeded
+webhook api
+e- {
+  id: 'evt_1NsRtWSJDEVNzqXlhnAVTLLs',
+  object: 'event',
+  api_version: '2020-08-27',
+  created: 1695222050,
+  data: {
+    object: {
+      id: 'cs_test_b1KfWpNHcWgmuXYediagRWFHEoQOSHshDlr1jVCjktqt8QCfxq5xzEEgaK',
+      object: 'checkout.session',
+      after_expiration: null,
+      allow_promotion_codes: null,
+      amount_subtotal: 810000,
+      amount_total: 810000,
+      automatic_tax: [Object],
+      billing_address_collection: null,
+      cancel_url: 'http://localhost:3006/user',
+      client_reference_id: null,
+      consent: null,
+      consent_collection: null,
+      created: 1695222008,
+      currency: 'inr',
+      currency_conversion: null,
+      custom_fields: [],
+      custom_text: [Object],
+      customer: 'cus_OfnU5KteXxynod',
+      customer_creation: 'always',
+      customer_details: [Object],
+      customer_email: 'xyz@email.com',
+      expires_at: 1695308408,
+      invoice: null,
+      invoice_creation: [Object],
+      livemode: false,
+      locale: null,
+      metadata: {},
+      mode: 'payment',
+      payment_intent: 'pi_3NsRsqSJDEVNzqXl1EBnW8HC',
+      payment_link: null,
+      payment_method_collection: 'always',
+      payment_method_options: {},
+      payment_method_types: [Array],
+      payment_status: 'paid',
+      phone_number_collection: [Object],
+      recovered_from: null,
+      setup_intent: null,
+      shipping: null,
+      shipping_address_collection: null,
+      shipping_options: [],
+      shipping_rate: null,
+      status: 'complete',
+      submit_type: null,
+      subscription: null,
+      success_url: 'http://localhost:3006/orders',
+      total_details: [Object],
+      url: null
+    }
+  },
+  livemode: false,
+  pending_webhooks: 3,
+  request: { id: null, idempotency_key: null },
+  type: 'checkout.session.completed'
+}
+Unhandled event type checkout.session.completed
+Unhandled event type checkout.session.completed
