@@ -7,6 +7,7 @@ import theBagLogo from "./../../assets/images/thebaglogo.png";
 const Navbar = () => {
   const [categories, setCategories] = useState();
   const [childWithoutParent, setChildWithoutParent] = useState([]);
+  const [searchedItems, setSearchedItems] = useState()
 
   const isUserLoggedIn = useSelector((state) => state.user.isUserLoggedIn);
   const cart = useSelector((state) => state.user.user.cart);
@@ -98,7 +99,10 @@ const Navbar = () => {
         .then((response) => response.json())
         .then((data) => {
           console.log("query response", data);
-          return data;
+          setSearchedItems(data)
+          document.querySelector('.search-overlay').classList.remove('display-none')//puts the overlay
+          document.getElementById('root').style.height="100vh"
+          document.getElementById('root').style.overflow="hidden"
         })
         .catch((error) => {
           console.error("Failed to query server:", error);
@@ -118,12 +122,25 @@ const Navbar = () => {
     };
   }
 
-  const debounceQuery = debounce(searchApi, 2500);
+  const debounceQuery = debounce(searchApi, 1500);
+
   const handleChange = (e) => {
     console.log("handleChange", e.target.value);
+    document.getElementById('searchdropdown').classList.remove('display-none')//mnake serch result visible
 
     debounceQuery({ value: e.target.value });
   };
+
+
+  function hideSearched(e) {
+    e.target.value = ""; //clearing the input on focus out
+    document.getElementById('searchdropdown').classList.toggle('display-none')//hiding the dropdown
+    document.querySelector('.search-overlay').classList.add('display-none')//removing the overlay
+    const root=document.getElementById('root')
+    root.style.height="unset"
+    root.style.overflow="unset"
+    setSearchedItems(undefined)
+  }
 
   return (
     <>
@@ -159,25 +176,34 @@ const Navbar = () => {
             id="navbarSupportedContent"
           >
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 justify-content-end w-100 ">
-              
-              <li className="nav-item">
-                <input
-                  type="search"
-                  className="nav-link "
-                  placeholder="search in shopp-itt"
-                  onChange={(e) => handleChange(e)}
-                />
 
-                <div class="search-dropdown hide" id="searchdropdown">
-                  <a
-                    class="dropdown-item"
-                    href="/how-good-is-work-from-home-for-employees-as-well-for-employer"
-                  >
-                    How good is work from home for employees as well for
-                    employer?
-                  </a>                
+              <li className="nav-item">
+
+                <div className="position-relative">
+                  <input
+                    type="search"
+                    className="nav-link "
+                    placeholder="search in shopp-itt"
+                    onChange={(e) => handleChange(e)}
+                    onBlur={e => hideSearched(e)}
+                  />
+
+                  <div class="search-dropdown display-none" id="searchdropdown">
+                    {searchedItems?.map(x => {
+                      return (
+                        <section class="dropdown-item">
+                          <Link to={`/product/${x._id}`}>
+                            <img className="me-3" src={x.image} alt="" height="50px" width="55px" />
+                          </Link>
+                          <Link to={`/product/${x._id}`}>
+                            <span>{x.name}</span>
+                          </Link>
+                        </section>
+                      )
+                    })}
+                  </div>
                 </div>
-                
+
               </li>
 
               <li className="nav-item position-relative dropdown">
@@ -325,6 +351,7 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
+      <div className="search-overlay display-none" onClick={hideSearched}></div>
     </>
   );
 };
