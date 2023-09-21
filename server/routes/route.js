@@ -464,7 +464,7 @@ router.post("/api/searchprod", async (req, res) => {
 
     try {
         if (value === "") {
-            res.send({}); //an empty data object is sent
+            res.send([]); //an empty data object is sent
         } else {
             let result = await PRODUCT.find({ "name": { "$regex": value, "$options": "i" } })
             res.send(result);
@@ -515,46 +515,46 @@ router.post('/create-checkout-session', async (req, res) => {
     let prod={0:'p1',1:"p2"}
     let stt=JSON.stringify(prod)
     //console.log('ff',line_items)
-    const session = await stripe.checkout.sessions.create({
-        line_items,
-            // : [
-            //     {
-            //         price_data: {
-            //             currency: 'inr',
-            //             product_data: {
-            //                 name: 'T-shirt',
-            //             },
-            //             unit_amount: 30000,
-            //         },
-            //         quantity: 3,
-            //         adjustable_quantity: {
-            //             enabled: true,
-            //             minimum: 1,
-            //             maximum: 50,
-            //         }
-            //     },
-            //     {
-            //         price_data: {
-            //             currency: 'inr',
-            //             product_data: {
-            //                 name: 'Bag',
-            //             },
-            //             unit_amount: 720000,
-            //         },
-            //         quantity: 1,
-            //     },
-            // ],
-        mode: 'payment',
-        payment_method_types: ['card'],
-        success_url: 'http://localhost:3006/orders',
-        cancel_url: 'http://localhost:3006/user',
-        customer_email: 'xyz@email.com',
-        metadata:{
-            stt
-        }
-    });
 
-    // //console.log('session - ', session)
+    // const session = await stripe.checkout.sessions.create({
+    //     line_items,
+    //         // : [
+    //         //     {
+    //         //         price_data: {
+    //         //             currency: 'inr',
+    //         //             product_data: {
+    //         //                 name: 'T-shirt',
+    //         //             },
+    //         //             unit_amount: 30000,
+    //         //         },
+    //         //         quantity: 3,
+    //         //         adjustable_quantity: {
+    //         //             enabled: true,
+    //         //             minimum: 1,
+    //         //             maximum: 50,
+    //         //         }
+    //         //     },
+    //         //     {
+    //         //         price_data: {
+    //         //             currency: 'inr',
+    //         //             product_data: {
+    //         //                 name: 'Bag',
+    //         //             },
+    //         //             unit_amount: 720000,
+    //         //         },
+    //         //         quantity: 1,
+    //         //     },
+    //         // ],
+    //     mode: 'payment',
+    //     payment_method_types: ['card'],
+    //     success_url: 'http://localhost:3006/orders',
+    //     cancel_url: 'http://localhost:3006/user',
+    //     customer_email: 'xyz@email.com',
+    //     metadata:{
+    //         stt
+    //     }
+    // });
+
 
     res.redirect(303, session.url);//redirects to checkout page
 });

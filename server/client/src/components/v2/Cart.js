@@ -191,14 +191,6 @@ const Cart = () => {
       },
       body: JSON.stringify({ priceObj }),
     })
-    // .then(response => response.json())
-    // .then(data => {
-    //   console.log('vhrvkouit resp', data);
-    // })
-    // .catch(error => {
-    //   console.error('Fcheckout err', error);
-    //   throw error; // Rethrow the error for error handling in the calling code
-    // });
   }
 
 

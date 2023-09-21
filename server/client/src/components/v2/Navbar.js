@@ -101,8 +101,13 @@ const Navbar = () => {
           console.log("query response", data);
           setSearchedItems(data)
           document.querySelector('.search-overlay').classList.remove('display-none')//puts the overlay
-          document.getElementById('root').style.height="100vh"
-          document.getElementById('root').style.overflow="hidden"
+          document.getElementById('root').style.height = "100vh"
+          document.getElementById('root').style.overflow = "hidden"
+
+          document.querySelector('.custom-loader').classList.add('display-none')
+          if (data.length === 0) {
+            document.querySelector('.no-item')?.classList.remove('display-none')
+          }
         })
         .catch((error) => {
           console.error("Failed to query server:", error);
@@ -127,18 +132,23 @@ const Navbar = () => {
   const handleChange = (e) => {
     console.log("handleChange", e.target.value);
     document.getElementById('searchdropdown').classList.remove('display-none')//mnake serch result visible
+    document.querySelector('.search-overlay').classList.remove('display-none')//adding the overlay
+
+    setSearchedItems(undefined)//setting the list to none so that it wont show previous resut wile typing
+    document.querySelector('.custom-loader').classList.remove('display-none')//showing loader while typing
+    document.querySelector('.no-item')?.classList.add('display-none')//hiding no item message while typing
 
     debounceQuery({ value: e.target.value });
   };
 
 
   function hideSearched(e) {
-    e.target.value = ""; //clearing the input on focus out
+    document.querySelector('[type="search"]').value = "";//clearing the input on focus out//NOT WORKING
     document.getElementById('searchdropdown').classList.toggle('display-none')//hiding the dropdown
     document.querySelector('.search-overlay').classList.add('display-none')//removing the overlay
-    const root=document.getElementById('root')
-    root.style.height="unset"
-    root.style.overflow="unset"
+    const root = document.getElementById('root')
+    root.style.height = "unset"
+    root.style.overflow = "unset"
     setSearchedItems(undefined)
   }
 
@@ -185,10 +195,11 @@ const Navbar = () => {
                     className="nav-link "
                     placeholder="search in shopp-itt"
                     onChange={(e) => handleChange(e)}
-                    onBlur={e => hideSearched(e)}
+                  //onBlur={e => hideSearched(e)}
                   />
 
                   <div class="search-dropdown display-none" id="searchdropdown">
+
                     {searchedItems?.map(x => {
                       return (
                         <section class="dropdown-item">
@@ -201,6 +212,9 @@ const Navbar = () => {
                         </section>
                       )
                     })}
+
+                    <div className="no-item display-none">No item found</div>
+                    <div className="custom-loader display-none"></div>
                   </div>
                 </div>
 
