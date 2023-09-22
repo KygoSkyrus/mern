@@ -46,6 +46,7 @@ const Cart = () => {
     priceObj.productList[x._id].name = x.name
     priceObj.productList[x._id].price = x.price
     priceObj.productList[x._id].quantity = tempObj[x._id]
+    priceObj.productList[x._id].discount=x.discount
   })
 
   priceObj.shipping = (sub < 1999) ? 99 : 0; //shipping

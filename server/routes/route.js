@@ -516,6 +516,20 @@ router.post('/create-checkout-session', async (req, res) => {
     let stt=JSON.stringify(prod)
     //console.log('ff',line_items)
 
+    let d={
+        products:{
+            0:"p1",
+            1:"p2"
+        },
+        shipping:0,
+        tax:0,
+        grandTotal:0,
+
+
+    }
+
+    
+
     // const session = await stripe.checkout.sessions.create({
     //     line_items,
     //         // : [
