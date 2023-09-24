@@ -11,7 +11,8 @@ app.use(express.static('public'));
 
 dotenv.config({ path: './env/config.env' });
 
-
+const ORDER = require('./models/orders')
+const USER = require('./models/user')
 // // Use JSON parser for all non-webhook routes
 // app.use((req, res, next) => {
 //   if (req.originalUrl === "/webhook") {
@@ -51,34 +52,80 @@ if (process.env.NODE_ENV === "production") {
 }
 
 
-
+//cart for failing : 4000 0000 0000 0119
 //there are different keys and code for webhook in prod
-app.post('/webhook', express.raw({ type: 'application/json' }), (request, response) => {
+app.post('/webhook', express.raw({ type: 'application/json' }), async (request, response) => {
   const payload = request.body;
   const sig = request.headers['stripe-signature'];
-  console.log("webhook api")
+  console.log("--------------------------webhook starts--------------------------------------------------")
   let event;
 
   try {
     event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
-    console.log('e-', event)
   } catch (err) {
     console.log('eeeeerrrr', err)//bug here
     return response.status(400).send(`Webhook Error: ${err.message}`);
   }
 
+
   // Handle the event
   console.log(`Unhandled event type ${event.type}`);
   switch (event.type) {
-    case 'payment_intent.succeeded':
+    case 'checkout.session.completed':
       const paymentIntentSucceeded = event.data.object;
-      console.log('edatobj', event.data)
+      console.log('succeeded', event.data)
+      console.log('meta s-', event.data.object.metadata)
 
-      // Then define and call a function to handle the event payment_intent.succeeded
+        const metadata = event.data.object.metadata
+  let order = {}
+  order.orderId = metadata.orderId
+  order.tax = metadata.tax
+  order.shipping = metadata.shipping
+  order.total = metadata.total
+  order.products = []
+  Object.keys(metadata).forEach(x => {
+    if (
+      x !== "tax" &&
+      x !== "total" &&
+      x !== "shipping" &&
+      x !== "orderId" &&
+      x !== "userId" &&
+      typeof metadata[x] === "string" // Check if the value is a string
+    ) {
+      let tempObj = {}
+      const productData = JSON.parse(metadata[x]);
+      tempObj.productId = x
+      tempObj.name = productData.name
+      tempObj.image = productData.image
+      tempObj.quantity = productData.quantity
+      tempObj.discount = productData.discount
+      tempObj.price = productData.price
+      order.products.push(tempObj)
+    }
+  })
+  // console.log('order--', order)
+
+      //saving the order details in db
+      try {
+        const updatedUser = await USER.findByIdAndUpdate(
+          "64dca5854563a04dffe7cd9b",
+          { $push: { orders: order } },
+          { new: true }
+        )//.populate('cartProducts');
+        console.log('updateduuu', updatedUser)
+
+      } catch (error) {
+        console.error('something went wrong', error);
+        res.status(500).json({ message: 'Internal server error.' });
+      }
+
       break;
-    // ... handle other event types
+    case 'payment_intent.payment_failed':
+      console.log('failed', event.data)
+      console.log('meta f-', event.data.object.metadata)
+      break;
     default:
-      console.log(`Unhandled event type ${event.type}`);
+      console.log('meta d-', event.data.object.metadata)
   }
   response.send();
 });
@@ -91,3 +138,19 @@ if (process.env.NODE_ENV === "production") {
 }
 
 app.listen(port, () => console.log(`server is running at ${port}`));
+
+
+      // let order = {
+        //   orderId:"",
+        //   products: [{
+        //     productId: "64c69d66c8b5667ef02f36c5",
+        //     name:"Redmi A2 (Sea Green, 2GB RAM, 32GB Storage)",
+        //     image:"	https://firebasestorage.googleapis.com/v0/b/shopp-…=media&token=fa8691b3-9d53-45a8-aced-2f92c435a379",
+        //     quantity: 3,
+        //     discount: 0,
+        //     price: 6000
+        //   }],
+        //   tax: 1800,
+        //   shipping: 0,
+        //   total: 19800,
+        // }

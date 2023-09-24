@@ -44,6 +44,7 @@ const Cart = () => {
     //product details
     priceObj.productList[x._id] = {}
     priceObj.productList[x._id].name = x.name
+    priceObj.productList[x._id].image = x.image[0]
     priceObj.productList[x._id].price = x.price
     priceObj.productList[x._id].quantity = tempObj[x._id]
     priceObj.productList[x._id].discount=x.discount

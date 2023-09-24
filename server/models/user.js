@@ -59,12 +59,36 @@ const userSchema = new Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'PRODUCT',
             },
+            name:{
+                type: String,
+            },
+            image:{
+                type: String,
+            },
             quantity: {
                 type: Number,
             },
+            discount:{
+                type: Number,
+            },
+            price:{
+                type: Number,
+            }
         }],
+        orderId:{
+            type:String,
+        },
+        tax:{
+            type: Number,
+        },
+        shipping:{
+            type: Number,
+        },
         total: {
             type: Number,
+        },
+        shippingAddress:{
+
         },
         createdAt: {
             type: Date,

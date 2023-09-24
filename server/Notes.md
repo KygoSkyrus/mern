@@ -151,6 +151,8 @@ StripeInvalidRequestError: The Checkout Session's total amount due must be no mo
 
 ### DEFECTS
 
+- have to add logic for eerror page or we can show like item not found for id routes....where if the url has wrong id,,the error page wont go as the router dosnt know it thats a wrong it ,,it will still redirect to pri=docut page,,there u have to check if the response from the server is null than show that item is not found,,,this goes for prdocts,orders,categoryes ewveruthing whihc has id route
+
 - set isuserloggedin to false whenever session expired is returned bcz it needs to refersh to show s=the signin option back when expired while the app is running
 - dont focus on discount now,, let irt as it is,,later add a field in product form where seller will update discount
 - one backspaceing in otp inputs,,two digits are getting erased

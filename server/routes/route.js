@@ -475,99 +475,154 @@ router.post("/api/searchprod", async (req, res) => {
 });
 
 
+router.get('/api/getorderbyid', async (req, res) => {
 
+    const { orderId } = req.query
+    const token = req.cookies.jwt;
+
+    console.log('orderId', orderId)
+    //thi is common for most user actions ,so create a middleware function instead
+    if (!token) {
+        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
+    }
+    try {
+        const decoded = jwt.verify(token, process.env.SECRETKEY);
+    
+
+    USER.findOne({_id:decoded._id},{projection:{orders:1,orderId}})
+        .then(response => {
+            // console.log('sss', response)
+            res.send({ user: response })
+        })
+        .catch(err => {
+            console.log(err)
+        })
+
+    }catch (error) {
+        console.error('Error getting items from wishlist', error);
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+
+})
+
+
+
+//NOTE::: DONT LET USER ADD MORE THAN 50 ITEMS AS IT WOULD BREAK THE STRIPE,,metadata onkect can only have 50 keys(whihc are products in our case),,shgow user a waring that we dont support bulk order at the moment ,,out of 50, 4 key s reserved 
 
 //IF the stirpe accont is activated than there may be a way to send invoice to user
 router.post('/create-checkout-session', async (req, res) => {
 
-    //if this doesnt work remove router.use(bodyParser.urlencoded({extended: true})); from top
-    const { priceObj } = req.body;
-
-    const data = JSON.parse(priceObj)
-    // console.log('checkout-----------', data)
 
     let line_items = []
-    Object.keys(data.productList).forEach(x => {
-        // console.log(data.productList[x].name)
+    const token = req.cookies.jwt;
+    const orderId = uuidv4()
+    let productList = {}//for metadata
 
-        let prod = {}
+    //thi is common for most user actions ,so create a middleware function instead
+    if (!token) {
+        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
+    }
+    try {
+        const decoded = jwt.verify(token, process.env.SECRETKEY);//for user id
 
-        prod.price_data = {}
-        prod.price_data.currency = "inr"
-        prod.price_data.product_data = {}
-        prod.price_data.product_data.name = data.productList[x].name
-        if (data.grandTotal < 999999) {
-            prod.price_data.unit_amount = data.productList[x].price * 100
-        } else {
-            prod.price_data.unit_amount = data.productList[x].price
-        }
-        prod.quantity = data.productList[x].quantity
-
-        prod.adjustable_quantity = {}
-        prod.adjustable_quantity.enabled = true
-        prod.adjustable_quantity.minimum = 1
-        prod.adjustable_quantity.maximum = 300
-
-        line_items.push(prod)
-    })
-
-    let metadata={}
-    let prod={0:'p1',1:"p2"}
-    let stt=JSON.stringify(prod)
-    //console.log('ff',line_items)
-
-    let d={
-        products:{
-            0:"p1",
-            1:"p2"
-        },
-        shipping:0,
-        tax:0,
-        grandTotal:0,
+        const data = JSON.parse(req.body.priceObj)
+        //meta data has 5 keys for orders details and rest 45 for products
+        productList.orderId = orderId
+        productList.userId = decoded._id
+        productList.tax = data.tax
+        productList.shipping = data.shipping
+        productList.total = data.grandTotal
 
 
+        Object.keys(data.productList).forEach(x => {
+            let prod = {}
+
+            prod.price_data = {}
+            prod.price_data.currency = "inr"
+            prod.price_data.product_data = {}
+            prod.price_data.product_data.name = data.productList[x].name
+            if (data.grandTotal < 999999) {
+                prod.price_data.unit_amount = data.productList[x].price * 100
+            } else {
+                prod.price_data.unit_amount = data.productList[x].price
+            }
+            prod.quantity = data.productList[x].quantity
+
+            prod.adjustable_quantity = {}
+            prod.adjustable_quantity.enabled = true
+            prod.adjustable_quantity.minimum = 1
+            prod.adjustable_quantity.maximum = 300
+
+            //for metadata
+            productList[x] = {}
+            productList[x].name = data.productList[x].name
+            productList[x].image = data.productList[x].image
+            productList[x].price = data.productList[x].price
+            productList[x].quantity = data.productList[x].quantity
+            productList[x].discount = data.productList[x].discount
+            productList[x] = JSON.stringify(productList[x])//metadata only supports key value(only string) that's why its stringified
+
+            line_items.push(prod)
+        })
+
+        console.log('productList', productList)
+
+        
+        // let order = {
+        //     orderId:"",
+        //     products: [{
+        //       productId: "64c69d66c8b5667ef02f36c5",
+        //       name:"Redmi A2 (Sea Green, 2GB RAM, 32GB Storage)",
+        //       image:"	https://firebasestorage.googleapis.com/v0/b/shopp-…=media&token=fa8691b3-9d53-45a8-aced-2f92c435a379",
+        //       quantity: 3,
+        //       discount: 0,
+        //       price: 6000
+        //     }],
+        //     tax: 1800,
+        //     shipping: 0,
+        //     total: 19800,
+        //   }
+
+    } catch (err) {
+        console.log('er', err);
     }
 
-    
-
-    // const session = await stripe.checkout.sessions.create({
-    //     line_items,
-    //         // : [
-    //         //     {
-    //         //         price_data: {
-    //         //             currency: 'inr',
-    //         //             product_data: {
-    //         //                 name: 'T-shirt',
-    //         //             },
-    //         //             unit_amount: 30000,
-    //         //         },
-    //         //         quantity: 3,
-    //         //         adjustable_quantity: {
-    //         //             enabled: true,
-    //         //             minimum: 1,
-    //         //             maximum: 50,
-    //         //         }
-    //         //     },
-    //         //     {
-    //         //         price_data: {
-    //         //             currency: 'inr',
-    //         //             product_data: {
-    //         //                 name: 'Bag',
-    //         //             },
-    //         //             unit_amount: 720000,
-    //         //         },
-    //         //         quantity: 1,
-    //         //     },
-    //         // ],
-    //     mode: 'payment',
-    //     payment_method_types: ['card'],
-    //     success_url: 'http://localhost:3006/orders',
-    //     cancel_url: 'http://localhost:3006/user',
-    //     customer_email: 'xyz@email.com',
-    //     metadata:{
-    //         stt
-    //     }
-    // });
+    const session = await stripe.checkout.sessions.create({
+        line_items,
+        // : [
+        //     {
+        //         price_data: {
+        //             currency: 'inr',
+        //             product_data: {
+        //                 name: 'T-shirt',
+        //             },
+        //             unit_amount: 30000,
+        //         },
+        //         quantity: 3,
+        //         adjustable_quantity: {
+        //             enabled: true,
+        //             minimum: 1,
+        //             maximum: 50,
+        //         }
+        //     },
+        //     {
+        //         price_data: {
+        //             currency: 'inr',
+        //             product_data: {
+        //                 name: 'Bag',
+        //             },
+        //             unit_amount: 720000,
+        //         },
+        //         quantity: 1,
+        //     },
+        // ],
+        mode: 'payment',
+        payment_method_types: ['card'],
+        success_url: `http://localhost:3006/orders/${orderId}`,
+        cancel_url: 'http://localhost:3006/user',
+        customer_email: 'xyz@email.com',
+        metadata: productList
+    });
 
 
     res.redirect(303, session.url);//redirects to checkout page

@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom'
 import { useDispatch,useSelector } from 'react-redux';
 import { setUserDetails } from './redux/userSlice';
 import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSlice';
+
+
 const ProductPage = () => {
 
     const { productId } = useParams()
