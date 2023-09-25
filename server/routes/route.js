@@ -118,11 +118,11 @@ router.post('/api/signup', async (req, res) => {
         const token = await user.generateAuthToken();
         //console.log(token);
         res.cookie('jwt', token, {
-            expires: new Date(Date.now() + 3600000),
+            expires: new Date(Date.now() + 7200000),
             httpOnly: true
         });
         res.cookie('email', email, {
-            expires: new Date(Date.now() + 3600000),
+            expires: new Date(Date.now() + 7200000),
             httpOnly: true
         });
 
@@ -488,18 +488,18 @@ router.get('/api/getorders', async (req, res) => {
     }
     try {
         const decoded = jwt.verify(token, process.env.SECRETKEY);
-    
 
-    USER.findOne({_id:decoded._id},{orders:1,_id:0})// to just get a specific field from a document
-        .then(response => {
-            // console.log('sss', response)
-            res.send({ user: response })
-        })
-        .catch(err => {
-            console.log(err)
-        })
 
-    }catch (error) {
+        USER.findOne({ _id: decoded._id }, { orders: 1, _id: 0 })// to just get a specific field from a document
+            .then(response => {
+                // console.log('sss', response)
+                res.send({ user: response })
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+    } catch (error) {
         console.error('Error getting items from wishlist', error);
         res.status(500).json({ message: 'Internal server error.' });
     }
@@ -568,7 +568,7 @@ router.post('/create-checkout-session', async (req, res) => {
 
         console.log('productList', productList)
 
-        
+
         // let order = {
         //     orderId:"",
         //     products: [{

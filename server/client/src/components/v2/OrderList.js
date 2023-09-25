@@ -35,6 +35,11 @@ const OrderList = () => {
       })
   }, [])
 
+  function getDateStr(date){
+    let d= new Date(date)
+    return d.getDate() + "-" + (d.getMonth()+1) + "-" + (d.getFullYear())
+  }
+
   return (
     <>
       <div>Your Orders</div>
@@ -82,7 +87,7 @@ const OrderList = () => {
 
                             </div>
                             <div class="col-md-2">
-                              <h6>Ordered at</h6>
+                              <h6 className='text-end'>Ordered at</h6>
                             </div>
                           </div>
                         </div>
@@ -132,16 +137,12 @@ const OrderList = () => {
                                     </div>
                                   </div>
                                   <div class="col-md-2">
-                                    {x.stock > 0 ? <span className='text-success'>In stock</span>
-                                      : <span className='text-danger'>Out of stock</span>}
+                                    {x.payment_status === "paid"? <span className='text-success'>{x.payment_status}</span>
+                                      : <span className='text-danger'>Failed</span>}
                                   </div>
 
                                   <div class="col-md-2 ">
-                                    <span>{
-                                      //cal a funcrion from here wihich returns this string
-                                       new Date(x.createdAt).getDate() + "-" + (new Date(x.createdAt).getMonth()+1) + "-" + (new Date(x.createdAt).getFullYear())
-                                      
-                                      }</span>
+                                    <section className='text-end'>{getDateStr(x.createdAt)}</section>
 
                                     {/* <div className='d-flex justify-content-end mt-2 ' style={{ marginRight: "-41px" }}>
                                       <u><span

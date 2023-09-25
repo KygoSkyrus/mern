@@ -51,7 +51,7 @@ if (process.env.NODE_ENV === "production") {
   endpointSecret = "whsec_5601d477da26790e09849aeeb567342bf53dbe96229fd3accbf27163f19c5476";
 }
 
-
+let receiptUrl;
 //cart for failing : 4000 0000 0000 0119
 //there are different keys and code for webhook in prod
 app.post('/webhook', express.raw({ type: 'application/json' }), async (request, response) => {
@@ -71,9 +71,13 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
   // Handle the event
   console.log(`Unhandled event type ${event.type}`);
   switch (event.type) {
+    case 'charge.succeeded':
+      receiptUrl=event.data.object.receipt_url
+    break;
     case 'checkout.session.completed':
       const paymentIntentSucceeded = event.data.object;
-      console.log('succeeded', event.data)
+      console.log('succeeded', event)
+      console.log('urr',receiptUrl)
       console.log('meta s-', event.data.object.metadata)
 
         const metadata = event.data.object.metadata
@@ -82,6 +86,8 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
   order.tax = metadata.tax
   order.shipping = metadata.shipping
   order.total = metadata.total
+  order.payment_status=event.data.object.payment_status
+  order.receiptUrl=receiptUrl
   order.products = []
   Object.keys(metadata).forEach(x => {
     if (
@@ -90,7 +96,7 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
       x !== "shipping" &&
       x !== "orderId" &&
       x !== "userId" &&
-      typeof metadata[x] === "string" // Check if the value is a string
+      typeof metadata[x] === "string" // Checks if the value is a string
     ) {
       let tempObj = {}
       const productData = JSON.parse(metadata[x]);
@@ -103,7 +109,6 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
       order.products.push(tempObj)
     }
   })
-  // console.log('order--', order)
 
       //saving the order details in db
       try {

@@ -87,6 +87,12 @@ const userSchema = new Schema({
         total: {
             type: Number,
         },
+        payment_status:{
+            type:String,
+        },
+        receiptUrl:{
+            type:String
+        },
         shippingAddress:{
 
         },
