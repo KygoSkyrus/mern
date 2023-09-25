@@ -475,12 +475,13 @@ router.post("/api/searchprod", async (req, res) => {
 });
 
 
-router.get('/api/getorderbyid', async (req, res) => {
 
-    const { orderId } = req.query
+router.get('/api/getorders', async (req, res) => {
+
+    // const { orderId } = req.query
     const token = req.cookies.jwt;
 
-    console.log('orderId', orderId)
+    // console.log('orderId', orderId)
     //thi is common for most user actions ,so create a middleware function instead
     if (!token) {
         return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
@@ -489,7 +490,7 @@ router.get('/api/getorderbyid', async (req, res) => {
         const decoded = jwt.verify(token, process.env.SECRETKEY);
     
 
-    USER.findOne({_id:decoded._id},{projection:{orders:1,orderId}})
+    USER.findOne({_id:decoded._id},{orders:1,_id:0})// to just get a specific field from a document
         .then(response => {
             // console.log('sss', response)
             res.send({ user: response })

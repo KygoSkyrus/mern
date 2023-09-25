@@ -97,7 +97,7 @@ const Category = () => {
                                     <div className='col-md-6 col-lg-4'>
                                         <div className='card2 card'>
                                             {i + 1 === randomNum && <div class="card-tag">New Product</div>}
-                                            <div style={{ background: "#fff" }}>
+                                            <div style={{ background: "#fff",height: "100%",minHeight: "275px",objectFit: "cover",display:"grid",placeItems: "center" }}>
                                                 <img src={x.image} className="card-img-top" alt="..." />
                                             </div>
                                             <div className="card-body border-none p-0">

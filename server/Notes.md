@@ -52,6 +52,13 @@ existing
 
 -- cureently the categoyr page is breaking the Link chaain an dreloading the appp
 
+--when session ecxipred the wishlist page is not showing toast and also hide the loader if the session exppired and sghow to login 
+
+
+
+..FOR PAYEMNT CONFIRm
+https://www.freepik.com/free-vector/successful-purchase-concept-illustration_7069728.htm#query=order%20page&position=9&from_view=keyword&track=ais
+
 done--
 -- show signin only if not logged in
 -- fix the toast position
