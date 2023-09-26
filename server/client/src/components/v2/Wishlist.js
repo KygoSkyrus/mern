@@ -6,11 +6,14 @@ import { setUserDetails } from './redux/userSlice';
 import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSlice';
 
 import wishlistImg from "./../../assets/images/newImg/collections/wishlistImg.gif"
+import LoginImg from "./../../assets/images/newImg/collections/login.png"
 
 const Wishlist = () => {
 
   const dispatch = useDispatch()
   const wishlistItems = useSelector(state => state.user.user.wishlist)
+  const userDetail = useSelector(state => state.user.user)
+  const userLoggedIn = useSelector(state => state.user.isUserLoggedIn)
   const [products, setProducts] = useState()
 
   useEffect(() => {
@@ -101,128 +104,127 @@ const Wishlist = () => {
 
   return (
     <>
-      {wishlistItems?.length < 0 ?
-        <div className='d-flex flex-column align-items-center'>
 
-          <div><img src={wishlistImg} alt='' />
+      {userDetail && userLoggedIn ?
+        (wishlistItems?.length < 0 ?
+          <div className='d-flex flex-column align-items-center'>
+            <div><img src={wishlistImg} alt='' />
+            </div>
+            <h5 className='text-dark'>Your wishlist is empty</h5>
+            <span className='text-center w-25'>
+              Looks like you have not added anything to your wishlist. Go ahead & explore top categories
+            </span>
+            <button className='btn my-4 btn-outline-warning'>Continue shopping</button>
           </div>
-          <h5 className='text-dark'>Your wishlist is empty</h5>
-          <span className='text-center w-25'>
-            Looks like you have not added anything to your wishlist. Go ahead & explore top categories
-          </span>
-          <button className='btn my-4 btn-outline-warning'>Continue shopping</button>
+          :
+          (products ? <div className='container my-5'>
+            <div class="row justify-content-center">
+              <div class="col-lg-9 t-mb-30 mb-lg-0 theSection" >
+                <div class="row ">
+                  <div class="col-12">
+                    <div class="row ">
+                      <div className='row mb-3 p-2 pb-0 border-bottom'>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-10">
+                          <div className='d-flex flex-column justify-content-between h-100'>
+                            <div className='row d-flex justify-content-between'>
+                              <div class="col-md-4">
+                                <h6>
+                                  Item
+                                </h6>
+                              </div>
+                              <div class="col-md-2">
+                                <h6>
+                                  Price
+                                </h6>
+                              </div>
+                              <div class="col-md-2">
+                                <h6>
+                                  Availability
+                                </h6>
 
-        </div> :
-
-
-        (products ? <div className='container my-5'>
-          <div class="row justify-content-center">
-            <div class="col-lg-9 t-mb-30 mb-lg-0 theSection" >
-              <div class="row ">
-                <div class="col-12">
-                  <div class="row ">
-                    <div className='row mb-3 p-2 pb-0 border-bottom'>
-                      <div class="col-md-2"></div>
-                      <div class="col-md-10">
-                        <div className='d-flex flex-column justify-content-between h-100'>
-                          <div className='row d-flex justify-content-between'>
-                            <div class="col-md-4">
-                              <h6>
-                                Item
-                              </h6>
-                            </div>
-                            <div class="col-md-2">
-                              <h6>
-                                Price
-                              </h6>
-                            </div>
-                            <div class="col-md-2">
-                              <h6>
-                                Availability
-                              </h6>
-
-                            </div>
-                            <div class="col-md-2">
+                              </div>
+                              <div class="col-md-2">
+                              </div>
                             </div>
                           </div>
                         </div>
+
                       </div>
-
-                    </div>
-                    {products?.map((x, i) => {
-                      return (
-                        <>
-                          <div key={x._id} className='row  p-2 '>
-                            <div class="col-md-2">
-                              <div className='d-flex justify-content-center'>
-                                <img src={x.image} alt='' className='img-fluidt-minw-215' style={{ maxHeight: "80px" }} />
+                      {products?.map((x, i) => {
+                        return (
+                          <>
+                            <div key={x._id} className='row  p-2 '>
+                              <div class="col-md-2">
+                                <div className='d-flex justify-content-center'>
+                                  <img src={x.image} alt='' className='img-fluidt-minw-215' style={{ maxHeight: "80px" }} />
+                                </div>
                               </div>
-                            </div>
 
-                            <div class="col-md-10">
-                              <div className='d-flex flex-column justify-content-between h-100'>
-                                <div className='row d-flex justify-content-between'>
+                              <div class="col-md-10">
+                                <div className='d-flex flex-column justify-content-between h-100'>
+                                  <div className='row d-flex justify-content-between'>
 
-                                  <div class="col-md-4">
-                                    <Link to={`/product/${x._id}`} style={{ color: "inherit" }}>
-                                      <h6>
-                                        {x.name}
-                                        {/* {x.rating} */}
-                                      </h6>
-                                    </Link>
-                                  </div>
-                                  <div class="col-md-2">
-                                    <div className='d-flex align-items-end flex-column' style={{ width: "fit-content" }}>
-                                      <section>
-                                        <span style={{ fontSize: "12px" }}>&#8377;</span>
-                                        <span className='fs-6'>{Math.floor(x.price - x.discount * x.price / 100)}</span>
-                                      </section>
-                                      {x.discount !== 0 &&
-                                        <section style={{ fontWeight: "400", color: "#ff4460", lineHeight: "2px" }}>
-                                          <span style={{ fontSize: "10px" }}>&#8377;</span>
-                                          <span className='fs-7 extra-small' style={{ textDecoration: "line-through" }}>{x.price}</span>
+                                    <div class="col-md-4">
+                                      <Link to={`/product/${x._id}`} style={{ color: "inherit" }}>
+                                        <h6>
+                                          {x.name}
+                                          {/* {x.rating} */}
+                                        </h6>
+                                      </Link>
+                                    </div>
+                                    <div class="col-md-2">
+                                      <div className='d-flex align-items-end flex-column' style={{ width: "fit-content" }}>
+                                        <section>
+                                          <span style={{ fontSize: "12px" }}>&#8377;</span>
+                                          <span className='fs-6'>{Math.floor(x.price - x.discount * x.price / 100)}</span>
                                         </section>
-                                      }
+                                        {x.discount !== 0 &&
+                                          <section style={{ fontWeight: "400", color: "#ff4460", lineHeight: "2px" }}>
+                                            <span style={{ fontSize: "10px" }}>&#8377;</span>
+                                            <span className='fs-7 extra-small' style={{ textDecoration: "line-through" }}>{x.price}</span>
+                                          </section>
+                                        }
 
+                                      </div>
                                     </div>
-                                  </div>
-                                  <div class="col-md-2">
-                                    {x.stock > 0 ? <span className='text-success'>In stock</span>
-                                      : <span className='text-danger'>Out of stock</span>}
-                                  </div>
-
-                                  <div class="col-md-2 ">
-                                    <button className="btn btn-warning px-4 rounded-pill text-light" onClick={() => addToCart(x._id)}>Add to cart</button>
-
-                                    <div className='d-flex justify-content-end mt-2 ' style={{ marginRight: "-41px" }}>
-                                      <u><span
-                                        onClick={() => updatewishlist(x._id)}
-                                        className='me-4 pointer'>Remove <i class="fa fa-trash fa-sm "></i></span></u>
+                                    <div class="col-md-2">
+                                      {x.stock > 0 ? <span className='text-success'>In stock</span>
+                                        : <span className='text-danger'>Out of stock</span>}
                                     </div>
-                                    {/* <button className="btn btn-danger ms-2 rounded-pill text-light"><i class="fa fa-trash fa-sm"></i></button> */}
+
+                                    <div class="col-md-2 ">
+                                      <button className="btn btn-warning px-4 rounded-pill text-light" onClick={() => addToCart(x._id)}>Add to cart</button>
+
+                                      <div className='d-flex justify-content-end mt-2 ' style={{ marginRight: "-41px" }}>
+                                        <u><span
+                                          onClick={() => updatewishlist(x._id)}
+                                          className='me-4 pointer'>Remove <i class="fa fa-trash fa-sm "></i></span></u>
+                                      </div>
+                                      {/* <button className="btn btn-danger ms-2 rounded-pill text-light"><i class="fa fa-trash fa-sm"></i></button> */}
+                                    </div>
+
                                   </div>
 
                                 </div>
-
                               </div>
-                            </div>
 
-                          </div>
-                          <div className='d-flex justify-content-end mb-3 border-bottom pb-3'>
-                            {/* <u><span
+                            </div>
+                            <div className='d-flex justify-content-end mb-3 border-bottom pb-3'>
+                              {/* <u><span
                               // onClick={() => removeFromCart(x._id)} 
                               className='me-4 pointer'>Remove <i class="fa fa-trash fa-sm"></i></span></u> */}
-                          </div>
-                        </>
-                      )
-                    })}
+                            </div>
+                          </>
+                        )
+                      })}
 
+                    </div>
                   </div>
                 </div>
-              </div>
 
-            </div>
-            {/* <div className='col-lg-3 mb-3 p-img-sticky '>
+              </div>
+              {/* <div className='col-lg-3 mb-3 p-img-sticky '>
               <div className='row'>
                 <div>
                   <h5>Summary</h5>
@@ -261,13 +263,33 @@ const Wishlist = () => {
                 </div>
               </div>
             </div> */}
+            </div>
+          </div>
+            :
+            <div className='d-flex justify-content-center align-items-center' style={{ height: "70vh" }}>
+              <div class="custom-loader"></div>
+            </div>)
+        )
+        :
+        <div className='container my-5'>
+          <div className='d-flex flex-column align-items-center m-auto' style={{ width: "fit-content" }}>
+
+            <div><img src={LoginImg} alt='' />
+            </div>
+            <h5 className='text-dark'>You are not logged in</h5>
+            <span className='text-center'>
+              Sign in to your account to continue
+            </span>
+            <button className='btn my-4 btn-outline-warning w-100' data-bs-toggle="modal" href="#exampleModalToggle">Sign in</button>
+
           </div>
         </div>
-          :
-          <div className='d-flex justify-content-center align-items-center' style={{ height: "70vh" }}>
-            <div class="custom-loader"></div>
-          </div>)
       }
+
+
+
+
+
       <div>Recommended products</div>
     </>
   )

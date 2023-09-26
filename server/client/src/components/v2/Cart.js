@@ -5,11 +5,17 @@ import {Link} from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserDetails } from './redux/userSlice';
 import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSlice';
+
+
 import emptyCartImg from "./../../assets/images/newImg/collections/emptycart.png"
+import LoginImg from "./../../assets/images/newImg/collections/login.png"
+
 
 const Cart = () => {
 
   const dispatch = useDispatch()
+  const userDetail = useSelector(state => state.user.user)
+  const userLoggedIn = useSelector(state => state.user.isUserLoggedIn)
   const wishlistItems = useSelector(state => state.user.user.wishlist)
   const cartItems = useSelector(state => state.user.user.cartProducts)
   const cart = useSelector(state => state.user.user.cart)
@@ -259,7 +265,8 @@ const Cart = () => {
 
   return (
     <>
-      {!cartItems?.length > 0 ?
+    {userDetail && userLoggedIn ?
+      (!cartItems?.length > 0 ?
         <div className='d-flex flex-column align-items-center'>
 
           <div><img src={emptyCartImg} alt='' />
@@ -424,7 +431,24 @@ const Cart = () => {
             </div>
           </div>
         </div>
-      }
+      )
+      : <div className='container my-5'>
+      <div className='d-flex flex-column align-items-center m-auto' style={{ width: "fit-content" }}>
+     
+        <div><img src={LoginImg} alt='' />
+        </div>
+        <h5 className='text-dark'>You are not logged in</h5>
+        <span className='text-center'>
+          Sign in to your account to continue
+        </span>
+        <button className='btn my-4 btn-outline-warning w-100' data-bs-toggle="modal" href="#exampleModalToggle">Sign in</button>
+     
+      </div>
+     </div>
+         
+
+                  }
+
       <div>Recommended products</div>
     </>
   )

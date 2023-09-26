@@ -615,6 +615,9 @@ img {
 
 
 /***************--------------------*************** ORDER LIST **************-------------------***************/
+.order-lis-imgs{
+  width: 100px;
+}
 .order-lis-imgs img{
   max-height: 38px;
   /* width: 44px; */
