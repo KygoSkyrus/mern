@@ -72,43 +72,43 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
   console.log(`Unhandled event type ${event.type}`);
   switch (event.type) {
     case 'charge.succeeded':
-      receiptUrl=event.data.object.receipt_url
-    break;
+      receiptUrl = event.data.object.receipt_url
+      break;
     case 'checkout.session.completed':
       const paymentIntentSucceeded = event.data.object;
       console.log('succeeded', event)
-      console.log('urr',receiptUrl)
+      console.log('urr', receiptUrl)
       console.log('meta s-', event.data.object.metadata)
 
-        const metadata = event.data.object.metadata
-  let order = {}
-  order.orderId = metadata.orderId
-  order.tax = metadata.tax
-  order.shipping = metadata.shipping
-  order.total = metadata.total
-  order.payment_status=event.data.object.payment_status
-  order.receiptUrl=receiptUrl
-  order.products = []
-  Object.keys(metadata).forEach(x => {
-    if (
-      x !== "tax" &&
-      x !== "total" &&
-      x !== "shipping" &&
-      x !== "orderId" &&
-      x !== "userId" &&
-      typeof metadata[x] === "string" // Checks if the value is a string
-    ) {
-      let tempObj = {}
-      const productData = JSON.parse(metadata[x]);
-      tempObj.productId = x
-      tempObj.name = productData.name
-      tempObj.image = productData.image
-      tempObj.quantity = productData.quantity
-      tempObj.discount = productData.discount
-      tempObj.price = productData.price
-      order.products.push(tempObj)
-    }
-  })
+      const metadata = event.data.object.metadata
+      let order = {}
+      order.orderId = metadata.orderId
+      order.tax = metadata.tax
+      order.shipping = metadata.shipping
+      order.total = metadata.total
+      order.payment_status = event.data.object.payment_status
+      order.receiptUrl = receiptUrl
+      order.products = []
+      Object.keys(metadata).forEach(x => {
+        if (
+          x !== "tax" &&
+          x !== "total" &&
+          x !== "shipping" &&
+          x !== "orderId" &&
+          x !== "userId" &&
+          typeof metadata[x] === "string" // Checks if the value is a string
+        ) {
+          let tempObj = {}
+          const productData = JSON.parse(metadata[x]);
+          tempObj.productId = x
+          tempObj.name = productData.name
+          tempObj.image = productData.image
+          tempObj.quantity = productData.quantity
+          tempObj.discount = productData.discount
+          tempObj.price = productData.price
+          order.products.push(tempObj)
+        }
+      })
 
       //saving the order details in db
       try {
@@ -145,17 +145,17 @@ if (process.env.NODE_ENV === "production") {
 app.listen(port, () => console.log(`server is running at ${port}`));
 
 
-      // let order = {
-        //   orderId:"",
-        //   products: [{
-        //     productId: "64c69d66c8b5667ef02f36c5",
-        //     name:"Redmi A2 (Sea Green, 2GB RAM, 32GB Storage)",
-        //     image:"	https://firebasestorage.googleapis.com/v0/b/shopp-…=media&token=fa8691b3-9d53-45a8-aced-2f92c435a379",
-        //     quantity: 3,
-        //     discount: 0,
-        //     price: 6000
-        //   }],
-        //   tax: 1800,
-        //   shipping: 0,
-        //   total: 19800,
-        // }
+// let order = {
+//   orderId:"",
+//   products: [{
+//     productId: "64c69d66c8b5667ef02f36c5",
+//     name:"Redmi A2 (Sea Green, 2GB RAM, 32GB Storage)",
+//     image:"	https://firebasestorage.googleapis.com/v0/b/shopp-…=media&token=fa8691b3-9d53-45a8-aced-2f92c435a379",
+//     quantity: 3,
+//     discount: 0,
+//     price: 6000
+//   }],
+//   tax: 1800,
+//   shipping: 0,
+//   total: 19800,
+// }
