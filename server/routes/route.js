@@ -519,6 +519,7 @@ router.post('/create-checkout-session', async (req, res) => {
     const orderId = uuidv4()
     let productList = {}//for metadata
 
+
     //thi is common for most user actions ,so create a middleware function instead
     if (!token) {
         return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
@@ -566,23 +567,8 @@ router.post('/create-checkout-session', async (req, res) => {
             line_items.push(prod)
         })
 
-        console.log('productList', productList)
+        //console.log('productList', productList)
 
-
-        // let order = {
-        //     orderId:"",
-        //     products: [{
-        //       productId: "64c69d66c8b5667ef02f36c5",
-        //       name:"Redmi A2 (Sea Green, 2GB RAM, 32GB Storage)",
-        //       image:"	https://firebasestorage.googleapis.com/v0/b/shopp-…=media&token=fa8691b3-9d53-45a8-aced-2f92c435a379",
-        //       quantity: 3,
-        //       discount: 0,
-        //       price: 6000
-        //     }],
-        //     tax: 1800,
-        //     shipping: 0,
-        //     total: 19800,
-        //   }
 
     } catch (err) {
         console.log('er', err);
@@ -621,8 +607,14 @@ router.post('/create-checkout-session', async (req, res) => {
         payment_method_types: ['card'],
         success_url: `http://localhost:3006/orders/${orderId}`,
         cancel_url: 'http://localhost:3006/user',
-        customer_email: 'xyz@email.com',
-        metadata: productList
+        customer_email: req.cookies.email,
+        metadata: productList,
+        billing_address_collection:"required",
+        total_details:{
+            amount_discount:443,
+            amount_tax:33
+        }
+        //shipping_address_collection:"required"
     });
 
 
