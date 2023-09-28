@@ -1,31 +1,49 @@
 const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
-  orderNumber: {
+  orderId: {
     type: String,
     required: true,
     unique: true,
   },
+  tax: {
+    type: Number,
+  },
+  shipping: {
+    type: Number,
+  },
+  payment_status: {
+    type: String,
+  },
+  receiptUrl: {
+    type: String
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'USER',
     required: true,
   },
   products: [
     {
-      product: {
+      productId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product',
-        required: true,
+        ref: 'PRODUCT',
+      },
+      name: {
+        type: String,
+      },
+      image: {
+        type: String,
       },
       quantity: {
         type: Number,
-        required: true,
+      },
+      discount: {
+        type: Number,
       },
       price: {
         type: Number,
-        required: true,
-      },
+      }
     },
   ],
   totalAmount: {
@@ -33,10 +51,11 @@ const orderSchema = new mongoose.Schema({
     required: true,
   },
   shippingAddress: {
-    street: String,
+    line1: String,
+    line2: String,
     city: String,
-    state: String,
-    postalCode: String,
+    postal_code: String,
+    state:String,
     country: String,
   },
   status: {
@@ -46,13 +65,8 @@ const orderSchema = new mongoose.Schema({
   },
   paymentMethod: {
     type: String,
-    enum: ['Credit Card', 'PayPal', 'Cash on Delivery', 'Other'],
-    required: true,
-  },
-  paymentStatus: {
-    type: String,
-    enum: ['Pending', 'Paid', 'Failed'],
-    default: 'Pending',
+    enum: ['Card', 'PayPal', 'Cash on Delivery', 'Other'],
+    default: 'Card',
   },
   createdAt: {
     type: Date,
@@ -60,6 +74,4 @@ const orderSchema = new mongoose.Schema({
   },
 }, { collection: "orders" });
 
-const Order = mongoose.model('ORDER', orderSchema);
-
-module.exports = Order;
+module.exports = mongoose.model('ORDER', orderSchema);

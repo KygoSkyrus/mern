@@ -80,6 +80,23 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
       console.log('urr', receiptUrl)
       console.log('meta s-', event.data.object.metadata)
 
+      // event.data.object."customer_details": {
+      //   "address": {
+      //     "city": "delhi",
+      //     "country": "IN",
+      //     "line1": "32",
+      //     "line2": "gdsf vsddfs",
+      //     "postal_code": "443342",
+      //     "state": "JH"
+      //   },
+      //   "email": "dheerajgupta.whyshy@gmail.com",
+      //   "name": "zzz",
+      //   "phone": null,
+      //   "tax_exempt": "none",
+      //   "tax_ids": [
+      //   ]
+      // },
+
       const metadata = event.data.object.metadata
       let order = {}
       order.orderId = metadata.orderId
@@ -89,13 +106,10 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
       order.payment_status = event.data.object.payment_status
       order.receiptUrl = receiptUrl
       order.products = []
+      prodArray = []
       Object.keys(metadata).forEach(x => {
         if (
-          x !== "tax" &&
-          x !== "total" &&
-          x !== "shipping" &&
-          x !== "orderId" &&
-          x !== "userId" &&
+          x !== "tax" && x !== "total" && x !== "shipping" && x !== "orderId" && x !== "userId" &&
           typeof metadata[x] === "string" // Checks if the value is a string
         ) {
           let tempObj = {}
@@ -107,17 +121,45 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
           tempObj.discount = productData.discount
           tempObj.price = productData.price
           order.products.push(tempObj)
+          prodArray.push(tempObj)//for ORDER collection
         }
       })
 
       //saving the order details in db
       try {
         const updatedUser = await USER.findByIdAndUpdate(
-          "64dca5854563a04dffe7cd9b",
+          event.data.object.metadata.userId,
           { $push: { orders: order } },
           { new: true }
         )//.populate('cartProducts');
         console.log('updateduuu', updatedUser)
+
+        const theOrder = new ORDER({
+          orderId: metadata.orderId,
+          totalAmount: metadata.total,
+          tax: metadata.tax,
+          shipping: metadata.shipping,
+          payment_status: event.data.object.payment_status,
+          receiptUrl: receiptUrl,
+          user: event.data.object.metadata.userId,
+          products: prodArray,
+          shippingAddress: event.data.object.customer_details,
+          // status: {
+          //   enum: ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'],
+          //   default: 'Pending',
+          // },
+          // paymentMethod: {
+          //   enum: ['Card', 'PayPal', 'Cash on Delivery', 'Other'],
+          //   default: 'Card',
+          // },
+        })
+        theOrder.save()
+          .then(response => {
+            console.log('saved order', response)
+          })
+          .catch(err => {
+            console.log(err)
+          })
 
       } catch (error) {
         console.error('something went wrong', error);
@@ -126,7 +168,7 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
 
       break;
     case 'payment_intent.payment_failed':
-      console.log('failed', event.data)
+      console.log('failed', event)
       console.log('meta f-', event.data.object.metadata)
       break;
     default:
