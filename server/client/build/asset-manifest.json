@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.17ad5cd6.chunk.css",
-    "main.js": "/static/js/main.f95a8fab.chunk.js",
-    "main.js.map": "/static/js/main.f95a8fab.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.f540d4ab.js",
-    "runtime-main.js.map": "/static/js/runtime-main.f540d4ab.js.map",
+    "main.css": "/static/css/main.1c4a8a18.chunk.css",
+    "main.js": "/static/js/main.4954e638.chunk.js",
+    "main.js.map": "/static/js/main.4954e638.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.e64d1ac0.js",
+    "runtime-main.js.map": "/static/js/runtime-main.e64d1ac0.js.map",
     "static/css/2.19627560.chunk.css": "/static/css/2.19627560.chunk.css",
-    "static/js/2.128c6631.chunk.js": "/static/js/2.128c6631.chunk.js",
-    "static/js/2.128c6631.chunk.js.map": "/static/js/2.128c6631.chunk.js.map",
-    "static/js/3.51f47170.chunk.js": "/static/js/3.51f47170.chunk.js",
-    "static/js/3.51f47170.chunk.js.map": "/static/js/3.51f47170.chunk.js.map",
+    "static/js/2.2d2b4b01.chunk.js": "/static/js/2.2d2b4b01.chunk.js",
+    "static/js/2.2d2b4b01.chunk.js.map": "/static/js/2.2d2b4b01.chunk.js.map",
+    "static/js/3.ab4ab073.chunk.js": "/static/js/3.ab4ab073.chunk.js",
+    "static/js/3.ab4ab073.chunk.js.map": "/static/js/3.ab4ab073.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.19627560.chunk.css.map": "/static/css/2.19627560.chunk.css.map",
-    "static/css/main.17ad5cd6.chunk.css.map": "/static/css/main.17ad5cd6.chunk.css.map",
-    "static/js/2.128c6631.chunk.js.LICENSE.txt": "/static/js/2.128c6631.chunk.js.LICENSE.txt",
+    "static/css/main.1c4a8a18.chunk.css.map": "/static/css/main.1c4a8a18.chunk.css.map",
+    "static/js/2.2d2b4b01.chunk.js.LICENSE.txt": "/static/js/2.2d2b4b01.chunk.js.LICENSE.txt",
     "static/media/admin.css": "/static/media/backpack.4b415f3c.jpg",
     "static/media/binoculars.6b3d925f.jpg": "/static/media/binoculars.6b3d925f.jpg",
     "static/media/blackSneakers.0fe9ef59.jpg": "/static/media/blackSneakers.0fe9ef59.jpg",
@@ -32,7 +32,8 @@
     "static/media/jeanjacket.ea4dba6b.jpg": "/static/media/jeanjacket.ea4dba6b.jpg",
     "static/media/laptop1.b9174d5d.png": "/static/media/laptop1.b9174d5d.png",
     "static/media/login-cover.e687bd43.svg": "/static/media/login-cover.e687bd43.svg",
-    "static/media/login.373c913d.png": "/static/media/login.373c913d.png",
+    "static/media/login.png": "/static/media/login.373c913d.png",
+    "static/media/noOrder.a8b31587.svg": "/static/media/noOrder.a8b31587.svg",
     "static/media/perfume.11f9e9a2.jpg": "/static/media/perfume.11f9e9a2.jpg",
     "static/media/pinkpurse.2f166e64.jpg": "/static/media/pinkpurse.2f166e64.jpg",
     "static/media/redshoes.2f10481e.jpg": "/static/media/redshoes.2f10481e.jpg",
@@ -44,10 +45,10 @@
     "static/media/yogamat.2aa142bb.jpg": "/static/media/yogamat.2aa142bb.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.f540d4ab.js",
+    "static/js/runtime-main.e64d1ac0.js",
     "static/css/2.19627560.chunk.css",
-    "static/js/2.128c6631.chunk.js",
-    "static/css/main.17ad5cd6.chunk.css",
-    "static/js/main.f95a8fab.chunk.js"
+    "static/js/2.2d2b4b01.chunk.js",
+    "static/css/main.1c4a8a18.chunk.css",
+    "static/js/main.4954e638.chunk.js"
   ]
 }

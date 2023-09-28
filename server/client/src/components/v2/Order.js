@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUserDetails } from './redux/userSlice';
 import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSlice';
 
+import { formatInINR } from './Utility';
 import LoginImg from "./../../assets/images/newImg/collections/login.png"
 import noOrder from "./../../assets/images/newImg/collections/noOrder.svg"
 
@@ -132,10 +133,7 @@ const Order = () => {
                                     <div className='row d-flex justify-content-between'>
                                       <div class="col-md-2">
                                         <div className='d-flex align-items-end flex-column' style={{ width: "fit-content", margin: "auto" }}>
-                                          <section>
-                                            <span style={{ fontSize: "12px" }}>&#8377;</span>
-                                            <span className='fs-6'>{x.price}</span>
-                                          </section>
+                                            <span className=''>{formatInINR.format(x.price)}</span>
                                         </div>
                                       </div>
                                       <div class="col-md-2 text-center">
@@ -144,10 +142,7 @@ const Order = () => {
 
                                       <div class="col-md-2 text-center">
                                         <div className='d-flex align-items-end flex-column' style={{ width: "fit-content", margin: "auto" }}>
-                                          <section>
-                                            <span style={{ fontSize: "12px" }}>&#8377;</span>
-                                            <span className='fs-6'>{x.quantity * Math.floor(x.price - x.discount * x.price / 100)}</span>
-                                          </section>
+                                            <span className=''>{formatInINR.format((x.quantity * Math.floor(x.price - x.discount * x.price / 100)))}</span>
                                         </div>
                                       </div>
                                     </div>
@@ -173,20 +168,20 @@ const Order = () => {
 
                     <div className='d-flex justify-content-between my-2 px-3'>
                       <span>Subtotal</span>
-                      <span >{order.total - (order.shipping + order.tax)} </span>
+                      <span >{formatInINR.format(order.total - (order.shipping + order.tax))} </span>
                     </div>
                     <div className='d-flex justify-content-between my-2 px-3'>
                       <span>Tax</span>
-                      <span >{order.tax} </span>
+                      <span >{formatInINR.format(order.tax)} </span>
                     </div>
                     <div className='my-2 px-3'>
                       <section className='d-flex justify-content-between border-bottom'>
                         <span>Shipping</span>
-                        <span >{order.shipping} </span></section>
+                        <span >{formatInINR.format(order.shipping)} </span></section>
                     </div>
                     <div className='d-flex justify-content-between my-2 px-3'>
                       <span>Total</span>
-                      <span >{order.total} </span>
+                      <span >{formatInINR.format(order.total)} </span>
                     </div>
 
                   </div>

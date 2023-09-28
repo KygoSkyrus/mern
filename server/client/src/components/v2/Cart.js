@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUserDetails } from './redux/userSlice';
 import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSlice';
 
-
+import { formatInINR } from './Utility';
+import { formatInINRwoSign } from './Utility';
 import emptyCartImg from "./../../assets/images/newImg/collections/emptycart.png"
 import LoginImg from "./../../assets/images/newImg/collections/login.png"
 
@@ -155,31 +156,31 @@ const Cart = () => {
 
     if (!newQuantity <= 0) {
       //updating quantity
-      lineRefs.current[i].current.innerText = newQuantity;//for showing in ui
+      lineRefs.current[i].current.innerText = formatInINRwoSign.format(newQuantity);//for showing in ui
       lineRefs.current[i].current.dataset.quantity = newQuantity;//for keeping record for further updates
       priceObj.productList[productId].quantity = newQuantity//updating quantiy in product details
 
 
       //updating total price of product in priceobj and ui (price*quantity)
       priceObj.productTotal[productId] = newQuantity * Math.floor(price - discount * price / 100)
-      totalAmtRefs.current[i].current.innerText = newQuantity * Math.floor(price - discount * price / 100)
+      totalAmtRefs.current[i].current.innerText = formatInINRwoSign.format(newQuantity * Math.floor(price - discount * price / 100))
 
       let total=0;
       Object.keys(priceObj.productTotal).forEach(x=>{
         total+= parseInt(priceObj.productTotal[x])
       })
-      subtotal.current.innerText = total;
+      subtotal.current.innerText = formatInINRwoSign.format(total);
 
       //setting SHIPPING if subtotal is less than 1999
-      shippingCharge.current.innerText = total < 1999 ? 99 : "-";
+      shippingCharge.current.innerText = total < 1999 ? formatInINRwoSign.format(99) : "-";
       priceObj.shipping = (total < 1999) ? 99 : 0
 
       //setting the TAX (10%) on the subtotal
-      tax.current.innerText = Math.round(total * 0.1)
+      tax.current.innerText = formatInINRwoSign.format(Math.round(total * 0.1))
       priceObj.tax = Math.round(total * 0.1);
 
       //setting GRANDTOTAL (adding subtotal/shipping/tax)
-      grandTotal.current.innerText = total + (total < 1999 ? 99 : 0) + Math.round(total * 0.1)
+      grandTotal.current.innerText = formatInINRwoSign.format(total + (total < 1999 ? 99 : 0) + Math.round(total * 0.1))
       priceObj.grandTotal = total + (total < 1999 ? 99 : 0) + Math.round(total * 0.1)
 
       document.querySelector('[name=priceObj]').value=JSON.stringify(priceObj)//update the inout with priceobj
@@ -190,16 +191,6 @@ const Cart = () => {
     }
   }
 
-
-  const handleCheckout = () => {
-    fetch('/create-checkout-session', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ priceObj }),
-    })
-  }
 
 
   const removeFromCart = (productId) => {
@@ -263,12 +254,6 @@ const Cart = () => {
       })
   }
 
-
-  let inrRS = new Intl.NumberFormat('en-IN', {
-    style: 'currency',
-    currency: 'INR',
-})
-console.log(inrRS.format(44354723))
 
 
   return (
@@ -351,7 +336,7 @@ console.log(inrRS.format(44354723))
                                     <div className='d-flex align-items-end flex-column' style={{ width: "fit-content" }}>
                                       <section>
                                         <span style={{ fontSize: "12px" }}>&#8377;</span>
-                                        <span className='fs-6'>{Math.floor(x.price - x.discount * x.price / 100)}</span>
+                                        <span className='fs-6'>{formatInINRwoSign.format(Math.floor(x.price - x.discount * x.price / 100))}</span>
                                       </section>
                                       {x.discount !== 0 &&
                                         <section style={{ fontWeight: "400", color: "#ff4460", lineHeight: "2px" }}>
@@ -373,7 +358,7 @@ console.log(inrRS.format(44354723))
                                   <div class="col-md-2">
                                     <div>
                                       <span style={{ fontSize: "12px" }}>&#8377;</span>
-                                      <span className='fs-5' ref={totalAmtRefs.current[i]}>{Math.floor(x.price - x.discount * x.price / 100) * tempObj[x._id]}</span>
+                                      <span className='fs-6' ref={totalAmtRefs.current[i]}>{formatInINRwoSign.format(Math.floor(x.price - x.discount * x.price / 100) * tempObj[x._id])}</span>
                                     </div>
                                   </div>
                                 </div>
@@ -409,24 +394,24 @@ console.log(inrRS.format(44354723))
                       {/* {Object.keys(priceObj).reduce((x,a)=>{
                       return priceObj[x]+priceObj[a]
                     })} */}
-                      {sub}
+                      {formatInINR.format(sub)}
                     </span>
                   </div>
 
                   <div className='d-flex justify-content-between my-2'>
                     <span title='99 shipping & handling charge is applied under subtotal 1999'>Estimated Shipping & Handling <i class="fa fa-question-circle fa-sm" aria-hidden="true"></i>
                     </span>
-                    <span ref={shippingCharge}>{sub < 1999 ? 99 : "-"}</span>
+                    <span ref={shippingCharge}>{sub < 1999 ? formatInINR.format(99) : "-"}</span>
                   </div>
 
                   <div className='d-flex justify-content-between my-2'>
                     <span title='levies 10% service tax'  data-bs-toggle="tooltip" data-bs-placement="right"  >Estimated Tax <i class="fa fa-question-circle fa-sm" aria-hidden="true"></i></span>
-                    <span ref={tax}>{Math.round(sub * 0.1)}</span>
+                    <span ref={tax}>{formatInINR.format(Math.round(sub * 0.1))}</span>
                   </div>
 
                   <div className='d-flex justify-content-between py-2 my-4 text-dark' style={{ borderBottom: "1px solid #dee2e6", borderTop: "1px solid #dee2e6" }}>
                     <span><b>Total</b></span>
-                    <span ref={grandTotal} className='fw-bolder'>{sub + (sub < 1999 ? 99 : 0) + Math.round(sub * 0.1)}</span>
+                    <span ref={grandTotal} className='fw-bolder'>{formatInINR.format(sub + (sub < 1999 ? 99 : 0) + Math.round(sub * 0.1))}</span>
                   </div>        
 
                   <form action="/create-checkout-session" method="POST">
