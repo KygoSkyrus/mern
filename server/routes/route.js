@@ -610,10 +610,10 @@ router.post('/create-checkout-session', async (req, res) => {
         customer_email: req.cookies.email,
         metadata: productList,
         billing_address_collection:"required",
-        total_details:{
-            amount_discount:443,
-            amount_tax:33
-        }
+        // total_details:{
+        //     amount_discount:443,
+        //     amount_tax:33
+        // }
         //shipping_address_collection:"required"
     });
 

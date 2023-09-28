@@ -263,6 +263,14 @@ const Cart = () => {
       })
   }
 
+
+  let inrRS = new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+})
+console.log(inrRS.format(44354723))
+
+
   return (
     <>
     {userDetail && userLoggedIn ?
