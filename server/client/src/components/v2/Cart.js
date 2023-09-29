@@ -1,11 +1,12 @@
 /* eslint-disable no-eval */
 import React, { useRef } from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserDetails } from './redux/userSlice';
 import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSlice';
 
+import RealtedProducts from './RealtedProducts';
 import { formatInINR } from './Utility';
 import { formatInINRwoSign } from './Utility';
 import emptyCartImg from "./../../assets/images/newImg/collections/emptycart.png"
@@ -54,7 +55,7 @@ const Cart = () => {
     priceObj.productList[x._id].image = x.image[0]
     priceObj.productList[x._id].price = x.price
     priceObj.productList[x._id].quantity = tempObj[x._id]
-    priceObj.productList[x._id].discount=x.discount
+    priceObj.productList[x._id].discount = x.discount
   })
 
   priceObj.shipping = (sub < 1999) ? 99 : 0; //shipping
@@ -165,9 +166,9 @@ const Cart = () => {
       priceObj.productTotal[productId] = newQuantity * Math.floor(price - discount * price / 100)
       totalAmtRefs.current[i].current.innerText = formatInINRwoSign.format(newQuantity * Math.floor(price - discount * price / 100))
 
-      let total=0;
-      Object.keys(priceObj.productTotal).forEach(x=>{
-        total+= parseInt(priceObj.productTotal[x])
+      let total = 0;
+      Object.keys(priceObj.productTotal).forEach(x => {
+        total += parseInt(priceObj.productTotal[x])
       })
       subtotal.current.innerText = formatInINRwoSign.format(total);
 
@@ -183,7 +184,7 @@ const Cart = () => {
       grandTotal.current.innerText = formatInINRwoSign.format(total + (total < 1999 ? 99 : 0) + Math.round(total * 0.1))
       priceObj.grandTotal = total + (total < 1999 ? 99 : 0) + Math.round(total * 0.1)
 
-      document.querySelector('[name=priceObj]').value=JSON.stringify(priceObj)//update the inout with priceobj
+      document.querySelector('[name=priceObj]').value = JSON.stringify(priceObj)//update the inout with priceobj
 
       console.log('priceObj in up', priceObj)
       // Trigger the batched update in the background
@@ -207,7 +208,7 @@ const Cart = () => {
         return response.json()
       })
       .then(res => {
-        console.log('resp',resp)
+        console.log('resp', resp)
         if (resp.status === 200) {
           console.log('2000')
           console.log('updated user object', res.user)
@@ -224,7 +225,7 @@ const Cart = () => {
       })
   }
 
-  const movetowishlist = (productId)=>{
+  const movetowishlist = (productId) => {
     let resp;
     fetch(`/api/movetowishlist`, {
       method: "POST",
@@ -238,7 +239,7 @@ const Cart = () => {
         return response.json()
       })
       .then(res => {
-        console.log('resp',resp)
+        console.log('resp', resp)
         if (resp.status === 200) {
           console.log('200')
           dispatch(setToastStatus({ isSuccess: true }))
@@ -258,191 +259,193 @@ const Cart = () => {
 
   return (
     <>
-    {userDetail && userLoggedIn ?
-      (!cartItems?.length > 0 ?
-        <div className='d-flex flex-column align-items-center'>
+      {userDetail && userLoggedIn ?
+        (!cartItems?.length > 0 ?
+          <div className='d-flex flex-column align-items-center'>
 
-          <div><img src={emptyCartImg} alt='' />
-          </div>
-          <h5 className='text-dark'>Your cart is empty</h5>
-          <span className='text-center w-25'>
-            Looks like you have not added anything to your cart. Go ahead & explore top categories
-          </span>
-          <button className='btn my-4 btn-outline-warning'>Continue shopping</button>
+            <div><img src={emptyCartImg} alt='' />
+            </div>
+            <h5 className='text-dark'>Your cart is empty</h5>
+            <span className='text-center w-25'>
+              Looks like you have not added anything to your cart. Go ahead & explore top categories
+            </span>
+            <button className='btn my-4 btn-outline-warning'>Continue shopping</button>
 
-        </div> :
+          </div> :
 
-        <div className='container my-5'>
-           <h6 className='text-center my-5'>My Cart</h6>
-          <div class="row ">
-            <div class="col-lg-9 t-mb-30 mb-lg-0 theSection" >
-              <div class="row ">
-                <div class="col-12">
-                  <div class="row ">
-                    <div className='row mb-3 p-2 pb-0 border-bottom'>
-                      <div class="col-md-2"></div>
-                      <div class="col-md-10">
-                        <div className='d-flex flex-column justify-content-between h-100'>
-                          <div className='row d-flex justify-content-between'>
-                            <div class="col-md-4">
-                              <h6>
-                                Item
-                              </h6>
-                            </div>
-                            <div class="col-md-2">
-                              <h6>
-                                Price
-                              </h6>
-                            </div>
-                            <div class="col-md-3">
-                              <h6>
-                                Quantity
-                              </h6>
+          <div className='container my-5'>
+            <h6 className='text-center my-5'>My Cart</h6>
+            <div class="row ">
+              <div class="col-lg-9 t-mb-30 mb-lg-0 theSection" >
+                <div class="row ">
+                  <div class="col-12">
+                    <div class="row ">
+                      <div className='row mb-3 p-2 pb-0 border-bottom'>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-10">
+                          <div className='d-flex flex-column justify-content-between h-100'>
+                            <div className='row d-flex justify-content-between'>
+                              <div class="col-md-4">
+                                <h6>
+                                  Item
+                                </h6>
+                              </div>
+                              <div class="col-md-2">
+                                <h6>
+                                  Price
+                                </h6>
+                              </div>
+                              <div class="col-md-3">
+                                <h6>
+                                  Quantity
+                                </h6>
 
-                            </div>
-                            <div class="col-md-2">
-                              <h6>
-                                Total
-                              </h6>
+                              </div>
+                              <div class="col-md-2">
+                                <h6>
+                                  Total
+                                </h6>
+                              </div>
                             </div>
                           </div>
                         </div>
+
                       </div>
+                      {cartItems.map((x, i) => {
+                        return (
+                          <>
+                            <div key={x._id} className='row  p-2 '>
+                              <div class="col-md-2">
+                                <div className='d-flex justify-content-center'>
+                                  <img src={x.image} alt='' className='img-fluidt-minw-215' style={{ maxHeight: "100px" }} />
+                                </div>
+                              </div>
+
+                              <div class="col-md-10">
+                                <div className='d-flex flex-column justify-content-between h-100'>
+                                  <div className='row d-flex justify-content-between'>
+
+                                    <div class="col-md-4">
+                                      <Link to={`/product/${x._id}`} style={{ color: "inherit" }}>
+                                        <h6>
+                                          {x.name}
+                                        </h6>
+                                        {x.stock > 0 ?
+                                          <span className='text-success'>In stock</span>
+                                          : <span className='text-danger'>Out of stock</span>}
+                                      </Link>
+                                    </div>
+                                    <div class="col-md-2">
+                                      <div className='d-flex align-items-end flex-column' style={{ width: "fit-content" }}>
+                                        <section>
+                                          <span style={{ fontSize: "12px" }}>&#8377;</span>
+                                          <span className='fs-6'>{formatInINRwoSign.format(Math.floor(x.price - x.discount * x.price / 100))}</span>
+                                        </section>
+                                        {x.discount !== 0 &&
+                                          <section style={{ fontWeight: "400", color: "#ff4460", lineHeight: "2px" }}>
+                                            <span style={{ fontSize: "10px" }}>&#8377;</span>
+                                            <span className='fs-7 extra-small' style={{ textDecoration: "line-through" }}>{x.price}</span>
+                                          </section>
+                                        }
+
+                                      </div>
+                                    </div>
+                                    <div class="col-md-3">
+
+                                      <div className='border d-flex row rounded-pill' style={{ width: "fit-content" }}>
+                                        <span className='py-1 col-4 pointer' onClick={() => updateQuantity(x._id, "-", i, x.price, x.discount)} >-</span>
+                                        <span className='py-1 col-4' ref={lineRefs.current[i]} data-quantity={tempObj[x._id]} >{tempObj[x._id]}</span>
+                                        <span className='py-1 col-4 pointer' onClick={() => updateQuantity(x._id, "+", i, x.price, x.discount)}>+</span>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                      <div>
+                                        <span style={{ fontSize: "12px" }}>&#8377;</span>
+                                        <span className='fs-6' ref={totalAmtRefs.current[i]}>{formatInINRwoSign.format(Math.floor(x.price - x.discount * x.price / 100) * tempObj[x._id])}</span>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                </div>
+                              </div>
+
+                            </div>
+                            <div className='d-flex justify-content-end mb-3 border-bottom pb-3'>
+                              <u><span onClick={() => removeFromCart(x._id)} className='me-4 pointer'>Remove <i class="fa fa-trash fa-sm"></i></span></u>
+                              {!wishlistItems?.includes(x._id) && <u><span className='me-4 pointer' onClick={() => movetowishlist(x._id)}>Move to wishlist <i class="fa fa-heart fa-sm"></i></span></u>}
+                            </div>
+                          </>
+                        )
+                      })}
 
                     </div>
-                    {cartItems.map((x, i) => {
-                      return (
-                        <>
-                          <div key={x._id} className='row  p-2 '>
-                            <div class="col-md-2">
-                              <div className='d-flex justify-content-center'>
-                                <img src={x.image} alt='' className='img-fluidt-minw-215' style={{ maxHeight: "100px" }} />
-                              </div>
-                            </div>
-
-                            <div class="col-md-10">
-                              <div className='d-flex flex-column justify-content-between h-100'>
-                                <div className='row d-flex justify-content-between'>
-
-                                  <div class="col-md-4">
-                                      <Link to={`/product/${x._id}`} style={{color:"inherit"}}>
-                                    <h6>
-                                    {x.name}
-                                      can show here other product details too like instock
-                                    </h6>
-                                    </Link>
-                                  </div>
-                                  <div class="col-md-2">
-                                    <div className='d-flex align-items-end flex-column' style={{ width: "fit-content" }}>
-                                      <section>
-                                        <span style={{ fontSize: "12px" }}>&#8377;</span>
-                                        <span className='fs-6'>{formatInINRwoSign.format(Math.floor(x.price - x.discount * x.price / 100))}</span>
-                                      </section>
-                                      {x.discount !== 0 &&
-                                        <section style={{ fontWeight: "400", color: "#ff4460", lineHeight: "2px" }}>
-                                          <span style={{ fontSize: "10px" }}>&#8377;</span>
-                                          <span className='fs-7 extra-small' style={{ textDecoration: "line-through" }}>{x.price}</span>
-                                        </section>
-                                      }
-
-                                    </div>
-                                  </div>
-                                  <div class="col-md-3">
-                                
-                                    <div className='border d-flex row rounded-pill' style={{ width: "fit-content" }}>
-                                      <span className='py-1 col-4 pointer' onClick={() => updateQuantity(x._id, "-", i, x.price, x.discount)} >-</span>
-                                      <span className='py-1 col-4' ref={lineRefs.current[i]} data-quantity={tempObj[x._id]} >{tempObj[x._id]}</span>
-                                      <span className='py-1 col-4 pointer' onClick={() => updateQuantity(x._id, "+", i, x.price, x.discount)}>+</span>
-                                    </div>
-                                  </div>
-                                  <div class="col-md-2">
-                                    <div>
-                                      <span style={{ fontSize: "12px" }}>&#8377;</span>
-                                      <span className='fs-6' ref={totalAmtRefs.current[i]}>{formatInINRwoSign.format(Math.floor(x.price - x.discount * x.price / 100) * tempObj[x._id])}</span>
-                                    </div>
-                                  </div>
-                                </div>
-
-                              </div>
-                            </div>
-
-                          </div>
-                          <div className='d-flex justify-content-end mb-3 border-bottom pb-3'>
-                            <u><span onClick={() => removeFromCart(x._id)} className='me-4 pointer'>Remove <i class="fa fa-trash fa-sm"></i></span></u>
-                            {!wishlistItems?.includes(x._id) && <u><span className='me-4 pointer' onClick={() => movetowishlist(x._id)}>Move to wishlist <i class="fa fa-heart fa-sm"></i></span></u>}                 
-                          </div>
-                        </>
-                      )
-                    })}
-
                   </div>
                 </div>
+
               </div>
+              <div className='col-lg-3 mb-3 p-img-sticky '>
+                <div className='row'>
+                  <div>
+                    <h5>Summary</h5>
 
-            </div>
-            <div className='col-lg-3 mb-3 p-img-sticky '>
-              <div className='row'>
-                <div>
-                  <h5>Summary</h5>
+                    <section>Do you have a Promo Code?</section>
 
-                  <section>Do you have a Promo Code?</section>
-
-                  <div className='d-flex justify-content-between my-2'>
-                    <span>Subtotal <i class="fa fa-question-circle fa-sm" aria-hidden="true"></i>
-                    </span>
-                    <span ref={subtotal}>
-                      {/* {Object.keys(priceObj).reduce((x,a)=>{
+                    <div className='d-flex justify-content-between my-2'>
+                      <span>Subtotal <i class="fa fa-question-circle fa-sm" aria-hidden="true"></i>
+                      </span>
+                      <span ref={subtotal}>
+                        {/* {Object.keys(priceObj).reduce((x,a)=>{
                       return priceObj[x]+priceObj[a]
                     })} */}
-                      {formatInINR.format(sub)}
-                    </span>
+                        {formatInINR.format(sub)}
+                      </span>
+                    </div>
+
+                    <div className='d-flex justify-content-between my-2'>
+                      <span title='99 shipping & handling charge is applied under subtotal 1999'>Estimated Shipping & Handling <i class="fa fa-question-circle fa-sm" aria-hidden="true"></i>
+                      </span>
+                      <span ref={shippingCharge}>{sub < 1999 ? formatInINR.format(99) : "-"}</span>
+                    </div>
+
+                    <div className='d-flex justify-content-between my-2'>
+                      <span title='levies 10% service tax' data-bs-toggle="tooltip" data-bs-placement="right"  >Estimated Tax <i class="fa fa-question-circle fa-sm" aria-hidden="true"></i></span>
+                      <span ref={tax}>{formatInINR.format(Math.round(sub * 0.1))}</span>
+                    </div>
+
+                    <div className='d-flex justify-content-between py-2 my-4 text-dark' style={{ borderBottom: "1px solid #dee2e6", borderTop: "1px solid #dee2e6" }}>
+                      <span><b>Total</b></span>
+                      <span ref={grandTotal} className='fw-bolder'>{formatInINR.format(sub + (sub < 1999 ? 99 : 0) + Math.round(sub * 0.1))}</span>
+                    </div>
+
+                    <form action="/create-checkout-session" method="POST">
+                      <input type="hidden" name='priceObj' value={JSON.stringify(priceObj)} />
+                      <button className='btn w-100 my-2' style={{ border: "1px solid rgb(0 0 0 / 16%)", background: "#ebebeb", borderTop: "0" }} type="submit">Checkout</button>
+                    </form>
+                    {/* <button className='btn w-100 my-2' style={{ border: "1px solid rgb(0 0 0 / 16%)", background: "#ebebeb", borderTop: "0" }} onClick={()=>handleCheckout()}>Checkout</button> */}
                   </div>
-
-                  <div className='d-flex justify-content-between my-2'>
-                    <span title='99 shipping & handling charge is applied under subtotal 1999'>Estimated Shipping & Handling <i class="fa fa-question-circle fa-sm" aria-hidden="true"></i>
-                    </span>
-                    <span ref={shippingCharge}>{sub < 1999 ? formatInINR.format(99) : "-"}</span>
-                  </div>
-
-                  <div className='d-flex justify-content-between my-2'>
-                    <span title='levies 10% service tax'  data-bs-toggle="tooltip" data-bs-placement="right"  >Estimated Tax <i class="fa fa-question-circle fa-sm" aria-hidden="true"></i></span>
-                    <span ref={tax}>{formatInINR.format(Math.round(sub * 0.1))}</span>
-                  </div>
-
-                  <div className='d-flex justify-content-between py-2 my-4 text-dark' style={{ borderBottom: "1px solid #dee2e6", borderTop: "1px solid #dee2e6" }}>
-                    <span><b>Total</b></span>
-                    <span ref={grandTotal} className='fw-bolder'>{formatInINR.format(sub + (sub < 1999 ? 99 : 0) + Math.round(sub * 0.1))}</span>
-                  </div>        
-
-                  <form action="/create-checkout-session" method="POST">
-                    <input type="hidden" name='priceObj' value={JSON.stringify(priceObj)} />
-                    <button className='btn w-100 my-2' style={{ border: "1px solid rgb(0 0 0 / 16%)", background: "#ebebeb", borderTop: "0" }} type="submit">Checkout</button>
-                  </form>
-                  {/* <button className='btn w-100 my-2' style={{ border: "1px solid rgb(0 0 0 / 16%)", background: "#ebebeb", borderTop: "0" }} onClick={()=>handleCheckout()}>Checkout</button> */}
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      )
-      : <div className='container my-5'>
-      <div className='d-flex flex-column align-items-center m-auto' style={{ width: "fit-content" }}>
-     
-        <div><img src={LoginImg} alt='' />
-        </div>
-        <h5 className='text-dark'>You are not logged in</h5>
-        <span className='text-center'>
-          Sign in to your account to continue
-        </span>
-        <button className='btn my-4 btn-outline-warning w-100' data-bs-toggle="modal" href="#exampleModalToggle">Sign in</button>
-     
-      </div>
-     </div>
-         
+        )
+        : <div className='container my-5'>
+          <div className='d-flex flex-column align-items-center m-auto' style={{ width: "fit-content" }}>
 
-                  }
+            <div><img src={LoginImg} alt='' />
+            </div>
+            <h5 className='text-dark'>You are not logged in</h5>
+            <span className='text-center'>
+              Sign in to your account to continue
+            </span>
+            <button className='btn my-4 btn-outline-warning w-100' data-bs-toggle="modal" href="#exampleModalToggle">Sign in</button>
 
-      <div>Recommended products</div>
+          </div>
+        </div>
+
+      }
+
+      <RealtedProducts />
+
     </>
   )
 }

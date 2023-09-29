@@ -882,6 +882,10 @@ input[type="number"]::-webkit-outer-spin-button {
   background-color: inherit;
   padding-bottom: 25px;
 }
+.card2.withborder{
+  border:var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+  box-shadow: var(--shadow-medium) !important;
+}
 .card-tag {
   position: absolute;
   left: 0;
@@ -993,6 +997,21 @@ input[type="number"]::-webkit-outer-spin-button {
   color: var(--yellow);
 } */
 /* rating stars starts */
+
+/* for related products */
+.withborder .product-price{
+  font-size: 12px;
+}
+.withborder .product-price .discount-percent{
+  font-size: 10px;
+}
+/* .slick-prev:before, .slick-next:before{
+  color: #ababab !important;
+} */
+/* .slick-dots {
+  bottom: -5px !important;
+} */
+
 /*-------------------------- products --------------------------*/
 
 /* PRODUCT PAGE */

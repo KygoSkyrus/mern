@@ -33,6 +33,7 @@ router.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf } }));
 /************* SCHEMA ***************/
 const PRODUCT = require('../models/product')
 const CATEGORY = require('../models/category')
+const ORDER = require('./../models/orders')
 
 
 
@@ -628,6 +629,44 @@ router.post('/create-checkout-session', async (req, res) => {
 
 
 
+//ADMIN API *****************************************************************************
+//authenticate admin account too
+router.get('/api/admin/getorders', async (req, res) => {
+
+    // const { orderId } = req.query
+    const token = req.cookies.jwt;
+
+    // console.log('orderId', orderId)
+    //thi is common for most user actions ,so create a middleware function instead
+    if (!token) {
+        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
+    }
+    try {
+       // const decoded = jwt.verify(token, process.env.SECRETKEY);
+       
+        ORDER.find({})
+            .then(response => {
+                // console.log('sss', response)
+                return res.status(200).json({ data:response, is_user_logged_in: true });
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+    } catch (error) {
+        console.error('Error getting items from wishlist', error);
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+
+})
+
+
+//ADMIN API *****************************************************************************
+
+
+
+
+
 
 //stripe
 router.post('/checkout', async (req, res) => {
@@ -692,7 +731,10 @@ router.post('/getemail', async (req, res) => {
 
 router.get('/api/getproducts', async (req, res) => {
 
-    await PRODUCT.find({})
+    const {limit}=req.query
+    console.log('hfhfd',limit)
+
+    await PRODUCT.find({}).limit(limit)
         .then(response => {
             // console.log(response)
             res.send(response)
