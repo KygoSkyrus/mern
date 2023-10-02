@@ -6,9 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUserDetails } from './redux/userSlice';
 import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSlice';
 
-import { formatInINR } from './Utility';
+import { formatInINR,getFullDateStr } from './Utility';
 import LoginImg from "./../../assets/images/newImg/collections/login.png"
 import noOrder from "./../../assets/images/newImg/collections/noOrder.svg"
+
 
 
 const Order = () => {
@@ -49,11 +50,7 @@ const Order = () => {
   }, [])
 
 
-  function getDateStr(date) {
-    let m=['January','February','March','April','May','June','July','August','September','October','November','December']
-    let d = new Date(date)
-    return d.getDate() + " " + (m[d.getMonth()]) + " " + (d.getFullYear()) + ", " + (d.getHours() < 12 ? d.getHours() : d.getHours() - 12) + ":" + (d.getMinutes()) + " " + (d.getHours() < 12 ? "AM" : "PM")
-  }
+ 
 
   return (
     <>
@@ -69,7 +66,7 @@ const Order = () => {
               <div className='d-flex justify-content-between p-2 px-3 mb-4 text-bg-warning rounded-1'>
                 <h6 className='d-inline text-black mb-0'>Order #{order.orderId}</h6>
                 <span>
-                  <i className='fa fa-calendar fa-regular'></i>&nbsp;&nbsp;{getDateStr(order.createdAt)}
+                  <i className='fa fa-calendar fa-regular'></i>&nbsp;&nbsp;{getFullDateStr(order.createdAt)}
                 </span>
               </div>
               <div class="row justify-content-center">

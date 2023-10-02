@@ -8,6 +8,7 @@ import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSl
 import noOrder from "./../../assets/images/newImg/collections/noOrder.svg"
 import LoginImg from "./../../assets/images/newImg/collections/login.png"
 
+import { getDateStr } from './Utility';
 
 const OrderList = () => {
 
@@ -39,10 +40,7 @@ const OrderList = () => {
       })
   }, [])
 
-  function getDateStr(date) {
-    let d = new Date(date)
-    return d.getDate() + "-" + (d.getMonth() + 1) + "-" + (d.getFullYear())
-  }
+
 
   return (
     <>
@@ -138,7 +136,7 @@ const OrderList = () => {
                                   <div className='d-flex flex-column justify-content-between h-100'>
                                     <div className='row d-flex justify-content-between'>
                                       <div class="col-md-2">
-                                        <Link className='d-flex align-items-end flex-column'  to={`/orders/${x.orderId}`} style={{ width: "fit-content", margin: "auto" }}>
+                                        <Link className='d-flex align-items-end flex-column' to={`/orders/${x.orderId}`} style={{ width: "fit-content", margin: "auto" }}>
                                           <section>
                                             <span style={{ fontSize: "12px" }}>&#8377;</span>
                                             <span className='fs-6'>{x.total}</span>

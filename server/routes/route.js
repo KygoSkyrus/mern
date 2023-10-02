@@ -119,11 +119,11 @@ router.post('/api/signup', async (req, res) => {
         const token = await user.generateAuthToken();
         //console.log(token);
         res.cookie('jwt', token, {
-            expires: new Date(Date.now() + 7200000),
+            expires: new Date(Date.now() + 10800000),
             httpOnly: true
         });
         res.cookie('email', email, {
-            expires: new Date(Date.now() + 7200000),
+            expires: new Date(Date.now() + 10800000),
             httpOnly: true
         });
 
@@ -155,11 +155,11 @@ router.post('/api/signin', async (req, res) => {
             //console.log(token);
 
             res.cookie('jwt', token, {
-                expires: new Date(Date.now() + 3600000),
+                expires: new Date(Date.now() + 10800000),
                 httpOnly: true
             });
             res.cookie('email', email, {
-                expires: new Date(Date.now() + 3600000),
+                expires: new Date(Date.now() + 10800000),
                 httpOnly: true
             });
 
@@ -644,9 +644,9 @@ router.get('/api/admin/getorders', async (req, res) => {
     try {
        // const decoded = jwt.verify(token, process.env.SECRETKEY);
        
-        ORDER.find({})
+        ORDER.find({}).populate('user')
             .then(response => {
-                // console.log('sss', response)
+                 console.log('sss', response)
                 return res.status(200).json({ data:response, is_user_logged_in: true });
             })
             .catch(err => {

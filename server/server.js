@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const path = require("path")
 const app = express();
 const dotenv = require('dotenv');
 const sk = process.env.SK;
@@ -30,6 +31,12 @@ const USER = require('./models/user')
 //     express.json()(req, res, next);
 //   }
 // });
+
+app.use(express.static(path.join(__dirname, 'client/build')));
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
+
 
 const db = process.env.dbURI;
 const port = process.env.PORT || 4000;

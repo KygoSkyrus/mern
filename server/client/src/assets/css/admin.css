@@ -354,6 +354,27 @@ label {
 /************************************************ PRODUCT FORM INPUTS ************************************************/
 
 
+/******************** ORDER DETAILS *************************/
+.orderDetails{
+width: 80vw;
+/* padding: 30px; */
+}
+.orderDetails .theSection{
+  height: 80vh;
+  overflow: auto;
+}
+.orderDetails .theSection::-webkit-scrollbar {
+  width: 4px;
+}
+.orderDetails .theSection::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgb(224, 224, 224);
+}
+.orderDetails .theSection::-webkit-scrollbar-thumb {
+  background: rgb(167, 167, 167);
+  border-radius: 10px;
+}
+/******************** ORDER DETAILS *************************/
+
 
 
 

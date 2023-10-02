@@ -26,6 +26,7 @@ const getUser = (dispatch) => {
         })
 
 }
+export default getUser;
 
 
 export const formatInINR = new Intl.NumberFormat('en-IN', {
@@ -40,4 +41,14 @@ export const formatInINRwoSign = new Intl.NumberFormat('en-IN', {
     maximumFractionDigits: 0,
 })
 
-export default getUser;
+export function getDateStr(date) {
+    let d = new Date(date)
+    return d.getDate() + "-" + (d.getMonth() + 1) + "-" + (d.getFullYear())
+}
+
+
+export function getFullDateStr(date) {
+    let m=['January','February','March','April','May','June','July','August','September','October','November','December']
+    let d = new Date(date)
+    return d.getDate() + " " + (m[d.getMonth()]) + " " + (d.getFullYear()) + ", " + (d.getHours() < 12 ? d.getHours() : d.getHours() - 12) + ":" + (d.getMinutes()) + " " + (d.getHours() < 12 ? "AM" : "PM")
+  }
