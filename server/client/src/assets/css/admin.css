@@ -47,13 +47,25 @@
 }
 .btn-trapezoid-outline:hover {
   background: #ffc107;
-  color: #136377;
-  transition: all 0.6s ease-out;
+  /* color: #136377 !important; */
+  transition: all 0.3s ease-in;
+  box-shadow: 2px 2px 10px rgb(182, 182, 182);
 }
 
 .nav-icons {
   padding: 6px 20px;
   cursor: pointer;
+}
+
+a.nav-icons.text-white.py-2.active::before {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 22px;
+  background: white;
+  z-index: 9999;
+  left: 0;
+  border-radius: 0 4px 4px 0;
 }
 /****************************************** SIDE NAV **************************************************/
 
