@@ -52,9 +52,9 @@ if (process.env.NODE_ENV === "production") {
 
   //UNCOMMENT THIS FOR PRODUCT ONLY
   app.use(express.static(path.join(__dirname, 'client/build')));
-  // app.get('/*', function (req, res) {//breaking server side
-  //   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-  // });
+  app.get('/*', function (req, res) {//breaking server side
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  });
 
 } else {
   // This is your Stripe CLI webhook secret for testing your endpoint locally.
