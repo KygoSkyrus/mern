@@ -57,12 +57,12 @@ const User = () => {
 
                     <section className='text-primary skip'>Skip for later</section>
                     <div class="row ">
-                        <div class="col-md-4 " >
+                        <div class="col-md-4 align-self-end" >
                             <div className='row'>
                                 <div className='col-md-9 m-auto text-center'>
                                     <img src={userDetail?.avtar} alt="" class="img-fluid w-100 t-minw-215 rounded" />
-                                    <h5 className='my-2 text-capitalize'>{userDetail?.firstname}&nbsp;{userDetail?.lastname}</h5>
-                                    <button className='btn' onClick={signOut}>Sign out</button>
+                                    <h5 className='my-2 mb-3 text-capitalize'>{userDetail?.firstname}&nbsp;{userDetail?.lastname}</h5>
+                                    <button className='btn btn-outline-danger w-100' onClick={signOut}>Sign out</button>
                                 </div>
                             </div>
 
