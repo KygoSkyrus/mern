@@ -78,19 +78,19 @@ const Nav = () => {
       <div className='d-flex align-items-center'>
 
         <div className="btn-trapezoid-outline" onClick={e => handleSelectedOption(e)} >
-          <Link className='nav-icons text-white py-2' data-link="dashboard" to='/admin/dashboard'>
+          <Link className='nav-icons text-white py-1 my-1' data-link="dashboard" to='/admin/dashboard'>
             <i className="fa-solid fa-shopping-bag" aria-hidden="true"></i>
           </Link>
 
-          <Link className='nav-icons text-white py-2 active' data-link="orders" to='/admin/orders'>
+          <Link className='nav-icons text-white py-1 my-1 active' data-link="orders" to='/admin/orders'>
             <i className="fa-solid fa-table" aria-hidden="true"></i>
           </Link>
 
-          <Link className='nav-icons text-white py-2' data-link="users" to='/admin/users'>
+          <Link className='nav-icons text-white py-1 my-1' data-link="users" to='/admin/users'>
             <i className="fa-regular fa-user" aria-hidden="true"></i>
           </Link>
 
-          <section className='nav-icons py-2' onClick={handleAddClick}>
+          <section className='nav-icons py-1 my-1' onClick={handleAddClick}>
             <i className="fa-solid fa-add" aria-hidden="true"></i>
           </section>
 

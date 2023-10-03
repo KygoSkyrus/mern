@@ -57,7 +57,7 @@
   cursor: pointer;
 }
 
-a.nav-icons.text-white.py-2.active::before {
+a.nav-icons.active::before {
   content: "";
   position: absolute;
   width: 4px;

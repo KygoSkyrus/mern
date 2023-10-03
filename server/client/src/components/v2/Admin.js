@@ -7,6 +7,7 @@ import Toast from './Toast';
 import Dashboard from './Admin/Dashboard';
 import Loader from './Loader.jsx';
 import Orders from './Admin/Orders';
+import Users from './Admin/Users';
 
 const Admin = () => {
     
@@ -23,6 +24,7 @@ const Admin = () => {
                     <Routes>
                         <Route path="/dashboard" exact element={<Dashboard />} />
                         <Route path="/orders" exact element={<Orders />} />
+                        <Route path="/users" exact element={<Users />} />
                         {/* <Route path="/:id" exact element={<SingleBlog  />} /> */}
                     </Routes>
                 </div>

@@ -108,7 +108,11 @@ const userSchema = new Schema({
                 require: true
             }
         }
-    ]
+    ],
+    createdAt: {
+        type: Date,
+        default: Date.now,
+      },
 }, { collection: "users" });
 
 

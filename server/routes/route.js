@@ -577,33 +577,6 @@ router.post('/create-checkout-session', async (req, res) => {
 
     const session = await stripe.checkout.sessions.create({
         line_items,
-        // : [
-        //     {
-        //         price_data: {
-        //             currency: 'inr',
-        //             product_data: {
-        //                 name: 'T-shirt',
-        //             },
-        //             unit_amount: 30000,
-        //         },
-        //         quantity: 3,
-        //         adjustable_quantity: {
-        //             enabled: true,
-        //             minimum: 1,
-        //             maximum: 50,
-        //         }
-        //     },
-        //     {
-        //         price_data: {
-        //             currency: 'inr',
-        //             product_data: {
-        //                 name: 'Bag',
-        //             },
-        //             unit_amount: 720000,
-        //         },
-        //         quantity: 1,
-        //     },
-        // ],
         mode: 'payment',
         payment_method_types: ['card'],
         success_url: process.env.NODE_ENV === "production"?`https://shoppitt.onrender.com/orders/${orderId}`:`http://localhost:3006/orders/${orderId}`,
@@ -632,6 +605,7 @@ router.post('/create-checkout-session', async (req, res) => {
 //ADMIN API *****************************************************************************
 //authenticate admin account too
 router.get('/api/admin/getorders', async (req, res) => {
+    //this will get orders of all the users and not only one loggged in user
 
     // const { orderId } = req.query
     const token = req.cookies.jwt;
@@ -660,7 +634,34 @@ router.get('/api/admin/getorders', async (req, res) => {
 
 })
 
+router.get('/api/admin/getusers', async (req, res) => {
 
+    // const { orderId } = req.query
+    const token = req.cookies.jwt;
+
+    // console.log('orderId', orderId)
+    //thi is common for most user actions ,so create a middleware function instead
+    if (!token) {
+        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
+    }
+    try {
+       // const decoded = jwt.verify(token, process.env.SECRETKEY);
+       
+        USER.find({})
+            .then(response => {
+                 console.log('u', response)
+                return res.status(200).json({ data:response, is_user_logged_in: true });
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+    } catch (error) {
+        console.error('Error getting items from wishlist', error);
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+
+})
 //ADMIN API *****************************************************************************
 
 
