@@ -47,24 +47,7 @@ mongoose.connect(db, {
 
 
 let endpointSecret;
-if (process.env.NODE_ENV === "production") {
-  endpointSecret = "we_1Ns5wFSJDEVNzqXlNvgt2OSL";
 
-  
-
-  
-
-} else {
-  // This is your Stripe CLI webhook secret for testing your endpoint locally.
-  endpointSecret = "whsec_5601d477da26790e09849aeeb567342bf53dbe96229fd3accbf27163f19c5476";
-}
-
-app.use(express.static("client/build"));
-  //UNCOMMENT THIS FOR PRODUCT ONLY
-  app.use(express.static(path.join(__dirname, 'client/build')));
-  app.get('/*', function (req, res) {//breaking server side
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-  });
 
 let receiptUrl;
 //cart for failing : 4000 0000 0000 0119
@@ -195,6 +178,19 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
 //moving it affter webhook api to prevent the bodyparser to have effect from router file
 app.use(require('./routes/route'));
 
+if (process.env.NODE_ENV === "production") {
+  endpointSecret = "we_1Ns5wFSJDEVNzqXlNvgt2OSL";
+} else {
+  // This is your Stripe CLI webhook secret for testing your endpoint locally.
+  endpointSecret = "whsec_5601d477da26790e09849aeeb567342bf53dbe96229fd3accbf27163f19c5476";
+}
+
+app.use(express.static("client/build"));
+  //UNCOMMENT THIS FOR PRODUCT ONLY
+  app.use(express.static(path.join(__dirname, 'client/build')));
+  app.get('/*', function (req, res) {//breaking server side
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  });
 
 app.listen(port, () => console.log(`server is running at ${port}`));
 
