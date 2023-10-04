@@ -455,6 +455,52 @@ router.post('/api/getwishlistitems', async (req, res) => {
 
 })
 
+//Update user's address
+router.post('/api/updatedaddress', async (req, res) => {
+    const token = req.cookies.jwt;
+    if (!token) {
+        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
+    }
+    try {
+        //const { productId } = req.body;
+        console.log('eueuue',req.body)
+        const decoded = jwt.verify(token, process.env.SECRETKEY);
+
+        const user = await USER.findById(decoded._id);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+
+
+
+        // let updatedUser;
+        // if (wishlistItem) {
+        //     //removing the product from wishlist if already there
+        //     updatedUser = await USER.findByIdAndUpdate(
+        //         decoded._id,
+        //         { $pull: { wishlist: productId } },
+        //         { new: true }
+        //     ).populate('cartProducts');
+        //     res.status(200).json({ message: 'Product removed from wishlist.', user: updatedUser });
+        // } else {
+        //     //adding the product to wishlist
+        //     updatedUser = await USER.findByIdAndUpdate(
+        //         decoded._id,
+        //         { $push: { wishlist: productId } },
+        //         { new: true }
+        //     ).populate('cartProducts');
+        //     res.status(200).json({ message: 'Product added to wishlist.', user: updatedUser });
+        // }
+
+
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+})
+
 
 
 //SEARCH QUERY-----------------------------------------------
