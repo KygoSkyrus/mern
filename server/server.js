@@ -76,24 +76,7 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
       const paymentIntentSucceeded = event.data.object;
       console.log('succeeded', event)
       console.log('urr', receiptUrl)
-      console.log('meta s-', event.data.object.metadata)
-
-      // event.data.object."customer_details": {
-      //   "address": {
-      //     "city": "delhi",
-      //     "country": "IN",
-      //     "line1": "32",
-      //     "line2": "gdsf vsddfs",
-      //     "postal_code": "443342",
-      //     "state": "JH"
-      //   },
-      //   "email": "dheerajgupta.whyshy@gmail.com",
-      //   "name": "zzz",
-      //   "phone": null,
-      //   "tax_exempt": "none",
-      //   "tax_ids": [
-      //   ]
-      // },
+      console.log('customer details s-', event.data.object.customer_details)
 
       const metadata = event.data.object.metadata
       let order = {}
@@ -130,7 +113,7 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
           { $push: { orders: order } },
           { new: true }
         )//.populate('cartProducts');
-        console.log('updateduuu', updatedUser)
+        //console.log('updateduuu', updatedUser)
 
         const theOrder = new ORDER({
           orderId: metadata.orderId,
@@ -141,22 +124,19 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
           receiptUrl: receiptUrl,
           user: event.data.object.metadata.userId,
           products: prodArray,
-          shippingAddress: event.data.object.customer_details,
-          // status: {
-          //   enum: ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'],
-          //   default: 'Pending',
-          // },
+          shippingAddress: event.data.object.customer_details.address,
           // paymentMethod: {
           //   enum: ['Card', 'PayPal', 'Cash on Delivery', 'Other'],
           //   default: 'Card',
           // },
         })
+        console.log('orderrbfore savimg',theOrder)
         theOrder.save()
           .then(response => {
             console.log('saved order', response)
           })
           .catch(err => {
-            console.log(err)
+            console.log("errror---",err)
           })
 
       } catch (error) {
@@ -186,26 +166,10 @@ if (process.env.NODE_ENV === "production") {
 }
 
 app.use(express.static("client/build"));
-  //UNCOMMENT THIS FOR PRODUCT ONLY
+  //FOR PRODUCTION 
   app.use(express.static(path.join(__dirname, 'client/build')));
   app.get('/*', function (req, res) {//breaking server side
     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
   });
 
 app.listen(port, () => console.log(`server is running at ${port}`));
-
-
-// let order = {
-//   orderId:"",
-//   products: [{
-//     productId: "64c69d66c8b5667ef02f36c5",
-//     name:"Redmi A2 (Sea Green, 2GB RAM, 32GB Storage)",
-//     image:"	https://firebasestorage.googleapis.com/v0/b/shopp-…=media&token=fa8691b3-9d53-45a8-aced-2f92c435a379",
-//     quantity: 3,
-//     discount: 0,
-//     price: 6000
-//   }],
-//   tax: 1800,
-//   shipping: 0,
-//   total: 19800,
-// }
