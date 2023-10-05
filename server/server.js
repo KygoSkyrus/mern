@@ -24,13 +24,13 @@ const USER = require('./models/user')
 // });
 
 // app.use(express.json());
-app.use((req, res, next) => {
-  if (req.originalUrl === '/webhook') {
-    next();
-  } else {
-    express.json()(req, res, next);
-  }
-});
+// app.use((req, res, next) => {
+//   if (req.originalUrl === '/webhook') {
+//     next();
+//   } else {
+//     express.json()(req, res, next);
+//   }
+// });
 
 
 

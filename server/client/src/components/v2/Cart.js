@@ -11,6 +11,7 @@ import { formatInINR } from './Utility';
 import { formatInINRwoSign } from './Utility';
 import emptyCartImg from "./../../assets/images/newImg/collections/emptycart.png"
 import LoginImg from "./../../assets/images/newImg/collections/login.png"
+import theBagLogo from "./../../assets/images/thebaglogo.png";
 
 
 const Cart = () => {
@@ -273,14 +274,16 @@ const Cart = () => {
 
           </div> :
 
-          <div className='container my-5'>
-            <h6 className='text-center my-5'>My Cart</h6>
+          <div className='container cart-page my-5'>
+            <h6 className='text-center my-5 d-flex justify-content-center align-items-center'>My Cart
+              <img alt='' className='ms-2' src={theBagLogo} width="20px" />
+            </h6>
             <div class="row ">
               <div class="col-lg-9 t-mb-30 mb-lg-0 theSection" >
                 <div class="row ">
                   <div class="col-12">
                     <div class="row ">
-                      <div className='row mb-3 p-2 pb-0 border-bottom'>
+                      <div className='row mb-3 p-2 pb-0 border-bottom cart-heading'>
                         <div class="col-md-2"></div>
                         <div class="col-md-10">
                           <div className='d-flex flex-column justify-content-between h-100'>

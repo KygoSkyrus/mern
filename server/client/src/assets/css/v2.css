@@ -2210,11 +2210,24 @@ main {
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
+
+
   .follow {
     justify-content: flex-start;
   }
   .follow li {
     margin-right: 10px;
   }
+
+
+  /* CART page */
+  .cart-heading{
+    display: none;
+  }
+  .slick-arrow{
+    display: none !important;
+  }
+
+
 }
 /* RESPONSIVE */

@@ -133,6 +133,9 @@ https://dr5hn.github.io/countries-states-cities-database/
 
 // box-shadow: 1px 7px 14px -5px rgba(0,0,0,0.2);
 
+
+- show HOME > Order > order id for order page
+
 # CATEGORY
 
 - we can have categories like in skyblog,,but whats the point of repeating the same stuff,,
