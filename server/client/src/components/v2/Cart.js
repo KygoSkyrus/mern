@@ -282,7 +282,7 @@ const Cart = () => {
               <div class="col-lg-9 t-mb-30 mb-lg-0 theSection" >
                 <div class="row ">
                   <div class="col-12">
-                    <div class="row ">
+                    <div class="row ci-holder">
                       <div className='row mb-3 p-2 pb-0 border-bottom cart-heading'>
                         <div class="col-md-2"></div>
                         <div class="col-md-10">
@@ -317,18 +317,18 @@ const Cart = () => {
                       {cartItems.map((x, i) => {
                         return (
                           <>
-                            <div key={x._id} className='row  p-2 '>
+                            <div key={x._id} className='row  p-2 ci'>
                               <div class="col-md-2">
                                 <div className='d-flex justify-content-center'>
                                   <img src={x.image} alt='' className='img-fluidt-minw-215' style={{ maxHeight: "100px" }} />
                                 </div>
                               </div>
 
-                              <div class="col-md-10">
+                              <div class="col-md-10 ci-detail">
                                 <div className='d-flex flex-column justify-content-between h-100'>
                                   <div className='row d-flex justify-content-between'>
 
-                                    <div class="col-md-4">
+                                    <div class="col-md-4 ci-name">
                                       <Link to={`/product/${x._id}`} style={{ color: "inherit" }}>
                                         <h6>
                                           {x.name}
@@ -338,7 +338,7 @@ const Cart = () => {
                                           : <span className='text-danger'>Out of stock</span>}
                                       </Link>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 ci-price">
                                       <div className='d-flex align-items-end flex-column' style={{ width: "fit-content" }}>
                                         <section>
                                           <span style={{ fontSize: "12px" }}>&#8377;</span>
@@ -353,7 +353,7 @@ const Cart = () => {
 
                                       </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-3 ci-quantity">
 
                                       <div className='border d-flex row rounded-pill' style={{ width: "fit-content" }}>
                                         <span className='py-1 col-4 pointer' onClick={() => updateQuantity(x._id, "-", i, x.price, x.discount)} >-</span>
@@ -361,7 +361,7 @@ const Cart = () => {
                                         <span className='py-1 col-4 pointer' onClick={() => updateQuantity(x._id, "+", i, x.price, x.discount)}>+</span>
                                       </div>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 ci-total">
                                       <div>
                                         <span style={{ fontSize: "12px" }}>&#8377;</span>
                                         <span className='fs-6' ref={totalAmtRefs.current[i]}>{formatInINRwoSign.format(Math.floor(x.price - x.discount * x.price / 100) * tempObj[x._id])}</span>
@@ -372,10 +372,10 @@ const Cart = () => {
                                 </div>
                               </div>
 
-                            </div>
-                            <div className='d-flex justify-content-end mb-3 border-bottom pb-3'>
-                              <u><span onClick={() => removeFromCart(x._id)} className='me-4 pointer'>Remove <i class="fa fa-trash fa-sm"></i></span></u>
-                              {!wishlistItems?.includes(x._id) && <u><span className='me-4 pointer' onClick={() => movetowishlist(x._id)}>Move to wishlist <i class="fa fa-heart fa-sm"></i></span></u>}
+                              <div className='d-flex justify-content-end mb-3 border-bottom pb-3 ci-remove'>
+                                <u><span onClick={() => removeFromCart(x._id)} className='me-4 pointer'>Remove <i class="fa fa-trash fa-sm"></i></span></u>
+                                {!wishlistItems?.includes(x._id) && <u><span className='me-4 pointer' onClick={() => movetowishlist(x._id)}>Move to wishlist <i class="fa fa-heart fa-sm"></i></span></u>}
+                              </div>
                             </div>
                           </>
                         )

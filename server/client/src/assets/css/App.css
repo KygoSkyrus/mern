@@ -149,7 +149,6 @@
   width: 50%;
 }
 
-
 /******************************************** responsive**********************************************/
 @media (max-width: 991px) {
   .abc {
@@ -204,9 +203,7 @@
     margin-left: 5px;
     font-size: 16px;
   }
-  .price {
-    width: 80px;
-  }
+
   .qty {
     width: 30px;
     height: 30px;

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useDispatch,useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setUserDetails } from './redux/userSlice';
 import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSlice';
 
@@ -51,7 +51,7 @@ const ProductPage = () => {
                 return response.json()
             })
             .then(res => {
-                console.log('res add to cart',res)
+                console.log('res add to cart', res)
                 if (resp.status === 200) {
                     dispatch(setToastStatus({ isSuccess: true }))
                     dispatch(setUserDetails({ user: res.user }))
@@ -78,7 +78,7 @@ const ProductPage = () => {
                 return response.json()
             })
             .then(res => {
-                console.log('res add to wishlist',res)
+                console.log('res add to wishlist', res)
                 if (resp.status === 200) {
                     dispatch(setToastStatus({ isSuccess: true }))
                     dispatch(setUserDetails({ user: res.user }))
@@ -98,7 +98,7 @@ const ProductPage = () => {
                     <div class="row t-mb-30">
                         <div class="col-md-6 p-img-sticky" >
                             <div class="product--left-img t-flex-100 t-mb-30 mb-md-0">
-                                <div className='row'>
+                                <div className='row '>
                                     <div className='additional-images row col-md-2'>
                                         {product.image.map((x, i) => {
                                             return (
@@ -156,9 +156,9 @@ const ProductPage = () => {
                                 <div className='d-flex gap-2 mt-3'>
                                     <button className='btn buy-btn'>Buy Now</button>
                                     <button className='btn cart-btn' onClick={addToCart}>Add to cart</button>
-                                    <button className='btn wishlist-btn' onClick={updatewishlist} title={wishlistItems?.includes(product._id)? "Remove from wishlist":"Add to wishlist"}>                                    
+                                    <button className='btn wishlist-btn' onClick={updatewishlist} title={wishlistItems?.includes(product._id) ? "Remove from wishlist" : "Add to wishlist"}>
                                         <i class={`fa fa-heart ${wishlistItems?.includes(product._id) && "text-danger"}`}></i>
-                                        </button>
+                                    </button>
                                 </div>
 
                                 <div class="mt-4 offers">
@@ -178,7 +178,7 @@ const ProductPage = () => {
 
                                 <div className='description'>
                                     <h5 class="grey mb-3">Description</h5>
-                                    <p class="mb-0 d-none d-lg-block ">
+                                    <p class="mb-0">
                                         <ul>
                                             {product.description.split("--").map(x => {
                                                 return (

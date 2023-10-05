@@ -611,48 +611,41 @@ img {
 } */
 /*---------------=====================----------- TOAST --------------------======================----------------*/
 
-
-
-
 /***************--------------------*************** ORDER LIST **************-------------------***************/
-.order-lis-imgs{
+.order-lis-imgs {
   width: 100px;
 }
-.order-lis-imgs img{
+.order-lis-imgs img {
   max-height: 38px;
   /* width: 44px; */
   border-radius: 0.375rem;
 }
-.order-lis-imgs span{
+.order-lis-imgs span {
   background-color: #fff;
-    border: 1px solid var(--bs-border-color);
-    border-radius: 0.375rem;
-    height: 40px;
-    width: 44px;
-    display: grid;
-    place-items: center;
+  border: 1px solid var(--bs-border-color);
+  border-radius: 0.375rem;
+  height: 40px;
+  width: 44px;
+  display: grid;
+  place-items: center;
 }
-.order-lis-imgs div{
+.order-lis-imgs div {
   background-color: #fff;
   border: 1px solid var(--bs-border-color);
   border-radius: 0.375rem;
   max-height: 40px;
-    height: 40px;
-    width: 44px;
-    display: grid;
-    place-items: center;
+  height: 40px;
+  width: 44px;
+  display: grid;
+  place-items: center;
 }
-.order-lis-imgs .ifOne{
+.order-lis-imgs .ifOne {
   width: 88px;
   max-height: 80px;
   height: 80px;
 }
 
 /***************--------------------*************** ORDER LIST **************-------------------***************/
-
-
-
-
 
 /******************************************** signin.js **********************************************/
 input::-webkit-outer-spin-button,
@@ -882,8 +875,8 @@ input[type="number"]::-webkit-outer-spin-button {
   background-color: inherit;
   padding-bottom: 25px;
 }
-.card2.withborder{
-  border:var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+.card2.withborder {
+  border: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
   box-shadow: var(--shadow-medium) !important;
 }
 .card-tag {
@@ -999,10 +992,10 @@ input[type="number"]::-webkit-outer-spin-button {
 /* rating stars starts */
 
 /* for related products */
-.withborder .product-price{
+.withborder .product-price {
   font-size: 12px;
 }
-.withborder .product-price .discount-percent{
+.withborder .product-price .discount-percent {
   font-size: 10px;
 }
 /* .slick-prev:before, .slick-next:before{
@@ -1052,6 +1045,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .description li {
   display: flex;
+  text-wrap: nowrap;
 }
 .description .disc {
   transform: translateX(-12px);
@@ -2210,8 +2204,6 @@ main {
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
-
-
   .follow {
     justify-content: flex-start;
   }
@@ -2219,15 +2211,86 @@ main {
     margin-right: 10px;
   }
 
-
   /* CART page */
-  .cart-heading{
+  .cart-page {
+    margin: 0;
+  }
+  .cart-page > h6 {
+    margin: 32px 0 22px 0 !important;
+  }
+  .cart-heading {
     display: none;
   }
-  .slick-arrow{
+  .ci-holder {
+    padding: 0 16px !important;
+    display: flex;
+    justify-content: center;
+  }
+  .ci {
+    position: relative;
+    box-shadow: var(--shadow-small);
+    background: #fff;
+    border-radius: 4px;
+    margin: 6px 0;
+  }
+  .ci-name h6 {
+    text-wrap: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .ci-price {
+    display: none;
+  }
+  .ci-total,
+  .ci-quantity {
+    display: flex;
+    justify-content: end;
+  }
+  .ci-quantity div {
+    margin-right: -4px;
+  }
+  .ci-remove {
+    position: absolute;
+    bottom: 0;
+    left: 7px;
+    width: fit-content;
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 10px !important;
+  }
+  /* CART page */
+
+  /* PRODUCT page */
+  .p-img-sticky {
+    position: static;
+  }
+  .product--left-img > .row {
+    flex-direction: column-reverse;
+  }
+  .additional-images {
+    flex-direction: row;
+  }
+  .additional-images img {
+    width: 50px !important;
+  }
+  .product--right-content .post__title {
+    text-wrap: unset;
+  }
+  .offers p,
+  .services p {
+    text-wrap: unset;
+    margin: 0 0 8px 8px;
+  }
+  .description ul {
+    padding-left: 24px;
+  }
+  .description li {
+    text-wrap: wrap;
+  }
+  /* PRODUCT page */
+
+  .slick-arrow {
     display: none !important;
   }
-
-
 }
 /* RESPONSIVE */
