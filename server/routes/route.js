@@ -462,8 +462,8 @@ router.post('/api/updatedaddress', async (req, res) => {
         return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
     }
     try {
-        //const { productId } = req.body;
-        console.log('eueuue',req.body)
+        const { address } = req.body;
+        console.log('eueuue',address)
         const decoded = jwt.verify(token, process.env.SECRETKEY);
 
         const user = await USER.findById(decoded._id);
@@ -472,26 +472,17 @@ router.post('/api/updatedaddress', async (req, res) => {
         }
 
 
+// if()
 
+        let updatedUser;
 
-        // let updatedUser;
-        // if (wishlistItem) {
-        //     //removing the product from wishlist if already there
-        //     updatedUser = await USER.findByIdAndUpdate(
-        //         decoded._id,
-        //         { $pull: { wishlist: productId } },
-        //         { new: true }
-        //     ).populate('cartProducts');
-        //     res.status(200).json({ message: 'Product removed from wishlist.', user: updatedUser });
-        // } else {
-        //     //adding the product to wishlist
-        //     updatedUser = await USER.findByIdAndUpdate(
-        //         decoded._id,
-        //         { $push: { wishlist: productId } },
-        //         { new: true }
-        //     ).populate('cartProducts');
-        //     res.status(200).json({ message: 'Product added to wishlist.', user: updatedUser });
-        // }
+            updatedUser = await USER.findByIdAndUpdate(
+                decoded._id,
+                { address: address, phone:(user.phone!==address.phone)?address.phone:user.phone },
+                { new: true }
+            ).populate('cartProducts');
+            res.status(200).json({ message: 'User details updated.', user: updatedUser });
+      
 
 
 
