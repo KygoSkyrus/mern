@@ -32,7 +32,7 @@ const USER = require('./models/user')
 //   }
 // });
 
-
+app.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf } }))
 
 const db = process.env.dbURI;
 const port = process.env.PORT || 4000;
@@ -59,7 +59,7 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
   let event;
 
   try {
-    event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+    event = stripe.webhooks.constructEvent(request.rawBody, sig, endpointSecret);
   } catch (err) {
     console.log('eeeeerrrr', err)//bug here
     return response.status(400).send(`Webhook Error: ${err.message}`);
@@ -130,13 +130,13 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
           //   default: 'Card',
           // },
         })
-        console.log('orderrbfore savimg',theOrder)
+        console.log('orderrbfore savimg', theOrder)
         theOrder.save()
           .then(response => {
             console.log('saved order', response)
           })
           .catch(err => {
-            console.log("errror---",err)
+            console.log("errror---", err)
           })
 
       } catch (error) {
@@ -166,10 +166,10 @@ if (process.env.NODE_ENV === "production") {
 }
 
 app.use(express.static("client/build"));
-  //FOR PRODUCTION 
-  app.use(express.static(path.join(__dirname, 'client/build')));
-  app.get('/*', function (req, res) {//breaking server side
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-  });
+//FOR PRODUCTION 
+app.use(express.static(path.join(__dirname, 'client/build')));
+app.get('/*', function (req, res) {//breaking server side
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
 
 app.listen(port, () => console.log(`server is running at ${port}`));
