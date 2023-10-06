@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserDetails } from './redux/userSlice';
 import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSlice';
 
+import RelatedProducts from './RealtedProducts'
 
 const ProductPage = () => {
 
@@ -13,6 +14,8 @@ const ProductPage = () => {
     const [product, setProduct] = useState()
 
     const wishlistItems = useSelector(state => state.user.user.wishlist)
+    const catSubcatRelation = useSelector(state=>state.product.catSubcatRelation)
+    console.log('catSubcatRelation',catSubcatRelation)
 
     console.log('product id', productId)
     useEffect(() => {
@@ -114,19 +117,7 @@ const ProductPage = () => {
                         </div>
                         <div class="col-md-6">
                             <div class="product--right-content t-flex-100">
-                                <ul class="list d-flex align-items-center ps-0">
-                                    <li class="t-mr-16">
-                                        <a class="t-link t-link--light tag tag--skew tag-epsilon text-uppercase" href="/category/lifestyle">
-                                            <span class="tag__skew-reverse">{product.category}</span>
-                                        </a>
-                                    </li>
-                                    <li class="t-mr-16">
-                                        <span class="t-link t-link--secondary ex-sm-text text-capitalize">
-                                            <span class="las la-clock sm-text"></span>10 min read
-                                        </span>
-                                    </li>
-
-                                </ul>
+                            <h6 className='navigation-q text-capitalize'><Link to='/' >Home</Link> {catSubcatRelation[product.category] && (<><span></span> {catSubcatRelation[product.category]}</>)} <span></span> {product.category}</h6>
                                 <h4 class="post__title t-mt-10 t-md-34-lg-1875">
                                     <a class="t-link t-link--secondary" href="/">{product.name}</a>
                                 </h4>
@@ -198,26 +189,7 @@ const ProductPage = () => {
                 </div>
                 :
                 <div>...Loading your product</div>}
-            {/* <div className='container bx'>
-                <div className='row'>
-                    <div className='col-12'>
-                        <div className='row'>
-                            <div className='col-md-6 col-lg-6'>
-                                <div className='prod-left'>
-                                    <img src={product?.image[0]} alt=''/>
-
-                                </div>
-                            </div>
-                            <div className='col-md-6 col-lg-6'>
-                                <div className='prod-right'>
-                                    <h1>{product?.name}</h1>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> */}
+           <RelatedProducts />
         </>
     )
 }

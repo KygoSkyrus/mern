@@ -265,6 +265,8 @@ const SignIn = ({ firebaseApp }) => {
         if (form === 'signin') {
             signin.classList.remove('hideLoginForm')
             signup.classList.add('hideSignupForm')
+            signup.style.display="none !important"
+            signup.style.background="red"
         } else {
             signup.classList.remove('hideSignupForm')
             signin.classList.add('hideLoginForm')

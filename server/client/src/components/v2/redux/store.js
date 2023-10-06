@@ -1,7 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
+
 import {productFormVisibilityReducer,productFormReducer, isUpdatedReducer} from './todoSlice';
 import { userReducer } from './userSlice';
-//import {productFormReducer} from './todoSlice';
+import { productReducer } from './productSlice';
 
 const store = configureStore({
     reducer: {
@@ -9,6 +10,7 @@ const store = configureStore({
       productForm:productFormReducer,
       isUpdated:isUpdatedReducer,
       user:userReducer,
+      product:productReducer
     }
 })
 export default store; 

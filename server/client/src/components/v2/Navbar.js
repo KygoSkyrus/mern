@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
+
+import { setCatSubcatRelation } from "./redux/productSlice";
 
 import theBagLogo from "./../../assets/images/thebaglogo.png";
 
@@ -9,6 +11,7 @@ const Navbar = () => {
   const [childWithoutParent, setChildWithoutParent] = useState([]);
   const [searchedItems, setSearchedItems] = useState()
 
+  const dispatch=useDispatch()
   const isUserLoggedIn = useSelector((state) => state.user.isUserLoggedIn);
   const cart = useSelector((state) => state.user.user.cart);
 
@@ -25,7 +28,6 @@ const Navbar = () => {
     );
   };
 
-  //NOTE::: cannot have two columns for categories as on over on lement ffrom 1st col ypu wont be able to react the subcategory,,either put all of your subcate at theright side or separate the prent cat and cate without parent
 
   useEffect(() => {
     fetch("/api/getcategory")
@@ -45,17 +47,21 @@ const Navbar = () => {
         //without parent - 11
         // parent category - 14
         //this can be moved to down in jsx
+        let catSubcatRelation={}
         res.map((x) => {
           if (x.subCategory.length > 0) {
             x.subCategory.map((y, i) => {
+              catSubcatRelation[y]=x.name;
               if (tempArray.includes(y.toLowerCase())) {
-                tempArray.splice(tempArray.indexOf(y.toLowerCase()), 1); //removing subcat
+                tempArray.splice(tempArray.indexOf(y.toLowerCase()), 1); //removing subcat from main list
               }
             });
             tempArray.splice(tempArray.indexOf(x.name.toLowerCase()), 1); //finally removing the parent category after subcat is removed
           }
         });
-        console.log("s", tempArray);
+        console.log("s", tempArray,catSubcatRelation);
+        dispatch(setCatSubcatRelation({val:catSubcatRelation}))//dispatch child parent relation to use on product page and in navifgation queue where ever reqjired
+       
         // setCategoriesAndID({ ...categoriesAndID, ...tempObject })//it has all categories and their id in an object, if to remove alos reove tempobj
         setChildWithoutParent([...childWithoutParent, ...tempArray]);
       });

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams,Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 
 import { setUserDetails } from './redux/userSlice';
@@ -86,9 +86,9 @@ const Category = () => {
 
     return (
         <>
-            <div>Category</div>
 
-            <div className='container bx'>
+            <div className='container bx category-page my-5'>
+            <h6 className='navigation-q text-capitalize'><Link to='/' >Home</Link> <span></span> {categoryId}</h6>
                 <div className='row'>
                     <div className='col-12'>
                         <div className='row'>
