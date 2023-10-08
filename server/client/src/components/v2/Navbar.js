@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { setCatSubcatRelation } from "./redux/productSlice";
 
@@ -11,7 +11,7 @@ const Navbar = () => {
   const [childWithoutParent, setChildWithoutParent] = useState([]);
   const [searchedItems, setSearchedItems] = useState()
 
-  const dispatch=useDispatch()
+  const dispatch = useDispatch()
   const isUserLoggedIn = useSelector((state) => state.user.isUserLoggedIn);
   const cart = useSelector((state) => state.user.user.cart);
 
@@ -47,11 +47,11 @@ const Navbar = () => {
         //without parent - 11
         // parent category - 14
         //this can be moved to down in jsx
-        let catSubcatRelation={}
+        let catSubcatRelation = {}
         res.map((x) => {
           if (x.subCategory.length > 0) {
             x.subCategory.map((y, i) => {
-              catSubcatRelation[y]=x.name;
+              catSubcatRelation[y] = x.name;
               if (tempArray.includes(y.toLowerCase())) {
                 tempArray.splice(tempArray.indexOf(y.toLowerCase()), 1); //removing subcat from main list
               }
@@ -59,9 +59,9 @@ const Navbar = () => {
             tempArray.splice(tempArray.indexOf(x.name.toLowerCase()), 1); //finally removing the parent category after subcat is removed
           }
         });
-        console.log("s", tempArray,catSubcatRelation);
-        dispatch(setCatSubcatRelation({val:catSubcatRelation}))//dispatch child parent relation to use on product page and in navifgation queue where ever reqjired
-       
+        console.log("s", tempArray, catSubcatRelation);
+        dispatch(setCatSubcatRelation({ val: catSubcatRelation }))//dispatch child parent relation to use on product page and in navifgation queue where ever reqjired
+
         // setCategoriesAndID({ ...categoriesAndID, ...tempObject })//it has all categories and their id in an object, if to remove alos reove tempobj
         setChildWithoutParent([...childWithoutParent, ...tempArray]);
       });
@@ -306,6 +306,7 @@ const Navbar = () => {
                     data-bs-toggle="modal"
                     href="#exampleModalToggle"
                     role="button"
+                    data-bs-target="#exampleModalToggle"
                   >
                     SignIn
                   </a>

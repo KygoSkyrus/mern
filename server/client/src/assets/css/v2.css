@@ -662,16 +662,15 @@ input[type="number"] {
 }
 
 .signin .modal-body {
-  max-width: 80%;
+  /* max-width: 80%;
   width: 100%;
-  margin: auto;
+  margin: auto; */
 }
 .continue-with {
 }
 .continue-with span {
   background: white;
   position: relative;
-  z-index: 1;
   padding: 0 10px;
 }
 .continue-with section {
@@ -685,9 +684,16 @@ input[type="number"] {
 .signup-form,
 .signin-form {
   transition: var(--transition);
+  position: absolute;
+  width: 50%;
+  padding: 0px 50px;
 }
 .signin-form {
-  transform: translate(0, -100%);
+  right: 0;
+  opacity: 1;
+}
+.signup-form {
+  left: 0;
   opacity: 1;
 }
 .hideLoginForm {
@@ -701,6 +707,10 @@ input[type="number"] {
   transform: translate(-135%, 0);
   z-index: -1;
   opacity: 0;
+}
+
+.uns{
+  transform: unset !important;
 }
 /******************************************** signin.js **********************************************/
 
@@ -2346,7 +2356,36 @@ main {
 }
 .signin .modal-content > div{
   width: 100% !important;
+  justify-content: center;
+  background-color: inherit !important;
 }
+.signin .modal-content > div img{
+  width: 250px;
+}
+
+
+
+
+.signin-form {
+  transform: unset;
+  opacity: unset;
+}
+.signin-form h5{
+  text-align: center;
+}
+.hideLoginForm {
+  position: relative;
+  transform: unset;
+  z-index: unset;
+  opacity: unset;
+}
+.hideSignupForm {
+  position: relative;
+  transform: unset;
+  z-index: unset;
+  opacity: unset;
+}
+
   /* SIGNIN Modal */
 
 }

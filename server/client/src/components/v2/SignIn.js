@@ -259,19 +259,63 @@ const SignIn = ({ firebaseApp }) => {
 
 
     const toggleSignIn = (form) => {
-        console.log('djdj')
         let signin = document.querySelector('.signin-form')
         let signup = document.querySelector('.signup-form')
         if (form === 'signin') {
-            signin.classList.remove('hideLoginForm')
-            signup.classList.add('hideSignupForm')
-            signup.style.display="none !important"
-            signup.style.background="red"
+                signup.style.left='0'
+                signin.style.right='0'
         } else {
-            signup.classList.remove('hideSignupForm')
-            signin.classList.add('hideLoginForm')
+            signup.style.left='50%'
+            signin.style.right='50%'
         }
     }
+    if (2 > 1)
+        return (
+            <div class="modal fade signin" id="exampleModalToggle" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered w-75">
+                    <div className="modal-content " style={{width:"80vw"}}>
+
+                        <div className="modal-body d-flex flex-row p-0 position-relative">
+                            <div className='w-50 d-flex bg-dark' style={{ zIndex: 1 }}>
+                                <img src={loginImg} alt='' />
+                            </div>
+                            <div className='w-50' >
+                                <div className='signup-form d-flex justify-content-center align-items-center flex-column h-100' >
+                                    <h5 className='text-dark'>Create an account</h5>
+                                    <section>Enter your email below to create your account</section>
+                                    <input type="email" className="form-control my-2" name="email" id="email" placeholder="Email address" aria-describedby="emailHelp" value={email.signupEmail} onChange={(e) => setemail({ ...email, signupEmail: e.target.value })} />
+                                    <button className='btn btn-outline-warning w-100' onClick={emailVerification}>Create account</button>
+
+                                    <section className='my-3 text-end w-100 pointer' onClick={() => toggleSignIn('signin')}>Exsiting user? Signin</section>
+                                    <section className='continue-with position-relative w-100 text-center'>
+                                        <span >OR CONTINUE WITH</span>
+                                        <section></section>
+                                    </section>
+
+                                    <button className='btn btn-outline-info w-100 m-2' onClick={() => goWithGoogle('signup')}>Google</button>
+                                </div>
+
+                                <div className={`signin-form d-flex justify-content-center align-items-center flex-column h-100 ${window.outerWidth < 768 && 'd-none'}`} >
+                                    <h5 className='text-dark'>SignIn to your account</h5>
+                                    <section>Enter your email and password to signin to your account</section>
+                                    <input type="email" className="form-control my-2" name="email" id="email" placeholder="Email address" aria-describedby="emailHelp" value={email.signinEmail} onChange={(e) => setemail({ ...email, signinEmail: e.target.value })} />
+                                    <input type="password" className="form-control" id="password" name="password" placeholder="Password*" value={password} onChange={(e) => setpassword(e.target.value)} />
+                                    <button className='btn btn-outline-warning w-100 my-2' onClick={emailVerification}>Sign In</button>
+
+                                    <section className='my-3 text-end w-100 pointer' onClick={() => toggleSignIn('signup')}>New user? Create an account</section>
+                                    <section className='continue-with position-relative w-100 text-center'>
+                                        <span >OR CONTINUE WITH</span>
+                                        <section></section>
+                                    </section>
+
+                                    <button className='btn btn-outline-info w-100 m-2' onClick={() => goWithGoogle('signin')}>Google</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
 
     return (
         <>
@@ -300,9 +344,9 @@ const SignIn = ({ firebaseApp }) => {
                                     <button className='btn btn-outline-info w-100 m-2' onClick={() => goWithGoogle('signup')}>Google</button>
                                 </div>
 
-                                <div className='signin-form hideLoginForm d-flex justify-content-center align-items-center flex-column h-100'>
+                                <div className={`signin-form hideLoginForm d-flex justify-content-center align-items-center flex-column h-100 ${window.outerWidth < 768 && 'd-none'}`} >
                                     <h5 className='text-dark'>SignIn to your account</h5>
-                                    <section>Enter your email below to create your account</section>
+                                    <section>Enter your email and password to signin to your account</section>
                                     <input type="email" className="form-control my-2" name="email" id="email" placeholder="Email address" aria-describedby="emailHelp" value={email.signinEmail} onChange={(e) => setemail({ ...email, signinEmail: e.target.value })} />
                                     <input type="password" className="form-control" id="password" name="password" placeholder="Password*" value={password} onChange={(e) => setpassword(e.target.value)} />
                                     <button className='btn btn-outline-warning w-100 my-2' onClick={emailVerification}>Sign In</button>

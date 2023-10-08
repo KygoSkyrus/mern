@@ -32,7 +32,7 @@ const USER = require('./models/user')
 //   }
 // });
 
-app.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf } }))
+// app.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf } }))
 
 const db = process.env.dbURI;
 const port = process.env.PORT || 4000;
@@ -59,7 +59,8 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
   let event;
 
   try {
-    event = stripe.webhooks.constructEvent(request.rawBody, sig, endpointSecret);
+    // event = stripe.webhooks.constructEvent(request.rawBody, sig, endpointSecret);
+    event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
   } catch (err) {
     console.log('eeeeerrrr', err)//bug here
     return response.status(400).send(`Webhook Error: ${err.message}`);
