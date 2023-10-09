@@ -448,6 +448,12 @@ img {
   background: #0000008c;
 }
 
+.categoryListsHolder{
+  position: absolute;
+  right: 0px;
+  display: flex;
+  border-radius: 0.375rem;
+}
 .withoutParentUl {
   border-right: 0;
   border-bottom-right-radius: 0;
@@ -2372,11 +2378,51 @@ main {
     padding-left: 10px;
 }
 
+.categoryListsHolder{
+  display: block;
+  width: 100%;
+  position: relative;
+  border-radius: 0.375rem;
+  box-shadow: var(--shadow-medium) !important;
+}
+.withoutParentUl{
+  padding-bottom: 0;
+  border-radius:  0 !important;
+  border: 0;
+}
+.withParentUl{
+  padding-top: 0;
+  background-color: unset ;
+  border-radius: 0  !important;
+  border: 0;
+}
+.dropdown:hover > .child-category-m {
+  display: block !important;
+  width: 100%;
+  box-shadow: var(--shadow-small) !important;
+}
+.parentCategoryList .grtrArrow{
+  top: 14px;
+}
+.parentCategoryList:hover section {
+  padding-right: 1.8rem;
+  padding-bottom: 11px;
+}
+.parentCat{
+  flex-direction: column;
+}
 .profileDropdownUL{
   box-shadow: none !important;
 }
  /* NABAR  */
 
+
+ /* USER */
+.user-form{
+  box-shadow: unset;
+    background-color: unset;
+}
+ /* USER */
 
 }
 /* ---------------RESPONSIVE------------------------------------------------------------------------- */

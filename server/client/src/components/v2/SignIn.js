@@ -283,6 +283,7 @@ const SignIn = ({ firebaseApp }) => {
             <div class="modal fade signin" id="exampleModalToggle" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered w-75">
                     <div className="modal-content " style={{width:"80vw"}}>
+                    <button type="button" id='closeSignin' class="btn-close d-none" data-bs-dismiss="modal" aria-label="Close"></button>
 
                         <div className="modal-body d-flex flex-row p-0 position-relative">
                             <div className='w-50 signin-img d-flex bg-dark' style={{ zIndex: 2 }}>

@@ -62,7 +62,6 @@ const Navbar = () => {
         console.log("s", tempArray, catSubcatRelation);
         dispatch(setCatSubcatRelation({ val: catSubcatRelation }))//dispatch child parent relation to use on product page and in navifgation queue where ever reqjired
 
-        // setCategoriesAndID({ ...categoriesAndID, ...tempObject })//it has all categories and their id in an object, if to remove alos reove tempobj
         setChildWithoutParent([...childWithoutParent, ...tempArray]);
       });
   }, []);
@@ -74,16 +73,23 @@ const Navbar = () => {
     childCategoryElem.innerHTML = ""; //clearing the previous subCat
     childCategoryElem.classList.remove("display-none");
 
+    let ul=e.target.childNodes[1]
+    if(ul) ul.innerHTML=""
     categories[e.target.dataset.index]?.subCategory?.map((x) => {
       let li = document.createElement("li");
       let a = document.createElement("a");
-      console.log("fff", x.toLowerCase());
+      // console.log("fff", x.toLowerCase());
       a.href = `/category/${x}`;
       a.innerHTML = x;
       a.classList.add("dropdown-item", "gap-2", "d-flex");
       li.appendChild(a);
-      childCategoryElem.appendChild(li);
-    });
+
+      if(window.outerWidth<992){
+        ul.appendChild(li)
+      }else{
+        childCategoryElem.appendChild(li);
+      }
+    });    
   };
 
   const clearSubCategory = (e) => {
@@ -229,7 +235,6 @@ const Navbar = () => {
               <li className="nav-item position-relative dropdown">
                 <button
                   type="button"
-                  // className="nav-link" id="dropdownCategory" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside"
                   class="nav-link dropdown-toggle"
                   id="dropdownCategory"
                   data-mdb-toggle="dropdown"
@@ -237,10 +242,8 @@ const Navbar = () => {
                 >
                   Category
                 </button>
-                {/* here put the categoires dynamicaaly and on hover of these categpries there will be the subcategpry will be shown only if the subcategory is avaible and put the subcategory there on hover,,,have to create the subcategory dropdown manuallty though */}
                 <div
-                  className="shadow"
-                  style={{ position: "absolute", right: 0, display: "flex" }}
+                  className="shadow categoryListsHolder"
                   onMouseLeave={(e) => clearSubCategory(e)}
                 >
                   <ul
@@ -281,12 +284,13 @@ const Navbar = () => {
                               className="parentCategoryList"
                               onMouseOver={(e) => populateSubCategory(e)}
                             >
-                              <span></span>
+                              <span className="grtrArrow"></span>
                               <section
-                                className="dropdown-item gap-2 d-flex"
+                                className="dropdown-item dropdown gap-2 d-flex parentCat"
                                 data-index={i}
                               >
                                 {x.name}
+                                <ul class="child-category-m dropdown-menu shadow d-none"></ul>
                               </section>
                             </li>
                           );
