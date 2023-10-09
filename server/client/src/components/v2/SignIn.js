@@ -262,27 +262,36 @@ const SignIn = ({ firebaseApp }) => {
         let signin = document.querySelector('.signin-form')
         let signup = document.querySelector('.signup-form')
         if (form === 'signin') {
+            if(window.outerWidth<768){
+                signup.classList.add('d-none')
+                signin.classList.remove('d-none')
+            }else{
                 signup.style.left='0'
                 signin.style.right='0'
+            }
         } else {
-            signup.style.left='50%'
-            signin.style.right='50%'
+            if(window.outerWidth<768){
+                signup.classList.remove('d-none')
+                signin.classList.add('d-none')
+            }else{
+                signup.style.left='50%'
+                signin.style.right='50%'
+            }
         }
     }
-    if (2 > 1)
         return (
             <div class="modal fade signin" id="exampleModalToggle" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered w-75">
                     <div className="modal-content " style={{width:"80vw"}}>
 
                         <div className="modal-body d-flex flex-row p-0 position-relative">
-                            <div className='w-50 d-flex bg-dark' style={{ zIndex: 1 }}>
+                            <div className='w-50 signin-img d-flex bg-dark' style={{ zIndex: 2 }}>
                                 <img src={loginImg} alt='' />
                             </div>
-                            <div className='w-50' >
+                            <div className='w-50 forms-holder' >
                                 <div className='signup-form d-flex justify-content-center align-items-center flex-column h-100' >
                                     <h5 className='text-dark'>Create an account</h5>
-                                    <section>Enter your email below to create your account</section>
+                                    <section className='text-center'>Enter your email below to create your account</section>
                                     <input type="email" className="form-control my-2" name="email" id="email" placeholder="Email address" aria-describedby="emailHelp" value={email.signupEmail} onChange={(e) => setemail({ ...email, signupEmail: e.target.value })} />
                                     <button className='btn btn-outline-warning w-100' onClick={emailVerification}>Create account</button>
 
@@ -297,7 +306,7 @@ const SignIn = ({ firebaseApp }) => {
 
                                 <div className={`signin-form d-flex justify-content-center align-items-center flex-column h-100 ${window.outerWidth < 768 && 'd-none'}`} >
                                     <h5 className='text-dark'>SignIn to your account</h5>
-                                    <section>Enter your email and password to signin to your account</section>
+                                    <section className='text-center'>Enter your email and password to signin to your account</section>
                                     <input type="email" className="form-control my-2" name="email" id="email" placeholder="Email address" aria-describedby="emailHelp" value={email.signinEmail} onChange={(e) => setemail({ ...email, signinEmail: e.target.value })} />
                                     <input type="password" className="form-control" id="password" name="password" placeholder="Password*" value={password} onChange={(e) => setpassword(e.target.value)} />
                                     <button className='btn btn-outline-warning w-100 my-2' onClick={emailVerification}>Sign In</button>
@@ -317,95 +326,7 @@ const SignIn = ({ firebaseApp }) => {
             </div>
         )
 
-    return (
-        <>
-            <div className="modal fade signin" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
-                <div className="modal-dialog modal-dialog-centered w-75" style={{ maxWidth: "80%" }}>
-                    <div className="modal-content d-flex flex-row">
-                        <div className='w-50 d-flex bg-dark' style={{ zIndex: 1 }}>
-                            <img src={loginImg} alt='' />
-                        </div>
-                        <div className='w-50'>
-                            <button type="button" className="d-none" data-bs-dismiss="modal" aria-label="Close" id="closeSignin"></button>
-
-                            <div className="modal-body h-100">
-                                <div className='signup-form d-flex justify-content-center align-items-center flex-column h-100'>
-                                    <h5 className='text-dark'>Create an account</h5>
-                                    <section>Enter your email below to create your account</section>
-                                    <input type="email" className="form-control my-2" name="email" id="email" placeholder="Email address" aria-describedby="emailHelp" value={email.signupEmail} onChange={(e) => setemail({ ...email, signupEmail: e.target.value })} />
-                                    <button className='btn btn-outline-warning w-100' onClick={emailVerification}>Create account</button>
-
-                                    <section className='my-3 text-end w-100 pointer' onClick={() => toggleSignIn('signin')}>Exsiting user? Signin</section>
-                                    <section className='continue-with position-relative w-100 text-center'>
-                                        <span >OR CONTINUE WITH</span>
-                                        <section></section>
-                                    </section>
-
-                                    <button className='btn btn-outline-info w-100 m-2' onClick={() => goWithGoogle('signup')}>Google</button>
-                                </div>
-
-                                <div className={`signin-form hideLoginForm d-flex justify-content-center align-items-center flex-column h-100 ${window.outerWidth < 768 && 'd-none'}`} >
-                                    <h5 className='text-dark'>SignIn to your account</h5>
-                                    <section>Enter your email and password to signin to your account</section>
-                                    <input type="email" className="form-control my-2" name="email" id="email" placeholder="Email address" aria-describedby="emailHelp" value={email.signinEmail} onChange={(e) => setemail({ ...email, signinEmail: e.target.value })} />
-                                    <input type="password" className="form-control" id="password" name="password" placeholder="Password*" value={password} onChange={(e) => setpassword(e.target.value)} />
-                                    <button className='btn btn-outline-warning w-100 my-2' onClick={emailVerification}>Sign In</button>
-
-                                    <section className='my-3 text-end w-100 pointer' onClick={() => toggleSignIn('signup')}>New user? Create an account</section>
-                                    <section className='continue-with position-relative w-100 text-center'>
-                                        <span >OR CONTINUE WITH</span>
-                                        <section></section>
-                                    </section>
-
-                                    <button className='btn btn-outline-info w-100 m-2' onClick={() => goWithGoogle('signin')}>Google</button>
-                                </div>
-
-                                {/* <div className="padding" >
-                                    <form method="POST">
-                                        <div className="mb-3">
-                                            <input type="email" className="form-control" name="email" id="email" placeholder="Email address*" aria-describedby="emailHelp" value={email} onChange={(e) => setemail(e.target.value)} />
-                                        </div>
-                                        <div className="mb-3">
-                                            <input type="password" className="form-control" id="password" name="password" placeholder="Password*" value={password} onChange={(e) => setpassword(e.target.value)} />
-                                        </div>
-                                        <button type="submit" className="btn btn-outline-warning w-100" onClick={loginuser}>SIGN IN</button>
-                                    </form>
-                                </div> */}
-
-                                {/* <div className="padding" >
-                                    <form >
-                                        <div className="mb-3">
-                                            <input type="number" className="form-control" name="phone" id="phone" placeholder="Phone Number*" aria-describedby="emailHelp" value={phone} onChange={(e) => setphone(e.target.value)} />
-                                        </div>
-                                        <div id='sign-in-button' className='d-none'>ss</div>
-                                        <div className="position-relative">
-                                            <div className="p-2 text-center">
-                                                <h6>Please enter the one time password <br /> to verify your account</h6>
-                                                <div> <span>A code has been sent to</span> <small>*******9897</small> </div>
-                                                <div id="otp" className="inputs d-flex flex-row justify-content-center mt-2" onClick={e => OTPInput(e)}>
-                                                    <input className="m-2 text-center form-control rounded" type="text" id="first" maxLength="1" />
-                                                    <input className="m-2 text-center form-control rounded" type="text" id="second" maxLength="1" />
-                                                    <input className="m-2 text-center form-control rounded" type="text" id="third" maxLength="1" />
-                                                    <input className="m-2 text-center form-control rounded" type="text" id="fourth" maxLength="1" />
-                                                    <input className="m-2 text-center form-control rounded" type="text" id="fifth" maxLength="1" />
-                                                    <input className="m-2 text-center form-control rounded" type="text" id="sixth" maxLength="1" />
-                                                </div>
-                                                <div className="mt-4"> <button className="btn btn-danger px-4 validate" onClick={e => onValidate(e)}>Validate</button> </div>
-                                            </div>
-                                        </div>
-
-                                        <button className="btn btn-outline-warning w-100" onClick={loginWithNumber}>LOG IN</button>
-                                    </form>
-                                </div> */}
-
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </>
-    )
+  
 }
 
 export default SignIn

@@ -657,21 +657,18 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
+.signin .modal-dialog {
+  min-width: 70vw;
+}
 .signin .modal-content {
   min-height: 75vh;
 }
 
-.signin .modal-body {
-  /* max-width: 80%;
-  width: 100%;
-  margin: auto; */
-}
-.continue-with {
-}
 .continue-with span {
   background: white;
   position: relative;
   padding: 0 10px;
+  z-index: 1;
 }
 .continue-with section {
   width: 100%;
@@ -695,22 +692,6 @@ input[type="number"] {
 .signup-form {
   left: 0;
   opacity: 1;
-}
-.hideLoginForm {
-  position: relative;
-  transform: translate(-135%, -100%);
-  z-index: -1;
-  opacity: 0;
-}
-.hideSignupForm {
-  position: relative;
-  transform: translate(-135%, 0);
-  z-index: -1;
-  opacity: 0;
-}
-
-.uns{
-  transform: unset !important;
 }
 /******************************************** signin.js **********************************************/
 
@@ -1018,17 +999,16 @@ input[type="number"]::-webkit-outer-spin-button {
 /*-------------------------- products --------------------------*/
 
 /* PRODUCT PAGE */
-.navigation-q{
-
+.navigation-q {
 }
-.navigation-q span{
-    display: inline-block;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 512' style='fill: %23adadad'%3E%3Cpath d='M96 480c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L242.8 256L73.38 86.63c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25l-192 192C112.4 476.9 104.2 480 96 480z'/%3E%3C/svg%3E");
-    width: 6px;
-    background-repeat: no-repeat;
-    background-position: center;
-    height: 10px;
-    padding: 0 4px;
+.navigation-q span {
+  display: inline-block;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 512' style='fill: %23adadad'%3E%3Cpath d='M96 480c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L242.8 256L73.38 86.63c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25l-192 192C112.4 476.9 104.2 480 96 480z'/%3E%3C/svg%3E");
+  width: 6px;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 10px;
+  padding: 0 4px;
 }
 
 .p-img-sticky {
@@ -1041,7 +1021,7 @@ input[type="number"]::-webkit-outer-spin-button {
   justify-content: center;
   flex-direction: column;
 }
-.additional-images img{
+.additional-images img {
   border: 1px solid #d7d7d7;
   margin: 2px;
 }
@@ -2237,11 +2217,11 @@ main {
     margin-right: 10px;
   }
 
-    /* SLICK SLIDER */
-    .slick-arrow {
-      display: none !important;
-    }
-    /* SLICK SLIDER */
+  /* SLICK SLIDER */
+  .slick-arrow {
+    display: none !important;
+  }
+  /* SLICK SLIDER */
 
   /* CART page */
   .cart-page {
@@ -2321,72 +2301,82 @@ main {
   }
   /* PRODUCT page */
 
-
   /* CATEGORY page */
-  .category-page{
+  .category-page {
     margin-top: 0 !important;
   }
-  .navigation-q{
+  .navigation-q {
     margin-top: 28px;
   }
-  .card2{
-  margin: 6px 0;
-  box-shadow: var(--shadow-medium) !important;
+  .card2 {
+    margin: 6px 0;
+    box-shadow: var(--shadow-medium) !important;
   }
-  .card2 img{
+  .card2 img {
     width: 80%;
   }
-  .card2 .card-body{
+  .card2 .card-body {
     padding: 0 1rem !important;
   }
   .product-bottom-details .product-links,
-  .product-bottom-details .product-links span{
+  .product-bottom-details .product-links span {
     display: flex;
   }
   /* CATEGORY page */
 
 
   /* SIGNIN Modal */
-  .signin .modal-dialog{
+  .signin .modal-dialog {
     margin: auto;
-    width: unset !important;
   }
-.signin .modal-content{
-  flex-direction: column !important;
-}
-.signin .modal-content > div{
-  width: 100% !important;
-  justify-content: center;
-  background-color: inherit !important;
-}
-.signin .modal-content > div img{
-  width: 250px;
-}
-
-
-
-
-.signin-form {
-  transform: unset;
-  opacity: unset;
-}
-.signin-form h5{
-  text-align: center;
-}
-.hideLoginForm {
-  position: relative;
-  transform: unset;
-  z-index: unset;
-  opacity: unset;
-}
-.hideSignupForm {
-  position: relative;
-  transform: unset;
-  z-index: unset;
-  opacity: unset;
-}
-
+  .signin .modal-content {
+    min-height: unset;
+  }
+  .signin .modal-body {
+    flex-direction: column !important;
+  }
+  .signin .modal-body > div {
+    width: 100% !important;
+    display: flex;
+    justify-content: center;
+    background-color: inherit !important;
+  }
+  .signin .modal-body > div img {
+    width: 250px;
+  }
+  .signin-img {
+    margin-top: 26px;
+  }
+  .forms-holder {
+    max-height: 343px;
+    min-height: 353px;
+    margin-top: 8px;
+  }
+  .signup-form,
+  .signin-form {
+    position: relative;
+    width: 100%;
+    padding: 0px 20px;
+    justify-content: start !important;
+  }
+  .signin-form h5 {
+    text-align: center;
+  }
   /* SIGNIN Modal */
+
+
+  /* NABAR  */
+  .nav-item input[type="search"] {
+    min-width: 100%;
+    padding-right: 10px ;
+    padding-left: 10px;
+}
+
+.profileDropdownUL{
+  box-shadow: none !important;
+}
+ /* NABAR  */
+
 
 }
 /* ---------------RESPONSIVE------------------------------------------------------------------------- */
