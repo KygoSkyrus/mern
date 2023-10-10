@@ -117,111 +117,115 @@ const Wishlist = () => {
             <button className='btn my-4 btn-outline-warning'>Continue shopping</button>
           </div>
           :
-          (products ? <div className='container my-5'>
-            <div class="row justify-content-center">
-              <div class="col-lg-9 t-mb-30 mb-lg-0 theSection" >
-                <div class="row ">
-                  <div class="col-12">
-                    <div class="row ">
-                      <div className='row mb-3 p-2 pb-0 border-bottom'>
-                        <div class="col-md-2"></div>
-                        <div class="col-md-10">
-                          <div className='d-flex flex-column justify-content-between h-100'>
-                            <div className='row d-flex justify-content-between'>
-                              <div class="col-md-4">
-                                <h6>
-                                  Item
-                                </h6>
-                              </div>
-                              <div class="col-md-2">
-                                <h6>
-                                  Price
-                                </h6>
-                              </div>
-                              <div class="col-md-2">
-                                <h6>
-                                  Availability
-                                </h6>
+          (products ?
+            <div className='container wi-page  my-5'>
+               <h6 className='text-center my-5 d-flex justify-content-center align-items-center'>My Wishlist&nbsp;
+              <i className='fa fa-heart text-danger'></i>
+            </h6>
+              <div class="row justify-content-center">
+                <div class="col-lg-9 t-mb-30 mb-lg-0 theSection" >
+                  <div class="row ">
+                    <div class="col-12">
+                      <div class="row wi-holder">
+                        <div className='row mb-3 p-2 pb-0 border-bottom wList-heading'>
+                          <div class="col-md-2"></div>
+                          <div class="col-md-10">
+                            <div className='d-flex flex-column justify-content-between h-100'>
+                              <div className='row d-flex justify-content-between'>
+                                <div class="col-md-4">
+                                  <h6>
+                                    Item
+                                  </h6>
+                                </div>
+                                <div class="col-md-2">
+                                  <h6>
+                                    Price
+                                  </h6>
+                                </div>
+                                <div class="col-md-2">
+                                  <h6>
+                                    Availability
+                                  </h6>
 
-                              </div>
-                              <div class="col-md-2">
+                                </div>
+                                <div class="col-md-2">
+                                </div>
                               </div>
                             </div>
                           </div>
+
                         </div>
-
-                      </div>
-                      {products?.map((x, i) => {
-                        return (
-                          <>
-                            <div key={x._id} className='row  p-2 '>
-                              <div class="col-md-2">
-                                <div className='d-flex justify-content-center'>
-                                  <img src={x.image} alt='' className='img-fluidt-minw-215' style={{ maxHeight: "80px" }} />
+                        {products?.map((x, i) => {
+                          return (
+                            <>
+                              <div key={x._id} className='row  p-2 wi'>
+                                <div class="col-md-2">
+                                  <div className='d-flex justify-content-center'>
+                                    <img src={x.image} alt='' className='img-fluidt-minw-215' style={{ maxHeight: "80px" }} />
+                                  </div>
                                 </div>
-                              </div>
 
-                              <div class="col-md-10">
-                                <div className='d-flex flex-column justify-content-between h-100'>
-                                  <div className='row d-flex justify-content-between'>
+                                <div class="col-md-10 wi-detail">
+                                  <div className='d-flex flex-column justify-content-between h-100'>
+                                    <div className='row d-flex justify-content-between'>
 
-                                    <div class="col-md-4">
-                                      <Link to={`/product/${x._id}`} style={{ color: "inherit" }}>
-                                        <h6>
-                                          {x.name}
-                                          {/* {x.rating} */}
-                                        </h6>
-                                      </Link>
-                                    </div>
-                                    <div class="col-md-2">
-                                      <div className='d-flex align-items-end flex-column' style={{ width: "fit-content" }}>
-                                        <section>
-                                          <span style={{ fontSize: "12px" }}>&#8377;</span>
-                                          <span className='fs-6'>{Math.floor(x.price - x.discount * x.price / 100)}</span>
-                                        </section>
-                                        {x.discount !== 0 &&
-                                          <section style={{ fontWeight: "400", color: "#ff4460", lineHeight: "2px" }}>
-                                            <span style={{ fontSize: "10px" }}>&#8377;</span>
-                                            <span className='fs-7 extra-small' style={{ textDecoration: "line-through" }}>{x.price}</span>
+                                      <div class="col-md-4 wi-name">
+                                        <Link to={`/product/${x._id}`} style={{ color: "inherit" }}>
+                                          <h6>
+                                            {x.name}
+                                            {/* {x.rating} */}
+                                          </h6>
+                                        </Link>
+                                      </div>
+                                      <div class="col-md-2 wi-price">
+                                        <div className='d-flex align-items-end flex-column' style={{ width: "fit-content" }}>
+                                          <section>
+                                            <span style={{ fontSize: "12px" }}>&#8377;</span>
+                                            <span className='fs-6'>{Math.floor(x.price - x.discount * x.price / 100)}</span>
                                           </section>
-                                        }
+                                          {x.discount !== 0 &&
+                                            <section style={{ fontWeight: "400", color: "#ff4460", lineHeight: "2px" }}>
+                                              <span style={{ fontSize: "10px" }}>&#8377;</span>
+                                              <span className='fs-7 extra-small' style={{ textDecoration: "line-through" }}>{x.price}</span>
+                                            </section>
+                                          }
 
+                                        </div>
                                       </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                      {x.stock > 0 ? <span className='text-success'>In stock</span>
-                                        : <span className='text-danger'>Out of stock</span>}
-                                    </div>
-
-                                    <div class="col-md-2 ">
-                                      <button className="btn btn-warning px-4 rounded-pill text-light" onClick={() => addToCart(x._id)}>Add to cart</button>
-
-                                      <div className='d-flex justify-content-end mt-2 ' style={{ marginRight: "-41px" }}>
-                                        <u><span
-                                          onClick={() => updatewishlist(x._id)}
-                                          className='me-4 pointer'>Remove <i class="fa fa-trash fa-sm "></i></span></u>
+                                      <div class="col-md-2 wi-stock">
+                                        {x.stock > 0 ? <span className='text-success'>In stock</span>
+                                          : <span className='text-danger'>Out of stock</span>}
                                       </div>
-                                      {/* <button className="btn btn-danger ms-2 rounded-pill text-light"><i class="fa fa-trash fa-sm"></i></button> */}
+
+                                      <div class="col-md-2 wi-remove">
+                                        <button className="btn btn-warning px-4 rounded-pill text-light" onClick={() => addToCart(x._id)}>Add to cart</button>
+
+                                        <div className='d-flex justify-content-end mt-2 ' style={{ marginRight: "-41px" }}>
+                                          <u><span
+                                            onClick={() => updatewishlist(x._id)}
+                                            className='me-4 pointer'>Remove <i class="fa fa-trash fa-sm "></i></span></u>
+                                        </div>
+                                        {/* <button className="btn btn-danger ms-2 rounded-pill text-light"><i class="fa fa-trash fa-sm"></i></button> */}
+                                      </div>
+
                                     </div>
 
                                   </div>
-
                                 </div>
+
                               </div>
+                              <div className='d-flex justify-content-end mb-3 border-bottom pb-3 wi-divider'></div>
+                            </>
+                          )
+                        })}
 
-                            </div>
-                            <div className='d-flex justify-content-end mb-3 border-bottom pb-3'></div>
-                          </>
-                        )
-                      })}
-
+                      </div>
                     </div>
                   </div>
-                </div>
 
-              </div> 
+                </div>
+              </div>
             </div>
-          </div>
             :
             <div className='d-flex justify-content-center align-items-center' style={{ height: "70vh" }}>
               <div class="custom-loader"></div>

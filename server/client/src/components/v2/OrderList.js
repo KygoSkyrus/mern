@@ -64,14 +64,14 @@ const OrderList = () => {
 
 
           (orders ?
-            <div className='container my-5'>
+            <div className='container orderList-page my-5'>
               <div>Your Orders</div>
               <div class="row justify-content-center">
                 <div class="col-lg-9 t-mb-30 mb-lg-0 theSection" >
                   <div class="row ">
                     <div class="col-12">
-                      <div class="row ">
-                        <div className='row mb-3 p-2 pb-0 border-bottom'>
+                      <div class="row ol-holder">
+                        <div className='row mb-3 p-2 pb-0 border-bottom '>
                           <div class="col-md-4">
                             <div className='row justify-content-center'>
                               <div className='col-md-4 text-center'>
@@ -111,8 +111,8 @@ const OrderList = () => {
                         {orders?.map((x, i) => {
                           return (
                             <>
-                              <div key={x._id} className='row p-2 align-items-center' >
-                                <div class="col-md-4">
+                              <div key={x._id} className='row p-2 align-items-center oli' >
+                                <div class="col-md-4 oli-images">
                                   <div className='row justify-content-center'>
                                     <div className='col-md-4 '>
                                       <Link className='d-flex flex-wrap order-lis-imgs' to={`/orders/${x.orderId}`}>
@@ -132,9 +132,9 @@ const OrderList = () => {
                                   </div>
                                 </div>
 
-                                <div class="col-md-8">
+                                <div class="col-md-8 oli-details-container">
                                   <div className='d-flex flex-column justify-content-between h-100'>
-                                    <div className='row d-flex justify-content-between'>
+                                    <div className='row d-flex justify-content-between oli-details'>
                                       <div class="col-md-2">
                                         <Link className='d-flex align-items-end flex-column' to={`/orders/${x.orderId}`} style={{ width: "fit-content", margin: "auto" }}>
                                           <section>
@@ -167,7 +167,7 @@ const OrderList = () => {
                                 </div>
 
                               </div>
-                              <div className='d-flex justify-content-end mb-3 border-bottom pb-3'>
+                              <div className='d-flex justify-content-end mb-3 border-bottom pb-3 oli-divider'>
                                 {/* <u><span
                               // onClick={() => removeFromCart(x._id)} 
                               className='me-4 pointer'>Remove <i class="fa fa-trash fa-sm"></i></span></u> */}

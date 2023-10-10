@@ -2239,12 +2239,16 @@ main {
   .cart-heading {
     display: none;
   }
-  .ci-holder {
+  .ci-holder,
+  .wi-holder,
+  .ol-holder {
     padding: 0 16px !important;
     display: flex;
     justify-content: center;
   }
-  .ci {
+  .ci,
+  .wi,
+  .oli {
     position: relative;
     box-shadow: var(--shadow-small);
     background: #fff;
@@ -2277,6 +2281,57 @@ main {
     margin-bottom: 10px !important;
   }
   /* CART page */
+
+
+  /* ORDERLIST PAGE */
+  .oli-divider{
+    display: none !important;
+  }
+  .oli-details > div,
+  .oli-images,
+  .oli-details-container{
+    width: fit-content;
+  }
+/* ORDERLIST PAGE */
+
+  /* WISHLIST */
+  .wi-page > h6 {
+    margin: 32px 0 22px 0 !important;
+}
+
+  .wList-heading{
+    display: none;
+  }
+
+  .wi-divider{
+    display: none !important;
+  }
+  .wi-detail{
+    position: relative;
+  }
+  .wi-name h6 {
+    text-wrap: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .wi-price {
+    display: flex;
+    justify-content: end;
+  }
+  .wi-stock{
+    position: absolute;
+    top: 24px;
+  }
+  .wi-remove {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    margin-top: 11px;
+  }
+  .wi-remove button{
+    border-radius: 4px !important;
+  }
+/* WISHLIST */
 
   /* PRODUCT page */
   .p-img-sticky {
