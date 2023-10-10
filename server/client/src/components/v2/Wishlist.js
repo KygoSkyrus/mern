@@ -210,11 +210,7 @@ const Wishlist = () => {
                               </div>
 
                             </div>
-                            <div className='d-flex justify-content-end mb-3 border-bottom pb-3'>
-                              {/* <u><span
-                              // onClick={() => removeFromCart(x._id)} 
-                              className='me-4 pointer'>Remove <i class="fa fa-trash fa-sm"></i></span></u> */}
-                            </div>
+                            <div className='d-flex justify-content-end mb-3 border-bottom pb-3'></div>
                           </>
                         )
                       })}
@@ -223,46 +219,7 @@ const Wishlist = () => {
                   </div>
                 </div>
 
-              </div>
-              {/* <div className='col-lg-3 mb-3 p-img-sticky '>
-              <div className='row'>
-                <div>
-                  <h5>Summary</h5>
-
-                  <section>Do you have a Promo Code?</section>
-
-                  <div className='d-flex justify-content-between my-2'>
-                    <span>Subtotal <i class="fa fa-question-circle fa-sm" aria-hidden="true"></i>
-                    </span>
-                    <span ref={subtotal}>
-                      {sub}
-                    </span>
-                  </div>
-
-                  <div className='d-flex justify-content-between my-2'>
-                    <span title='99 shipping & handling charge is applied under subtotal 1999'>Estimated Shipping & Handling <i class="fa fa-question-circle fa-sm" aria-hidden="true"></i>
-                    </span>
-                    <span ref={shippingCharge}>{sub < 1999 ? 99 : "-"}</span>
-                  </div>
-
-                  <div className='d-flex justify-content-between my-2'>
-                    <span title='levies 10% service tax'>Estimated Tax <i class="fa fa-question-circle fa-sm" aria-hidden="true"></i></span>
-                    <span ref={tax}>{Math.round(sub * 0.1)}</span>
-                  </div>
-
-                  <div className='d-flex justify-content-between py-2 my-4 text-dark' style={{ borderBottom: "1px solid #dee2e6", borderTop: "1px solid #dee2e6" }}>
-                    <span><b>Total</b></span>
-                    <span ref={grandTotal} className='fw-bolder'>{sub + (sub < 1999 ? 99 : 0) + Math.round(sub * 0.1)}</span>
-                  </div>
-
-                  <form action="/create-checkout-session" method="POST">
-                    <input type="hidden" name='priceObj' value={JSON.stringify(priceObj)} />
-                    <button className='btn w-100 my-2' style={{ border: "1px solid rgb(0 0 0 / 16%)", background: "#ebebeb", borderTop: "0" }} type="submit">Checkout</button>
-                  </form>
-                  
-                </div>
-              </div>
-            </div> */}
+              </div> 
             </div>
           </div>
             :

@@ -106,13 +106,13 @@ const User = () => {
                 <div className='container my-5 user-form py-3 rounded'>
 
                     <section className='text-primary skip'>Skip for later</section>
-                    <div class="row my-4">
+                    <div class="row my-4 user-form-holder">
                         <div class="col-md-4 align-self-end" >
                             <div className='row'>
                                 <div className='col-md-9 m-auto text-center'>
                                     <img src={userDetail?.avtar} alt="" class="img-fluid t-minw-215 rounded" style={{ maxHeight: "223px", width: "223px" }} />
                                     <h5 className='my-2 mb-3 text-capitalize'>{userDetail?.firstname}&nbsp;{userDetail?.lastname}</h5>
-                                    <button className='btn btn-outline-danger w-100' onClick={signOut}>Sign out</button>
+                                        <button className={`w-100 signout-btn ${window.outerWidth>768 && " btn btn-outline-danger"}`} onClick={signOut}>{window.outerWidth>768 ?"Sign out":<i className='fa fa-sign-out-alt'></i>}</button>
                                 </div>
                             </div>
 

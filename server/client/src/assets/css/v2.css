@@ -448,7 +448,7 @@ img {
   background: #0000008c;
 }
 
-.categoryListsHolder{
+.categoryListsHolder {
   position: absolute;
   right: 0px;
   display: flex;
@@ -2330,7 +2330,6 @@ main {
   }
   /* CATEGORY page */
 
-
   /* SIGNIN Modal */
   .signin .modal-dialog {
     margin: auto;
@@ -2370,59 +2369,81 @@ main {
   }
   /* SIGNIN Modal */
 
-
   /* NABAR  */
   .nav-item input[type="search"] {
     min-width: 100%;
-    padding-right: 10px ;
+    padding-right: 10px;
     padding-left: 10px;
-}
+  }
 
-.categoryListsHolder{
-  display: block;
-  width: 100%;
-  position: relative;
-  border-radius: 0.375rem;
-  box-shadow: var(--shadow-medium) !important;
-}
-.withoutParentUl{
-  padding-bottom: 0;
-  border-radius:  0 !important;
-  border: 0;
-}
-.withParentUl{
-  padding-top: 0;
-  background-color: unset ;
-  border-radius: 0  !important;
-  border: 0;
-}
-.dropdown:hover > .child-category-m {
-  display: block !important;
-  width: 100%;
-  box-shadow: var(--shadow-small) !important;
-}
-.parentCategoryList .grtrArrow{
-  top: 14px;
-}
-.parentCategoryList:hover section {
-  padding-right: 1.8rem;
-  padding-bottom: 11px;
-}
-.parentCat{
-  flex-direction: column;
-}
-.profileDropdownUL{
-  box-shadow: none !important;
-}
- /* NABAR  */
-
-
- /* USER */
-.user-form{
-  box-shadow: unset;
+  .categoryListsHolder {
+    display: block;
+    width: 100%;
+    position: relative;
+    border-radius: 0.375rem;
+    box-shadow: var(--shadow-medium) !important;
+  }
+  .withoutParentUl {
+    padding-bottom: 0;
+    border-radius: 0 !important;
+    border: 0;
+  }
+  .withParentUl {
+    padding-top: 0;
     background-color: unset;
-}
- /* USER */
+    border-radius: 0 !important;
+    border: 0;
+  }
+  .dropdown:hover > .child-category-m {
+    display: block !important;
+    width: 100%;
+    box-shadow: var(--shadow-small) !important;
+  }
+  .parentCategoryList .grtrArrow {
+    top: 14px;
+  }
+  .parentCategoryList:hover section {
+    padding-right: 1.8rem;
+    padding-bottom: 11px;
+  }
+  .parentCat {
+    flex-direction: column;
+  }
+  .profileDropdownUL {
+    box-shadow: none !important;
+  }
+  /* NABAR  */
+
+  /* USER */
+  .user-form {
+    box-shadow: unset;
+    background-color: unset;
+    margin-top: 0 !important;
+  }
+  .user-form-holder {
+    position: relative;
+    margin: 0.25rem;
+    padding: 3rem 0.25rem 3rem 0.25rem;
+    border-radius: 0.25rem;
+    box-shadow: var(--shadow-medium);
+    background-color: #fff;
+  }
+  .user-form-holder :nth-child(2){
+    padding-right: calc(var(--bs-gutter-x) * .5)!important;
+  }
+  .signout-btn{
+    width: fit-content !important;
+    position: absolute;
+    top: 5px;
+    right: 0;
+    color: grey;
+  }
+  /* USER */
+
+
+  /* WHISHLIST */
+
+  /* WHISHLIST */
 
 }
 /* ---------------RESPONSIVE------------------------------------------------------------------------- */
