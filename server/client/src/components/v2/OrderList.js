@@ -9,6 +9,7 @@ import noOrder from "./../../assets/images/newImg/collections/noOrder.svg"
 import LoginImg from "./../../assets/images/newImg/collections/login.png"
 
 import { getDateStr } from './Utility';
+import { formatInINRwoSign } from './Utility';
 
 const OrderList = () => {
 
@@ -17,6 +18,8 @@ const OrderList = () => {
   const userDetail = useSelector(state => state.user.user)
   const userLoggedIn = useSelector(state => state.user.isUserLoggedIn)
   console.log('is loggedin', userLoggedIn, userDetail)
+
+  //BUG: after loggin in it just dont show orders but the loader
 
   useEffect(() => {
     let resp;
@@ -65,13 +68,15 @@ const OrderList = () => {
 
           (orders ?
             <div className='container orderList-page my-5'>
-              <div>Your Orders</div>
+              <h6 className='text-center my-5 d-flex justify-content-center align-items-center'>My Cart&nbsp;
+                <i className='fa fa-box-open text-warning mt-1'></i>
+              </h6>
               <div class="row justify-content-center">
                 <div class="col-lg-9 t-mb-30 mb-lg-0 theSection" >
                   <div class="row ">
                     <div class="col-12">
                       <div class="row ol-holder">
-                        <div className='row mb-3 p-2 pb-0 border-bottom '>
+                        <div className='row mb-3 p-2 pb-0 border-bottom oli-heading'>
                           <div class="col-md-4">
                             <div className='row justify-content-center'>
                               <div className='col-md-4 text-center'>
@@ -139,7 +144,7 @@ const OrderList = () => {
                                         <Link className='d-flex align-items-end flex-column' to={`/orders/${x.orderId}`} style={{ width: "fit-content", margin: "auto" }}>
                                           <section>
                                             <span style={{ fontSize: "12px" }}>&#8377;</span>
-                                            <span className='fs-6'>{x.total}</span>
+                                            <span className='fs-6 oli-price' >{formatInINRwoSign.format(x.total)}</span>
                                           </section>
                                         </Link>
                                       </div>

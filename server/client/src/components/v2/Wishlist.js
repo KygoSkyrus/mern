@@ -159,7 +159,7 @@ const Wishlist = () => {
                           return (
                             <>
                               <div key={x._id} className='row  p-2 wi'>
-                                <div class="col-md-2">
+                                <div class="col-md-2 wi-img">
                                   <div className='d-flex justify-content-center'>
                                     <img src={x.image} alt='' className='img-fluidt-minw-215' style={{ maxHeight: "80px" }} />
                                   </div>

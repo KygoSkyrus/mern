@@ -318,7 +318,7 @@ const Cart = () => {
                         return (
                           <>
                             <div key={x._id} className='row  p-2 ci'>
-                              <div class="col-md-2">
+                              <div class="col-md-2 ci-img">
                                 <div className='d-flex justify-content-center'>
                                   <img src={x.image} alt='' className='img-fluidt-minw-215' style={{ maxHeight: "100px" }} />
                                 </div>

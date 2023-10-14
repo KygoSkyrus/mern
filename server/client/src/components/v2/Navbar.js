@@ -191,7 +191,8 @@ const Navbar = () => {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span className="navbar-toggler-icon"></span>
+            <div class="menu-toggle is-active" id="mobile-menu"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
+            {/* <span className="navbar-toggler-icon"></span> */}
           </button>
           <div
             className="collapse navbar-collapse "

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUserDetails } from './redux/userSlice';
 import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSlice';
 
-import { formatInINR,getFullDateStr } from './Utility';
+import { formatInINR, getFullDateStr } from './Utility';
 import LoginImg from "./../../assets/images/newImg/collections/login.png"
 import noOrder from "./../../assets/images/newImg/collections/noOrder.svg"
 
@@ -50,7 +50,7 @@ const Order = () => {
   }, [])
 
 
- 
+
 
   return (
     <>
@@ -62,8 +62,8 @@ const Order = () => {
           </div> :
 
           (order ?
-            <div className='container my-5'>
-              <div className='d-flex justify-content-between p-2 px-3 mb-4 text-bg-warning rounded-1'>
+            <div className='container order-page my-5'>
+              <div className='d-flex justify-content-between p-2 px-3 mb-4 text-bg-warning rounded-1 oi-heading'>
                 <h6 className='d-inline text-black mb-0'>Order #{order.orderId}</h6>
                 <span>
                   <i className='fa fa-calendar fa-regular'></i>&nbsp;&nbsp;{getFullDateStr(order.createdAt)}
@@ -85,7 +85,7 @@ const Order = () => {
                               </div>
                             </div>
                           </div>
-                          <div class="col-md-6">
+                          <div class="col-md-6 oi-other-heading">
                             <div className='row d-flex justify-content-between'>
                               <div class="col-md-2 ">
                                 <h6>
@@ -109,17 +109,17 @@ const Order = () => {
                         {order?.products?.map((x, i) => {
                           return (
                             <>
-                              <div key={x._id} className='row  align-items-center' >
+                              <div key={x._id} className='row  align-items-center oi' >
                                 <div class="col-md-6">
-                                  <div className='row justify-content-center align-items-center'>
-                                    <div className='col-md-2 '>
+                                  <div className='row justify-content-center align-items-center oi-top'>
+                                    <div className='col-md-2 oi-img'>
                                       <Link className='d-flex flex-wrap order-lis-imgs' to={`/product/${x.productId}`}>
                                         <div >
                                           <img src={x.image} alt='' className='img-fluidt-minw-215' />
                                         </div>
                                       </Link>
                                     </div>
-                                    <Link class="col-md-6" to={`/product/${x.productId}`} >
+                                    <Link class="col-md-6 oi-name" to={`/product/${x.productId}`} >
                                       {x.name}
                                     </Link>
                                   </div>
@@ -127,19 +127,19 @@ const Order = () => {
 
                                 <div class="col-md-6">
                                   <div className='d-flex flex-column justify-content-between h-100'>
-                                    <div className='row d-flex justify-content-between'>
+                                    <div className='row d-flex justify-content-between oi-details'>
                                       <div class="col-md-2">
                                         <div className='d-flex align-items-end flex-column' style={{ width: "fit-content", margin: "auto" }}>
-                                            <span className=''>{formatInINR.format(x.price)}</span>
+                                          <span className=''>{formatInINR.format(x.price)}</span>
                                         </div>
                                       </div>
                                       <div class="col-md-2 text-center">
                                         <span className=''>{x.quantity}</span>
                                       </div>
 
-                                      <div class="col-md-2 text-center">
+                                      <div class="col-md-2 text-center oi-total">
                                         <div className='d-flex align-items-end flex-column' style={{ width: "fit-content", margin: "auto" }}>
-                                            <span className=''>{formatInINR.format((x.quantity * Math.floor(x.price - x.discount * x.price / 100)))}</span>
+                                          <span className=''>{formatInINR.format((x.quantity * Math.floor(x.price - x.discount * x.price / 100)))}</span>
                                         </div>
                                       </div>
                                     </div>

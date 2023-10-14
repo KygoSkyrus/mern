@@ -1,5 +1,6 @@
 # WORKFLOW:::
 
+- create a react  out to us page,,add it in footer and alos in ptrofiles dropdown..add the from with query amd send to db
 
 inidividual 
 - caling api on their own and populate cart
