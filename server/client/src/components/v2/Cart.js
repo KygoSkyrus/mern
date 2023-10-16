@@ -22,7 +22,7 @@ const Cart = () => {
   const wishlistItems = useSelector(state => state.user.user.wishlist)
   const cartItems = useSelector(state => state.user.user.cartProducts)
   const cart = useSelector(state => state.user.user.cart)
-  console.log('cart', cartItems)
+  console.log('cart', cart)
 
   const subtotal = React.useRef()
   const shippingCharge = React.useRef()
@@ -260,7 +260,7 @@ const Cart = () => {
 
   return (
     <>
-      {/* {userDetail && userLoggedIn ?
+      {userDetail && userLoggedIn ?
         (!cartItems?.length > 0 ?
           <div className='d-flex flex-column align-items-center'>
 
@@ -272,7 +272,7 @@ const Cart = () => {
             </span>
             <button className='btn my-4 btn-outline-warning'>Continue shopping</button>
 
-          </div> : */}
+          </div> :
 
           <div className='container cart-page my-5'>
             <h6 className='text-center my-5 d-flex justify-content-center align-items-center'>My Cart
@@ -314,7 +314,7 @@ const Cart = () => {
                         </div>
 
                       </div>
-                      {cartItems?.map((x, i) => {
+                      {cartItems.map((x, i) => {
                         return (
                           <>
                             <div key={x._id} className='row  p-2 ci'>
@@ -430,9 +430,8 @@ const Cart = () => {
               </div>
             </div>
           </div>
-        {/* )
-        :
-         <div className='container my-5'>
+        )
+        : <div className='container my-5'>
           <div className='d-flex flex-column align-items-center m-auto' style={{ width: "fit-content" }}>
 
             <div><img src={LoginImg} alt='' />
@@ -446,7 +445,7 @@ const Cart = () => {
           </div>
         </div>
 
-      } */}
+      }
 
       <RealtedProducts />
 
