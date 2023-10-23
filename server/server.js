@@ -8,7 +8,7 @@ const sk = process.env.SK;
 const { v4: uuidv4 } = require('uuid');
 const stripe = require('stripe')(sk);
 
-app.use(express.static('public'));
+// app.use(express.static('public'));
 
 dotenv.config({ path: './env/config.env' });
 
@@ -34,25 +34,15 @@ app.use((req, res, next) => {
 
 // app.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf } }))
 
-const db = process.env.dbURI;
-const port = process.env.PORT || 4000;
-
-mongoose.set('strictQuery', false);
-mongoose.connect(db, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => {
-  console.log('db connected');
-}).catch((err) => console.log(err));
 
 
-let endpointSecret;
-if (process.env.NODE_ENV === "production") {
-  endpointSecret = "we_1Ns5wFSJDEVNzqXlNvgt2OSL";
-} else {
+// let endpointSecret;
+// if (process.env.NODE_ENV === "production") {
+//   endpointSecret = "we_1Ns5wFSJDEVNzqXlNvgt2OSL";
+// } else {
   // This is your Stripe CLI webhook secret for testing your endpoint locally.
-  endpointSecret = "whsec_5601d477da26790e09849aeeb567342bf53dbe96229fd3accbf27163f19c5476";
-}
+  let endpointSecret = "whsec_5601d477da26790e09849aeeb567342bf53dbe96229fd3accbf27163f19c5476";
+// }
 
 let receiptUrl;
 //cart for failing : 4000 0000 0000 0119
@@ -63,6 +53,7 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
   let event;
 
   try {
+    console.log('eendpointSecret',endpointSecret)
     // event = stripe.webhooks.constructEvent(request.rawBody, sig, endpointSecret);
     event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
   } catch (err) {
@@ -159,6 +150,19 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
   }
   response.send();
 });
+
+
+const db = process.env.dbURI;
+const port = process.env.PORT || 4000;
+
+mongoose.set('strictQuery', false);
+mongoose.connect(db, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}).then(() => {
+  console.log('db connected');
+}).catch((err) => console.log(err));
+
 
 //moving it affter webhook api to prevent the bodyparser to have effect from router file
 app.use(require('./routes/route'));
