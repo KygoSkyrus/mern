@@ -8,7 +8,7 @@ const dotenv = require('dotenv');
 const port = process.env.PORT || 5000;
 
 dotenv.config({ path: './env/config.env' });
-const stripe = new Stripe(process.env.sk, {
+const stripe = new Stripe(process.env.SK, {
   apiVersion: '2023-08-16',
 });
 
