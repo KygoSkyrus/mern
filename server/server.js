@@ -6,7 +6,7 @@ const dotenv = require('dotenv');
 const sk = process.env.SK;
 
 const { v4: uuidv4 } = require('uuid');
-const stripe = require('stripe')(sk);
+const stripe = require('stripe')(process.env.SK);
 
 // app.use(express.static('public'));
 
@@ -38,10 +38,10 @@ app.use((req, res, next) => {
 
 // let endpointSecret;
 // if (process.env.NODE_ENV === "production") {
-  // let endpointSecret = "we_1Ns5wFSJDEVNzqXlNvgt2OSL";
+  let endpointSecret = "we_1Ns5wFSJDEVNzqXlNvgt2OSL";
 // } else {
   // This is your Stripe CLI webhook secret for testing your endpoint locally.
-  let endpointSecret = "whsec_5601d477da26790e09849aeeb567342bf53dbe96229fd3accbf27163f19c5476";
+  // let endpointSecret = "whsec_5601d477da26790e09849aeeb567342bf53dbe96229fd3accbf27163f19c5476";
 // }
 
 let receiptUrl;
@@ -53,7 +53,7 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
   let event;
 
   try {
-    console.log('eendpointSecret',endpointSecret)
+    console.log('eendpointSecret',endpointSecret, " process.env.SK",process.env.SK)
     // event = stripe.webhooks.constructEvent(request.rawBody, sig, endpointSecret);
     event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
   } catch (err) {
