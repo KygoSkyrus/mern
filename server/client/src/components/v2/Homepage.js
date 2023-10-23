@@ -30,7 +30,7 @@ const Homepage = () => {
       </div>
 
 
-      {product ?
+      {/* {product ?
         product.map(x => {
           return (
             <div class="container">
@@ -39,8 +39,7 @@ const Homepage = () => {
                 <div class="card3-body">
                   <div class="text-section">
                     <h5 class="card-title">{x.name}</h5>
-                    {/* <p class="card-text">Some quick example text to build on the card's
-                                                  content.</p> */}
+                  
                   </div>
                   <div class="cta-section">
                     <div>{x.price}</div>
@@ -53,7 +52,7 @@ const Homepage = () => {
           )
         })
         : <section className='d-flex justify-content-center align-items-center'><h1>...Loading</h1></section>
-      }
+      } */}
 
 
       <ProductCardsCollection/>

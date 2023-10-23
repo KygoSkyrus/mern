@@ -1141,6 +1141,9 @@ input[type="number"]::-webkit-outer-spin-button {
   margin-top: 2px;
   font-size: 0.8em;
   color: gray;
+  overflow: hidden;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
 }
 .product_details .pricing {
   margin-top: 4px;
@@ -1199,12 +1202,11 @@ input[type="number"]::-webkit-outer-spin-button {
   .box .content {
     display: flex;
     flex-direction: column;
-    width: 100vw;
     border-radius: 0px;
   }
   .box .product_img {
-    width: calc(100vw - 6%) !important;
-    height: 350px !important;
+    /* width: calc(100vw - 6%) !important; */
+    height: 225px !important;
   }
   h4.title {
     font-size: 1em !important;
@@ -2162,7 +2164,7 @@ main {
 
 .marquee {
   position: absolute;
-  top: 0;
+  top: 20%;
   left: 0;
   width: var(--marquee-width);
   overflow: hidden;
@@ -2672,8 +2674,33 @@ main {
 }
 /* Banner */
 
+
+/* yellow stuff */
+.bx1,
+.bx2,
+.bx3 {
+  transform: unset;
+}
+.bx:hover .bx1,
+.bx:hover .bx3 {
+  transform: unset;
+}
+.box .content{
+  margin: 6px 0;
+}
+/* yellow stuff */
+
+
+/* MARQUEE */
+.marquee span{
+  font-size: 116px;
+}
+/* MARQUEE */
+
+
   /* ----------------------------HOMEPAGE------------------------------*/
 }
+
 
 @media (max-width: 400px) {
   .order-lis-imgs {

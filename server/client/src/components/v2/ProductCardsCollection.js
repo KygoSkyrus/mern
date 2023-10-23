@@ -65,10 +65,10 @@ const ProductCardsCollection = () => {
           <div class="left">
             <div class="product_img pimg1"></div>
             <div class="product_details">
-              <h4 class="title">Woakers</h4>
-              <p class="discription">Men's White Printed Sneakers</p>
-              <p class="pricing">₹824 <span class="price_original">₹4000</span> <span class="offer"> 79% OFF</span></p>
-              <p class="other">inclusive of all taxes</p>
+              <h4 class="title">Electronics</h4>
+              <p class="discription">Laptops, Tablets, VR headsets, Gaming consoles, Television, Computers, Camera etc</p>
+              {/* <p class="pricing">₹824 <span class="price_original">₹4000</span> <span class="offer"> 79% OFF</span></p>
+              <p class="other">inclusive of all taxes</p> */}
             </div>
           </div>
 {/* 
@@ -105,10 +105,10 @@ const ProductCardsCollection = () => {
             <div className='p1-bg'>
             <div class="product_img pimg2"></div></div>
             <div class="product_details">
-              <h4 class="title">Woakers</h4>
-              <p class="discription">Men's White Printed Sneakers</p>
-              <p class="pricing">₹824 <span class="price_original">₹4000</span> <span class="offer"> 79% OFF</span></p>
-              <p class="other">inclusive of all taxes</p>
+              <h4 class="title">Home Appliances</h4>
+              <p class="discription">Refrigerator, Microwave, Vaccum cleaner, Air conditioner, Washing machine etc</p>
+              {/* <p class="pricing"><span class="offer">UPTO 60% OFF</span></p>
+              <p class="other">inclusive of all taxes</p> */}
             </div>
           </div>
           </div>
@@ -121,10 +121,10 @@ const ProductCardsCollection = () => {
           <div class="left">
             <div class="product_img pimg3"></div>
             <div class="product_details">
-              <h4 class="title">Woakers</h4>
-              <p class="discription">Men's White Printed Sneakers</p>
-              <p class="pricing">₹824 <span class="price_original">₹4000</span> <span class="offer"> 79% OFF</span></p>
-              <p class="other">inclusive of all taxes</p>
+              <h4 class="title">Wearable Devices</h4>
+              <p class="discription">Smartwatches, Earbuds, Headphones etc</p>
+              {/* <p class="pricing">₹824 <span class="price_original">₹4000</span> <span class="offer"> 79% OFF</span></p>
+              <p class="other">inclusive of all taxes</p> */}
             </div>
           </div>
           </div>
@@ -308,7 +308,7 @@ something wide must go here
 
 
 
-<div className='cgh' >
+<div className='cgh d-none' >
 <div className='holder-cgh'>
   <section>Laptops</section>
   <div className='circle-cgh'></div>
