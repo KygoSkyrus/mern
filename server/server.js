@@ -38,10 +38,10 @@ app.use((req, res, next) => {
 
 // let endpointSecret;
 // if (process.env.NODE_ENV === "production") {
-//   endpointSecret = "we_1Ns5wFSJDEVNzqXlNvgt2OSL";
+  let endpointSecret = "we_1Ns5wFSJDEVNzqXlNvgt2OSL";
 // } else {
   // This is your Stripe CLI webhook secret for testing your endpoint locally.
-  let endpointSecret = "whsec_5601d477da26790e09849aeeb567342bf53dbe96229fd3accbf27163f19c5476";
+  // let endpointSecret = "whsec_5601d477da26790e09849aeeb567342bf53dbe96229fd3accbf27163f19c5476";
 // }
 
 let receiptUrl;
