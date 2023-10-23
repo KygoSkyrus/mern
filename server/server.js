@@ -24,13 +24,13 @@ const USER = require('./models/user')
 // });
 
 // app.use(express.json());
-// app.use((req, res, next) => {
-//   if (req.originalUrl === '/webhook') {
-//     next();
-//   } else {
-//     express.json()(req, res, next);
-//   }
-// });
+app.use((req, res, next) => {
+  if (req.originalUrl === '/webhook') {
+    next();
+  } else {
+    express.json()(req, res, next);
+  }
+});
 
 // app.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf } }))
 
@@ -47,11 +47,15 @@ mongoose.connect(db, {
 
 
 let endpointSecret;
-
+if (process.env.NODE_ENV === "production") {
+  endpointSecret = "we_1Ns5wFSJDEVNzqXlNvgt2OSL";
+} else {
+  // This is your Stripe CLI webhook secret for testing your endpoint locally.
+  endpointSecret = "whsec_5601d477da26790e09849aeeb567342bf53dbe96229fd3accbf27163f19c5476";
+}
 
 let receiptUrl;
 //cart for failing : 4000 0000 0000 0119
-//there are different keys and code for webhook in prod
 app.post('/webhook', express.raw({ type: 'application/json' }), async (request, response) => {
   const payload = request.body;
   const sig = request.headers['stripe-signature'];
@@ -159,12 +163,7 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
 //moving it affter webhook api to prevent the bodyparser to have effect from router file
 app.use(require('./routes/route'));
 
-if (process.env.NODE_ENV === "production") {
-  endpointSecret = "we_1Ns5wFSJDEVNzqXlNvgt2OSL";
-} else {
-  // This is your Stripe CLI webhook secret for testing your endpoint locally.
-  endpointSecret = "whsec_5601d477da26790e09849aeeb567342bf53dbe96229fd3accbf27163f19c5476";
-}
+
 
 app.use(express.static("client/build"));
 //FOR PRODUCTION 
