@@ -52,15 +52,15 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
   console.log("--------------------------webhook starts--------------------------------------------------")
   let event;
 
-  try {
+  // try {
     console.log('endpointSecret',endpointSecret)
     // event = stripe.webhooks.constructEvent(request.rawBody, sig, endpointSecret);
     event = stripe.webhooks.constructEvent(request.body.toString(), sig, endpointSecret);
-    console.log('theevent',event)
-  } catch (err) {
-    console.log('eeeeerrrr', err)//bug here
-    return response.status(400).send(`Webhook Error: ${err.message}`);
-  }
+  //   console.log('theevent',event)
+  // } catch (err) {
+  //   console.log('eeeeerrrr', err)//bug here
+  //   return response.status(400).send(`Webhook Error: ${err.message}`);
+  // }
 
 
   // Handle the event
