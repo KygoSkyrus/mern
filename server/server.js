@@ -4,6 +4,7 @@ const path = require("path")
 const app = express();
 const dotenv = require('dotenv');
 const sk = process.env.SK;
+const bodyParser=require('body-parser')
 
 const { v4: uuidv4 } = require('uuid');
 const stripe = require('stripe')(sk);
@@ -24,13 +25,25 @@ const USER = require('./models/user')
 // });
 
 // app.use(express.json());
-app.use((req, res, next) => {
-  if (req.originalUrl === '/webhook') {
-    next();
-  } else {
-    express.json()(req, res, next);
-  }
-});
+// app.use((req, res, next) => {
+//   if (req.originalUrl === '/webhook') {
+//     next();
+//   } else {
+//     express.json()(req, res, next);
+//   }
+// });
+
+
+app.use(bodyParser.json({
+  // Because Stripe needs the raw body, we compute it but only when hitting the Stripe callback URL.
+  verify: function(requset,res,buf) {
+      var url = requset.originalUrl;
+      console.log('urlll',url)
+      if (url.startsWith('/stripe-webhooks') || url.startsWith('/webhook')) {
+        requset.rawBody = buf.toString()
+      }
+  }}));
+
 
 // app.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf } }))
 
@@ -55,96 +68,10 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
   try {
     console.log('endpointSecret',endpointSecret)
     // event = stripe.webhooks.constructEvent(request.rawBody, sig, endpointSecret);
-    event = stripe.webhooks.constructEvent(request.body.toString(), sig, endpointSecret);
+    event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
   } catch (err) {
     console.log('eeeeerrrr', err)//bug here
     // return response.status(400).send(`Webhook Error: ${err.message}`);
-    console.log(`Unhandled event type ${err.payload.type}`);
-  switch (err.payload.type) {
-    case 'charge.succeeded' || "checkout.session.async_payment_succeeded":
-      receiptUrl = err.payload.data.object.receipt_url
-      break;
-    case 'checkout.session.completed':
-      const paymentIntentSucceeded = err.payload.data.object;
-      console.log('succeeded', err.payload)
-      console.log('urr', receiptUrl)
-      console.log('customer details s-', err.payload.data.object.customer_details)
-
-      const metadata = err.payload.data.object.metadata
-      let order = {}
-      order.orderId = metadata.orderId
-      order.tax = metadata.tax
-      order.shipping = metadata.shipping
-      order.total = metadata.total
-      order.payment_status = err.payload.data.object.payment_status
-      order.receiptUrl = receiptUrl
-      order.products = []
-      prodArray = []
-      Object.keys(metadata).forEach(x => {
-        if (
-          x !== "tax" && x !== "total" && x !== "shipping" && x !== "orderId" && x !== "userId" &&
-          typeof metadata[x] === "string" // Checks if the value is a string
-        ) {
-          let tempObj = {}
-          const productData = JSON.parse(metadata[x]);
-          tempObj.productId = x
-          tempObj.name = productData.name
-          tempObj.image = productData.image
-          tempObj.quantity = productData.quantity
-          tempObj.discount = productData.discount
-          tempObj.price = productData.price
-          order.products.push(tempObj)
-          prodArray.push(tempObj)//for ORDER collection
-        }
-      })
-
-      //saving the order details in db
-      try {
-        const updatedUser = await USER.findByIdAndUpdate(
-          err.payload.data.object.metadata.userId,
-          { $push: { orders: order } },
-          { new: true }
-        )//.populate('cartProducts');
-        //console.log('updateduuu', updatedUser)
-
-        const theOrder = new ORDER({
-          orderId: metadata.orderId,
-          totalAmount: metadata.total,
-          tax: metadata.tax,
-          shipping: metadata.shipping,
-          payment_status: err.payload.data.object.payment_status,
-          receiptUrl: receiptUrl,
-          user: err.payload.data.object.metadata.userId,
-          products: prodArray,
-          shippingAddress: err.payload.data.object.customer_details.address,
-          // paymentMethod: {
-          //   enum: ['Card', 'PayPal', 'Cash on Delivery', 'Other'],
-          //   default: 'Card',
-          // },
-        })
-        console.log('orderrbfore savimg', theOrder)
-        theOrder.save()
-          .then(response => {
-            console.log('saved order', response)
-          })
-          .catch(error => {
-            console.log("errror---", error)
-          })
-
-      } catch (error) {
-        console.error('something went wrong', error);
-        res.status(500).json({ message: 'Internal server error.' });
-      }
-
-      break;
-    case 'payment_intent.payment_failed':
-      console.log('failed', err.payload)
-      console.log('meta f-', err.payload.data.object.metadata)
-      break;
-    default:
-      console.log('meta d-', err.payload.data.object.metadata)
-  }
-  response.send();
   }
   
 
