@@ -38,7 +38,7 @@ app.use((req, res, next) => {
 
 // let endpointSecret;
 // if (process.env.NODE_ENV === "production") {
-  let endpointSecret = "we_1Ns5wFSJDEVNzqXlNvgt2OSL";
+  let endpointSecret = process.env.EPS;
 // } else {
   // This is your Stripe CLI webhook secret for testing your endpoint locally.
   // let endpointSecret = "whsec_5601d477da26790e09849aeeb567342bf53dbe96229fd3accbf27163f19c5476";
@@ -48,14 +48,15 @@ let receiptUrl;
 //cart for failing : 4000 0000 0000 0119
 app.post('/webhook', express.raw({ type: 'application/json' }), async (request, response) => {
   const payload = request.body;
+  const body = await request.text()
   const sig = request.headers['stripe-signature'];
   console.log("--------------------------webhook starts--------------------------------------------------")
   let event;
 
   try {
-    console.log('eendpointSecret',endpointSecret)
+    console.log('endpointSecret',endpointSecret)
     // event = stripe.webhooks.constructEvent(request.rawBody, sig, endpointSecret);
-    event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+    event = stripe.webhooks.constructEvent(body, sig, endpointSecret);
   } catch (err) {
     console.log('eeeeerrrr', err)//bug here
     return response.status(400).send(`Webhook Error: ${err.message}`);
