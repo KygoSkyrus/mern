@@ -56,12 +56,97 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
     console.log('endpointSecret',endpointSecret)
     // event = stripe.webhooks.constructEvent(request.rawBody, sig, endpointSecret);
     event = stripe.webhooks.constructEvent(request.body.toString(), sig, endpointSecret);
-  } catch (err) {
-    console.log('eeeeerrrr', err)//bug here
+  } catch (event) {
+    console.log('eeeeerrrr', event)//bug here
     // return response.status(400).send(`Webhook Error: ${err.message}`);
+    console.log(`Unhandled event type ${event.type}`);
+  switch (event.type) {
+    case 'charge.succeeded' || "checkout.session.async_payment_succeeded":
+      receiptUrl = event.data.object.receipt_url
+      break;
+    case 'checkout.session.completed':
+      const paymentIntentSucceeded = event.data.object;
+      console.log('succeeded', event)
+      console.log('urr', receiptUrl)
+      console.log('customer details s-', event.data.object.customer_details)
+
+      const metadata = event.data.object.metadata
+      let order = {}
+      order.orderId = metadata.orderId
+      order.tax = metadata.tax
+      order.shipping = metadata.shipping
+      order.total = metadata.total
+      order.payment_status = event.data.object.payment_status
+      order.receiptUrl = receiptUrl
+      order.products = []
+      prodArray = []
+      Object.keys(metadata).forEach(x => {
+        if (
+          x !== "tax" && x !== "total" && x !== "shipping" && x !== "orderId" && x !== "userId" &&
+          typeof metadata[x] === "string" // Checks if the value is a string
+        ) {
+          let tempObj = {}
+          const productData = JSON.parse(metadata[x]);
+          tempObj.productId = x
+          tempObj.name = productData.name
+          tempObj.image = productData.image
+          tempObj.quantity = productData.quantity
+          tempObj.discount = productData.discount
+          tempObj.price = productData.price
+          order.products.push(tempObj)
+          prodArray.push(tempObj)//for ORDER collection
+        }
+      })
+
+      //saving the order details in db
+      try {
+        const updatedUser = await USER.findByIdAndUpdate(
+          event.data.object.metadata.userId,
+          { $push: { orders: order } },
+          { new: true }
+        )//.populate('cartProducts');
+        //console.log('updateduuu', updatedUser)
+
+        const theOrder = new ORDER({
+          orderId: metadata.orderId,
+          totalAmount: metadata.total,
+          tax: metadata.tax,
+          shipping: metadata.shipping,
+          payment_status: event.data.object.payment_status,
+          receiptUrl: receiptUrl,
+          user: event.data.object.metadata.userId,
+          products: prodArray,
+          shippingAddress: event.data.object.customer_details.address,
+          // paymentMethod: {
+          //   enum: ['Card', 'PayPal', 'Cash on Delivery', 'Other'],
+          //   default: 'Card',
+          // },
+        })
+        console.log('orderrbfore savimg', theOrder)
+        theOrder.save()
+          .then(response => {
+            console.log('saved order', response)
+          })
+          .catch(err => {
+            console.log("errror---", err)
+          })
+
+      } catch (error) {
+        console.error('something went wrong', error);
+        res.status(500).json({ message: 'Internal server error.' });
+      }
+
+      break;
+    case 'payment_intent.payment_failed':
+      console.log('failed', event)
+      console.log('meta f-', event.data.object.metadata)
+      break;
+    default:
+      console.log('meta d-', event.data.object.metadata)
+  }
+  response.send();
   }
   
-  console.log('theevent',event)
 
   // Handle the event
   console.log(`Unhandled event type ${event.type}`);
