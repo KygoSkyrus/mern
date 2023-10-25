@@ -33,7 +33,21 @@ app.use((req, res, next) => {
 });
 
 // app.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf } }))
+addRawBody=(req, res, next) =>{
+  req.setEncoding('utf8');
 
+  var data = '';
+
+  req.on('data', function(chunk) {
+    data += chunk;
+  });
+
+  req.on('end', function() {
+    req.rawBody = data;
+
+    next();
+  });
+}
 
 
 // let endpointSecret;
@@ -46,16 +60,16 @@ app.use((req, res, next) => {
 
 let receiptUrl;
 //cart for failing : 4000 0000 0000 0119
-app.post('/webhook', async (request, response) => {
-  const payload = request.body;
+app.post('/webhook', addRawBody, async (request, response) => {
+  const payload = request.rawBody;
   const sig = request.headers['stripe-signature'];
-  console.log("--------------------------webhook starts--------------------------------------------------")
+  console.log("--------------------------webhook starts--------------------------------------------------",request.rawBody)
   let event;
 
   try {
     console.log('eendpointSecret',endpointSecret)
     // event = stripe.webhooks.constructEvent(request.rawBody, sig, endpointSecret);
-    event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+    event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
   } catch (err) {
     console.log('eeeeerrrr', err)//bug here
     // return response.status(400).send(`Webhook Error: ${err.message}`);
