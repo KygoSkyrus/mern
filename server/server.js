@@ -56,27 +56,27 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
     console.log('endpointSecret',endpointSecret)
     // event = stripe.webhooks.constructEvent(request.rawBody, sig, endpointSecret);
     event = stripe.webhooks.constructEvent(request.body.toString(), sig, endpointSecret);
-  } catch (event) {
-    console.log('eeeeerrrr', event)//bug here
+  } catch (err) {
+    console.log('eeeeerrrr', err)//bug here
     // return response.status(400).send(`Webhook Error: ${err.message}`);
-    console.log(`Unhandled event type ${event.type}`);
-  switch (event.type) {
+    console.log(`Unhandled event type ${err.payload.type}`);
+  switch (err.payload.type) {
     case 'charge.succeeded' || "checkout.session.async_payment_succeeded":
-      receiptUrl = event.data.object.receipt_url
+      receiptUrl = err.payload.data.object.receipt_url
       break;
     case 'checkout.session.completed':
-      const paymentIntentSucceeded = event.data.object;
-      console.log('succeeded', event)
+      const paymentIntentSucceeded = err.payload.data.object;
+      console.log('succeeded', err.payload)
       console.log('urr', receiptUrl)
-      console.log('customer details s-', event.data.object.customer_details)
+      console.log('customer details s-', err.payload.data.object.customer_details)
 
-      const metadata = event.data.object.metadata
+      const metadata = err.payload.data.object.metadata
       let order = {}
       order.orderId = metadata.orderId
       order.tax = metadata.tax
       order.shipping = metadata.shipping
       order.total = metadata.total
-      order.payment_status = event.data.object.payment_status
+      order.payment_status = err.payload.data.object.payment_status
       order.receiptUrl = receiptUrl
       order.products = []
       prodArray = []
@@ -101,7 +101,7 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
       //saving the order details in db
       try {
         const updatedUser = await USER.findByIdAndUpdate(
-          event.data.object.metadata.userId,
+          err.payload.data.object.metadata.userId,
           { $push: { orders: order } },
           { new: true }
         )//.populate('cartProducts');
@@ -112,11 +112,11 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
           totalAmount: metadata.total,
           tax: metadata.tax,
           shipping: metadata.shipping,
-          payment_status: event.data.object.payment_status,
+          payment_status: err.payload.data.object.payment_status,
           receiptUrl: receiptUrl,
-          user: event.data.object.metadata.userId,
+          user: err.payload.data.object.metadata.userId,
           products: prodArray,
-          shippingAddress: event.data.object.customer_details.address,
+          shippingAddress: err.payload.data.object.customer_details.address,
           // paymentMethod: {
           //   enum: ['Card', 'PayPal', 'Cash on Delivery', 'Other'],
           //   default: 'Card',
@@ -127,8 +127,8 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
           .then(response => {
             console.log('saved order', response)
           })
-          .catch(err => {
-            console.log("errror---", err)
+          .catch(error => {
+            console.log("errror---", error)
           })
 
       } catch (error) {
@@ -138,11 +138,11 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
 
       break;
     case 'payment_intent.payment_failed':
-      console.log('failed', event)
-      console.log('meta f-', event.data.object.metadata)
+      console.log('failed', err.payload)
+      console.log('meta f-', err.payload.data.object.metadata)
       break;
     default:
-      console.log('meta d-', event.data.object.metadata)
+      console.log('meta d-', err.payload.data.object.metadata)
   }
   response.send();
   }
