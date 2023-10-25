@@ -39,7 +39,7 @@ app.use(bodyParser.json({
   verify: function(requset,res,buf) {
       var url = requset.originalUrl;
       console.log('urlll',url)
-      if (url.startsWith('/stripe-webhooks') || url.startsWith('/webhook')) {
+      if (url.startsWith('/stripe-webhooks') || url==='/webhook') {
         requset.rawBody = buf.toString()
       }
   }}));
@@ -76,8 +76,8 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
   
 
   // Handle the event
-  console.log(`Unhandled event type ${event.type}`);
-  switch (event.type) {
+  console.log(`Unhandled event type ${event?.type}`);
+  switch (event?.type) {
     case 'charge.succeeded' || "checkout.session.async_payment_succeeded":
       receiptUrl = event.data.object.receipt_url
       break;
