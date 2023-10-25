@@ -4,7 +4,6 @@ const path = require("path")
 const app = express();
 const dotenv = require('dotenv');
 const sk = process.env.SK;
-const bodyParser=require('body-parser')
 
 const { v4: uuidv4 } = require('uuid');
 const stripe = require('stripe')(sk);
@@ -25,25 +24,13 @@ const USER = require('./models/user')
 // });
 
 // app.use(express.json());
-// app.use((req, res, next) => {
-//   if (req.originalUrl === '/webhook') {
-//     next();
-//   } else {
-//     express.json()(req, res, next);
-//   }
-// });
-
-
-app.use(bodyParser.json({
-  // Because Stripe needs the raw body, we compute it but only when hitting the Stripe callback URL.
-  verify: function(requset,res,buf) {
-      var url = requset.originalUrl;
-      console.log('urlll',url)
-      if (url.startsWith('/stripe-webhooks') || url==='/webhook') {
-        requset.rawBody = buf.toString()
-      }
-  }}));
-
+app.use((req, res, next) => {
+  if (req.originalUrl === '/webhook') {
+    next();
+  } else {
+    express.json()(req, res, next);
+  }
+});
 
 // app.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf } }))
 
@@ -59,21 +46,20 @@ app.use(bodyParser.json({
 
 let receiptUrl;
 //cart for failing : 4000 0000 0000 0119
-app.post('/webhook', express.raw({ type: 'application/json' }), async (request, response) => {
+app.post('/webhook', async (request, response) => {
   const payload = request.body;
   const sig = request.headers['stripe-signature'];
   console.log("--------------------------webhook starts--------------------------------------------------")
   let event;
 
   try {
-    console.log('endpointSecret',endpointSecret)
+    console.log('eendpointSecret',endpointSecret)
     // event = stripe.webhooks.constructEvent(request.rawBody, sig, endpointSecret);
     event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
   } catch (err) {
     console.log('eeeeerrrr', err)//bug here
     // return response.status(400).send(`Webhook Error: ${err.message}`);
   }
-  
 
   // Handle the event
   console.log(`Unhandled event type ${event?.type}`);
