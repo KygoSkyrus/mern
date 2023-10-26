@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 const bodyParser = require('body-parser')
 // Use JSON parser for all non-webhook routes
-router.use(bodyParser.urlencoded({ extended: true }));//for checkout passed values
+// router.use(bodyParser.urlencoded({ extended: true }));//for checkout passed values
 router.use((req, res, next) => {
     if (req.originalUrl === "/webhook") {
         next();
@@ -28,7 +28,7 @@ const stripe = require('stripe')(sk);
 
 
 
-router.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf } }));
+// router.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf } }));
 
 /************* SCHEMA ***************/
 const PRODUCT = require('../models/product')
@@ -627,6 +627,8 @@ router.post('/create-checkout-session', async (req, res) => {
         // }
         //shipping_address_collection:"required"
     });
+
+    console.log('session',session)
 
 
     res.redirect(303, session.url);//redirects to checkout page

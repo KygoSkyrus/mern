@@ -32,22 +32,7 @@ app.use((req, res, next) => {
   }
 });
 
-// app.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf } }))
-addRawBody=(req, res, next) =>{
-  req.setEncoding('utf8');
 
-  var data = '';
-
-  req.on('data', function(chunk) {
-    data += chunk;
-  });
-
-  req.on('end', function() {
-    req.rawBody = data;
-
-    next();
-  });
-}
 
 
 // let endpointSecret;
@@ -60,8 +45,8 @@ addRawBody=(req, res, next) =>{
 
 let receiptUrl;
 //cart for failing : 4000 0000 0000 0119
-app.post('/webhook', addRawBody, async (request, response) => {
-  const payload = request.rawBody;
+app.post('/webhook', express.raw({type: 'application/json'}), async (request, response) => {
+  const payload = request.body;
   const sig = request.headers['stripe-signature'];
   console.log("--------------------------webhook starts--------------------------------------------------",request.rawBody)
   let event;
