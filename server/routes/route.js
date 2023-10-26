@@ -565,47 +565,47 @@ router.post('/create-checkout-session', async (req, res) => {
     try {
         const decoded = jwt.verify(token, process.env.SECRETKEY);//for user id
 
-        const data = JSON.parse(req.body.priceObj)
-        //meta data has 5 keys for orders details and rest 45 for products
-        productList.orderId = orderId
-        productList.userId = decoded._id
-        productList.tax = data.tax
-        productList.shipping = data.shipping
-        productList.total = data.grandTotal
+        // const data = JSON.parse(req.body.priceObj)
+        // //meta data has 5 keys for orders details and rest 45 for products
+        // productList.orderId = orderId
+        // productList.userId = decoded._id
+        // productList.tax = data.tax
+        // productList.shipping = data.shipping
+        // productList.total = data.grandTotal
 
 
-        Object.keys(data.productList).forEach(x => {
-            let prod = {}
+        // Object.keys(data.productList).forEach(x => {
+        //     let prod = {}
 
-            prod.price_data = {}
-            prod.price_data.currency = "inr"
-            prod.price_data.product_data = {}
-            prod.price_data.product_data.name = data.productList[x].name
-            if (data.grandTotal < 999999) {
-                prod.price_data.unit_amount = data.productList[x].price * 100
-            } else {
-                prod.price_data.unit_amount = data.productList[x].price
-            }
-            prod.quantity = data.productList[x].quantity
+        //     prod.price_data = {}
+        //     prod.price_data.currency = "inr"
+        //     prod.price_data.product_data = {}
+        //     prod.price_data.product_data.name = data.productList[x].name
+        //     if (data.grandTotal < 999999) {
+        //         prod.price_data.unit_amount = data.productList[x].price * 100
+        //     } else {
+        //         prod.price_data.unit_amount = data.productList[x].price
+        //     }
+        //     prod.quantity = data.productList[x].quantity
 
-            prod.adjustable_quantity = {}
-            prod.adjustable_quantity.enabled = true
-            prod.adjustable_quantity.minimum = 1
-            prod.adjustable_quantity.maximum = 300
+        //     prod.adjustable_quantity = {}
+        //     prod.adjustable_quantity.enabled = true
+        //     prod.adjustable_quantity.minimum = 1
+        //     prod.adjustable_quantity.maximum = 300
 
-            //for metadata
-            productList[x] = {}
-            productList[x].name = data.productList[x].name
-            productList[x].image = data.productList[x].image
-            productList[x].price = data.productList[x].price
-            productList[x].quantity = data.productList[x].quantity
-            productList[x].discount = data.productList[x].discount
-            productList[x] = JSON.stringify(productList[x])//metadata only supports key value(only string) that's why its stringified
+        //     //for metadata
+        //     productList[x] = {}
+        //     productList[x].name = data.productList[x].name
+        //     productList[x].image = data.productList[x].image
+        //     productList[x].price = data.productList[x].price
+        //     productList[x].quantity = data.productList[x].quantity
+        //     productList[x].discount = data.productList[x].discount
+        //     productList[x] = JSON.stringify(productList[x])//metadata only supports key value(only string) that's why its stringified
 
-            line_items.push(prod)
-        })
+        //     line_items.push(prod)
+        // })
 
-        //console.log('productList', productList)
+        // console.log('line_items', line_items)
 
 
     } catch (err) {
@@ -613,7 +613,13 @@ router.post('/create-checkout-session', async (req, res) => {
     }
 
     const session = await stripe.checkout.sessions.create({
-        line_items,
+        line_items: [
+            {
+              price_data: { currency: 'inr', product_data: {name:"McAfee Total Protection Antivirus 2023"}, unit_amount: 150000 },
+              quantity: 1,
+              adjustable_quantity: { enabled: true, minimum: 1, maximum: 300 }
+            }
+          ],
         mode: 'payment',
         payment_method_types: ['card'],
         success_url: process.env.NODE_ENV === "production"?`https://shoppitt.onrender.com/orders/${orderId}`:`http://localhost:3006/orders/${orderId}`,
@@ -628,8 +634,7 @@ router.post('/create-checkout-session', async (req, res) => {
         //shipping_address_collection:"required"
     });
 
-    console.log('session',session)
-
+   console.log('session',session)
 
     res.redirect(303, session.url);//redirects to checkout page
 });
