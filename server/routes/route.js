@@ -2,10 +2,12 @@ const express = require('express');
 const router = express('router');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
 const bodyParser = require('body-parser')
+
 // Use JSON parser for all non-webhook routes
-// router.use(bodyParser.urlencoded({ extended: true }));//for checkout passed values
+router.use(bodyParser.urlencoded({ extended: true }));//for checkout passed values
+
+//to prevent req.body to get modified by bodyparser for webhook events
 router.use((req, res, next) => {
     if (req.originalUrl === "/webhook") {
         next();
@@ -17,20 +19,19 @@ router.use((req, res, next) => {
 const cookieParser = require('cookie-parser');
 router.use(cookieParser());
 
-const USER = require('../models/user');
 
 const dotenv = require('dotenv');
 dotenv.config({ path: './env/config.env' });
-const sk = process.env.SK;
 
 const { v4: uuidv4 } = require('uuid');
-const stripe = require('stripe')(sk);
+const stripe = require('stripe')(process.env.SK);
 
 
 
-// router.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf } }));
+router.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf } }));
 
 /************* SCHEMA ***************/
+const USER = require('../models/user');
 const PRODUCT = require('../models/product')
 const CATEGORY = require('../models/category')
 const ORDER = require('./../models/orders')
@@ -545,9 +546,24 @@ router.get('/api/getorders', async (req, res) => {
 })
 
 
+router.get('/x', async (req, res) => {
+    // const session = await stripe.checkout.sessions.retrieve(
+    //     'cs_test_a1oiHVuScDr3QTN5rFXiG9siS0f7ToUici3v79U0IcPBnh3jzf0oHhsHjB'
+    //   );
+
+    //   console.log('sesssss',session)
+    const paymentIntent = await stripe.paymentIntents.retrieve(
+        'pi_3O7J2gSJDEVNzqXl08By3YGE'
+    );
+
+    console.log('payemnent intent', paymentIntent)
+    console.log('payemnent intent', paymentIntent.charges.data)
+})
+
 
 //NOTE::: DONT LET USER ADD MORE THAN 50 ITEMS AS IT WOULD BREAK THE STRIPE,,metadata onkect can only have 50 keys(whihc are products in our case),,shgow user a waring that we dont support bulk order at the moment ,,out of 50, 4 key s reserved 
 
+//card for failing : 4000 0000 0000 0119
 //IF the stirpe accont is activated than there may be a way to send invoice to user
 router.post('/create-checkout-session', async (req, res) => {
 
@@ -565,47 +581,47 @@ router.post('/create-checkout-session', async (req, res) => {
     try {
         const decoded = jwt.verify(token, process.env.SECRETKEY);//for user id
 
-        // const data = JSON.parse(req.body.priceObj)
-        // //meta data has 5 keys for orders details and rest 45 for products
-        // productList.orderId = orderId
-        // productList.userId = decoded._id
-        // productList.tax = data.tax
-        // productList.shipping = data.shipping
-        // productList.total = data.grandTotal
+        const data = JSON.parse(req.body.priceObj)
+        //meta data has 5 keys for orders details and rest 45 for products
+        productList.orderId = orderId
+        productList.userId = decoded._id
+        productList.tax = data.tax
+        productList.shipping = data.shipping
+        productList.total = data.grandTotal
 
 
-        // Object.keys(data.productList).forEach(x => {
-        //     let prod = {}
+        Object.keys(data.productList).forEach(x => {
+            let prod = {}
 
-        //     prod.price_data = {}
-        //     prod.price_data.currency = "inr"
-        //     prod.price_data.product_data = {}
-        //     prod.price_data.product_data.name = data.productList[x].name
-        //     if (data.grandTotal < 999999) {
-        //         prod.price_data.unit_amount = data.productList[x].price * 100
-        //     } else {
-        //         prod.price_data.unit_amount = data.productList[x].price
-        //     }
-        //     prod.quantity = data.productList[x].quantity
+            prod.price_data = {}
+            prod.price_data.currency = "inr"
+            prod.price_data.product_data = {}
+            prod.price_data.product_data.name = data.productList[x].name
+            if (data.grandTotal < 999999) {
+                prod.price_data.unit_amount = data.productList[x].price * 100
+            } else {
+                prod.price_data.unit_amount = data.productList[x].price
+            }
+            prod.quantity = data.productList[x].quantity
 
-        //     prod.adjustable_quantity = {}
-        //     prod.adjustable_quantity.enabled = true
-        //     prod.adjustable_quantity.minimum = 1
-        //     prod.adjustable_quantity.maximum = 300
+            prod.adjustable_quantity = {}
+            prod.adjustable_quantity.enabled = true
+            prod.adjustable_quantity.minimum = 1
+            prod.adjustable_quantity.maximum = 300
 
-        //     //for metadata
-        //     productList[x] = {}
-        //     productList[x].name = data.productList[x].name
-        //     productList[x].image = data.productList[x].image
-        //     productList[x].price = data.productList[x].price
-        //     productList[x].quantity = data.productList[x].quantity
-        //     productList[x].discount = data.productList[x].discount
-        //     productList[x] = JSON.stringify(productList[x])//metadata only supports key value(only string) that's why its stringified
+            //for metadata
+            productList[x] = {}
+            productList[x].name = data.productList[x].name
+            productList[x].image = data.productList[x].image
+            productList[x].price = data.productList[x].price
+            productList[x].quantity = data.productList[x].quantity
+            productList[x].discount = data.productList[x].discount
+            productList[x] = JSON.stringify(productList[x])//metadata only supports key value(only string) that's why its stringified
 
-        //     line_items.push(prod)
-        // })
+            line_items.push(prod)
+        })
 
-        // console.log('line_items', line_items)
+        //console.log('productList', productList)
 
 
     } catch (err) {
@@ -613,13 +629,7 @@ router.post('/create-checkout-session', async (req, res) => {
     }
 
     const session = await stripe.checkout.sessions.create({
-        line_items: [
-            {
-              price_data: { currency: 'inr', product_data: {name:"McAfee Total Protection Antivirus 2023"}, unit_amount: 150000 },
-              quantity: 1,
-              adjustable_quantity: { enabled: true, minimum: 1, maximum: 300 }
-            }
-          ],
+        line_items,
         mode: 'payment',
         payment_method_types: ['card'],
         success_url: process.env.NODE_ENV === "production"?`https://shoppitt.onrender.com/orders/${orderId}`:`http://localhost:3006/orders/${orderId}`,
@@ -634,7 +644,7 @@ router.post('/create-checkout-session', async (req, res) => {
         //shipping_address_collection:"required"
     });
 
-   console.log('session',session)
+console.log('session',session)
 
     res.redirect(303, session.url);//redirects to checkout page
 });
