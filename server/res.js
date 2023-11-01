@@ -401,3 +401,96 @@ e- {
 }
 Unhandled event type checkout.session.completed
 Unhandled event type checkout.session.completed
+
+
+
+
+
+session {
+  id: 'cs_test_b1JkPOXJksFWTcLedU3exNjXYMVQ2gaspkQQBnqpGXIvoJ6gp4JLdVd6iK',
+  object: 'checkout.session',
+  after_expiration: null,
+  allow_promotion_codes: null,
+  amount_subtotal: 44939700,
+  amount_total: 44939700,
+  automatic_tax: { enabled: false, status: null },
+  billing_address_collection: 'required',
+  cancel_url: 'http://localhost:3006/user',
+  client_reference_id: null,
+  client_secret: null,
+  consent: null,
+  consent_collection: null,
+  created: 1698849684,
+  currency: 'inr',
+  currency_conversion: null,
+  custom_fields: [],
+  custom_text: {
+    shipping_address: null,
+    submit: null,
+    terms_of_service_acceptance: null
+  },
+  customer: null,
+  customer_creation: 'always',
+  customer_details: {
+    address: null,
+    email: 'dheerajgupta.whyshy@gmail.com',
+    name: null,
+    phone: null,
+    tax_exempt: 'none',
+    tax_ids: null
+  },
+  customer_email: 'dheerajgupta.whyshy@gmail.com',
+  expires_at: 1698936084,
+  invoice: null,
+  invoice_creation: {
+    enabled: false,
+    invoice_data: {
+      account_tax_ids: null,
+      custom_fields: null,
+      description: null,
+      footer: null,
+      metadata: {},
+      rendering_options: null
+    }
+  },
+  livemode: false,
+  locale: null,
+  metadata: {
+    '64c69d66c8b5667ef02f36c5': '{"name":"Redmi A2 (Sea Green, 2GB RAM, 32GB Storage)","image":"https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2Fc0dfeda0-f36d-4c4c-8fd0-74e94220e570?alt=media&token=fa8691b3-9d53-45a8-aced-2f92c435a379","price":6000,"quantity":5,"discount":0}',
+    '64c6a234c8b5667ef02f36cf': '{"name":"Sony WH-CH520, Wireless On-Ear Bluetooth Headphones with Mic","image":"https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F8175b06d-714e-46be-8b0f-4e704acf8a31?alt=media&token=6f19ac90-41e2-4e7d-b935-14dbfaf2e4e0","price":6000,"quantity":1,"discount":0}',
+    '64c74b6010ceb052b95b037e': '{"name":"Globex M77 All-in-one Computer","image":"https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F69333c2f-bb4f-40ed-8846-b332e802caa0?alt=media&token=71fe7679-76c4-4fa8-b5e6-cd7a1f8ecff0","price":59100,"quantity":5,"discount":0}',
+    '64c7512b10ceb052b95b0386': '{"name":"IdeaTek i5 CPU","image":"https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F02c8c4e1-d199-44ef-9aae-1f993182945f?alt=media&token=b98b0ea8-9b4e-4599-b954-4a81ee70c8f7","price":49999,"quantity":1,"discount":0}',
+    '64c757f810ceb052b95b039e': '{"name":"EXO MP3 Player","image":"https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F9df80e24-9a2f-4679-b74f-950e07eff5de?alt=media&token=e11a41d4-e680-4648-84af-a01537b34f43","price":45899,"quantity":1,"discount":0}',
+    '64c9e8a38f6af900849dfb93': '{"name":"Sky 65 Drone ","image":"https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2Fb3758d1e-43ff-47e1-8cfe-1aab7f8e5c0c?alt=media&token=86bda328-05bb-4d86-9a46-d85bedd23fe7","price":13999,"quantity":1,"discount":0}',
+    '64ca25ac8f6af900849dfbb2': '{"name":"Globex 700W smart solo Microwave oven ","image":"https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2Ff1b65308-8318-43b5-a098-9e9c48e9cdbb?alt=media&token=5d9a85ff-dcf1-4578-a750-2ed7e8772b9e","price":5000,"quantity":1,"discount":0}',
+    '64ca5d7a953bcfba730dc09a': '{"name":"McAfee Total Protection Antivirus 2023 ","image":"https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2Fb554934d-37f8-4a53-860a-d13d124a5654?alt=media&token=dd0a87d5-46b9-4aa9-b09d-88ec660cd0f0","price":1500,"quantity":1,"discount":0}',
+    '64ca5fc0953bcfba730dc0a2': '{"name":"Cerberus GeForce GTX 1050 4GB Gaming Graphics Card ","image":"https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2Fe402f412-dc64-4f48-a25d-8f77d41ebe47?alt=media&token=cca08095-ccec-43db-81a9-4e59c0886501","price":1500,"quantity":1,"discount":0}',
+    orderId: 'e210b6ec-8ff6-4045-b25e-e7ef96a2063e',
+    shipping: '0',
+    tax: '44940',
+    total: '494337',
+    userId: '64dca5854563a04dffe7cd9b'
+  },
+  mode: 'payment',
+  payment_intent: 'pi_3O7fbkSJDEVNzqXl1bEFRyaS',
+  payment_link: null,
+  payment_method_collection: 'always',
+  payment_method_configuration_details: null,
+  payment_method_options: {},
+  payment_method_types: [ 'card' ],
+  payment_status: 'unpaid',
+  phone_number_collection: { enabled: false },
+  recovered_from: null,
+  setup_intent: null,
+  shipping: null,
+  shipping_address_collection: null,
+  shipping_options: [],
+  shipping_rate: null,
+  status: 'open',
+  submit_type: null,
+  subscription: null,
+  success_url: 'http://localhost:3006/orders/e210b6ec-8ff6-4045-b25e-e7ef96a2063e',
+  total_details: { amount_discount: 0, amount_shipping: 0, amount_tax: 0 },
+  ui_mode: 'hosted',
+  url: 'https://checkout.stripe.com/c/pay/cs_test_b1JkPOXJksFWTcLedU3exNjXYMVQ2gaspkQQBnqpGXIvoJ6gp4JLdVd6iK#fidkdWxOYHwnPyd1blpxYHZxWjA0T21zbnVWT0FAU0t%2FdF1pfVJ0VD1VM0p9YzFrb1UxYndPZEpub09xPDRQYVBfSDRDT2BsajZHYjVVZEBEXzd8ZFdEUkNLdmdPUWo1SDBqSmdJdjJ1V0BRNTU0Vkp1cTNVTycpJ2N3amhWYHdzYHcnP3F3cGApJ2lkfGpwcVF8dWAnPydocGlxbFpscWBoJyknYGtkZ2lgVWlkZmBtamlhYHd2Jz9xd3BgeCUl'
+}

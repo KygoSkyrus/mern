@@ -6,15 +6,7 @@ const bodyParser = require('body-parser')
 
 // Use JSON parser for all non-webhook routes
 router.use(bodyParser.urlencoded({ extended: true }));//for checkout passed values
-
-//to prevent req.body to get modified by bodyparser for webhook events
-router.use((req, res, next) => {
-    if (req.originalUrl === "/webhook") {
-        next();
-    } else {
-        bodyParser.json()(req, res, next);
-    }
-});
+router.use(bodyParser.json())
 
 const cookieParser = require('cookie-parser');
 router.use(cookieParser());
@@ -464,7 +456,7 @@ router.post('/api/updatedaddress', async (req, res) => {
     }
     try {
         const { address } = req.body;
-        console.log('eueuue',address)
+        console.log('eueuue', address)
         const decoded = jwt.verify(token, process.env.SECRETKEY);
 
         const user = await USER.findById(decoded._id);
@@ -473,17 +465,17 @@ router.post('/api/updatedaddress', async (req, res) => {
         }
 
 
-// if()
+        // if()
 
         let updatedUser;
 
-            updatedUser = await USER.findByIdAndUpdate(
-                decoded._id,
-                { address: address, phone:(user.phone!==address.phone)?address.phone:user.phone },
-                { new: true }
-            ).populate('cartProducts');
-            res.status(200).json({ message: 'User details updated.', user: updatedUser });
-      
+        updatedUser = await USER.findByIdAndUpdate(
+            decoded._id,
+            { address: address, phone: (user.phone !== address.phone) ? address.phone : user.phone },
+            { new: true }
+        ).populate('cartProducts');
+        res.status(200).json({ message: 'User details updated.', user: updatedUser });
+
 
 
 
@@ -632,11 +624,11 @@ router.post('/create-checkout-session', async (req, res) => {
         line_items,
         mode: 'payment',
         payment_method_types: ['card'],
-        success_url: process.env.NODE_ENV === "production"?`https://shoppitt.onrender.com/orders/${orderId}`:`http://localhost:3006/orders/${orderId}`,
-        cancel_url: process.env.NODE_ENV === "production"?`https://shoppitt.onrender.com/user`:'http://localhost:3006/user',
+        success_url: process.env.NODE_ENV === "production" ? `https://shoppitt.onrender.com/orders/${orderId}` : `http://localhost:3006/orders/${orderId}`,
+        cancel_url: process.env.NODE_ENV === "production" ? `https://shoppitt.onrender.com/user` : 'http://localhost:3006/user',
         customer_email: req.cookies.email,
         metadata: productList,
-        billing_address_collection:"required",
+        billing_address_collection: "required",
         // total_details:{
         //     amount_discount:443,
         //     amount_tax:33
@@ -644,7 +636,79 @@ router.post('/create-checkout-session', async (req, res) => {
         //shipping_address_collection:"required"
     });
 
-console.log('session',session)
+
+    if (session) {
+
+        
+        let metadata = session.metadata
+        console.log('session', session)
+        console.log('meta data', metadata)
+        let order = {}
+        order.orderId =orderId
+        order.tax = metadata.tax
+        order.shipping = metadata.shipping
+        order.total = metadata.total
+        order.payment_status = session.payment_status
+        order.receiptUrl = ''
+        order.products = []
+        prodArray = []
+        Object.keys(metadata).forEach(x => {
+            if (
+                x !== "tax" && x !== "total" && x !== "shipping" && x !== "orderId" && x !== "userId" &&
+                typeof metadata[x] === "string" // Checks if the value is a string
+            ) {
+                let tempObj = {}
+                //parsing the product details from metadata
+                const productData = JSON.parse(metadata[x]);
+                tempObj.productId = x
+                tempObj.name = productData.name
+                tempObj.image = productData.image
+                tempObj.quantity = productData.quantity
+                tempObj.discount = productData.discount
+                tempObj.price = productData.price
+                order.products.push(tempObj)
+                prodArray.push(tempObj)//for ORDER collection
+            }
+        })
+
+        //saving the order details in db
+        try {
+            const updatedUser = await USER.findByIdAndUpdate(
+                metadata.userId,
+                { $push: { orders: order } },
+                { new: true }
+            )//.populate('cartProducts');
+
+            const theOrder = new ORDER({
+                orderId: metadata.orderId,
+                totalAmount: metadata.total,
+                tax: metadata.tax,
+                shipping: metadata.shipping,
+                payment_status: sessionpayment_status,
+                receiptUrl: receiptUrl,
+                user: metadata.userId,
+                products: prodArray,
+                shippingAddress: session.customer_details.address,
+                // paymentMethod: {
+                //   enum: ['Card', 'PayPal', 'Cash on Delivery', 'Other'],
+                //   default: 'Card',
+                // },
+            })
+            theOrder.save()
+                .then(response => {
+                    console.log('saved order', response)
+                })
+                .catch(err => {
+                    console.log("errror-", err)
+                    res.status(500).json({ message: 'Internal server error.' });
+                })
+
+        } catch (error) {
+            console.error('something went wrong', error);
+            res.status(500).json({ message: 'Internal server error.' });
+        }
+    }
+
 
     res.redirect(303, session.url);//redirects to checkout page
 });
@@ -670,12 +734,12 @@ router.get('/api/admin/getorders', async (req, res) => {
         return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
     }
     try {
-       // const decoded = jwt.verify(token, process.env.SECRETKEY);
-       
+        // const decoded = jwt.verify(token, process.env.SECRETKEY);
+
         ORDER.find({}).populate('user')
             .then(response => {
-                 console.log('sss', response)
-                return res.status(200).json({ data:response, is_user_logged_in: true });
+                console.log('sss', response)
+                return res.status(200).json({ data: response, is_user_logged_in: true });
             })
             .catch(err => {
                 console.log(err)
@@ -699,12 +763,12 @@ router.get('/api/admin/getusers', async (req, res) => {
         return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
     }
     try {
-       // const decoded = jwt.verify(token, process.env.SECRETKEY);
-       
+        // const decoded = jwt.verify(token, process.env.SECRETKEY);
+
         USER.find({})
             .then(response => {
-                 console.log('u', response)
-                return res.status(200).json({ data:response, is_user_logged_in: true });
+                console.log('u', response)
+                return res.status(200).json({ data: response, is_user_logged_in: true });
             })
             .catch(err => {
                 console.log(err)
@@ -786,8 +850,8 @@ router.post('/getemail', async (req, res) => {
 
 router.get('/api/getproducts', async (req, res) => {
 
-    const {limit}=req.query
-    console.log('hfhfd',limit)
+    const { limit } = req.query
+    console.log('hfhfd', limit)
 
     await PRODUCT.find({}).limit(limit)
         .then(response => {
