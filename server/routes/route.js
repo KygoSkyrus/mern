@@ -575,6 +575,7 @@ router.post('/create-checkout-session', async (req, res) => {
 
         const data = JSON.parse(req.body.priceObj)
         //meta data has 5 keys for orders details and rest 45 for products
+        //maybe we wont need these five to be store in metadat as the session object will be created right here
         productList.orderId = orderId
         productList.userId = decoded._id
         productList.tax = data.tax
@@ -599,7 +600,7 @@ router.post('/create-checkout-session', async (req, res) => {
             prod.adjustable_quantity = {}
             prod.adjustable_quantity.enabled = true
             prod.adjustable_quantity.minimum = 1
-            prod.adjustable_quantity.maximum = 300
+            prod.adjustable_quantity.maximum = 99
 
             //for metadata
             productList[x] = {}
@@ -615,64 +616,75 @@ router.post('/create-checkout-session', async (req, res) => {
 
         //console.log('productList', productList)
 
-
-    } catch (err) {
-        console.log('er', err);
-    }
-
-    const session = await stripe.checkout.sessions.create({
-        line_items,
-        mode: 'payment',
-        payment_method_types: ['card'],
-        success_url: process.env.NODE_ENV === "production" ? `https://shoppitt.onrender.com/orders/${orderId}` : `http://localhost:3006/orders/${orderId}`,
-        cancel_url: process.env.NODE_ENV === "production" ? `https://shoppitt.onrender.com/user` : 'http://localhost:3006/user',
-        customer_email: req.cookies.email,
-        metadata: productList,
-        billing_address_collection: "required",
-        // total_details:{
-        //     amount_discount:443,
-        //     amount_tax:33
-        // }
-        //shipping_address_collection:"required"
-    });
+        const session = await stripe.checkout.sessions.create({
+            line_items,
+            mode: 'payment',
+            payment_method_types: ['card'],
+            success_url: process.env.NODE_ENV === "production" ? `https://shoppitt.onrender.com/orders/${orderId}` : `http://localhost:3006/orders/${orderId}`,
+            cancel_url: process.env.NODE_ENV === "production" ? `https://shoppitt.onrender.com/user` : 'http://localhost:3006/user',
+            customer_email: req.cookies.email,
+            metadata: productList,
+            billing_address_collection: "required",
+            // total_details:{
+            //     amount_discount:443,
+            //     amount_tax:33
+            // }
+            //shipping_address_collection:"required"
+        });
 
 
-    if (session) {
+        if (session) {
 
-        
-        let metadata = session.metadata
-        console.log('session', session)
-        console.log('meta data', metadata)
-        let order = {}
-        order.orderId =orderId
-        order.tax = metadata.tax
-        order.shipping = metadata.shipping
-        order.total = metadata.total
-        order.payment_status = session.payment_status
-        order.receiptUrl = ''
-        order.products = []
-        prodArray = []
-        Object.keys(metadata).forEach(x => {
-            if (
-                x !== "tax" && x !== "total" && x !== "shipping" && x !== "orderId" && x !== "userId" &&
-                typeof metadata[x] === "string" // Checks if the value is a string
-            ) {
-                let tempObj = {}
-                //parsing the product details from metadata
-                const productData = JSON.parse(metadata[x]);
-                tempObj.productId = x
-                tempObj.name = productData.name
-                tempObj.image = productData.image
-                tempObj.quantity = productData.quantity
-                tempObj.discount = productData.discount
-                tempObj.price = productData.price
-                order.products.push(tempObj)
-                prodArray.push(tempObj)//for ORDER collection
-            }
-        })
 
-        //saving the order details in db
-        try {
+            //saving the session id with orderid in db 
+            const user = await USER.findByIdAndUpdate(
+                decoded._id,
+                {
+                    $push: {
+                        checkoutSession: {
+                            sessionId: session.id,
+                            orderId: orderId
+                        }
+                    }
+                },
+                { new: true }
+            )//.populate('cartProducts');
+
+
+
+            let metadata = session.metadata
+            console.log('session', session)
+            console.log('meta data', metadata)
+            let order = {}
+            order.orderId = orderId
+            order.tax = metadata.tax
+            order.shipping = metadata.shipping
+            order.total = metadata.total
+            order.payment_status = session.payment_status
+            order.receiptUrl = ''
+            order.products = []
+            prodArray = []
+            Object.keys(metadata).forEach(x => {
+                if (
+                    x !== "tax" && x !== "total" && x !== "shipping" && x !== "orderId" && x !== "userId" &&
+                    typeof metadata[x] === "string" // Checks if the value is a string
+                ) {
+                    let tempObj = {}
+                    //parsing the product details from metadata
+                    const productData = JSON.parse(metadata[x]);
+                    tempObj.productId = x
+                    tempObj.name = productData.name
+                    tempObj.image = productData.image
+                    tempObj.quantity = productData.quantity
+                    tempObj.discount = productData.discount
+                    tempObj.price = productData.price
+                    order.products.push(tempObj)
+                    prodArray.push(tempObj)//for ORDER collection
+                }
+            })
+
+            //saving the order details in db
+
             const updatedUser = await USER.findByIdAndUpdate(
                 metadata.userId,
                 { $push: { orders: order } },
@@ -703,10 +715,10 @@ router.post('/create-checkout-session', async (req, res) => {
                     res.status(500).json({ message: 'Internal server error.' });
                 })
 
-        } catch (error) {
-            console.error('something went wrong', error);
-            res.status(500).json({ message: 'Internal server error.' });
         }
+    } catch (error) {
+        console.error('something went wrong', error);
+        res.status(500).json({ message: 'Internal server error.' });
     }
 
 

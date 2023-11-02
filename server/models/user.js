@@ -54,6 +54,10 @@ const userSchema = new Schema({
             default: 1,
         },
     }],
+    checkoutSession:[{
+        sessionId:{type:String},
+        orderId:{type:String},
+    }],
     orders: [{
         products: [{
             productId: {
