@@ -17,6 +17,7 @@ const USER = require('./models/user')
 
 // // Use JSON parser for all non-webhook routes
 // app.use(express.json());
+//to prevent req.body to get modified by bodyparser for webhook events
 app.use((req, res, next) => {
   if (req.originalUrl === '/webhook') {
     next();
