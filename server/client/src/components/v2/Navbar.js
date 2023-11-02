@@ -113,8 +113,7 @@ const Navbar = () => {
           console.log("query response", data);
           setSearchedItems(data)
           document.querySelector('.search-overlay').classList.remove('display-none')//puts the overlay
-          document.getElementById('root').style.height = "100vh"
-          document.getElementById('root').style.overflow = "hidden"
+          
 
           document.querySelector('.custom-loader').classList.add('display-none')
           if (data.length === 0) {
@@ -143,6 +142,11 @@ const Navbar = () => {
 
   const handleChange = (e) => {
     console.log("handleChange", e.target.value);
+
+    //fixing root height
+    document.getElementById('root').style.height = "100vh"
+    document.getElementById('root').style.overflow = "hidden"
+
     document.getElementById('searchdropdown').classList.remove('display-none')//mnake serch result visible
     document.querySelector('.search-overlay').classList.remove('display-none')//adding the overlay
 
@@ -215,7 +219,7 @@ const Navbar = () => {
 
                     {searchedItems?.map(x => {
                       return (
-                        <section class="dropdown-item">
+                        <section class="dropdown-item" key={x._id}>
                           <Link to={`/product/${x._id}`}>
                             <img className="me-3" src={x.image} alt="" height="50px" width="55px" />
                           </Link>

@@ -69,7 +69,9 @@
   /* list-style-type: none; */
   text-decoration: none;
 }
-
+#root{
+  position: relative;
+}
 /*********************************************** basics COMMON *************************************************************/
 
 ::-moz-selection {
@@ -446,6 +448,7 @@ img {
   width: 100vw;
   height: 100vh;
   background: #0000008c;
+  z-index: 999;
 }
 
 .categoryListsHolder {
