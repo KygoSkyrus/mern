@@ -25,7 +25,7 @@ const Order = () => {
 
   useEffect(() => {
     let resp;
-    fetch(`/api/getorders`)
+    fetch(`/api/getorders?orderId=${orderId}`)
       .then(response => {
         resp = response
         return response.json()
@@ -33,14 +33,35 @@ const Order = () => {
       .then(res => {
         setShowLoader(false)
         if (resp.status === 200) {
-          console.log('orders', res.user.orders)
-          console.log('the order', res.user.orders.find(x => x.orderId === orderId))
-          setOrder(res.user.orders.find(x => x.orderId === orderId))
+          console.log('the order', res.order)
+          if (res.order) {
+            setOrder(res.order)
+          } else {
+            let status;
+            //this api looks for checkoutsession and save the order is not saved in db and returns the order
+            fetch(`/api/getcheckoutsession?orderId=${orderId}`)
+              .then(response => {
+                status = response.status
+                return response.json()
+              })
+              .then(res => {
+                if (status === 200) {
+                  console.log('checkout sessio', res)
+                  setOrder(res.order)
+                } else {
+                  dispatch(setToastStatus({ isSuccess: false }))
+                  dispatch(toastVisibility({ toast: true }))
+                  dispatch(setToastContent({ message: res.message }))
+                }
+              })
+
+          }
           //dispatch(setUserDetails({ user: res.user }))
         } else {
           setOrder(undefined)
           // setShowLoader(false)
           console.log('not 2000')
+          //create an utility function whcih will updated these three state abd pass theese values (this is repeated on almost every api)
           dispatch(setToastStatus({ isSuccess: false }))
           dispatch(toastVisibility({ toast: true }))
           dispatch(setToastContent({ message: res.message }))

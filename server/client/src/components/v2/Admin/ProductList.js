@@ -31,7 +31,7 @@ const Product = ({ details }) => {
         dispatch(setLoaderVisibility({ loader: true }))//loader turned on
         e.target.classList.toggle('clr-red')
 
-        fetch("/productvisibility", {
+        fetch("/api/admin/productvisibility", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

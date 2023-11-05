@@ -10,7 +10,15 @@ inidividual
 - on add prod - no need to populate cart items
 - on remove prod 
 
+-  have to addd the options for select actegoies in add prodduct also with the option to add super category
+-- name on card is different from name of the user,, so store that namee also,,maybe not as we r not saving card details
 
+- remove the box shadow from dropdons in navbar in mobile view
+- on order page show loader when fetching the order
+
+- add a nice loader for all gthe loading process
+
+- recipt url get expirewd after a period , maybe the recipt can be copied toa  canvas or img and store in server
 
 existing
 - have to update the user on signin/
@@ -20,6 +28,7 @@ existing
 
 - same thing willl be doen for wishlist orders 
 
+- also check responsiveness betwwen 768-992
 
 -- remove to cart isnt rel time ,,no showng deleted items
 -- wishlist etc

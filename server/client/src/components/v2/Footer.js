@@ -14,7 +14,8 @@ const Footer = (props) => {
 							<div className="col-md-6 t-mb-30 mb-md-0 px-3">
 								<div className="brand mx-auto mr-md-auto ml-md-0">
 									<Link to="" className="t-link">
-										<section className="logo"></section>
+										{/* <section className="logo"></section> */}
+									<h6>SHOPP-ITT</h6>
 									</Link>
 								</div>
 							</div>
@@ -45,12 +46,22 @@ const Footer = (props) => {
 									</li>
 									<li className="t-mb-10">
 										<Link to="/contact" className="t-link text-capitalize t-link--light sm-text">
-											contact
+											profile
 										</Link>
 									</li>
 									<li className="t-mb-10">
 										<Link to="/post-your-blog" className="t-link text-capitalize t-link--light sm-text">
-											post a blog
+											cart
+										</Link>
+									</li>
+									<li className="t-mb-10">
+										<Link to="/post-your-blog" className="t-link text-capitalize t-link--light sm-text">
+											wishlist
+										</Link>
+									</li>
+									<li className="t-mb-10">
+										<Link to="/post-your-blog" className="t-link text-capitalize t-link--light sm-text">
+											orders
 										</Link>
 									</li>
 								</ul>

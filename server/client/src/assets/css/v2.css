@@ -69,7 +69,7 @@
   /* list-style-type: none; */
   text-decoration: none;
 }
-#root{
+#root {
   position: relative;
 }
 /*********************************************** basics COMMON *************************************************************/
@@ -128,6 +128,7 @@ button {
   background: none;
   text-decoration: none;
   color: #414141;
+  color: #fff;
 }
 h1,
 h2,
@@ -271,6 +272,40 @@ img {
   }
 }
 /*********************************************** custom LOADER ************************************************* */
+
+/*********************************************** bag loader ************************************************* */
+.loader_container {
+  height: 300px;
+  background-color: #ffffff;
+  display: grid;
+  place-items: center;
+}
+.line {
+  width: 100px;
+  height: 3px;
+  background-color: #e1e1e1;
+  position: relative;
+  overflow: hidden;
+}
+.mover {
+  width: 40%;
+  height: inherit;
+  position: absolute;
+  background-color: #ffd53d;
+  animation: leftRight 2s infinite linear;
+}
+@keyframes leftRight {
+  0% {
+    left: -30%;
+  }
+  50% {
+    left: 96%;
+  }
+  100% {
+    left: -30%;
+  }
+}
+/*********************************************** bag loader ************************************************* */
 
 /************************************************ BAG LOGO ************************************************/
 .bag-container {
@@ -560,7 +595,7 @@ img {
   padding-left: 0;
 }
 .footer-mid a:hover {
-  color: #4396da;
+  color: #ffd53d;
 }
 .follow {
   justify-content: space-between;
@@ -572,6 +607,9 @@ img {
   border: 1px solid #4396da;
   color: white;
   transition: all 0.3s;
+}
+.t-follow-link:hover {
+  color: #4396da !important;
 }
 
 .t-pt-40 {
@@ -2644,66 +2682,62 @@ main {
   /* USER */
 
   /* ----------------------------HOMEPAGE------------------------------*/
-/* Banner */
-.main-banner,
-.main-banner .slide {
-  height: 30vh;
-} 
-.main-banner .slide img {
-  height: 20vh;
-}
-.xbox-content {
-  /* padding: 30px 0 0 0px;` */
-  padding: 0px 0 0 10px;
-  font-size: 12px !important;
-}
-.xbox-content h2{
-  font-size: calc(0.8rem + .9vw) ;
-}
-.xbox-content p{
-  display: none;
-}
-.xbox-btn {
-  font-weight: unset;
-  padding: 5px 12px;
-}
-.xbox-btn .fa-chevron-right:before {
-  font-size: 10px;
-  margin-left: 3px;
-}
+  /* Banner */
+  .main-banner,
+  .main-banner .slide {
+    height: 30vh;
+  }
+  .main-banner .slide img {
+    height: 20vh;
+  }
+  .xbox-content {
+    /* padding: 30px 0 0 0px;` */
+    padding: 0px 0 0 10px;
+    font-size: 12px !important;
+  }
+  .xbox-content h2 {
+    font-size: calc(0.8rem + 0.9vw);
+  }
+  .xbox-content p {
+    display: none;
+  }
+  .xbox-btn {
+    font-weight: unset;
+    padding: 5px 12px;
+  }
+  .xbox-btn .fa-chevron-right:before {
+    font-size: 10px;
+    margin-left: 3px;
+  }
 
-.main-banner .slick-dots{
-  display: none !important;
-}
-/* Banner */
+  .main-banner .slick-dots {
+    display: none !important;
+  }
+  /* Banner */
 
+  /* yellow stuff */
+  .bx1,
+  .bx2,
+  .bx3 {
+    transform: unset;
+  }
+  .bx:hover .bx1,
+  .bx:hover .bx3 {
+    transform: unset;
+  }
+  .box .content {
+    margin: 6px 0;
+  }
+  /* yellow stuff */
 
-/* yellow stuff */
-.bx1,
-.bx2,
-.bx3 {
-  transform: unset;
-}
-.bx:hover .bx1,
-.bx:hover .bx3 {
-  transform: unset;
-}
-.box .content{
-  margin: 6px 0;
-}
-/* yellow stuff */
-
-
-/* MARQUEE */
-.marquee span{
-  font-size: 116px;
-}
-/* MARQUEE */
-
+  /* MARQUEE */
+  .marquee span {
+    font-size: 116px;
+  }
+  /* MARQUEE */
 
   /* ----------------------------HOMEPAGE------------------------------*/
 }
-
 
 @media (max-width: 400px) {
   .order-lis-imgs {

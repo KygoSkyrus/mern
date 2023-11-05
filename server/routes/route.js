@@ -1,74 +1,73 @@
 const express = require('express');
 const router = express('router');
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser');
+const dotenv = require('dotenv');
+const stripe = require('stripe')(process.env.SK);
+const { v4: uuidv4 } = require('uuid');
+// const bcrypt = require('bcryptjs');
 
-// Use JSON parser for all non-webhook routes
 router.use(bodyParser.urlencoded({ extended: true }));//for checkout passed values
 router.use(bodyParser.json())
-
-const cookieParser = require('cookie-parser');
 router.use(cookieParser());
-
-
-const dotenv = require('dotenv');
+router.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf } }));
 dotenv.config({ path: './env/config.env' });
 
-const { v4: uuidv4 } = require('uuid');
-const stripe = require('stripe')(process.env.SK);
 
-
-
-router.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf } }));
-
-/************* SCHEMA ***************/
+/************************************* SCHEMA ***************************************/
 const USER = require('../models/user');
 const PRODUCT = require('../models/product')
 const CATEGORY = require('../models/category')
 const ORDER = require('./../models/orders')
+/************************************* SCHEMA ***************************************/
 
 
 
-/*************routes***************/
-
-// const expiresIn = 3600; // 1 hour
-// // Generate the JWT
-// const token = jwt.sign(userData, 'your_secret_key', { expiresIn });
-router.get('/api/getUserInfo', async (req, res) => {
-    const token = req.cookies.jwt;
-    if (!token) {
-        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
+// Authorization middleware
+const authenticateToken = (req, res, next) => {
+    const token = req.headers['authorization'];
+    if (!token || token !== `Bearer ${process.env.SECRET_KEY}`) {
+        return res.status(401).json({ error: 'Unauthorized' });
     }
+    next();
+};
+
+const authenticateUser = (req, res, next) => {
+    const token = req.cookies.jwt;
+    if (!token)
+        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
+    next();
+};
+
+
+
+/*********************************** USER ***********************************/
+router.get('/api/getUserInfo', authenticateUser, async (req, res) => {
+    const token = req.cookies.jwt;
     //cookie timezone is fucked up,,
     // console.log(new Date(Date.now() + 3600000))
     try {
         const decoded = jwt.verify(token, process.env.SECRETKEY);
-        //console.log('decoded', decoded)
         // Check if the token is expired
-
 
         //populating with regular populate which can cause performnace overhead
         // const user = await USER.findById(decoded._id)
-        //     .populate('cart.productId')
+        //   .populate('cart.productId')
         //   .populate('wishlist.productId');
 
-        //by mongoose virtual
+        //populating by mongoose virtual
         const user = await USER.findById(decoded._id).populate('cartProducts');
-        //console.log(user)
         if (!user) {
             return res.status(404).json({ message: 'User not found.' });
         }
 
-        // Token is valid, user is signed in
         res.status(200).json({ message: 'Access granted.', is_user_logged_in: true, user });
     } catch (error) {
-        // Invalid token
         console.log(error)
         res.status(401).json({ message: 'Invalid token.', is_user_logged_in: false });
     }
 });
-
 
 router.get('/api/signmeout', async (req, res) => {
     try {
@@ -80,9 +79,6 @@ router.get('/api/signmeout', async (req, res) => {
     }
 })
 
-
-
-//signup 
 //i dont think jwt is doing anything here
 router.post('/api/signup', async (req, res) => {
 
@@ -127,9 +123,6 @@ router.post('/api/signup', async (req, res) => {
     }
 })
 
-
-
-//signin
 router.post('/api/signin', async (req, res) => {
 
     try {
@@ -170,13 +163,47 @@ router.post('/api/signin', async (req, res) => {
     }
 })
 
-
-
-router.post('/api/addtocart', async (req, res) => {
+//Update user's address
+router.post('/api/updatedaddress', authenticateUser, async (req, res) => {
     const token = req.cookies.jwt;
-    if (!token) {
-        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
+    try {
+        const { address } = req.body;
+        console.log('eueuue', address)
+        const decoded = jwt.verify(token, process.env.SECRETKEY);
+
+        const user = await USER.findById(decoded._id);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+
+        // if()
+
+        let updatedUser;
+
+        updatedUser = await USER.findByIdAndUpdate(
+            decoded._id,
+            { address: address, phone: (user.phone !== address.phone) ? address.phone : user.phone },
+            { new: true }
+        ).populate('cartProducts');
+        res.status(200).json({ message: 'User details updated.', user: updatedUser });
+
+
+
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ message: 'Internal server error.' });
     }
+})
+/*********************************** USER ***********************************/
+
+
+
+/*********************************** CART ***********************************/
+router.post('/api/addtocart',authenticateUser, async (req, res) => {
+    const token = req.cookies.jwt;
+
     try {
         const { productId } = req.body;
         const decoded = jwt.verify(token, process.env.SECRETKEY);
@@ -213,12 +240,9 @@ router.post('/api/addtocart', async (req, res) => {
         res.status(500).json({ message: 'Internal server error.' });
     }
 })
-
-router.post('/api/updatecart', async (req, res) => {
+router.post('/api/updatecart',authenticateUser, async (req, res) => {
     const token = req.cookies.jwt;
-    if (!token) {
-        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
-    }
+  
     try {
         const cartItems = req.body;
         const decoded = jwt.verify(token, process.env.SECRETKEY);
@@ -278,16 +302,10 @@ router.post('/api/updatecart', async (req, res) => {
         res.status(500).json({ message: 'Internal server error.' });
     }
 })
-
-
-
 //remove from cart
-router.post('/api/removefromcart', async (req, res) => {
+router.post('/api/removefromcart',authenticateUser, async (req, res) => {
     const token = req.cookies.jwt;
-    //thi is common for most user actions ,so create a middleware function instead
-    if (!token) {
-        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
-    }
+
     try {
         const { productId } = req.body;
         const decoded = jwt.verify(token, process.env.SECRETKEY);
@@ -310,16 +328,10 @@ router.post('/api/removefromcart', async (req, res) => {
         res.status(500).json({ message: 'Internal server error.' });
     }
 });
-
-
-
 //get cart items
-router.get('/api/getcartitems', async (req, res) => {
+router.get('/api/getcartitems',authenticateUser, async (req, res) => {
     const token = req.cookies.jwt;
     //thi is common for most user actions ,so create a middleware function instead
-    if (!token) {
-        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
-    }
     try {
 
         const decoded = jwt.verify(token, process.env.SECRETKEY);
@@ -338,16 +350,14 @@ router.get('/api/getcartitems', async (req, res) => {
     }
 
 })
+/*********************************** CART ***********************************/
 
 
 
-//WISHLIST
+/*********************************** WISHLIST ***********************************/
 //adding and removing from wishlist
-router.post('/api/updatewishlist', async (req, res) => {
+router.post('/api/updatewishlist',authenticateUser, async (req, res) => {
     const token = req.cookies.jwt;
-    if (!token) {
-        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
-    }
     try {
         const { productId } = req.body;
         const decoded = jwt.verify(token, process.env.SECRETKEY);
@@ -392,15 +402,10 @@ router.post('/api/updatewishlist', async (req, res) => {
         res.status(500).json({ message: 'Internal server error.' });
     }
 })
-
 //remove from cart
-router.post('/api/movetowishlist', async (req, res) => {
+router.post('/api/movetowishlist',authenticateUser, async (req, res) => {
     //this is mostly same as removefromcart just the adding to wishlist part
     const token = req.cookies.jwt;
-    //thi is common for most user actions ,so create a middleware function instead
-    if (!token) {
-        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
-    }
     try {
         const { productId } = req.body;
         const decoded = jwt.verify(token, process.env.SECRETKEY);
@@ -426,16 +431,11 @@ router.post('/api/movetowishlist', async (req, res) => {
     }
 });
 //get wishlist items
-router.post('/api/getwishlistitems', async (req, res) => {
-    const token = req.cookies.jwt;
+router.post('/api/getwishlistitems',authenticateUser, async (req, res) => {
+    const token = req.cookies.jwt;//the ids should be reterived from here and then the products should be queried/ ids are hefre bcz the wishlist array is being populated for every refresh just like cart  
     const { ids } = req.body
-    console.log('dd', ids, req.body)
-    if (!token) {
-        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
-    }
+   
     try {
-
-
         const items = await PRODUCT.find({ _id: { $in: ids } });
         console.log('uuu', items)
 
@@ -447,117 +447,16 @@ router.post('/api/getwishlistitems', async (req, res) => {
     }
 
 })
-
-//Update user's address
-router.post('/api/updatedaddress', async (req, res) => {
-    const token = req.cookies.jwt;
-    if (!token) {
-        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
-    }
-    try {
-        const { address } = req.body;
-        console.log('eueuue', address)
-        const decoded = jwt.verify(token, process.env.SECRETKEY);
-
-        const user = await USER.findById(decoded._id);
-        if (!user) {
-            return res.status(404).json({ message: 'User not found.' });
-        }
-
-
-        // if()
-
-        let updatedUser;
-
-        updatedUser = await USER.findByIdAndUpdate(
-            decoded._id,
-            { address: address, phone: (user.phone !== address.phone) ? address.phone : user.phone },
-            { new: true }
-        ).populate('cartProducts');
-        res.status(200).json({ message: 'User details updated.', user: updatedUser });
+/*********************************** WISHLIST ***********************************/
 
 
 
-
-    } catch (err) {
-        console.log(err)
-        res.status(500).json({ message: 'Internal server error.' });
-    }
-})
-
-
-
-//SEARCH QUERY-----------------------------------------------
-//NOTE::: this uses regex to get documents containing a specific word in db
-router.post("/api/searchprod", async (req, res) => {
-    const { value } = req.body;
-    console.log("dgd", value)
-
-    try {
-        if (value === "") {
-            res.send([]); //an empty data object is sent
-        } else {
-            let result = await PRODUCT.find({ "name": { "$regex": value, "$options": "i" } })
-            res.send(result);
-        }
-    } catch (err) {
-        console.log(err);
-    }
-});
-
-
-
-router.get('/api/getorders', async (req, res) => {
-
-    // const { orderId } = req.query
-    const token = req.cookies.jwt;
-
-    // console.log('orderId', orderId)
-    //thi is common for most user actions ,so create a middleware function instead
-    if (!token) {
-        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
-    }
-    try {
-        const decoded = jwt.verify(token, process.env.SECRETKEY);
-
-
-        USER.findOne({ _id: decoded._id }, { orders: 1, _id: 0 })// to just get a specific field from a document
-            .then(response => {
-                // console.log('sss', response)
-                res.send({ user: response })
-            })
-            .catch(err => {
-                console.log(err)
-            })
-
-    } catch (error) {
-        console.error('Error getting items from wishlist', error);
-        res.status(500).json({ message: 'Internal server error.' });
-    }
-
-})
-
-
-router.get('/x', async (req, res) => {
-    // const session = await stripe.checkout.sessions.retrieve(
-    //     'cs_test_a1oiHVuScDr3QTN5rFXiG9siS0f7ToUici3v79U0IcPBnh3jzf0oHhsHjB'
-    //   );
-
-    //   console.log('sesssss',session)
-    const paymentIntent = await stripe.paymentIntents.retrieve(
-        'pi_3O7J2gSJDEVNzqXl08By3YGE'
-    );
-
-    console.log('payemnent intent', paymentIntent)
-    console.log('payemnent intent', paymentIntent.charges.data)
-})
-
-
+/*********************************** CHECKOUT  ***********************************/
 //NOTE::: DONT LET USER ADD MORE THAN 50 ITEMS AS IT WOULD BREAK THE STRIPE,,metadata onkect can only have 50 keys(whihc are products in our case),,shgow user a waring that we dont support bulk order at the moment ,,out of 50, 4 key s reserved 
 
 //card for failing : 4000 0000 0000 0119
 //IF the stirpe accont is activated than there may be a way to send invoice to user
-router.post('/create-checkout-session', async (req, res) => {
+router.post('/create-checkout-session',authenticateUser, async (req, res) => {
 
 
     let line_items = []
@@ -565,11 +464,28 @@ router.post('/create-checkout-session', async (req, res) => {
     const orderId = uuidv4()
     let productList = {}//for metadata
 
+    /*
+    -session is created,
+    - it has session id annd the metadata
+    - session id is mapped with orderid and saved in db
+    - when payment is done then the page will redirect to order page with orderid in url
+    - the order page can be openend two ways:::
+      
+    - order page will first query the order list (FIRST scenario) and if the order isnt found then it will chekc if there is a session for that order id (for SECOND scenario)
+    
+    - FIRST>>>when order is placed>>
+        - on order page with the order id reterive the session id from db
+        - with the session id the session can be reterived from stripe api and then in that session  id get the paymentIntent id and reterive that too for recipt url
+        - get the necessary stuff from metadata and also check if the paymnet is success
+        - if succeeded then save that in database,if failed then save in db with failed status,,,,,,
+        - if no cation is taken then dont save and also delte that session and orderid from db,,,and show payment isnt completed bcz no action was taken
+
+      - SECOND>>>when order is opened from orderList
+        - if the order is visible in order list page ten it means it was saved ,,,its simple just get the order from db with order id
+    */
 
     //thi is common for most user actions ,so create a middleware function instead
-    if (!token) {
-        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
-    }
+
     try {
         const decoded = jwt.verify(token, process.env.SECRETKEY);//for user id
 
@@ -632,7 +548,7 @@ router.post('/create-checkout-session', async (req, res) => {
             //shipping_address_collection:"required"
         });
 
-
+        console.log('session', session)
         if (session) {
 
 
@@ -651,17 +567,120 @@ router.post('/create-checkout-session', async (req, res) => {
             )//.populate('cartProducts');
 
 
+            // let metadata = session.metadata
+            // console.log('session', session)
+            // console.log('meta data', metadata)
+            // let order = {}
+            // order.orderId = orderId
+            // order.tax = metadata.tax
+            // order.shipping = metadata.shipping
+            // order.total = metadata.total
+            // order.payment_status = session.payment_status
+            // order.receiptUrl = ''
+            // order.products = []
+            // prodArray = []
+            // Object.keys(metadata).forEach(x => {
+            //     if (
+            //         x !== "tax" && x !== "total" && x !== "shipping" && x !== "orderId" && x !== "userId" &&
+            //         typeof metadata[x] === "string" // Checks if the value is a string
+            //     ) {
+            //         let tempObj = {}
+            //         //parsing the product details from metadata
+            //         const productData = JSON.parse(metadata[x]);
+            //         tempObj.productId = x
+            //         tempObj.name = productData.name
+            //         tempObj.image = productData.image
+            //         tempObj.quantity = productData.quantity
+            //         tempObj.discount = productData.discount
+            //         tempObj.price = productData.price
+            //         order.products.push(tempObj)
+            //         prodArray.push(tempObj)//for ORDER collection
+            //     }
+            // })
+
+            // //saving the order details in db
+
+            // const updatedUser = await USER.findByIdAndUpdate(
+            //     metadata.userId,
+            //     { $push: { orders: order } },
+            //     { new: true }
+            // )//.populate('cartProducts');
+
+            // const theOrder = new ORDER({
+            //     orderId: metadata.orderId,
+            //     totalAmount: metadata.total,
+            //     tax: metadata.tax,
+            //     shipping: metadata.shipping,
+            //     payment_status: sessionpayment_status,
+            //     receiptUrl: receiptUrl,
+            //     user: metadata.userId,
+            //     products: prodArray,
+            //     shippingAddress: session.customer_details.address,
+            //     // paymentMethod: {
+            //     //   enum: ['Card', 'PayPal', 'Cash on Delivery', 'Other'],
+            //     //   default: 'Card',
+            //     // },
+            // })
+            // theOrder.save()
+            //     .then(response => {
+            //         console.log('saved order', response)
+            //     })
+            //     .catch(err => {
+            //         console.log("errror-", err)
+            //         res.status(500).json({ message: 'Internal server error.' });
+            //     })
+
+            res.redirect(303, session.url);//redirects to checkout page
+        }
+    } catch (error) {
+        console.error('something went wrong', error);
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+
+
+});
+
+//   GET /v1/checkout/sessions
+//using this uoy cann show all the checkout session whteher failed or succeed in admin panel
+
+router.get('/api/getcheckoutsession', async (req, res) => {
+    const { orderId } = req.query
+    const token = req.cookies.jwt;
+
+    console.log('orderId', orderId)
+    if (!token) {
+        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
+    }
+    try {
+        const decoded = jwt.verify(token, process.env.SECRETKEY);
+
+        let response = await USER.findOne({ _id: decoded._id }, { checkoutSession: 1, _id: 0 })
+
+        //extracting the session id mapped with order id
+        const checkoutSession = response?.checkoutSession.find(item => item.orderId === orderId)
+        console.log('checkoutSession', checkoutSession)
+
+        const session = await stripe.checkout.sessions.retrieve(
+            checkoutSession.sessionId
+        );
+        if (session?.payment_status === 'paid') {
+
+            //getting the payment intent
+            const paymentIntent = await stripe.paymentIntents.retrieve(
+                session.payment_intent
+            );
+            console.log('payment_intent', paymentIntent)
 
             let metadata = session.metadata
             console.log('session', session)
-            console.log('meta data', metadata)
+            console.log('metadata', metadata)
             let order = {}
             order.orderId = orderId
             order.tax = metadata.tax
             order.shipping = metadata.shipping
             order.total = metadata.total
             order.payment_status = session.payment_status
-            order.receiptUrl = ''
+            order.receiptUrl = paymentIntent?.charges?.data[0]?.receipt_url
             order.products = []
             prodArray = []
             Object.keys(metadata).forEach(x => {
@@ -678,8 +697,8 @@ router.post('/create-checkout-session', async (req, res) => {
                     tempObj.quantity = productData.quantity
                     tempObj.discount = productData.discount
                     tempObj.price = productData.price
-                    order.products.push(tempObj)
-                    prodArray.push(tempObj)//for ORDER collection
+                    order.products.push(tempObj)//to insert in user collection
+                    prodArray.push(tempObj)//to insert in ORDER collection
                 }
             })
 
@@ -696,8 +715,8 @@ router.post('/create-checkout-session', async (req, res) => {
                 totalAmount: metadata.total,
                 tax: metadata.tax,
                 shipping: metadata.shipping,
-                payment_status: sessionpayment_status,
-                receiptUrl: receiptUrl,
+                payment_status: session.payment_status,
+                receiptUrl: paymentIntent?.charges?.data[0]?.receipt_url,
                 user: metadata.userId,
                 products: prodArray,
                 shippingAddress: session.customer_details.address,
@@ -715,20 +734,46 @@ router.post('/create-checkout-session', async (req, res) => {
                     res.status(500).json({ message: 'Internal server error.' });
                 })
 
+            const data = updatedUser.orders.find(order => order.orderId === orderId)
+
+            return res.status(200).json({ order: data });
         }
+
     } catch (error) {
-        console.error('something went wrong', error);
+        console.error('Error session', error);
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+})
+/*********************************** CHECKOUT  ***********************************/
+
+
+
+/*********************************** ORDERS ***********************************/
+router.get('/api/getorders',authenticateUser, async (req, res) => {
+
+    const { orderId } = req.query
+    const token = req.cookies.jwt;
+
+
+    try {
+        const decoded = jwt.verify(token, process.env.SECRETKEY);
+
+        let response = await USER.findOne({ _id: decoded._id }, { orders: 1, _id: 0 })
+        const order = response?.orders.find(item => item.orderId === orderId)
+        if (orderId) {
+            return res.status(200).json({ order });
+        } else {
+            return res.status(200).json({ user: response });
+        }
+
+
+    } catch (error) {
+        console.error('Error getting items from wishlist', error);
         res.status(500).json({ message: 'Internal server error.' });
     }
 
-
-    res.redirect(303, session.url);//redirects to checkout page
-});
-
-
-//   GET /v1/checkout/sessions
-//using this uoy cann show all the checkout session whteher failed or succeed in admin panel
-
+})
+/*********************************** ORDERS ***********************************/
 
 
 
@@ -740,7 +785,8 @@ router.get('/api/admin/getorders', async (req, res) => {
     // const { orderId } = req.query
     const token = req.cookies.jwt;
 
-    // console.log('orderId', orderId)
+    //any user should be able to access admin panel
+
     //thi is common for most user actions ,so create a middleware function instead
     if (!token) {
         return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
@@ -792,76 +838,34 @@ router.get('/api/admin/getusers', async (req, res) => {
     }
 
 })
+
+//setting blogs visibility
+router.post("/api/admin/productvisibility", async (req, res) => {
+    const details = req.body;
+    console.log("s--s-s-s-s", details)
+    try {
+        //findByIdAndUpdate: is the alternatice to directly use id
+        let result = await PRODUCT.findOneAndUpdate({ _id: details.id }, { visibility: details.visibility }, { new: true })
+        if (result) {
+            res.send({ isSet: true })
+        } else {
+            res.send({ isSet: false })
+        }
+    } catch (err) {
+        console.log(err);
+    }
+});
 //ADMIN API *****************************************************************************
 
 
 
 
-
-
-//stripe
-router.post('/checkout', async (req, res) => {
-
-    const { totalPrice, token } = req.body;
-    //console.log("prdouct :", totalPrice);
-    //console.log("token :", token);
-    const indempontencyKey = uuidv4();
-
-    const customer = await stripe.customers.create({
-        email: token.email,
-        source: token.id
-    });
-
-    const charge = await stripe.charges.create({
-        amount: totalPrice.toFixed(2) * 100,
-        currency: 'INR',
-        customer: customer.id,
-        receipt_email: 'custmeridgoeshere@gmail.com',
-        description: 'purchase is done',
-        shipping: {
-            name: token.card.name,
-            address: {
-                country: token.card.address_country
-            },
-        }
-    }, { idempotencyKey: indempontencyKey });
-
-    res.send(JSON.stringify(charge));//charge is the reponse from stripe with all payment related details
-
-});
-
-
-router.post('/exist', async (req, res) => {
-
-    try {
-        let token = req.cookies.jwt;
-        //console.log("token:", token);
-        if (token) {
-            res.send(JSON.stringify(true));
-        } else {
-            res.send(JSON.stringify(false));
-        }
-    } catch (err) {
-        console.log(err);
-    }
-
-});
-
-router.post('/getemail', async (req, res) => {
-
-    try {
-        let email = req.cookies.email;
-        //console.log("email:", email);
-        res.send(JSON.stringify(email));//sending email from cookies to react
-    } catch (err) {
-        console.log(err);
-    }
-
-});
-
-
+/*********************************** PRODUCTS ***********************************/
 router.get('/api/getproducts', async (req, res) => {
 
+    //some authentication should be here too
+
+    //check if this is working fine fo dashboard
     const { limit } = req.query
     console.log('hfhfd', limit)
 
@@ -876,8 +880,6 @@ router.get('/api/getproducts', async (req, res) => {
         })
 
 })
-
-
 
 router.get('/api/getprodbycategory', async (req, res) => {
 
@@ -895,8 +897,6 @@ router.get('/api/getprodbycategory', async (req, res) => {
 
 })
 
-
-
 router.get('/api/getprodbyid', async (req, res) => {
 
     const { prodId } = req.query
@@ -913,7 +913,6 @@ router.get('/api/getprodbyid', async (req, res) => {
 
 })
 
-
 router.post('/api/addproducts', async (req, res) => {
 
     const { name, price, description, category, image, stock } = req.body;
@@ -921,6 +920,7 @@ router.post('/api/addproducts', async (req, res) => {
 
     //const data= JSON.parse(req.body)
 
+    //here admin authnetication shopuld be done, all the modifications rights should be for admin only
 
     const product = new PRODUCT({
         name: name,
@@ -943,8 +943,6 @@ router.post('/api/addproducts', async (req, res) => {
 
 })
 
-
-
 router.post('/api/editproduct', async (req, res) => {
 
     const { name, price, description, category, image, stock, discount, id } = req.body;
@@ -963,90 +961,11 @@ router.post('/api/editproduct', async (req, res) => {
         console.log(error)
     }
 })
-
-async function xxx() {
-    console.log('xxx')
-    USER.find({}).then(res => console.log('xxxxx', res))
-
-    // CATEGORY.updateMany( 
-    //     { subCategory: '' }, // Filter documents with empty strings in the array
-    //     { $pull: { subCategory: '' } } // Pull (remove) empty strings from the array
-    // )
-    //     .then((result) => {
-    //         console.log(`${result.nModified} documents updated`);
-    //     })
-    //     .catch((error) => {
-    //         console.error('Error updating documents:', error);
-    //     });
+/*********************************** PRODUCTS ***********************************/
 
 
 
-    // let arr = []
-    // await PRODUCT.find({})
-    //     .then(response => {
-
-    //         response.map(x => {
-    //             if (!arr.includes(x.category)) {
-    //                 const category = new CATEGORY({
-    //                     name: x.category,
-    //                     subCategory: ""
-    //                 })
-
-    //                 category.save()
-    //                     .then(resp => {
-    //                         console.log('response', resp)
-    //                         // arr.push(x.category)
-    //                     })
-    //                     .catch(err1 => {
-    //                         console.log(err1)
-    //                     })
-    //                 arr.push(x.category)
-    //             }
-    //         })
-    //         console.log('aaaaaaaaaaaa', arr)
-    //     })
-    //     .catch(error => {
-    //         console.log(error)
-    //     })
-
-
-    //  CATEGORY
-    //     .findOne({ name: 'speakers' })
-    //     .populate('products') // only works if we pushed refs to person.eventsAttended
-    //     .exec(function (err, person) {
-    //         if (err) console.log(err);
-    //         console.log(person);
-    //     });
-
-
-    // [
-    //     'smartphones',         'laptops',            'iPads',
-    //     'Tablets',             'Headphones',         'Earphones',
-    //     'DSLR',                'controllers',        'printers',
-    //     'home audio',          'smartwatch',         'smart band',
-    //     'desktop computers',   'Televisions',        'mouse',
-    //     'computer processors', 'bluetooth speakers', 'Fitness Trackers',
-    //     'VR Headsets',         'Wearable Devices',   'MP3 Player',
-    //     'Camcorder ',          'pendrive',           'xbox',
-    //     'playstation',         'Drones',             'Routers',
-    //     'Modems',              'Power bank',         'Projectors',
-    //     'refrigerator',        'Washing Machine',    'microwave',
-    //     'Air Conditioner',     'Heaters',            'operating system',
-    //     'antivirus',           'MS office',          'Graphics Cards',
-    //     'RAM',                 'SSDs',               'amazon echo',
-    //     'google home',         'Digital Camera',     'keyboards',
-    //     'monitors'
-    // ]
-
-}
-router.get("/xyz", async (req, res) => {
-    xxx()
-})
-
-
-
-
-
+/*********************************** CATEGORY ***********************************/
 router.post('/api/addcategory', async (req, res) => {
 
     const { name, subCategory } = req.body;
@@ -1069,7 +988,6 @@ router.post('/api/addcategory', async (req, res) => {
 
 })
 
-
 router.get('/api/getcategory', async (req, res) => {
 
     await CATEGORY.find({})
@@ -1083,110 +1001,27 @@ router.get('/api/getcategory', async (req, res) => {
         })
 
 })
+/*********************************** CATEGORY ***********************************/
 
 
-// router.post('/api/editcategory', async (req, res) => {
 
-//     const { name,subCategory,id } = req.body;
-//     console.log('dd', name,subCategory )
+//SEARCH QUERY-----------------------------------------------
+//NOTE::: this uses regex to get documents containing a specific word in db
+router.post("/api/searchprod", async (req, res) => {
+    const { value } = req.body;
+    console.log("dgd", value)
 
-//     //const data= JSON.parse(req.body)
-
-//     try {
-//         const result = await PRODUCT.findOneAndUpdate({ _id: id }, { $set: { name, price, description, category, image, stock } }, { new: true })
-//         if (result) {
-//             res.send({ isProductEdited: true })
-//         } else {
-//             res.send({ isProductEdited: false })
-//         }
-//     } catch (error) {
-//         console.log(error)
-//     }
-// })
-
-
-//seeting blogs visibility
-router.post("/productvisibility", async (req, res) => {
-    const details = req.body;
-    console.log("s--s-s-s-s", details)
     try {
-        //findByIdAndUpdate: is the alternatice to directly use id
-        let result = await PRODUCT.findOneAndUpdate({ _id: details.id }, { visibility: details.visibility }, { new: true })
-        if (result) {
-            res.send({ isSet: true })
+        if (value === "") {
+            res.send([]); //an empty data object is sent
         } else {
-            res.send({ isSet: false })
+            let result = await PRODUCT.find({ "name": { "$regex": value, "$options": "i" } })
+            res.send(result);
         }
     } catch (err) {
         console.log(err);
     }
 });
-
-
-///USER----
-// router.post("/api/newuser", async (req, res) => {
-// })
-async function aaa() {
-
-
-    let user = new USER({
-        firstname: "dummy",
-        lastname: "",
-        email: "dummy@email.com",
-        password: "dummy",
-        phone: "9999777888",
-        address: {
-            house: "511",
-            street: "Mapel street",
-            city: "Amsterdam",
-            pincode: "163301",
-            state: "New Orleans",
-            country: "USA",
-        },
-        role: "user",
-        wishlist: ['64c698900ef6832aa59e93bb'],
-        cart: [{
-            productId: "64c68fbe2dd4e9cac1dcf1d7",
-        }],
-        orders: [{
-            products: [{
-                productId: "64c698900ef6832aa59e93bb",
-                quantity: "3",
-            }],
-            total: 358894,
-        }],
-
-    })
-
-
-    user.save()
-        .then(res => console.log('ressss;d;d;d', res))
-
-    // USER.find({})
-    //     .then(res => {
-    //         console.log("-3-3-", res)
-    //     })
-
-    // USER
-    //     .findOne({ email: 'dummy@email.com' })
-    //     .populate({
-    //         path: 'wishlist',
-    //         // select:
-    //         //     'firstnname lastname phone',//this will return only required stuff from referred document
-    //     }) // only works if we pushed refs to person.eventsAttended
-    //     .exec(function (err, person) {
-    //         if (err) console.log(err);
-    //         console.log(person);
-    //     });
-
-}
-
-router.get("/aaa", async (req, res) => {
-    aaa()
-})
-
-
-
 
 
 //deleting blog record
@@ -1204,6 +1039,26 @@ router.post("/deleteblog", async (req, res) => {
     }
 });
 
+
+
+// [
+//     'smartphones',         'laptops',            'iPads',
+//     'Tablets',             'Headphones',         'Earphones',
+//     'DSLR',                'controllers',        'printers',
+//     'home audio',          'smartwatch',         'smart band',
+//     'desktop computers',   'Televisions',        'mouse',
+//     'computer processors', 'bluetooth speakers', 'Fitness Trackers',
+//     'VR Headsets',         'Wearable Devices',   'MP3 Player',
+//     'Camcorder ',          'pendrive',           'xbox',
+//     'playstation',         'Drones',             'Routers',
+//     'Modems',              'Power bank',         'Projectors',
+//     'refrigerator',        'Washing Machine',    'microwave',
+//     'Air Conditioner',     'Heaters',            'operating system',
+//     'antivirus',           'MS office',          'Graphics Cards',
+//     'RAM',                 'SSDs',               'amazon echo',
+//     'google home',         'Digital Camera',     'keyboards',
+//     'monitors'
+// ]
 
 
 module.exports = router;

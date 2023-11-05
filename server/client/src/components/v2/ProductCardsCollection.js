@@ -485,10 +485,6 @@ something wide must go here
           {/* <Example product={product} show={show} setShow={setShow} onAdd={onAdd} /> */}
         </div>
 
-
-
-
-
       </div>
 
     </>

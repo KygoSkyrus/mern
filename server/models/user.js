@@ -57,6 +57,10 @@ const userSchema = new Schema({
     checkoutSession:[{
         sessionId:{type:String},
         orderId:{type:String},
+        createdAt: {
+            type: Date,
+            default: Date.now,
+        },
     }],
     orders: [{
         products: [{
@@ -122,7 +126,7 @@ const userSchema = new Schema({
 
 
 //mongoose virtual to minimize performance overhead created by frequently calling populate
-//technincally mongose virtual dont wont on field with array so it will creeate another field and populate them
+//technincally mongose virtual dont work on field with array so it will create another field and populate them
 userSchema.virtual('cartProducts', {
     ref: 'PRODUCT',
     localField: 'cart.productId',
@@ -135,13 +139,6 @@ userSchema.set('toObject', { virtuals: true });
 userSchema.set('toJSON', { virtuals: true });
 
 
-// userSchema.virtual('wishlistProducts', {
-//     ref: 'Product',
-//     localField: 'wishlist.productId',
-//     foreignField: '_id',
-//     justOne: false
-// });
-
 //hashing password
 userSchema.pre('save', async function (next) {
     if (this.isModified('password')) {
@@ -150,12 +147,10 @@ userSchema.pre('save', async function (next) {
     next();
 });
 
-//issuing jwt
 userSchema.methods.generateAuthToken = async function () {
     try {
-        let token = jwt.sign({ _id: this._id }, process.env.SECRETKEY);//to generrate token
-        this.tokens = this.tokens.concat({ token: token });//here the second token is the token generated in the above line
-        console.log('did i ran')
+        let token = jwt.sign({ _id: this._id }, process.env.SECRETKEY);//generrates JWT token
+        //this.tokens = this.tokens.concat({ token: token });//no need to save token in db
         await this.save();
         return token;
     } catch (err) {
