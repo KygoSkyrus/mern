@@ -1839,7 +1839,7 @@ main {
 }
 .btn-neutral {
   padding: 0.65rem 1.75rem;
-  color: var(--black-300);
+  color: var(--red);
   background-color: var(--white-100);
   box-shadow: var(--shadow-medium);
 }
@@ -1939,7 +1939,7 @@ main {
   column-gap: 0.25rem;
   padding-right: 1.5rem;
 }
-.wrapper-detail .sizes .sizes-list .sizes-item {
+/* .wrapper-detail .sizes .sizes-list .sizes-item {
   font-family: inherit;
   font-size: 1rem;
   line-height: 2rem;
@@ -1950,11 +1950,38 @@ main {
   text-align: center;
   border-radius: 0.25rem;
   transition: all 0.2s ease;
+} */
+.wrapper-detail .sizes .sizes-list .sizes-item {
+  width: 29px;
+  height: 29px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+.wrapper-detail .sizes .sizes-list .sizes-item section {
+  cursor: not-allowed;
+  width: 21px;
+  height: 21px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+.wrapper-detail .sizes .sizes-list .sizes-item:nth-child(2) section {
+  background: #9c27b0;
+}
+.wrapper-detail .sizes .sizes-list .sizes-item:nth-child(3) section {
+  background: #e53935;
+}
+.wrapper-detail .sizes .sizes-list .sizes-item:nth-child(4) section {
+  background-color: var(--brown-500);
 }
 .wrapper-detail .sizes .sizes-list .sizes-item.is-select {
+  border: 2px solid var(--white-400);
+}
+.wrapper-detail .sizes .sizes-list .sizes-item.is-select section {
   font-weight: 500;
   color: var(--white-100);
-  background-color: var(--brown-500);
+  background: #ffb300;
+  cursor: pointer;
 }
 /* PRODUCT 7 */
 
@@ -2735,6 +2762,20 @@ main {
     font-size: 116px;
   }
   /* MARQUEE */
+
+  /* SPLINE PLAYER */
+  canvas {
+    width: 40vw !important;
+    height: 500px !important;
+  }
+  #spline {
+    width: 300px !important;
+    height: 500px !important;
+  }
+  #logo {
+    display: none !important;
+  }
+  /* SPLINE PLAYER */
 
   /* ----------------------------HOMEPAGE------------------------------*/
 }

@@ -16,7 +16,7 @@ const Navbar = () => {
   const cart = useSelector((state) => state.user.user.cart);
 
   let cartTotalQuantity = 0;
-  cart.map((x) => {
+  cart?.map((x) => {
     cartTotalQuantity = cartTotalQuantity + x.quantity;
   });
 
@@ -37,7 +37,7 @@ const Navbar = () => {
         setCategories(res);
         // let tempObject = {}
         let tempArray = [];
-        res.map((x) => {
+        res?.map((x) => {
           // tempObject[x.name.toLowerCase()] = x._id//bcz some of categories are capitalized
           tempArray.push(x.name.toLowerCase());
         });
@@ -48,7 +48,7 @@ const Navbar = () => {
         // parent category - 14
         //this can be moved to down in jsx
         let catSubcatRelation = {}
-        res.map((x) => {
+        res?.map((x) => {
           if (x.subCategory.length > 0) {
             x.subCategory.map((y, i) => {
               catSubcatRelation[y] = x.name;

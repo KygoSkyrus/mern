@@ -10,6 +10,9 @@ import headphone1 from './../../assets/images/newImg/collections/headphone1.webp
 
 import controller from "./../../assets/images/newImg/collections/controller.png";
 
+import cart3d from "./../../assets/images/newImg/collections/3dCard.png";
+import storeDoor from "./../../assets/images/newImg/collections/storeDoor.png";
+
 const ProductCardsCollection = () => {
 
     
@@ -168,7 +171,7 @@ something wide must go here
             </div>
             <div class="wrapper-content">
               <div class="wrapper-inform">
-                <span class="badge badge-darken">Man's Shoes</span>
+                <span class="badge badge-darken">Controller</span>
                 <h1 class="heading-sm font-bold text-dark">Nike Air Motion Max</h1>
                 <p class="text-md font-regular">
                   The combine of breathable mesh without seams for a traditional and
@@ -181,6 +184,15 @@ something wide must go here
                   <h3 class="text-xxl font-bold text-dark">$99.00</h3>
                 </div>
                 <div class="sizes">
+                  <span class="text-md font-semi text-dark">Color:</span>
+                  <ul class="sizes-list p-0">
+                    <li class="sizes-item is-select"><section></section></li>
+                    <li class="sizes-item"><section></section></li>
+                    <li class="sizes-item"><section></section></li>
+                    <li class="sizes-item"><section></section></li>
+                  </ul>
+                </div>
+                {/* <div class="sizes">
                   <span class="text-md font-semi text-dark">Sizes:</span>
                   <ul class="sizes-list p-0">
                     <li class="sizes-item is-select">37</li>
@@ -188,7 +200,7 @@ something wide must go here
                     <li class="sizes-item">39</li>
                     <li class="sizes-item">40</li>
                   </ul>
-                </div>
+                </div> */}
               </div>
               <div class="wrapper-action">
                 <button class="btn btn-darken">Add to Bag</button>
@@ -201,6 +213,17 @@ something wide must go here
         </section>
       </main>
       {/* PRODUCT 7 */}
+
+
+      <spline-viewer class="spline-player"  loading-anim url="https://prod.spline.design/XGRNABqigI-vYLoP/scene.splinecode"></spline-viewer>
+
+
+<div className='storeDoorComp'>
+  <div className=''>
+
+  </div>
+</div>
+
 
 
       {/* PRODUCT 3 */}
