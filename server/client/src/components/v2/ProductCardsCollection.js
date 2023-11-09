@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState,useEffect } from 'react'
 
 import products from './dummy'
 import BannerSlider from './BannerSlider.jsx'
@@ -10,12 +10,25 @@ import headphone1 from './../../assets/images/newImg/collections/headphone1.webp
 
 import controller from "./../../assets/images/newImg/collections/controller.png";
 
-import cart3d from "./../../assets/images/newImg/collections/3dCard.png";
+import cart3d from "./../../assets/images/newImg/collections/3dCart.png";
 import storeDoor from "./../../assets/images/newImg/collections/storeDoor.png";
 
 const ProductCardsCollection = () => {
 
-    
+    const [products,setProducts]=useState()
+
+   useEffect(() => {
+    console.log('ue in hp')
+    fetch('/api/getproducts', {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log('products', data)
+        setProducts(data)//save this data in redux
+      })
+  }, [])
 
   //RIPPLE--------------
   function createRipple(event) {
@@ -172,16 +185,15 @@ something wide must go here
             <div class="wrapper-content">
               <div class="wrapper-inform">
                 <span class="badge badge-darken">Controller</span>
-                <h1 class="heading-sm font-bold text-dark">Nike Air Motion Max</h1>
-                <p class="text-md font-regular">
-                  The combine of breathable mesh without seams for a traditional and
-                  modern style to add the perfect amount of flash to make you shine.
+                <h1 class="heading-sm font-bold text-dark">GoGear Pro Wireless Gamepad</h1>
+                <p class="text-md font-regular text-wrap">
+                Equipped with 2.4GHz wireless technology and supports up to 10 metres range. Integrated with dual intensity motor which allows a realistic gaming experience
                 </p>
               </div>
               <div class="wrapper-detail">
                 <div class="price">
                   <span class="text-md font-semi text-dark">Price:</span>
-                  <h3 class="text-xxl font-bold text-dark">$99.00</h3>
+                  <h3 class="text-xxl font-bold text-dark">&#8377;1999.00</h3>
                 </div>
                 <div class="sizes">
                   <span class="text-md font-semi text-dark">Color:</span>
@@ -215,12 +227,12 @@ something wide must go here
       {/* PRODUCT 7 */}
 
 
-      <spline-viewer class="spline-player"  loading-anim url="https://prod.spline.design/XGRNABqigI-vYLoP/scene.splinecode"></spline-viewer>
+      {/* <spline-viewer class="spline-player"  loading-anim url="https://prod.spline.design/XGRNABqigI-vYLoP/scene.splinecode"></spline-viewer> */}
 
 
-<div className='storeDoorComp'>
-  <div className=''>
-
+      <div className='storeDoorComp'>
+    rtjrwjiowkl
+  <div className='doorImg'>
   </div>
 </div>
 
@@ -475,40 +487,6 @@ something wide must go here
 
       </div>
 
-
-
-    
-
-      <div className='container bg-light my-4'>
-
-
-
-        <div className="row row-cols-2 row-cols-md-4 g-4 m-3">
-          {products.map(product => {
-            return (
-              <div className="col" key={product.id}>
-                <div className="card h-100" >
-                  <img src={product.src} className="card-img-top" alt="..." />
-                  <div className="card-body">
-                    <div className="d-flex justify-content-between mb-2 fc">
-                      <h5 className="card-title">{product.name}</h5>
-                      <h6 className="">&#8377;{product.price}</h6>
-                    </div>
-                    <p className="card-text ">{product.description}</p>
-                  </div>
-                  <button className="btn btn-outline-warning"  >
-                    <i className="fas fa-shopping-cart"></i>
-                  </button>
-                </div>
-              </div>
-
-            )
-          })}
-
-          {/* <Example product={product} show={show} setShow={setShow} onAdd={onAdd} /> */}
-        </div>
-
-      </div>
 
     </>
   )

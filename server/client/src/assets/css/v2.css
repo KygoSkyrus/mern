@@ -1972,7 +1972,7 @@ main {
   background: #e53935;
 }
 .wrapper-detail .sizes .sizes-list .sizes-item:nth-child(4) section {
-  background-color: var(--brown-500);
+  background-color:#ffb300 ;
 }
 .wrapper-detail .sizes .sizes-list .sizes-item.is-select {
   border: 2px solid var(--white-400);
@@ -1980,7 +1980,7 @@ main {
 .wrapper-detail .sizes .sizes-list .sizes-item.is-select section {
   font-weight: 500;
   color: var(--white-100);
-  background: #ffb300;
+  background: #0f1011;
   cursor: pointer;
 }
 /* PRODUCT 7 */
@@ -2764,7 +2764,7 @@ main {
   /* MARQUEE */
 
   /* SPLINE PLAYER */
-  canvas {
+  /* canvas {
     width: 40vw !important;
     height: 500px !important;
   }
@@ -2774,8 +2774,23 @@ main {
   }
   #logo {
     display: none !important;
-  }
+  } */
   /* SPLINE PLAYER */
+
+
+  /* STORE DOOR */
+.storeDoorComp{
+  width: 100px;
+  height: 400px;
+  background-color: grey;
+}
+.doorImg{
+  width: 300px;
+  height: 400px;
+  background: url('./../images/newImg/collections/storeDoor.png');
+}
+  /* STORE DOOR */
+
 
   /* ----------------------------HOMEPAGE------------------------------*/
 }
