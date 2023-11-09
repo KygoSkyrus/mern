@@ -127,8 +127,10 @@ button {
   outline: none;
   background: none;
   text-decoration: none;
-  color: #414141;
   color: #fff;
+}
+a{
+  color: #414141;
 }
 h1,
 h2,
@@ -2801,6 +2803,15 @@ main {
   /* MARQUEE */
 
   
+
+  /* store door */
+  .storedoor{
+    height: 310px;
+  }
+  .storedoor .text{
+    font-size: 20px;
+  }
+  /* store door */
 
   /* ----------------------------HOMEPAGE------------------------------*/
 }
