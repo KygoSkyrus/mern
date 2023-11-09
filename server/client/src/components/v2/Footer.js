@@ -45,22 +45,22 @@ const Footer = (props) => {
 										</Link>
 									</li>
 									<li className="t-mb-10">
-										<Link to="/contact" className="t-link text-capitalize t-link--light sm-text">
+										<Link to="/user" className="t-link text-capitalize t-link--light sm-text">
 											profile
 										</Link>
 									</li>
 									<li className="t-mb-10">
-										<Link to="/post-your-blog" className="t-link text-capitalize t-link--light sm-text">
+										<Link to="/cart" className="t-link text-capitalize t-link--light sm-text">
 											cart
 										</Link>
 									</li>
 									<li className="t-mb-10">
-										<Link to="/post-your-blog" className="t-link text-capitalize t-link--light sm-text">
+										<Link to="/wishlist" className="t-link text-capitalize t-link--light sm-text">
 											wishlist
 										</Link>
 									</li>
 									<li className="t-mb-10">
-										<Link to="/post-your-blog" className="t-link text-capitalize t-link--light sm-text">
+										<Link to="/orders" className="t-link text-capitalize t-link--light sm-text">
 											orders
 										</Link>
 									</li>
@@ -98,7 +98,22 @@ const Footer = (props) => {
 								<Link to="#" className="t-link text-capitalize t-link--light sm-text">
 								</Link>
 							</li> */}
-									{finalArr?.map((x, index) => {
+							<li className="t-mb-10" >
+												<Link to={"/category/laptops" } className="t-link text-capitalize t-link--light sm-text">
+													Laptops
+												</Link>
+											</li>
+											<li className="t-mb-10" >
+												<Link to={"/category/smartphones" } className="t-link text-capitalize t-link--light sm-text">
+												Smartphones
+												</Link>
+											</li>
+											<li className="t-mb-10" >
+												<Link to={"/category/dslr" } className="t-link text-capitalize t-link--light sm-text">
+													DSLR
+												</Link>
+											</li>
+									{/* {finalArr?.map((x, index) => {
 										return (
 											<li className="t-mb-10" key={index}>
 												<Link to={"/category/" + x} state={{ category: x }} className="t-link text-capitalize t-link--light sm-text">
@@ -107,7 +122,7 @@ const Footer = (props) => {
 											</li>
 										)
 									})
-									}
+									} */}
 								</ul>
 							</div>
 							<div className="col-md-6 col-lg-3 t-mb-30 mb-lg-0">

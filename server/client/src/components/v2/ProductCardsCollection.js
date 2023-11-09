@@ -1,5 +1,5 @@
-import React, { useState,useEffect } from 'react'
-
+import React, { useState, useEffect } from 'react'
+import {Link} from 'react-router-dom'
 import products from './dummy'
 import BannerSlider from './BannerSlider.jsx'
 
@@ -15,9 +15,9 @@ import storeDoor from "./../../assets/images/newImg/collections/storeDoor.png";
 
 const ProductCardsCollection = () => {
 
-    const [products,setProducts]=useState()
+  const [products, setProducts] = useState()
 
-   useEffect(() => {
+  useEffect(() => {
     console.log('ue in hp')
     fetch('/api/getproducts', {
       method: "GET",
@@ -57,37 +57,37 @@ const ProductCardsCollection = () => {
 
   return (
     <>
-    
-     {/* PRODUCT 5 */}
-     <button className='button5' onClick={createRipple}>Ripple</button>
+
+      {/* PRODUCT 5 */}
+      {/* <button className='button5' onClick={createRipple}>Ripple</button> */}
       {/* PRODUCT 5 */}
 
 
 
 
-    
+
 
 
       {/* <!-- Product 1 --> */}
-      <div className='container bx'>
+      <div className='container bx gapBtw'>
         <div className='row'>
           <div className='col-12'>
             <div className='row'>
 
-            <div className='col-md-6 col-lg-4'>
-      <section class="box bx1">
-        <div class="content">
+              <div className='col-md-6 col-lg-4'>
+                <section class="box bx1">
+                  <div class="content">
 
-          <div class="left">
-            <div class="product_img pimg1"></div>
-            <div class="product_details">
-              <h4 class="title">Electronics</h4>
-              <p class="discription">Laptops, Tablets, VR headsets, Gaming consoles, Television, Computers, Camera etc</p>
-              {/* <p class="pricing">₹824 <span class="price_original">₹4000</span> <span class="offer"> 79% OFF</span></p>
+                    <div class="left">
+                      <div class="product_img pimg1"></div>
+                      <div class="product_details">
+                        <h4 class="title">Electronics</h4>
+                        <p class="discription">Laptops, Tablets, VR headsets, Gaming consoles, Television, Computers, Camera etc</p>
+                        {/* <p class="pricing">₹824 <span class="price_original">₹4000</span> <span class="offer"> 79% OFF</span></p>
               <p class="other">inclusive of all taxes</p> */}
-            </div>
-          </div>
-{/* 
+                      </div>
+                    </div>
+                    {/* 
           <div class="right">
             <div class="product_description">
               <h4>PRODUCT DESCRIPTION</h4>
@@ -109,85 +109,88 @@ const ProductCardsCollection = () => {
             </div>
           </div> */}
 
+                  </div>
+                </section>
+              </div>
+
+
+              <div className='col-md-6 col-lg-4'>
+                <section class="box bx2">
+                  <div class="content">
+                    <div class="left">
+                      <div className='p1-bg'>
+                        <div class="product_img pimg2"></div></div>
+                      <div class="product_details">
+                        <h4 class="title">Home Appliances</h4>
+                        <p class="discription">Refrigerator, Microwave, Vaccum cleaner, Air conditioner, Washing machine etc</p>
+                        {/* <p class="pricing"><span class="offer">UPTO 60% OFF</span></p>
+              <p class="other">inclusive of all taxes</p> */}
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+
+              <div className='col-md-6 col-lg-4'>
+                <section class="box bx3">
+                  <div class="content">
+                    <div class="left">
+                      <div class="product_img pimg3"></div>
+                      <div class="product_details">
+                        <h4 class="title">Wearable Devices</h4>
+                        <p class="discription">Smartwatches, Earbuds, Headphones etc</p>
+                        {/* <p class="pricing">₹824 <span class="price_original">₹4000</span> <span class="offer"> 79% OFF</span></p>
+              <p class="other">inclusive of all taxes</p> */}
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+
+            </div>
+          </div>
         </div>
-      </section>
-      </div>
-
-
-      <div className='col-md-6 col-lg-4'>
-      <section class="box bx2">
-        <div class="content">
-          <div class="left">
-            <div className='p1-bg'>
-            <div class="product_img pimg2"></div></div>
-            <div class="product_details">
-              <h4 class="title">Home Appliances</h4>
-              <p class="discription">Refrigerator, Microwave, Vaccum cleaner, Air conditioner, Washing machine etc</p>
-              {/* <p class="pricing"><span class="offer">UPTO 60% OFF</span></p>
-              <p class="other">inclusive of all taxes</p> */}
-            </div>
-          </div>
-          </div>
-          </section>
-          </div>
-
-          <div className='col-md-6 col-lg-4'>
-      <section class="box bx3">
-        <div class="content">
-          <div class="left">
-            <div class="product_img pimg3"></div>
-            <div class="product_details">
-              <h4 class="title">Wearable Devices</h4>
-              <p class="discription">Smartwatches, Earbuds, Headphones etc</p>
-              {/* <p class="pricing">₹824 <span class="price_original">₹4000</span> <span class="offer"> 79% OFF</span></p>
-              <p class="other">inclusive of all taxes</p> */}
-            </div>
-          </div>
-          </div>
-          </section>
-          </div>
-
-      </div>
-      </div>
-      </div>
       </div>
       {/* <!-- Product 1 --> */}
 
 
 
-      <nav class="menu position-relative">
-  <div class="menu__item">
-    <div class="marquee">
-      <div class="marquee__inner">
-        <span>Shopp-itt</span>
-        <span>Shopp-itt</span>
-        <span>Shopp-itt</span>
-        <span>Shopp-itt</span>
+      <nav class="menu position-relative gapBtw">
+        <div class="menu__item">
+          <div class="marquee">
+            <div class="marquee__inner">
+              <span>Shopp-itt</span>
+              <span>Shopp-itt</span>
+              <span>Shopp-itt</span>
+              <span>Shopp-itt</span>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+
+      <div className='storedoor mt-2'>
+        <div className='text'>All-in-one store <br />for all of your Electronic needs</div>
+        <div className='doorImg'></div>
       </div>
-    </div>
-  </div>
-</nav>
 
-something wide must go here
-
-
- {/* PRODUCT 7 */}
- <main class="main">
+      {/* PRODUCT 7 */}
+      <main class="main gapBtw">
         {/* <!-- Wrapper Section --> */}
         <section class="section wrapper wrapper-section py-3">
           <div class="container wrapper-column">
             <div class="wrapper-figure">
-              <img 
-              src={controller}
-              // src="https://i.ibb.co/3msVHYZ/sneaker-image.png"
-               class="wrapper-image" loading="lazy" alt="Sneaker" />
+              <img
+                src={controller}
+                // src="https://i.ibb.co/3msVHYZ/sneaker-image.png"
+                class="wrapper-image" loading="lazy" alt="Sneaker" />
             </div>
             <div class="wrapper-content">
               <div class="wrapper-inform">
                 <span class="badge badge-darken">Controller</span>
                 <h1 class="heading-sm font-bold text-dark">GoGear Pro Wireless Gamepad</h1>
                 <p class="text-md font-regular text-wrap">
-                Equipped with 2.4GHz wireless technology and supports up to 10 metres range. Integrated with dual intensity motor which allows a realistic gaming experience
+                  Equipped with 2.4GHz wireless technology and supports up to 10 metres range. Integrated with dual intensity motor which allows a realistic gaming experience
                 </p>
               </div>
               <div class="wrapper-detail">
@@ -227,19 +230,65 @@ something wide must go here
       {/* PRODUCT 7 */}
 
 
+       {/* XBOX AD */}
+       <div className='container gapBtw'>
+        <section class="xbox">
+          <div class="xbox-content xboxAd">
+            <h2>Xbox Game Pass Ultimate</h2>
+            <p>Xbox Game Pass Ultimate Xbox Live Gold and over 100 high-quality
+              console and PC games. Play together with friends and discover your
+              next favorite game.</p>
+            <a href="/#" class="xbox-btn">
+              Join Now <i class="fas fa-chevron-right"></i>
+            </a>
+          </div>
+        </section>
+      </div>
+      {/* XBOX AD */}
+
+
       {/* <spline-viewer class="spline-player"  loading-anim url="https://prod.spline.design/XGRNABqigI-vYLoP/scene.splinecode"></spline-viewer> */}
 
 
-      <div className='storeDoorComp'>
-    rtjrwjiowkl
-  <div className='doorImg'>
-  </div>
-</div>
+
+
+  {/* PRODUCT 4 */}
+  <div className='container gapBtw blackCards'>
+    <h1 style={{ color: "#151515",fontFamily: "monospace"}} className='gapBtw text-center'>Trending Gadgets</h1>
+        <div className='row m0'>
+          <div className='col-12'>
+            <div className='row'>
+              {products?.map((x,i)=> {
+                if(i<6){
+                return (
+                  <div className='col-md-6 col-lg-4'>
+                    <div class="mini-card mdc-elevation--z4" >
+                      <div class="media-image mdc-card__media mdc-card__media--square" style={{backgroundImage:`url(${x.image[0]})`}}>
+                        <div class="mdc-card__media-content">
+                          <div class="card-info">
+                            <h1>{x.name}</h1>
+                            <Link to={`/product/${x._id}`}>Explore</Link>
+                            <h3>{x.category}</h3>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                )}
+              })}
+            </div>
+          </div>
+        </div>
+        <section className='gapBtw theLine' style={{width:"80%",height:"1px",background:"#d6d6d6",textAlign:"center"}}></section>
+      </div>
+      {/* PRODUCT 4 */}
+
 
 
 
       {/* PRODUCT 3 */}
-      <div class="container">
+      {/* <div class="container">
 
         <div class="card-3">
           <img src={img1} class="card-img-top" alt="..." />
@@ -256,48 +305,13 @@ something wide must go here
           </div>
         </div>
 
-      </div>
+      </div> */}
       {/* PRODUCT 3 */}
 
 
 
-
-
-      {/* PRODUCT 4 */}
-      <div className='container'>
-        <div className='row'>
-          <div className='col-12'>
-            <div className='row'>
-              {Array.from(Array(6).keys()).map(x => {
-                return (
-                  <div className='col-md-6 col-lg-4'>
-                    <div class="mini-card mdc-elevation--z4" >
-                        <div class="media-image mdc-card__media mdc-card__media--square">
-                          <div class="mdc-card__media-content">
-                            <div class="card-info">
-                              <h1>The new headphones</h1>
-                              <h2>Explore</h2>
-                              <h3>HEADPHONES</h3>
-                            </div>
-                          </div>
-
-                      </div>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* PRODUCT 4 */}
-
-
-
-
-
       {/* PRODUCT 6 */}
-      <div class="bottom-card">
+      {/* <div class="bottom-card">
         <div class="first-half">
           <div class="media-image top-card">
           </div>
@@ -309,18 +323,18 @@ something wide must go here
             <h6>United States, 16 hours ago</h6>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* PRODUCT 6 */}
 
 
 
 
-           {/* PRODUCT 2 */}
-           <div class='cardN'>
-        <img 
-        // src='https://raw.githubusercontent.com/mohammadjarabah/codepen-assets/main/pens/mdwvNJP/images/shoes.png'
-        src={headphone1}
-         class='card__img' alt='' />
+      {/* PRODUCT 2 */}
+      {/* <div class='cardN'>
+        <img
+          // src='https://raw.githubusercontent.com/mohammadjarabah/codepen-assets/main/pens/mdwvNJP/images/shoes.png'
+          src={headphone1}
+          class='card__img' alt='' />
         <h2 class='card__title'>Nike Shoes</h2>
         <div class='card__content'>
           <div class='card__sizeContainer'>
@@ -338,74 +352,33 @@ something wide must go here
           </div>
         </div>
         <a href='/#' class='card__link'>Buy Now</a>
-      </div>
+      </div> */}
       {/* PRODUCT 2 */}
 
 
 
-<div className='cgh d-none' >
-<div className='holder-cgh'>
-  <section>Laptops</section>
-  <div className='circle-cgh'></div>
-</div>
-<div className='holder-cgh'>
-  <section>Tablets</section>
-  <div className='circle-cgh'></div>
-</div>
-<div className='holder-cgh'>
-  <section>Smartwatches</section>
-  <div className='circle-cgh'></div>
-</div>
-<div className='holder-cgh'>
-  <section>Camera</section>
-  <div className='circle-cgh'></div>
-</div>
-<div className='holder-cgh'>
-  <section>Desktop</section>
-  <div className='circle-cgh'></div>
-</div>
-<div className='holder-cgh'>
-  <section>Gaming Consoles</section>
-  <div className='circle-cgh'></div>
-</div>
-<div className='holder-cgh'>
-  <section>Accessories</section>
-  <div className='circle-cgh'></div>
-</div>
-</div>
+      
 
 
 
 
 
-      {/* XBOX AD */}
-      <div className='container'>
-        <section class="xbox">
-          <div class="xbox-content">
-            <h2>Xbox Game Pass Ultimate</h2>
-            <p>Xbox Game Pass Ultimate Xbox Live Gold and over 100 high-quality
-              console and PC games. Play together with friends and discover your
-              next favorite game.</p>
-            <a href="/#" class="xbox-btn">
-              Join Now <i class="fas fa-chevron-right"></i>
-            </a>
-          </div>
-        </section>
-      </div>
-      {/* XBOX AD */}
+     
 
 
       {/* MACINTOX BANNER */}
-      <div class="container">
+      {/* <div class="container gapBtw">
         <div class="page">
           <div class="left">
-            <h1>Take home a Macintosh.</h1>
-            <p className='page-text'>Apple's remarkable new personal computer</p>
+            <h1>Get yourself a yoga Laptop</h1>
+            <p className='page-text'>Lenovo's remarkable new personal computer</p>
             <button>See it in action</button>
 
           </div>
           <div class="right">
-            <div class="img"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fsebastien-compagne.fr%2Fwebsite%2Fzpg%2Farcheologeek%2F1990_-_apple_mac_classic_II.png&f=1&nofb=1" alt='..' />
+            <div class="img">
+              <img alt='' src={products?.[4].image} />
+              <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fsebastien-compagne.fr%2Fwebsite%2Fzpg%2Farcheologeek%2F1990_-_apple_mac_classic_II.png&f=1&nofb=1" alt='..' />
             </div>
             <ul>
               <li>Instagram</li>
@@ -416,12 +389,12 @@ something wide must go here
             </ul>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* MACINTOX BANNER */}
 
 
-{/* PRODUCT 9 */}
-{/* <div class="product-card">
+      {/* PRODUCT 9 */}
+      {/* <div class="product-card">
         <div class="badge-pc">New Product</div>
         <div class="product-tumb">
             <img src="https://cdn-icons-png.flaticon.com/512/2806/2806251.png" alt=''/>
@@ -439,19 +412,17 @@ something wide must go here
             </div>
         </div>
     </div> */}
-   {/* PRODUCT 9 */}
+      {/* PRODUCT 9 */}
 
 
-<div></div>
+      {/* <div>
+        Shop by category
+      </div> */}
 
-<div>
-  Shop by category
-</div>
-
-{/* <SliderComponent/> */}
+      {/* <SliderComponent/> */}
 
 
-<CategoryStripSlider/>
+      {/* <CategoryStripSlider /> */}
 
 
 
@@ -466,7 +437,7 @@ something wide must go here
 
 
 
-      <div className='text-stroke-container'>
+      <div className='text-stroke-container d-none'>
         <div className='scrolldown slow1'>
           {Array.from(Array(30).keys()).map(x => {
             return (<h1 key={x} className='text-stroke-style'>KYGOSKYRUS</h1>)

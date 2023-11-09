@@ -852,6 +852,10 @@ input[type="number"]::-webkit-outer-spin-button {
 /*-------------------------- HOMEPAGE -------------------------------------*/
 /*-------------------------- HOMEPAGE -------------------------------------*/
 /*-------------------------- HOMEPAGE -------------------------------------*/
+.gapBtw{
+  margin-top: 70px;
+  margin-bottom: 60px;
+}
 /* BANNER SLIDER */
 .main-banner {
   height: 70vh;
@@ -904,7 +908,37 @@ input[type="number"]::-webkit-outer-spin-button {
   line-height: 23.3px !important;
   font-size: 10px !important;
 }
+.slick-arrow {
+  display: none !important;
+}
 /* BANNER SLIDER */
+
+
+  /* STORE DOOR */
+  .storedoor {
+    height: 400px;
+    background: linear-gradient(180deg, #a066be, #fff8e100);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+  }
+  .storedoor .text{
+    font-size: 32px;
+    font-style: oblique;
+color: rgb(228, 228, 228);
+font-weight: 900;
+  }
+  .storedoor .doorImg {
+    width: 250px;
+    height: 400px;
+    background: url("./../images/newImg/collections/storeDoor.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+  /* STORE DOOR */
+
 
 /*-------------------------- products --------------------------*/
 .card2 {
@@ -1263,35 +1297,6 @@ input[type="number"]::-webkit-outer-spin-button {
 /* Responsiveness:End */
 /*,,,,,,,,,,,,,,,,,,,,,,,/ product 1 \,,,,,,,,,,,,,,,,,,,,,,,,*/
 
-/* cgh */
-.cgh {
-  background-color: #e3e3e3;
-  display: flex;
-  gap: 30px;
-  padding: 40px 10px;
-  margin: 50px 0;
-}
-.holder-cgh {
-  position: relative;
-}
-.holder-cgh section {
-  font-size: 41px;
-  position: relative;
-  z-index: 1;
-  color: #b2b2b2;
-  text-wrap: nowrap;
-}
-.circle-cgh {
-  background-color: #151515;
-  border-radius: 50%;
-  width: 100px;
-  height: 100px;
-  position: absolute;
-  top: calc(50% - 42px);
-  left: calc(50% - 50px);
-  z-index: 0;
-}
-/* cgh */
 
 /*,,,,,,,,,,,,,,,,,,,,,,,/ product 2 \,,,,,,,,,,,,,,,,,,,,,,,,*/
 .cardN {
@@ -1527,13 +1532,18 @@ input[type="number"]::-webkit-outer-spin-button {
 /*,,,,,,,,,,,,,,,,,,,,,,,/ product 3 \,,,,,,,,,,,,,,,,,,,,,,,,*/
 
 /*,,,,,,,,,,,,,,,,,,,,,,,/ product 4 \,,,,,,,,,,,,,,,,,,,,,,,,*/
-
+.blackCards{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .mini-card {
   user-select: none;
   width: 100%;
   height: 111px;
   border-radius: 12px;
   background-color: transparent;
+  margin: 5px;
 }
 
 .media-image {
@@ -1542,6 +1552,7 @@ input[type="number"]::-webkit-outer-spin-button {
   background-position: 90% 50%;
   background-size: 24%;
   background-color: var(--color-blue);
+  background-color:#151515;
   overflow: hidden;
   z-index: 3;
 }
@@ -1556,6 +1567,7 @@ input[type="number"]::-webkit-outer-spin-button {
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+  position: relative;
 }
 
 .mini-card .card-info > h1 {
@@ -1566,9 +1578,13 @@ input[type="number"]::-webkit-outer-spin-button {
   font-weight: 400;
   text-align: left;
   z-index: 1;
+  max-width: 60%;
+  text-wrap: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
 }
 
-.mini-card .card-info > h2 {
+.mini-card .card-info > a {
   font-family: "Rubik", sans-serif;
   font-size: 12px;
   color: #fff;
@@ -1579,11 +1595,14 @@ input[type="number"]::-webkit-outer-spin-button {
   padding: 0.5rem 0.8rem 0.5rem 0.8rem;
   margin: 0.8rem 1rem 1rem 1.6rem;
   z-index: 1;
+
 }
 
 .mini-card .card-info > h3 {
   position: absolute;
-  transform: translate(3%, 38%);
+  /* transform: translate(0.6rem, 38%); */
+  left: 0.8rem;
+    top: 1.4rem;
   font-size: 3rem;
   font-family: "Lexend Deca", sans-serif;
   color: #fff;
@@ -1972,7 +1991,7 @@ main {
   background: #e53935;
 }
 .wrapper-detail .sizes .sizes-list .sizes-item:nth-child(4) section {
-  background-color:#ffb300 ;
+  background-color: #ffb300;
 }
 .wrapper-detail .sizes .sizes-list .sizes-item.is-select {
   border: 2px solid var(--white-400);
@@ -2038,7 +2057,7 @@ main {
   position: absolute;
   top: 58%;
   left: 7%;
-  transform: translate(-7%, -58%);
+  transform: translate(0%, -58%);
   font-size: 12px;
 }
 .page button {
@@ -2237,7 +2256,8 @@ main {
   width: var(--marquee-width);
   overflow: hidden;
   pointer-events: none;
-  mix-blend-mode: color-burn;
+  /* mix-blend-mode: color-burn; */
+  color: #efefefa6;
 }
 
 .marquee__inner {
@@ -2245,7 +2265,7 @@ main {
   display: flex;
   position: relative;
   transform: translate3d(var(--move-initial), 0, 0);
-  animation: marquee 5s linear infinite;
+  animation: marquee 7s linear infinite;
   animation-play-state: paused;
   opacity: 0;
   transition: opacity 0.1s;
@@ -2327,6 +2347,19 @@ main {
   .follow li {
     margin-right: 10px;
   }
+
+  /* black cards */
+  .blackCards{
+    display: block;
+  }
+  .blackCards  .m0{
+    margin-right: 0 !important;
+  }
+  .theLine{
+    display: none !important;
+  }
+  /* black cards */
+
 
   /* SLICK SLIDER */
   .slick-arrow {
@@ -2722,6 +2755,10 @@ main {
     padding: 0px 0 0 10px;
     font-size: 12px !important;
   }
+  .xboxAd{
+      position: relative;
+      top: 35%;
+  }
   .xbox-content h2 {
     font-size: calc(0.8rem + 0.9vw);
   }
@@ -2763,34 +2800,7 @@ main {
   }
   /* MARQUEE */
 
-  /* SPLINE PLAYER */
-  /* canvas {
-    width: 40vw !important;
-    height: 500px !important;
-  }
-  #spline {
-    width: 300px !important;
-    height: 500px !important;
-  }
-  #logo {
-    display: none !important;
-  } */
-  /* SPLINE PLAYER */
-
-
-  /* STORE DOOR */
-.storeDoorComp{
-  width: 100px;
-  height: 400px;
-  background-color: grey;
-}
-.doorImg{
-  width: 300px;
-  height: 400px;
-  background: url('./../images/newImg/collections/storeDoor.png');
-}
-  /* STORE DOOR */
-
+  
 
   /* ----------------------------HOMEPAGE------------------------------*/
 }

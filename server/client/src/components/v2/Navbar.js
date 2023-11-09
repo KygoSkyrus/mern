@@ -336,11 +336,11 @@ const Navbar = () => {
                   Orders
                 </Link>
               </li> */}
-              <li className="nav-item ">
+              {/* <li className="nav-item ">
                 <Link to="/admin/dashboard" className="nav-link">
                   Admin
                 </Link>
-              </li>
+              </li> */}
               <li className="nav-item position-relative dropdown">
                 <button
                   type="button"

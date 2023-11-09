@@ -139,7 +139,7 @@ const Category = () => {
                 </div>
             </div>
 
-            <div>Explore more</div>
+            {/* <div>Explore more</div> */}
 
         </>
     )
