@@ -129,7 +129,7 @@ button {
   text-decoration: none;
   color: #fff;
 }
-a{
+a {
   color: #414141;
 }
 h1,
@@ -626,6 +626,11 @@ img {
 .t-mr-16 {
   margin-right: 16px;
 }
+.brand h6 {
+  font-size: 21px;
+  color: #fff;
+  font-weight: 700;
+}
 /*---------------------------------------------- FOOTER ---------------------------------------------------*/
 
 /*-------------------====================------- TOAST --------------------------==============-----------*/
@@ -854,7 +859,7 @@ input[type="number"]::-webkit-outer-spin-button {
 /*-------------------------- HOMEPAGE -------------------------------------*/
 /*-------------------------- HOMEPAGE -------------------------------------*/
 /*-------------------------- HOMEPAGE -------------------------------------*/
-.gapBtw{
+.gapBtw {
   margin-top: 70px;
   margin-bottom: 60px;
 }
@@ -915,32 +920,55 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 /* BANNER SLIDER */
 
+/* STORE DOOR */
+.storedoor {
+  height: 400px;
+  background: linear-gradient(180deg, #a066be, #fff8e100);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+}
+.storedoor .text {
+  font-size: 32px;
+  font-style: oblique;
+  color: rgb(228, 228, 228);
+  font-weight: 900;
+}
+.storedoor .doorImg {
+  width: 250px;
+  height: 400px;
+  background: url("./../images/newImg/collections/storeDoor.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+/* STORE DOOR */
 
-  /* STORE DOOR */
-  .storedoor {
-    height: 400px;
-    background: linear-gradient(180deg, #a066be, #fff8e100);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 30px;
-  }
-  .storedoor .text{
-    font-size: 32px;
-    font-style: oblique;
-color: rgb(228, 228, 228);
-font-weight: 900;
-  }
-  .storedoor .doorImg {
-    width: 250px;
-    height: 400px;
-    background: url("./../images/newImg/collections/storeDoor.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-  }
-  /* STORE DOOR */
-
+/* CART Banner */
+.cartBanner{
+  height: 400px;
+  background: linear-gradient(0deg, #FFB300, #fff8e100);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+}
+.cartBanner .text {
+  font-size: 32px;
+  font-style: oblique;
+  color: rgb(255, 255, 255);
+  font-weight: 900;
+}
+.cartBanner .cartImg{
+  width: 250px;
+  height: 400px;
+  background: url("./../images/newImg/collections/3dCart.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+/* CART Banner */
 
 /*-------------------------- products --------------------------*/
 .card2 {
@@ -1299,7 +1327,6 @@ font-weight: 900;
 /* Responsiveness:End */
 /*,,,,,,,,,,,,,,,,,,,,,,,/ product 1 \,,,,,,,,,,,,,,,,,,,,,,,,*/
 
-
 /*,,,,,,,,,,,,,,,,,,,,,,,/ product 2 \,,,,,,,,,,,,,,,,,,,,,,,,*/
 .cardN {
   background-color: var(--color1);
@@ -1534,7 +1561,7 @@ font-weight: 900;
 /*,,,,,,,,,,,,,,,,,,,,,,,/ product 3 \,,,,,,,,,,,,,,,,,,,,,,,,*/
 
 /*,,,,,,,,,,,,,,,,,,,,,,,/ product 4 \,,,,,,,,,,,,,,,,,,,,,,,,*/
-.blackCards{
+.blackCards {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1554,7 +1581,7 @@ font-weight: 900;
   background-position: 90% 50%;
   background-size: 24%;
   background-color: var(--color-blue);
-  background-color:#151515;
+  background-color: #151515;
   overflow: hidden;
   z-index: 3;
 }
@@ -1597,14 +1624,13 @@ font-weight: 900;
   padding: 0.5rem 0.8rem 0.5rem 0.8rem;
   margin: 0.8rem 1rem 1rem 1.6rem;
   z-index: 1;
-
 }
 
 .mini-card .card-info > h3 {
   position: absolute;
   /* transform: translate(0.6rem, 38%); */
   left: 0.8rem;
-    top: 1.4rem;
+  top: 1.4rem;
   font-size: 3rem;
   font-family: "Lexend Deca", sans-serif;
   color: #fff;
@@ -2351,17 +2377,16 @@ main {
   }
 
   /* black cards */
-  .blackCards{
+  .blackCards {
     display: block;
   }
-  .blackCards  .m0{
+  .blackCards .m0 {
     margin-right: 0 !important;
   }
-  .theLine{
+  .theLine {
     display: none !important;
   }
   /* black cards */
-
 
   /* SLICK SLIDER */
   .slick-arrow {
@@ -2757,9 +2782,13 @@ main {
     padding: 0px 0 0 10px;
     font-size: 12px !important;
   }
-  .xboxAd{
-      position: relative;
-      top: 35%;
+  .slide .xbox-content {
+    width: 44% !important;
+  }
+
+  .xboxAd {
+    position: relative;
+    top: 35%;
   }
   .xbox-content h2 {
     font-size: calc(0.8rem + 0.9vw);
@@ -2802,13 +2831,11 @@ main {
   }
   /* MARQUEE */
 
-  
-
   /* store door */
-  .storedoor{
+  .storedoor {
     height: 310px;
   }
-  .storedoor .text{
+  .storedoor .text {
     font-size: 20px;
   }
   /* store door */
