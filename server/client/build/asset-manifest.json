@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/static/css/main.337817c9.chunk.css",
+    "main.css": "/static/css/main.53650bfc.chunk.css",
     "main.js": "/static/js/main.c26d5e3c.chunk.js",
     "main.js.map": "/static/js/main.c26d5e3c.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.3639c030.js",
@@ -12,7 +12,7 @@
     "static/js/3.7d0f0500.chunk.js.map": "/static/js/3.7d0f0500.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.19627560.chunk.css.map": "/static/css/2.19627560.chunk.css.map",
-    "static/css/main.337817c9.chunk.css.map": "/static/css/main.337817c9.chunk.css.map",
+    "static/css/main.53650bfc.chunk.css.map": "/static/css/main.53650bfc.chunk.css.map",
     "static/js/2.972f9e40.chunk.js.LICENSE.txt": "/static/js/2.972f9e40.chunk.js.LICENSE.txt",
     "static/media/3dCart.1f2e52c6.png": "/static/media/3dCart.1f2e52c6.png",
     "static/media/admin.css": "/static/media/backpack.4b415f3c.jpg",
@@ -49,7 +49,7 @@
     "static/js/runtime-main.3639c030.js",
     "static/css/2.19627560.chunk.css",
     "static/js/2.972f9e40.chunk.js",
-    "static/css/main.337817c9.chunk.css",
+    "static/css/main.53650bfc.chunk.css",
     "static/js/main.c26d5e3c.chunk.js"
   ]
 }
