@@ -257,32 +257,7 @@ const ProductCardsCollection = () => {
       {/* XBOX AD */}
 
 
-      <div className='container bx category-page my-5'>
-        <div className='row'>
-          <div className='col-12'>
-            <div className='row'>
-
-              <div className='col-md-6 col-lg-6'>
-                <div className='card2 card h-100'>
-                
-                  <div style={{ background: "#fff", height: "100%", minHeight: "275px", objectFit: "cover", display: "grid", placeItems: "center" }}>
-                    <img src={wearables1} className="card-img-top" style={{height:"-webkit-fill-available"}} alt="..." />
-                  </div>
-                </div>
-              </div>
-              <div className='col-md-6 col-lg-6'>
-                <div className='card2 card h-100'>
-                
-                  <div style={{ background: "#fff", height: "100%", minHeight: "275px", objectFit: "cover", display: "grid", placeItems: "center" }}>
-                    <img src={wearables2} className="card-img-top" alt="..." />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        </div>
-
+      
 
         {/* <spline-viewer class="spline-player"  loading-anim url="https://prod.spline.design/XGRNABqigI-vYLoP/scene.splinecode"></spline-viewer> */}
 
@@ -323,6 +298,30 @@ const ProductCardsCollection = () => {
 
 
 
+        <div className='container bx category-page my-5'>
+        <div className='row'>
+          <div className='col-12'>
+            <div className='row'>
+              <div className='col-md-6 col-lg-6'>
+                <div className='card2 card h-100'>
+                  <div style={{ background: "#fff", height: "100%", minHeight: "275px", objectFit: "cover", display: "grid", placeItems: "center" }}>
+                    <img src={wearables1} className="card-img-top" style={{height:"-webkit-fill-available"}} alt="..." />
+                  </div>
+                </div>
+              </div>
+              <div className='col-md-6 col-lg-6'>
+                <div className='card2 card h-100'>           
+                  <div style={{ background: "#fff", height: "100%", minHeight: "275px", objectFit: "cover", display: "grid", placeItems: "center" }}>
+                    <img src={wearables2} className="card-img-top" alt="..." />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+
+
 
         {/* PRODUCT 3 */}
         {/* <div class="container">
@@ -345,7 +344,7 @@ const ProductCardsCollection = () => {
       </div> */}
         {/* PRODUCT 3 */}
 
-
+ 
 
         {/* PRODUCT 6 */}
         {/* <div class="bottom-card">
