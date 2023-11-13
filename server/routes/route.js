@@ -781,7 +781,7 @@ router.get('/api/getorders',authenticateUser, async (req, res) => {
 //authenticate admin account too
 router.get('/api/admin/getorders', async (req, res) => {
     //this will get orders of all the users and not only one loggged in user
-
+     //also chekc irst if the account accessing this route is admin only
     // const { orderId } = req.query
     const token = req.cookies.jwt;
 

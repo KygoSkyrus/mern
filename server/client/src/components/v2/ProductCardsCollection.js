@@ -235,7 +235,7 @@ const ProductCardsCollection = () => {
 
 
       <div className='cartBanner mt-2'>
-        <div className='text'>All-in-one store <br />for all of your Electronic needs</div>
+        <div className='text'>Shop on SHOPP ITT <br />with exclusive deals and offers</div>
         <div className='cartImg'></div>
       </div>
 
@@ -297,7 +297,7 @@ const ProductCardsCollection = () => {
         {/* PRODUCT 4 */}
 
 
-
+{/* filler images */}
         <div className='container bx category-page my-5'>
         <div className='row'>
           <div className='col-12'>
@@ -320,6 +320,7 @@ const ProductCardsCollection = () => {
           </div>
         </div>
         </div>
+{/* filler images */}
 
 
 
@@ -346,49 +347,61 @@ const ProductCardsCollection = () => {
 
  
 
-        {/* PRODUCT 6 */}
-        {/* <div class="bottom-card">
-        <div class="first-half">
-          <div class="media-image top-card">
-          </div>
-        </div>
-        <div class="last-half">
-          <div class="card-info">
-            <h2 className='pname' >iPhone 11 Pro Max</h2>
-            <h4>$1,499.00</h4>
-            <h6>United States, 16 hours ago</h6>
-          </div>
-        </div>
-      </div> */}
-        {/* PRODUCT 6 */}
+
 
 
 
 
         {/* PRODUCT 2 */}
-        {/* <div class='cardN'>
-        <img
-          // src='https://raw.githubusercontent.com/mohammadjarabah/codepen-assets/main/pens/mdwvNJP/images/shoes.png'
-          src={headphone1}
-          class='card__img' alt='' />
-        <h2 class='card__title'>Nike Shoes</h2>
-        <div class='card__content'>
-          <div class='card__sizeContainer'>
-            <p class='card__sizeTitle'>Size:</p>
-            <span class='card__sizeNumber'>7</span>
-            <span class='card__sizeNumber'>8</span>
-            <span class='card__sizeNumber'>9</span>
-            <span class='card__sizeNumber'>10</span>
+
+        <div className='container gapBtw blackCards'>
+          <h1 style={{ color: "#151515", fontFamily: "monospace" }} className='gapBtw text-center'>Curated just for YOU</h1>
+          <div className='row m0'>
+            <div className='col-12'>
+              <div className='row'>
+                {products?.map((x, i) => {
+                  if (i < 3) {
+                    return (
+                      <div className='col-md-6 col-lg-4'>
+                      <div class='cardN' data-category={x.category}>
+                      <img
+                        // src='https://raw.githubusercontent.com/mohammadjarabah/codepen-assets/main/pens/mdwvNJP/images/shoes.png'
+                        // src={headphone1}
+                        src={x.image[0]}
+                        class='card__img' alt='' />
+                      <h2 class='card__title'>{x.name}</h2>
+                      <div class='card__content'>
+                        {/* <div class='card__sizeContainer'>
+                          <p class='card__sizeTitle'>Size:</p>
+                          <span class='card__sizeNumber'>7</span>
+                          <span class='card__sizeNumber'>8</span>
+                          <span class='card__sizeNumber'>9</span>
+                          <span class='card__sizeNumber'>10</span>
+                        </div>
+                        <div class='card__colorContainer'>
+                          <p class='card__colorTitle'>Color:</p>
+                          <span class='card__colorCircle' style={{ backgroundColor: '#9bdc28' }}></span>
+                          <span class='card__colorCircle' style={{ backgroundColor: '#03a9f4' }}></span>
+                          <span class='card__colorCircle' style={{ backgroundColor: '#e91e63' }}></span>
+                        </div> */}
+                        <div className='card__discount'>
+                          <button className='btn btn-outline-warning text-light'>{x.discount}% discount</button>
+                        </div>
+                      </div>
+                      <a href='/#' class='card__link'>Buy Now</a>
+                    </div>
+                    </div>
+                    )
+                  }
+                })}
+              </div>
+            </div>
           </div>
-          <div class='card__colorContainer'>
-            <p class='card__colorTitle'>Color:</p>
-            <span class='card__colorCircle' style={{ backgroundColor: '#9bdc28' }}></span>
-            <span class='card__colorCircle' style={{ backgroundColor: '#03a9f4' }}></span>
-            <span class='card__colorCircle' style={{ backgroundColor: '#e91e63' }}></span>
-          </div>
+          <section className='gapBtw theLine' style={{ width: "80%", height: "1px", background: "#d6d6d6", textAlign: "center" }}></section>
         </div>
-        <a href='/#' class='card__link'>Buy Now</a>
-      </div> */}
+
+
+      
         {/* PRODUCT 2 */}
 
 
