@@ -15,10 +15,13 @@ import storeDoor from "./../../assets/images/newImg/collections/storeDoor.png";
 
 import wearables1 from "./../../assets/images/newImg/collections/wearables1.jpg";
 import wearables2 from "./../../assets/images/newImg/collections/wearables2.jpg";
+import xbox from "./../../assets/images/newImg/collections/xbox.png";
+
 
 const ProductCardsCollection = () => {
 
   const [products, setProducts] = useState()
+  const [trendingProducts, setTrendingProducts] = useState([])
 
   useEffect(() => {
     console.log('ue in hp')
@@ -29,10 +32,15 @@ const ProductCardsCollection = () => {
       .then(res => res.json())
       .then(data => {
         console.log('products', data)
+        data?.map((x, i) => {
+          if (i < 6) {
+            setTrendingProducts(current => [...current, x])
+          }
+        })
         setProducts(data)//save this data in redux
       })
   }, [])
-
+  console.log('rtt', trendingProducts)
   //RIPPLE--------------
   function createRipple(event) {
     //add position relative and overflow hidden on whichever element you want this effect
@@ -68,7 +76,7 @@ const ProductCardsCollection = () => {
 
 
 
-
+      {/* ipads,dslr,xbox,drones, */}
 
 
       {/* <!-- Product 1 --> */}
@@ -90,28 +98,6 @@ const ProductCardsCollection = () => {
               <p class="other">inclusive of all taxes</p> */}
                       </div>
                     </div>
-                    {/* 
-          <div class="right">
-            <div class="product_description">
-              <h4>PRODUCT DESCRIPTION</h4>
-              <p>Elevate your style with this classy pair of Casual Shoes from the house of Our brand. Featuring a contemporary refined design with exceptional comfort, this pair is perfect to give your quintessential dressing an upgrade.
-              </p>
-              <p><span class="highlight">Country of Origin -</span>
-                India
-              </p>
-              <p><span class="highlight">Manufactured By -</span>
-                S.K. INTERNATIONAL AJUDD PURAM BAGDA TAHSIL AGRA U.P. <span class="special">282001, 9759860599, sheela.woakers@gmail.com</span>
-              </p>
-              <p><span class="highlight">Packed By -</span>
-                S.K. INTERNATIONAL AJUDD PURAM BAGDA TAHSIL AGRA U.P. <span class="special">282001, 9759860599, sheela.woakers@gmail.com</span>
-              </p>
-              <p><span class="highlight">Commodity -</span> Men's Casual Shoes
-              </p>
-              <p><span class="highlight">Sold By -</span> Next Tree Private Limited
-              </p>
-            </div>
-          </div> */}
-
                   </div>
                 </section>
               </div>
@@ -257,60 +243,58 @@ const ProductCardsCollection = () => {
       {/* XBOX AD */}
 
 
-      
-
-        {/* <spline-viewer class="spline-player"  loading-anim url="https://prod.spline.design/XGRNABqigI-vYLoP/scene.splinecode"></spline-viewer> */}
 
 
+      {/* <spline-viewer class="spline-player"  loading-anim url="https://prod.spline.design/XGRNABqigI-vYLoP/scene.splinecode"></spline-viewer> */}
 
 
-        {/* PRODUCT 4 */}
-        <div className='container gapBtw blackCards'>
-          <h1 style={{ color: "#151515", fontFamily: "monospace" }} className='gapBtw text-center'>Trending Gadgets</h1>
-          <div className='row m0'>
-            <div className='col-12'>
-              <div className='row'>
-                {products?.map((x, i) => {
-                  if (i < 6) {
-                    return (
-                      <div className='col-md-6 col-lg-4'>
-                        <div class="mini-card mdc-elevation--z4" >
-                          <div class="media-image mdc-card__media mdc-card__media--square" style={{ backgroundImage: `url(${x.image[0]})` }}>
-                            <div class="mdc-card__media-content">
-                              <div class="card-info">
-                                <h1>{x.name}</h1>
-                                <Link to={`/product/${x._id}`}>Explore</Link>
-                                <h3>{x.category}</h3>
-                              </div>
-                            </div>
+
+
+      {/* PRODUCT 4 */}
+      <div className='container gapBtw blackCards'>
+        <h1 style={{ color: "#151515", fontFamily: "monospace" }} className='gapBtw text-center'>Trending Gadgets</h1>
+        <div className='row m0'>
+          <div className='col-12'>
+            <div className='row'>
+              {trendingProducts?.map(x => {
+                return (
+                  <div className='col-md-6 col-lg-4'>
+                    <div class="mini-card mdc-elevation--z4" >
+                      <div class="media-image mdc-card__media mdc-card__media--square" style={{ backgroundImage: `url(${x.image[0]})` }}>
+                        <div class="mdc-card__media-content">
+                          <div class="card-info">
+                            <h1>{x.name}</h1>
+                            <Link to={`/product/${x._id}`}>Explore</Link>
+                            <h3>{x.category}</h3>
                           </div>
                         </div>
                       </div>
-                    )
-                  }
-                })}
-              </div>
+                    </div>
+                  </div>
+                )
+              })}
             </div>
           </div>
-          <section className='gapBtw theLine' style={{ width: "80%", height: "1px", background: "#d6d6d6", textAlign: "center" }}></section>
         </div>
-        {/* PRODUCT 4 */}
+        <section className='gapBtw theLine' style={{ width: "80%", height: "1px", background: "#d6d6d6", textAlign: "center" }}></section>
+      </div>
+      {/* PRODUCT 4 */}
 
 
-{/* filler images */}
-        <div className='container bx category-page my-5'>
+      {/* filler images */}
+      <div className='container bx category-page my-5'>
         <div className='row'>
           <div className='col-12'>
             <div className='row'>
               <div className='col-md-6 col-lg-6'>
                 <div className='card2 card h-100'>
                   <div style={{ background: "#fff", height: "100%", minHeight: "275px", objectFit: "cover", display: "grid", placeItems: "center" }}>
-                    <img src={wearables1} className="card-img-top" style={{height:"-webkit-fill-available"}} alt="..." />
+                    <img src={wearables1} className="card-img-top" style={{ height: "-webkit-fill-available" }} alt="..." />
                   </div>
                 </div>
               </div>
               <div className='col-md-6 col-lg-6'>
-                <div className='card2 card h-100'>           
+                <div className='card2 card h-100'>
                   <div style={{ background: "#fff", height: "100%", minHeight: "275px", objectFit: "cover", display: "grid", placeItems: "center" }}>
                     <img src={wearables2} className="card-img-top" alt="..." />
                   </div>
@@ -319,13 +303,13 @@ const ProductCardsCollection = () => {
             </div>
           </div>
         </div>
-        </div>
-{/* filler images */}
+      </div>
+      {/* filler images */}
 
 
 
-        {/* PRODUCT 3 */}
-        {/* <div class="container">
+      {/* PRODUCT 3 */}
+      {/* <div class="container">
 
         <div class="card-3">
           <img src={img1} class="card-img-top" alt="..." />
@@ -343,35 +327,36 @@ const ProductCardsCollection = () => {
         </div>
 
       </div> */}
-        {/* PRODUCT 3 */}
-
- 
+      {/* PRODUCT 3 */}
 
 
 
 
 
 
-        {/* PRODUCT 2 */}
 
-        <div className='container gapBtw blackCards'>
-          <h1 style={{ color: "#151515", fontFamily: "monospace" }} className='gapBtw text-center'>Curated just for YOU</h1>
-          <div className='row m0'>
-            <div className='col-12'>
-              <div className='row'>
-                {products?.map((x, i) => {
-                  if (i < 3) {
-                    return (
-                      <div className='col-md-6 col-lg-4'>
+
+      {/* PRODUCT 2 */}
+
+      <div className='container gapBtw blackCards'>
+        <h1 style={{ color: "#151515", fontFamily: "monospace" }} className='gapBtw text-center'>Curated just for YOU</h1>
+        <div className='row m0'>
+          <div className='col-12'>
+            <div className='row'>
+              {products?.map((x, i) => {
+                let displayProd = ["iphone", "dslr", "xbox"]
+                if (displayProd.includes((x.category).toLowerCase())) {
+                  return (
+                    <div className='col-md-6 col-lg-4'>
                       <div class='cardN' data-category={x.category}>
-                      <img
-                        // src='https://raw.githubusercontent.com/mohammadjarabah/codepen-assets/main/pens/mdwvNJP/images/shoes.png'
-                        // src={headphone1}
-                        src={x.image[0]}
-                        class='card__img' alt='' />
-                      <h2 class='card__title'>{x.name}</h2>
-                      <div class='card__content'>
-                        {/* <div class='card__sizeContainer'>
+                        <img
+                          // src='https://raw.githubusercontent.com/mohammadjarabah/codepen-assets/main/pens/mdwvNJP/images/shoes.png'
+                          // src={headphone1}
+                          src={controller}
+                          class='card__img' alt='' />
+                        <h2 class='card__title'>{x.name}</h2>
+                        <div class='card__content'>
+                          {/* <div class='card__sizeContainer'>
                           <p class='card__sizeTitle'>Size:</p>
                           <span class='card__sizeNumber'>7</span>
                           <span class='card__sizeNumber'>8</span>
@@ -384,30 +369,25 @@ const ProductCardsCollection = () => {
                           <span class='card__colorCircle' style={{ backgroundColor: '#03a9f4' }}></span>
                           <span class='card__colorCircle' style={{ backgroundColor: '#e91e63' }}></span>
                         </div> */}
-                        <div className='card__discount'>
-                          <button className='btn btn-outline-warning text-light'>{x.discount}% discount</button>
+                          <div className='card__discount'>
+                            <button className='btn btn-outline-warning text-light'>{x.discount}% discount</button>
+                          </div>
                         </div>
+                        <a href='/#' class='card__link'>Buy Now</a>
                       </div>
-                      <a href='/#' class='card__link'>Buy Now</a>
                     </div>
-                    </div>
-                    )
-                  }
-                })}
-              </div>
+                  )
+                }
+              })}
             </div>
           </div>
-          <section className='gapBtw theLine' style={{ width: "80%", height: "1px", background: "#d6d6d6", textAlign: "center" }}></section>
         </div>
-
-
-      
-        {/* PRODUCT 2 */}
-
+        <section className='gapBtw theLine' style={{ width: "80%", height: "1px", background: "#d6d6d6", textAlign: "center" }}></section>
+      </div>
 
 
 
-
+      {/* PRODUCT 2 */}
 
 
 
@@ -415,8 +395,13 @@ const ProductCardsCollection = () => {
 
 
 
-        {/* MACINTOX BANNER */}
-        {/* <div class="container gapBtw">
+
+
+
+
+
+      {/* MACINTOX BANNER */}
+      {/* <div class="container gapBtw">
         <div class="page">
           <div class="left">
             <h1>Get yourself a yoga Laptop</h1>
@@ -439,11 +424,11 @@ const ProductCardsCollection = () => {
           </div>
         </div>
       </div> */}
-        {/* MACINTOX BANNER */}
+      {/* MACINTOX BANNER */}
 
 
-        {/* PRODUCT 9 */}
-        {/* <div class="product-card">
+      {/* PRODUCT 9 */}
+      {/* <div class="product-card">
         <div class="badge-pc">New Product</div>
         <div class="product-tumb">
             <img src="https://cdn-icons-png.flaticon.com/512/2806/2806251.png" alt=''/>
@@ -461,55 +446,55 @@ const ProductCardsCollection = () => {
             </div>
         </div>
     </div> */}
-        {/* PRODUCT 9 */}
+      {/* PRODUCT 9 */}
 
 
-        {/* <div>
+      {/* <div>
         Shop by category
       </div> */}
 
-        {/* <SliderComponent/> */}
+      {/* <SliderComponent/> */}
 
 
-        {/* <CategoryStripSlider /> */}
-
-
-
+      {/* <CategoryStripSlider /> */}
 
 
 
 
-        {/* try adding word flip things on all these letters from hyperplexed */}
-        {/* <div className='textclip-container'>
+
+
+
+      {/* try adding word flip things on all these letters from hyperplexed */}
+      {/* <div className='textclip-container'>
         <div className='textClip'>jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd </div>
       </div> */}
 
 
 
-        <div className='text-stroke-container d-none'>
-          <div className='scrolldown slow1'>
-            {Array.from(Array(30).keys()).map(x => {
-              return (<h1 key={x} className='text-stroke-style'>KYGOSKYRUS</h1>)
-            })}
-          </div>
-
-          <div className='scrolldown slow3'>
-            {Array.from(Array(30).keys()).map(x => {
-              return (<h1 key={x} className='te'>KYGOSKYRUS</h1>)
-            })}
-          </div>
-
-          <div className='scrolldown slow2'>
-            {Array.from(Array(30).keys()).map(x => {
-              return (<h1 key={x} className='te'>KYGOSKYRUS</h1>)
-            })}
-          </div>
-
+      <div className='text-stroke-container d-none'>
+        <div className='scrolldown slow1'>
+          {Array.from(Array(30).keys()).map(x => {
+            return (<h1 key={x} className='text-stroke-style'>KYGOSKYRUS</h1>)
+          })}
         </div>
 
+        <div className='scrolldown slow3'>
+          {Array.from(Array(30).keys()).map(x => {
+            return (<h1 key={x} className='te'>KYGOSKYRUS</h1>)
+          })}
+        </div>
 
-      </>
-      )
+        <div className='scrolldown slow2'>
+          {Array.from(Array(30).keys()).map(x => {
+            return (<h1 key={x} className='te'>KYGOSKYRUS</h1>)
+          })}
+        </div>
+
+      </div>
+
+
+    </>
+  )
 }
 
-      export default ProductCardsCollection
+export default ProductCardsCollection

@@ -119,7 +119,7 @@ const firebaseApp = initializeApp(firebaseConfig);
 
         <Routes>
           <Route path="/*" exact element={<TheFront />} />
-          {/* <Route path="/admin/*" exact element={<Admin firebaseApp={firebaseApp} />} /> */}
+          <Route path="/admin/*" exact element={<Admin firebaseApp={firebaseApp} />} />
         </Routes>
 
 

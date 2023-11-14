@@ -402,6 +402,10 @@ img {
   border-radius: 8px;
   border: 1px solid grey;
 }
+.nav-item input[type="search"]:focus-visible {
+  border: 2px solid #ffc107;
+  outline: none;
+}
 .nav-item i {
   position: absolute;
   top: 37%;

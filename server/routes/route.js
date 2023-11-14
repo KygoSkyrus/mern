@@ -33,10 +33,14 @@ const authenticateToken = (req, res, next) => {
     next();
 };
 
-const authenticateUser = (req, res, next) => {
+const authenticateUser = async (req, res, next) => {
     const token = req.cookies.jwt;
     if (!token)
         return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
+
+    //this is for verifyng user and storing the user in request so the controlleer function dont have to access that from db again
+    const { _id } = jwt.verify(token, process.env.SECRETKEY);
+    req.user = await USER.findOne({ _id })
     next();
 };
 
@@ -49,6 +53,7 @@ router.get('/api/getUserInfo', authenticateUser, async (req, res) => {
     // console.log(new Date(Date.now() + 3600000))
     try {
         const decoded = jwt.verify(token, process.env.SECRETKEY);
+        const { _id } = jwt.verify(token, process.env.SECRETKEY);
         // Check if the token is expired
 
         //populating with regular populate which can cause performnace overhead
@@ -171,6 +176,7 @@ router.post('/api/updatedaddress', authenticateUser, async (req, res) => {
         console.log('eueuue', address)
         const decoded = jwt.verify(token, process.env.SECRETKEY);
 
+        //this part can also be move to middleware
         const user = await USER.findById(decoded._id);
         if (!user) {
             return res.status(404).json({ message: 'User not found.' });
@@ -201,7 +207,7 @@ router.post('/api/updatedaddress', authenticateUser, async (req, res) => {
 
 
 /*********************************** CART ***********************************/
-router.post('/api/addtocart',authenticateUser, async (req, res) => {
+router.post('/api/addtocart', authenticateUser, async (req, res) => {
     const token = req.cookies.jwt;
 
     try {
@@ -240,9 +246,9 @@ router.post('/api/addtocart',authenticateUser, async (req, res) => {
         res.status(500).json({ message: 'Internal server error.' });
     }
 })
-router.post('/api/updatecart',authenticateUser, async (req, res) => {
+router.post('/api/updatecart', authenticateUser, async (req, res) => {
     const token = req.cookies.jwt;
-  
+
     try {
         const cartItems = req.body;
         const decoded = jwt.verify(token, process.env.SECRETKEY);
@@ -303,7 +309,7 @@ router.post('/api/updatecart',authenticateUser, async (req, res) => {
     }
 })
 //remove from cart
-router.post('/api/removefromcart',authenticateUser, async (req, res) => {
+router.post('/api/removefromcart', authenticateUser, async (req, res) => {
     const token = req.cookies.jwt;
 
     try {
@@ -329,7 +335,7 @@ router.post('/api/removefromcart',authenticateUser, async (req, res) => {
     }
 });
 //get cart items
-router.get('/api/getcartitems',authenticateUser, async (req, res) => {
+router.get('/api/getcartitems', authenticateUser, async (req, res) => {
     const token = req.cookies.jwt;
     //thi is common for most user actions ,so create a middleware function instead
     try {
@@ -356,7 +362,7 @@ router.get('/api/getcartitems',authenticateUser, async (req, res) => {
 
 /*********************************** WISHLIST ***********************************/
 //adding and removing from wishlist
-router.post('/api/updatewishlist',authenticateUser, async (req, res) => {
+router.post('/api/updatewishlist', authenticateUser, async (req, res) => {
     const token = req.cookies.jwt;
     try {
         const { productId } = req.body;
@@ -403,7 +409,7 @@ router.post('/api/updatewishlist',authenticateUser, async (req, res) => {
     }
 })
 //remove from cart
-router.post('/api/movetowishlist',authenticateUser, async (req, res) => {
+router.post('/api/movetowishlist', authenticateUser, async (req, res) => {
     //this is mostly same as removefromcart just the adding to wishlist part
     const token = req.cookies.jwt;
     try {
@@ -431,10 +437,10 @@ router.post('/api/movetowishlist',authenticateUser, async (req, res) => {
     }
 });
 //get wishlist items
-router.post('/api/getwishlistitems',authenticateUser, async (req, res) => {
+router.post('/api/getwishlistitems', authenticateUser, async (req, res) => {
     const token = req.cookies.jwt;//the ids should be reterived from here and then the products should be queried/ ids are hefre bcz the wishlist array is being populated for every refresh just like cart  
     const { ids } = req.body
-   
+
     try {
         const items = await PRODUCT.find({ _id: { $in: ids } });
         console.log('uuu', items)
@@ -456,7 +462,7 @@ router.post('/api/getwishlistitems',authenticateUser, async (req, res) => {
 
 //card for failing : 4000 0000 0000 0119
 //IF the stirpe accont is activated than there may be a way to send invoice to user
-router.post('/create-checkout-session',authenticateUser, async (req, res) => {
+router.post('/create-checkout-session', authenticateUser, async (req, res) => {
 
 
     let line_items = []
@@ -749,7 +755,7 @@ router.get('/api/getcheckoutsession', async (req, res) => {
 
 
 /*********************************** ORDERS ***********************************/
-router.get('/api/getorders',authenticateUser, async (req, res) => {
+router.get('/api/getorders', authenticateUser, async (req, res) => {
 
     const { orderId } = req.query
     const token = req.cookies.jwt;
@@ -781,7 +787,7 @@ router.get('/api/getorders',authenticateUser, async (req, res) => {
 //authenticate admin account too
 router.get('/api/admin/getorders', async (req, res) => {
     //this will get orders of all the users and not only one loggged in user
-     //also chekc irst if the account accessing this route is admin only
+    //also chekc irst if the account accessing this route is admin only
     // const { orderId } = req.query
     const token = req.cookies.jwt;
 

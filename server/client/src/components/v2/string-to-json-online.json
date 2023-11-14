@@ -1,0 +1,829 @@
+[
+    {
+        "_id": "64c68fbe2dd4e9cac1dcf1d7",
+        "name": "Apple iPhone 13 (128GB) - Green",
+        "price": 69989,
+        "description": "Advanced dual-camera system with 12MP Wide and Ultra Wide cameras; --Photographic Styles, Smart HDR 4, Night mode, 4K Dolby Vision HDR recording--\n12MP TrueDepth front camera with Night mode, 4K Dolby Vision HDR recording--\nA15 Bionic chip for lightning-fast performance--15 cm (6.1-inch) Super Retina XDR display",
+        "category": "smartphones",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F2c1509ff-8f38-413c-9a83-7549cf87ce7f?alt=media&token=ac29f51b-2a62-4e6b-aece-942900dde95b",
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F3f1ccb0e-1965-4ac9-870a-1b93d4a82c2e?alt=media&token=0e605c7e-683c-4f50-be14-67f55cddda47"
+        ],
+        "stock": 60,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0,
+        "discount": 30
+    },
+    {
+        "_id": "64c698900ef6832aa59e93bb",
+        "name": "Apple 2023 MacBook Air Laptop M1 chip",
+        "price": 90000,
+        "description": "All-Day Battery Life – Go longer than ever with up to 18 hours of battery life--13.3-inch/33.74 cm Retina Display--8GB RAM, 256GB SSD Storage-- Backlit Keyboard-- FaceTime HD Camera, Touch ID -- Space Grey",
+        "category": "laptops",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F7ba318cc-06fb-4940-962b-c1892738b40f?alt=media&token=fa8e4769-758c-4758-ab56-579ba1be8128",
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F29c2c8b7-b55d-47da-9bd2-1c1ecf877ef1?alt=media&token=449ff315-63b2-44ff-9c2e-0355a076ea80"
+        ],
+        "stock": 10,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0,
+        "discount": 50
+    },
+    {
+        "discount": 0,
+        "_id": "64c699660ef6832aa59e93c0",
+        "name": "ASUS Vivobook Pro 15",
+        "price": 72599,
+        "description": "15.6\" (39.62 cm) FHD, Thin & Light Laptop --16GB/512GB SSD/4GB --NVIDIA GeForce RTX 3050/Windows 11/Office 2021-- Backlit/Fingerprint/Blue/1.80 kg",
+        "category": "laptops",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2Fc8436008-56b0-42a1-aeda-9c7f6f2c0378?alt=media&token=8356f54e-af74-40eb-977b-cd6f67083656",
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2Ffd3d885a-fdd7-4901-a0c8-73b6e8b7b1b1?alt=media&token=c8b285e0-3723-4678-b3ec-20a96a9485d8"
+        ],
+        "stock": 33,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c69a410ef6832aa59e93c3",
+        "name": "Apple 2022 10.9-inch iPad (Wi-Fi, 64GB) - Blue (10th Generation)",
+        "price": 49999,
+        "description": "Striking 10.9-inch Liquid Retina display with True Tone--\nA14 Bionic chip with 6-core CPU and 4-core GPU--\n12MP Wide back camera--\nLandscape 12MP Ultra Wide front camera with Center Stage--\nTouch ID for secure authentication and Apple Pay",
+        "category": "iPads",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F70d3077d-b241-4f90-8e8e-2f8422794f55?alt=media&token=0116cff6-67e8-4f21-8334-fad221cba109",
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2Fec69703b-4d79-47de-be95-fea9cceb60ec?alt=media&token=022c7ba3-92d0-4bea-9c33-7d23d0b2e4ee"
+        ],
+        "stock": 10,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c69c00c8b5667ef02f36c2",
+        "name": "Lenovo Tab P11 Plus Tablet",
+        "price": 30000,
+        "description": "11 inch 2K (2000*1200) Display Type - 2K, FHD, IPS; Screen Refresh - 60Hz--6 GB RAM| 128 GB ROM expandable upto 256 GB-- Mediatek Helio G90T octa core processor; Operating system - Android 11 OS-- 7700 mAH battery| 15 hours playback time--1 year warranty; Included Components - Lenovo Tab P11 Plus, 10V/2A charging adapter, USB Type-C charging cable",
+        "category": "tablets",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F60bbd791-8ed7-4808-b732-9075b77a3bac?alt=media&token=c619c9ba-0bfe-457f-ae40-978c481e6dea"
+        ],
+        "stock": 28,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c69d66c8b5667ef02f36c5",
+        "name": "Redmi A2 (Sea Green, 2GB RAM, 32GB Storage)",
+        "price": 6000,
+        "description": "Processor: High performance MediaTek Helio G36,upto 2.2GHz; | Upto 4GB RAM including 2GB Virtual RAM | 32GB Storage--\nDisplay: Large 16.5 cm HD+ display with Scratch resistant glass | 400nits peak brightness | 120Hz Touch sampling Rate--\nCamera: 8MP Dual camera with Portrait mode | 5MP Front camera\n5000mAh(typ) battery with 10W charger in-box--\nExpandable Storage to upto 1TB with Dedicated MicroSD card Slot | Dual SIM (nano+nano) dual standby (4G+4G)",
+        "category": "smartphones",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2Fc0dfeda0-f36d-4c4c-8fd0-74e94220e570?alt=media&token=fa8691b3-9d53-45a8-aced-2f92c435a379",
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F8ed93095-7b3d-47c5-81cf-61a628866d97?alt=media&token=655cd222-aea1-4d3b-92a8-a101116ef6cc"
+        ],
+        "stock": 54,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c6a175c8b5667ef02f36cc",
+        "name": "OnePlus Nord 3 5G ",
+        "price": 40000,
+        "description": "6.74 Inches; 120 Hz AMOLED FHD+ Display with Corning Gorilla Glass Victus; Resolution: 2772 X 1240 pixels; HDR 10+, sRGB, 10-bit Color Depth, PWM + DC dimming--\nOxygenOS based on Android 13.1--\nMediaTek Dimensity 9000 Chipset (Based 4nm Architecture)--8 GB + 128 GB | 16 GB + 256 GB; LPDDR5X RAM, UFS 3.1--\n5000 mAh with 80W SUPERVOOC Fast-charging",
+        "category": "smartphones",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2Fef698c14-8389-478d-b63f-c3a23cbd8635?alt=media&token=9002518a-f1d4-40b3-88b3-e94dc7581151"
+        ],
+        "stock": 17,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c6a234c8b5667ef02f36cf",
+        "name": "Sony WH-CH520, Wireless On-Ear Bluetooth Headphones with Mic",
+        "price": 6000,
+        "description": "With up to 50-hour battery life and quick charging, you’ll have enough power for multi-day road trips and long festival weekends.--\nGreat sound quality customizable to your music preference with EQ Custom on the Sony | Headphones Connect App.--\nBoost the quality of compressed music files and enjoy streaming music with high quality sound through DSEE.--\nDesigned to be lightweight and comfortable for all-day use.--\nCrystal clear hands-free calling with built-in mic.",
+        "category": "headphones",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F8175b06d-714e-46be-8b0f-4e704acf8a31?alt=media&token=6f19ac90-41e2-4e7d-b935-14dbfaf2e4e0",
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2Fb8d22402-9863-4083-bf2c-f5f9d72156f2?alt=media&token=f88ff977-2c76-4877-82e9-caeddcd5e353"
+        ],
+        "stock": 60,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c6a2d2c8b5667ef02f36d2",
+        "name": "Trinity headphones",
+        "price": 2599,
+        "description": "Up to 30-hour battery life and quick charging--\nGreat sound quality customizable to your music preference--\nBoost the quality of compressed music files --\nDesigned to be lightweight and comfortable for all-day use.--\nCrystal clear hands-free calling with built-in mic.--",
+        "category": "headphones",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F488f6670-44cb-4a15-8a9e-e74a4ce5b94c?alt=media&token=a4b3c493-2e10-4599-9c67-e5aae65e6351"
+        ],
+        "stock": 33,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c6a38ac8b5667ef02f36d5",
+        "name": "Trinity True wireless in-ear Earbuds x3567",
+        "price": 1999,
+        "description": "60 hours of total playtime--\n10 mins charge = 100 mins playtime. --\nLightning Boult Type-C fast charging makes this possible, getting your buds ready in no time.--\nLow latency gaming – Have an uninterrupted gaming experience with no lags",
+        "category": "earphones",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F2cd31bd5-f5cd-47d8-a52f-cdc261a5ae7b?alt=media&token=84bddc83-406e-41ff-8870-d727b7e1ce49",
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2Ff5681caa-1dd6-4632-a20d-f0686c3051c9?alt=media&token=e33bc301-9d00-468c-9bfb-958b2497760a"
+        ],
+        "stock": 43,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c6a497c8b5667ef02f36d8",
+        "name": "Digi GoCAM 35 H series ",
+        "price": 15899,
+        "description": "Comes with dual Touch screens feature.--\n You can capture selfies in any extreme environment with an intuitive 2″ LCD at back and a 1.3″ at front.--\nWater resistant to depth of up to 30 meters to meet most of the underwater sports records--With 128GB U3 Class+ 10 memory card(not included) for Capture crisp, pro-quality photos with 24MP interpolated to 48MP clarity.",
+        "category": "DSLR",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F055f840b-cda5-4d6f-8c6c-aa2803c5ac8c?alt=media&token=3e372309-c62a-4806-a490-c5f62223f842",
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F81402cff-877c-4e94-83ed-98b5c09d81e3?alt=media&token=f223778f-5053-4a52-86af-4717a76c1457",
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F2af59e46-75d6-4b4b-b7b5-8253a0c26588?alt=media&token=e4fc54e5-b3f2-4b9a-8ce3-de28cbc98839"
+        ],
+        "stock": 46,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c6a587c8b5667ef02f36da",
+        "name": "GoGear Pro Wireless Gamepad with 2.4GHz Wireless Technology",
+        "price": 1999,
+        "description": "Gamepad comes equipped with2.4GHz wireless technology and supports up to 10 metres range, an ideal choice for those looking to enjoy your favourite games without the hassle of cables and wires.--\nThe built-in lithium-ion battery in the gamepad can provide uninterrupted gameplay for up to 2 hours in a single charge for upto 30-minute--\nIntegrated dual intensity motor which allows a realistic gaming experience.",
+        "category": "controllers",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F4197b840-7daa-47d3-821f-f68500466cd4?alt=media&token=ad4fc680-13d3-431c-8fe5-1579de4441c2"
+        ],
+        "stock": 51,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c6a642c8b5667ef02f36dc",
+        "name": "Blue-Horn Smart Tank 529 All-in-one Colour Printer",
+        "price": 8999,
+        "description": "OS Compatibility: Windows 11; Windows 10; Windows 7--\nMaximum Print Speed (color): 5 ppm, Maximum Print Speed (Monochrome)--\nCompact Design, Guided Setup, Smart Guided Control Panel & Low on Ink Sensing--\nGet up to 6,000 black and 6,000 colour pages in the Box.",
+        "category": "printers",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2Fbe99951d-6c1d-4aaf-b21e-72dc8f3121dd?alt=media&token=4b4d7e74-be7b-42e0-a5e5-8b77160ebc50"
+        ],
+        "stock": 16,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c6a727c8b5667ef02f36de",
+        "name": "Victrola VBB-25-SLV Mini Bluetooth Boombox",
+        "price": 12299,
+        "description": "Wireless Bluetooth Connectivity--\nAm/FM radio with analog tuner--\nUsb port for MP3 playback--\nHeadphone jack--\nAc plug or battery operated",
+        "category": "home audio",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F238de7a0-c7fd-4d1c-9c11-8dfb92a1ed57?alt=media&token=6eda3629-2c17-4f11-81ba-bca4c8ec5046"
+        ],
+        "stock": 174,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c6a7bec8b5667ef02f36e1",
+        "name": "Trinity Phoenix Smart Watch with Bluetooth Calling ",
+        "price": 6729,
+        "description": "Comes with a 1.3\" TFT Color Full Touch Screen and a 240*240 Pixel High Resolution--The watch will work on a single charge for about 7 days--Notifcations from all social media channels (Instagram, Whatsapp, Facebook), Call Notifications, Health Tracking (SpO2, Heart Rate, Sleep), Sports Tracking & many more",
+        "category": "smartwatch",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F1620cb81-0603-4b41-b2d5-2500bf3cdff2?alt=media&token=bab9e14a-a177-4753-89ae-7a668caeb196"
+        ],
+        "stock": 44,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c74a1310ceb052b95b037b",
+        "name": "EXO Fitness Band M2835",
+        "price": 4500,
+        "description": "The watch needs to be charged for 2 hours to reach 100%--. The charger should be a 3.7V to 5V adapter or any laptop output. -- Track every trek you take or every football, cricket kabaddi match you play. --With over 100 sports modes Fire-Boltt Ninja Call Pro Plus has you covered.",
+        "category": "smart band",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F3330e7d6-b35a-47d0-84fd-c553637a1f8d?alt=media&token=d81e81ad-0bce-4ad1-91f2-a50f446f52e8"
+        ],
+        "stock": 13,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c74b6010ceb052b95b037e",
+        "name": "Globex M77 All-in-one Computer",
+        "price": 59100,
+        "description": "12th Gen Intel i3 27\" FHD IPS 3-Side Edgeless --All-in-One Desktop with Alexa Built-in --8GB/512GB SSD, Win11, MS Office 2021, --5.0MP Camera, Wireless Keyboard & Mouse",
+        "category": "desktop computers",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F69333c2f-bb4f-40ed-8846-b332e802caa0?alt=media&token=71fe7679-76c4-4fa8-b5e6-cd7a1f8ecff0"
+        ],
+        "stock": 36,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c74d3c10ceb052b95b0380",
+        "name": "Dynamic 32 M-series TV",
+        "price": 12600,
+        "description": "Full HD (1920 x 1080) Resolution | Refresh Rate : 60 Hertz | 178 Degree wide viewing angle--\n--Dual Band Wi-Fi | 2 HDMI ports to connect latest gaming consoles, set top box-- Blu-ray Players | 2 USB ports to connect hard drives and other USB devices | ALLM | ARC | Bluetooth 5.0 | Ethernet\n-- 24 Watts Output | Dolby Audio, DTS:X, DTS Virtual: X",
+        "category": "televisions",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F7f3a686b-bc78-4a74-88f3-b6e228bb7dbe?alt=media&token=ba3a2ae7-0094-4405-98f4-c1eb843d4601"
+        ],
+        "stock": 120,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c7500110ceb052b95b0383",
+        "name": "mBall Wired USB Gaming Mouse",
+        "price": 300,
+        "description": "Tact switch, DPI, Scroll wheel Switch life - 3 million clicks--Breathing LED light --Up to 3600 DPI tracking --Rubber soft surface grip --Ergonomic Design --Works on most surfaces --Hand orientation",
+        "category": "mouse",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2Fa3f70437-0607-40ca-8757-787c0f6c6e69?alt=media&token=6b00b143-b636-4af0-85f6-4435243eef02"
+        ],
+        "stock": 0,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c7512b10ceb052b95b0386",
+        "name": "IdeaTek i5 CPU",
+        "price": 49999,
+        "description": "Core i5 - 3320 (3.3 Ghz) (4 Cores, 6MB SmartCache) With H61 m2 (2th Generation) --8GB DDR3 RAM (2x4) With 1000 GB HDD--6 USB 2.0, at Front : 2 USB2.0, with VGA and HDMI Montior Port,-- 1 RJ45 Ethernet Port 10/100 Mbps, 1 Audio Jack (3-1).",
+        "category": "computer processors",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F02c8c4e1-d199-44ef-9aae-1f993182945f?alt=media&token=b98b0ea8-9b4e-4599-b954-4a81ee70c8f7"
+        ],
+        "stock": 33,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c7527610ceb052b95b0388",
+        "name": "BreakBass sDQ3100 speakers",
+        "price": 14699,
+        "description": "10W Bluetooth Speaker with Upto 7 Hours Playback--IPX5 and Integrated Controls (Black)--Its integrated controls allow for an easy user interface, ensuring that nothing stands between you and your favourite music\n--It offers dual connectivity via its Bluetooth v5.0 and AUX",
+        "category": "bluetooth speakers",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F121d113b-40e1-42cc-86e0-c21fc5e9ec67?alt=media&token=9f7ff8de-6835-4f4f-8676-3257985641e6"
+        ],
+        "stock": 23,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c7542710ceb052b95b038f",
+        "name": "Trinity x3 Fitness Tracker",
+        "price": 6500,
+        "description": "Comes with a 1.3\" TFT Color Full Touch Screen and a 240*240 Pixel High Resolution--The watch will work on a single charge for about 7 days--Notifcations from all social media channels (Instagram, Whatsapp, Facebook), Call Notifications, Health Tracking (SpO2, Heart Rate, Sleep), Sports Tracking & many more",
+        "category": "fitness trackers",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F9f0011f2-5f35-4785-88c4-6a116570b1ad?alt=media&token=b871999d-6938-4190-9aac-5b0dbcbfad80"
+        ],
+        "stock": 22,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c7552e10ceb052b95b0395",
+        "name": "BlueHorn Yoga laptop 180 deg foldable",
+        "price": 48000,
+        "description": "15.6\" (39.62 cm) FHD, Thin & Light Laptop --16GB/512GB SSD/4GB --NVIDIA GeForce RTX 3050/Windows 11/Office 2021-- Backlit/Fingerprint/Blue/1.80 kg",
+        "category": "laptops",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F091e4537-1c23-4343-bacc-1850f0969fe2?alt=media&token=744be687-5628-4212-9ae4-fa2821758ef1",
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2Fb7772ddd-894b-4dec-93e7-15f827e930ad?alt=media&token=054d1088-bd69-42bb-8194-b0adb507ae90"
+        ],
+        "stock": 34,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c7562910ceb052b95b0399",
+        "name": "Phoenix VR headsets z78H32",
+        "price": 5900,
+        "description": "VR Headsets for iPhone/Android--3D VR Glasses for TV, Movies & Video Games---VR Goggles Compatible with iOS, Android Phones (VR V-05 (VV))",
+        "category": "VR headsets",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F9466914a-a2b4-4b89-8e14-f28568d86dad?alt=media&token=b1a14b49-5c9b-464b-9fb0-e08bedda4af4",
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2Fe9f5f912-1834-4458-bffc-c7e03ffe35fd?alt=media&token=d2ff2c2d-f807-4c60-8733-9f57d01c27e5"
+        ],
+        "stock": 343,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c7574710ceb052b95b039c",
+        "name": "GoGear light Headphones",
+        "price": 4400,
+        "description": "With up to 50-hour battery life and quick charging, you’ll have enough power for multi-day road trips and long festival weekends.--\nGreat sound quality customizable to your music preference with EQ Custom on the Sony | Headphones Connect App.--\nBoost the quality of compressed music files and enjoy streaming music with high quality sound through DSEE.--\nDesigned to be lightweight and comfortable for all-day use.--\nCrystal clear hands-free calling with built-in mic.",
+        "category": "headphones",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F1530918c-44be-4b96-b3c6-8f9463d18d1c?alt=media&token=71e39e37-9ab0-4789-8581-9f99f24e2dd3"
+        ],
+        "stock": 28,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c757f810ceb052b95b039e",
+        "name": "EXO MP3 Player",
+        "price": 45899,
+        "description": "Upto 7 hours back and 36 hours on standby-- easy to carry, loghtweight compact design",
+        "category": "mp3 player",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F9df80e24-9a2f-4679-b74f-950e07eff5de?alt=media&token=e11a41d4-e680-4648-84af-a01537b34f43"
+        ],
+        "stock": 56,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c7588710ceb052b95b03a1",
+        "name": "Digi Camcorder Q36F73",
+        "price": 7899,
+        "description": "You can capture images in any extreme environment with an intuitive 2″ LCD at back and a 1.3″ at front.--\nWater resistant to depth of up to 30 meters to meet most of the underwater sports records--With 128GB U3 Class+ 10 memory card(not included) for Capture crisp, pro-quality photos with 24MP interpolated to 48MP clarity.",
+        "category": "camcorder",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F58273e5a-c80b-4d93-be79-b2e320fcaf11?alt=media&token=f7fc409f-839d-45ad-89f2-20f344d1e334"
+        ],
+        "stock": 33,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c75a5310ceb052b95b03ae",
+        "name": "KS 64GB Pendrive ",
+        "price": 899,
+        "description": "The 2-in-1 flash drive with a reversible USB Type-C and a traditional Type-A connector.--\nSeamlessly move content between your USB Type-C smartphone, tablets and Macs and USB Type-A computers.--\nFree up space on your USB Type-C smartphone so you can take more photos.",
+        "category": "pendrive",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F957789a7-bb41-4aea-ab65-bc061fed4418?alt=media&token=112d5dc4-2893-440d-b406-3e4b2cd2a339"
+        ],
+        "stock": 344,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c9e48a9512ccd6d6ac28b8",
+        "name": "Xbox One",
+        "price": 5500,
+        "description": "Experience next-gen speed and performance with the Xbox velocity architecture, powered by a custom SSD and integrated software--\nPlay thousands of games from four generations of Xbox with backward compatibility, including optimized titles at launch--\nXbox game Pass ultimate includes over 100 high-quality games, online multiplayer, and an EA play membership for one low monthly price--",
+        "category": "xbox",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F7e6d50eb-9323-46af-bb0e-d4e77a0c5d51?alt=media&token=68e6b5b4-d039-4161-8dcc-2b61ec9dd169"
+        ],
+        "stock": 45,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c9e55d9512ccd6d6ac28bb",
+        "name": "Playstation PS5",
+        "price": 52000,
+        "description": "Experience next-gen speed and performance with the Xbox velocity architecture, powered by a custom SSD and integrated software--\nPlay thousands of games from four generations of Xbox with backward compatibility, including optimized titles at launch--\nXbox game Pass ultimate includes over 100 high-quality games, online multiplayer, and an EA play membership for one low monthly price",
+        "category": "playstation",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F5a77f84a-f8fa-48eb-80f6-ca9a05361da5?alt=media&token=33a97326-9306-46b6-88d4-1fe7addbb216"
+        ],
+        "stock": 33,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c9e8a38f6af900849dfb93",
+        "name": "Sky 65 Drone ",
+        "price": 13999,
+        "description": "UPGRADED 20MP 4K CMOS 1/3.06\" Camera with 4X zoom and steady 3-AXIS GIMBAL to take cinematic videos and explore new perspectives.--\nFPV ENHANCED 5KM HD RANGE - Enjoy visually immersive aerial moments with FPV feature providing stunning real-time UHD image transmission up to 5km away.--\n70-MIN FLIGHT TIME WITH POWER PACK BATTERIES - Enjoy flight time of 70 minutes for uninterrupted aerial adventures",
+        "category": "drones",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2Fb3758d1e-43ff-47e1-8cfe-1aab7f8e5c0c?alt=media&token=86bda328-05bb-4d86-9a46-d85bedd23fe7"
+        ],
+        "stock": 4,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c9e9dd8f6af900849dfb97",
+        "name": "Router EX2300-24MP ",
+        "price": 3000,
+        "description": "With one gigabit WAN port and three gigabit LAN ports, speeds can be up to 10x faster than standard Ethernet connections. Comes with a 0.75M Ethernet Cable.--\nTransform your existing wired network to a wireless one with Access Point (AP) Mode",
+        "category": "routers",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2Ff828f7b6-95c9-4a7b-a41c-8a67b3413b2f?alt=media&token=c3c2586b-7cef-4901-b193-2b6613104cb3"
+        ],
+        "stock": 33,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c9eb918f6af900849dfb9b",
+        "name": "Sky Modem 140 mbps ",
+        "price": 3589,
+        "description": "With one gigabit WAN port and three gigabit LAN ports, speeds can be up to 10x faster than standard Ethernet connections. Comes with a 0.75M Ethernet Cable.--\nAccess Point Mode: Transform your existing wired network to a wireless one with Access Point (AP) Mode",
+        "category": "modems",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2Fd3fd6bd7-040d-43c5-a36b-9259df39fb39?alt=media&token=b176cb87-891c-4f91-b51d-075223ab121b"
+        ],
+        "stock": 34,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c9ec598f6af900849dfb9f",
+        "name": "MI Power bank 3i 16000 mAH",
+        "price": 4000,
+        "description": "20000mAh Lithium Polymer battery--\n18W Fast Charging--\nTriple port output--\nDual input port (Micro-USB/USB-C, Charging Time : 6.9 hours--\nPower Delivery--\nAdvanced 12 Layer chip protection",
+        "category": "power bank",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2Fb2dac89e-377e-4a65-b3ca-75de30f16ddc?alt=media&token=015fa5e0-eaea-488b-a2f1-0a45a2482beb"
+        ],
+        "stock": 51,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64c9ee5f8f6af900849dfba3",
+        "name": "Electro Projector D-series",
+        "price": 10000,
+        "description": "Connectivity: 2 x HDMI to connect TV (Set Top Box), Fire TV Stick, PC/ Laptop, DVD, Play Station | USB to connect hard drives and other USB devices | VGA | AV | Audio Out | SD Card--\nSound: 3 watt Built in Harmonized Frequency Speaker | 3.5 mm Audio Out Jack--\nSpecial feature: Dedicated Keystone knob (For Perfect Screen alignment) | 5x AR coated Glass lens | Digital Zoom In & Zoom Out |",
+        "category": "projectors",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F248f77e3-806a-4595-a490-e21516431090?alt=media&token=fa285810-a104-4f2f-9f62-1b80f5181d9e"
+        ],
+        "stock": 7,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64ca24ce8f6af900849dfbaa",
+        "name": "Godrej 670 L Multi Door, Triple Zones with Convertible Mode, ",
+        "price": 89000,
+        "description": "Frost Free Refrigerator : Auto defrost function to prevent ice-build up--\nCapacity 670 L : Suitable for families with 5 or more members--\n Fresh food capacity : 422 L | Freezer capacity : 125 L | shelves : 2 | Shelf type : Toughened glass shelf | Vegetable Storage Space : 27 L",
+        "category": "refrigerator",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F8de12037-9cb0-4e29-9fed-f4cfadd9ac30?alt=media&token=6acf98cf-dd79-4efd-af26-860e31843951"
+        ],
+        "stock": 7,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64ca25468f6af900849dfbae",
+        "name": "Samsung 7 kg Fully-Automatic Top Loading Washing Machine",
+        "price": 17999,
+        "description": "Fully-automatic top load washing machine: Affordable with great wash quality, Easy to use--\nCapacity 7 Kg: Suitable For Families With 3 To 4 Members--\nWash Programs: Normal, Quick Wash, Soak+Normal | Delicates | Eco Tub Clean | Energy Saving | 6",
+        "category": "washing machine",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2Fe1a53cbb-9743-4939-9fef-91d99282a2ae?alt=media&token=cc0da3be-eb6b-4c05-8591-0ff822f33d2e"
+        ],
+        "stock": 14,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64ca25ac8f6af900849dfbb2",
+        "name": "Globex 700W smart solo Microwave oven ",
+        "price": 5000,
+        "description": "Convection Microwave: For baking along with grilling, reheating, defrosting and cooking. With 800 W of power cook faster and healthier.--\nCapacity: 19 L, Suitable for small families / singles & couples",
+        "category": "microwave",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2Ff1b65308-8318-43b5-a098-9e9c48e9cdbb?alt=media&token=5d9a85ff-dcf1-4578-a750-2ed7e8772b9e"
+        ],
+        "stock": 30,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64ca5a0a953bcfba730dc08e",
+        "name": "Lloyd 1.5 Ton 3 Star Inverter Split AC",
+        "price": 35000,
+        "description": "Capacity: 1.5 ton suitable for medium size rooms up to 160 square feet--\nEnergy Rating: 3 Star, Annual Energy Consumption: 911.00, ISEER Value: 4.04, please refer to energy label on the product page",
+        "category": "air conditioner",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2Fe701436c-f136-442a-820c-ccc9f4ecf58f?alt=media&token=5150c771-6a31-49ec-87e7-fcb620190aa9"
+        ],
+        "stock": 3,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64ca5b8f953bcfba730dc092",
+        "name": "Gibson 'n' Meyers Room heater",
+        "price": 9999,
+        "description": "25 Watts 11 Fin Oil Filled Radiator for Noiseless Full Room Comfort During Winters--\nCustomized to your heating needs with an adjustable thermostat to maintain desired room temperature--\nFeaturing safety tilt & an auto thermal shutoff to prevent overheating.",
+        "category": "heaters",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F32eac3ec-9f6c-45e7-aba0-eefd428b7ff0?alt=media&token=19172d96-7d94-4281-977b-a13018e33f1f"
+        ],
+        "stock": 34,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64ca5cc0953bcfba730dc096",
+        "name": "Ubuntu Linux Desktop 22.04 Official 64-bit",
+        "price": 300,
+        "description": "This is the full OFFICIAL RELEASE Ubuntu 20.04.1 LTS (Focal Fossa) Ubuntu, for desktop PCs and laptops. LTS stands for long-term support — which means five years, until April 2025, of free security and maintenance updates, guaranteed.--\nUbuntu is the most popular Linux in the world, Contains a massive array of software - office applications, browser, email, image editing and more.",
+        "category": "operating system",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2Ff1577bb6-a246-4973-9cae-3fc0a4485b14?alt=media&token=108ec33a-9260-415b-958e-50142b079360"
+        ],
+        "stock": 8,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64ca5d7a953bcfba730dc09a",
+        "name": "McAfee Total Protection Antivirus 2023 ",
+        "price": 1500,
+        "description": "SYSTEM REQUIREMENT: Microsoft Windows 11, 10, 8.1 fully patched (32- and 64-bit) --Build 4.11.1 or higher: macOS 10.15 and above--Build 4.9.1: macOS 10.12 - 10.14 -- Google Android smartphones and tablets 7 or higher --Apple iOS 13 or later",
+        "category": "antivirus",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2Fb554934d-37f8-4a53-860a-d13d124a5654?alt=media&token=dd0a87d5-46b9-4aa9-b09d-88ec660cd0f0"
+        ],
+        "stock": 50,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64ca5e01953bcfba730dc09e",
+        "name": "Microsoft 365 Personal MS-Office",
+        "price": 5000,
+        "description": "Premium versions of Word, Excel, PowerPoint, and Outlook--\n1 TB OneDrive cloud storage to back up files and photos--\nWorks on Windows, macOS, iOS, and Android (iOS and Android require separate app installation)--\nAdvance security for email and files",
+        "category": "MS office",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2Fff117ca6-ffe7-48f7-b9f7-12a74d44eb56?alt=media&token=01f59863-a339-4b70-b2dc-16b09b6eb6ce"
+        ],
+        "stock": 80,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64ca5fc0953bcfba730dc0a2",
+        "name": "Cerberus GeForce GTX 1050 4GB Gaming Graphics Card ",
+        "price": 1500,
+        "description": "1455 MHz Boost Clock in OC mode for outstanding performance and gaming experience.--\nExtensively tested with the latest chart-topping game titles like League of Legends, Overwatch and PlayerUnknown€s Battlegrounds.--\nA strong backplate reinforces the circuit board and is a striking outward mark of Cerberus€s role as a powerful guardian.",
+        "category": "graphics cards",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2Fe402f412-dc64-4f48-a25d-8f77d41ebe47?alt=media&token=cca08095-ccec-43db-81a9-4e59c0886501"
+        ],
+        "stock": 70,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64ca617c953bcfba730dc0a6",
+        "name": "Crucial Pro RAM 64GB Kit (2x32GB) DDR4 ",
+        "price": 19999,
+        "description": "Plug-and-play high performance. Downclock capable for systems that only support 3000MT/s or 2666MT/s.--\nUniversal compatibility. Compatible with 8th–13th Gen Intel Core or AMD Ryzen 1000–5000 Series desktop CPUs.--\nSupports Intel XMP 2.0 to recover memory speed if the CPU suppresses it in 4 DIMM configurations.",
+        "category": "RAM",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F80c680f3-4fee-45f7-8b0d-cf176c668d1f?alt=media&token=a5540f96-d114-417f-93ae-39cad4b56362"
+        ],
+        "stock": 91,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64ca621d953bcfba730dc0aa",
+        "name": "Western Digital WD Green SATA 240GB Solid State Drive ",
+        "price": 1500,
+        "description": "SLC (single-level cell) caching boosts write performance to quickly perform everyday tasks.--\nShock-resistant and WD F.I.T. Lab certified for compatibility and reliability.--\nUltra-low power-draw so you can use your laptop for longer periods of time.--\nAvailable in 2.5\"/7mm cased and M.2 2280 form factors to accommodate most PCs.",
+        "category": "SSDs",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2Fa30bd268-6239-4b61-9937-acb96fe2fa40?alt=media&token=ca21f895-2195-41c7-8625-91fb52d447e6"
+        ],
+        "stock": 0,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64ca632b953bcfba730dc0ae",
+        "name": "Echo Dot (3rd Gen) - Smart speaker with Alexa (Black)",
+        "price": 3000,
+        "description": "3rd Generation Echo Dot-Smart Speaker with Alexa that can be operated by voice. Alexa can speak English and Hindi.--\nJust ask Alexa to play music from Amazon Music, Hungama, Spotify, Jio Saavn, Apple Music. (some apps may require subscription).",
+        "category": "amazon echo",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F439a3a71-75bf-4e41-b837-9a7bef7a9bd3?alt=media&token=f87b0678-ec43-400d-90e5-f3b10c917e4d"
+        ],
+        "stock": 58,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64ca6398953bcfba730dc0b2",
+        "name": "Google Home",
+        "price": 20000,
+        "description": "Over 100 of the funniest questions to ask Google Home Kindle Edition",
+        "category": "google home",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2Fe96832e0-6e3d-4b56-b63f-b402c2894e0e?alt=media&token=9869112f-94fb-418f-9095-f2973c2b441c"
+        ],
+        "stock": 74,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64d0b2c250b886cbd85e7dcd",
+        "name": "Alpha ZV-E10L 24.2 Mega Pixel Interchangeable-Lens Mirrorless ",
+        "price": 15999,
+        "description": "Interchangeable-lens camera for vlogging--\nLarge APS-C type 24.2-megapixel28 Exmor CMOS sensor--\nDirectional 3-Capsule Mic supplied with wind screen--\nFeatures designed for vloggers—Product Showcase Setting, Bokeh Switch, Still/Movie/S&Q button",
+        "category": "digital camera",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F307c2ebc-3a00-48ad-b70a-609a558e6fa8?alt=media&token=03246621-525a-4fa4-8414-e5f46ba5ff88"
+        ],
+        "stock": 5,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64d0b60f50b886cbd85e7df3",
+        "name": "Compact Multi-Device Bluetooth Keyboard",
+        "price": 1230,
+        "description": "The Keys to Any of Your Devices: Quickly pair and stay wirelessly connected to as many as 3 devices with Bluetooth 5.2.--\nEnjoy the full satisfaction of standard-sized keycaps and smart shortcuts. ",
+        "category": "keyboards",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F3486d86c-3c9a-4533-a594-4af936cca91a?alt=media&token=ad515872-4b02-4cb9-aaef-2bb438e806c2"
+        ],
+        "stock": 43,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    },
+    {
+        "discount": 0,
+        "_id": "64d0b67a50b886cbd85e7df7",
+        "name": "VA2215-H Full HD 1080p 22 Inch/55.8 Cms LED 1920 Monitor",
+        "price": 13999,
+        "description": "FULL HD MONITOR : 21.5 Inch 1080p monitor with Eyecare technology and wide viewing angle of 178 degree--\nGAMING : With AMD FreeSync technology, it eliminates screen tearing and choppy frame rates to provide seamless, flawlessly smooth visuals in every scene.",
+        "category": "monitors",
+        "image": [
+            "https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/shoppitt%2F61fd3fe8-e959-4ffb-a215-69a6de2f3fd2?alt=media&token=99088a7b-916d-4a8c-a738-398fe9b07854"
+        ],
+        "stock": 31,
+        "rating": 0,
+        "visibility": true,
+        "reviews": [],
+        "__v": 0
+    }
+]

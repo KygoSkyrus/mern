@@ -10,9 +10,9 @@ app.use(express.json());
 
 var corsOptions = {
   origin: 'https://shoppitt.onrender.com',
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  optionsSuccessStatus: 200,
 }
-app.use(cors(corsOptions))
+app.use(cors(corsOptions))//not needed as frontend and server are hosted on same domain
 
 const db = process.env.dbURI;
 const port = process.env.PORT || 4000;
