@@ -15,16 +15,21 @@ import storeDoor from "./../../assets/images/newImg/collections/storeDoor.png";
 
 import wearables1 from "./../../assets/images/newImg/collections/wearables1.jpg";
 import wearables2 from "./../../assets/images/newImg/collections/wearables2.jpg";
+
+//curated prodcuts image
 import xbox from "./../../assets/images/newImg/collections/xbox.png";
+import dslr from "./../../assets/images/newImg/collections/dslr.png";
 
 
 const ProductCardsCollection = () => {
 
   const [products, setProducts] = useState()
   const [trendingProducts, setTrendingProducts] = useState([])
+  const [curatedProducts,setCuratedProducts]=useState({})
+  // const tempObj=['xbox','iphone','DSLR',]
+  const tempObj={'xbox':{displayName:"Xbox One",displayImage:xbox},'iphone':{displayName:"Apple iPhone 13",displayImage:null},'DSLR':{displayName:"Digit GoCam 35",displayImage:dslr}}
 
   useEffect(() => {
-    console.log('ue in hp')
     fetch('/api/getproducts', {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -32,15 +37,30 @@ const ProductCardsCollection = () => {
       .then(res => res.json())
       .then(data => {
         console.log('products', data)
-        data?.map((x, i) => {
+        data?.map((item, i) => {
           if (i < 6) {
-            setTrendingProducts(current => [...current, x])
+            setTrendingProducts(current => [...current, item])
           }
+          Object.keys(tempObj).forEach(x=>{
+            if(item.name.toLowerCase().includes(x) || item.category===x && !curatedProducts.hasOwnProperty(x)){
+              item.displayName=tempObj[x].displayName
+              item.displayImage=tempObj[x].displayImage
+              setCuratedProducts(current=>({...current,[x]:item}))
+              return 
+            }
+          })
+          // tempObj.forEach(x=>{
+          //   if(item.name.toLowerCase().includes(x) || item.category===x && !curatedProducts.hasOwnProperty(x)){
+          //     setCuratedProducts(current=>({...current,[x]:item}))
+          //     return 
+          //   }
+          // })
         })
         setProducts(data)//save this data in redux
       })
   }, [])
-  console.log('rtt', trendingProducts)
+
+  console.log('ccc',curatedProducts)
   //RIPPLE--------------
   function createRipple(event) {
     //add position relative and overflow hidden on whichever element you want this effect
@@ -343,18 +363,17 @@ const ProductCardsCollection = () => {
         <div className='row m0'>
           <div className='col-12'>
             <div className='row'>
-              {products?.map((x, i) => {
-                let displayProd = ["iphone", "dslr", "xbox"]
-                if (displayProd.includes((x.category).toLowerCase())) {
-                  return (
+              {
+                Object.keys(curatedProducts).map(key=>{
+                  return(
                     <div className='col-md-6 col-lg-4'>
-                      <div class='cardN' data-category={x.category}>
+                      <div class='cardN' data-category={key}>
                         <img
                           // src='https://raw.githubusercontent.com/mohammadjarabah/codepen-assets/main/pens/mdwvNJP/images/shoes.png'
                           // src={headphone1}
-                          src={controller}
+                          src={curatedProducts[key].displayImage || curatedProducts[key].image}
                           class='card__img' alt='' />
-                        <h2 class='card__title'>{x.name}</h2>
+                        <h2 class='card__title'>{curatedProducts[key].displayName}</h2>
                         <div class='card__content'>
                           {/* <div class='card__sizeContainer'>
                           <p class='card__sizeTitle'>Size:</p>
@@ -370,6 +389,29 @@ const ProductCardsCollection = () => {
                           <span class='card__colorCircle' style={{ backgroundColor: '#e91e63' }}></span>
                         </div> */}
                           <div className='card__discount'>
+                            <button className='btn btn-outline-warning text-light'>{curatedProducts[key].discount}% discount</button>
+                          </div>
+                        </div>
+                        <a href='/#' class='card__link'>Buy Now</a>
+                      </div>
+                    </div>
+                  )
+                })
+              }
+              {/* {products?.map((x, i) => {
+                let displayProd = ["iphone", "dslr", "xbox"]
+                if (displayProd.includes((x.category).toLowerCase())) {
+                  return (
+                    <div className='col-md-6 col-lg-4'>
+                      <div class='cardN' data-category={x.category}>
+                        <img
+                          // src='https://raw.githubusercontent.com/mohammadjarabah/codepen-assets/main/pens/mdwvNJP/images/shoes.png'
+                          // src={headphone1}
+                          src={controller}
+                          class='card__img' alt='' />
+                        <h2 class='card__title'>{x.name}</h2>
+                        <div class='card__content'>                    
+                          <div className='card__discount'>
                             <button className='btn btn-outline-warning text-light'>{x.discount}% discount</button>
                           </div>
                         </div>
@@ -378,7 +420,7 @@ const ProductCardsCollection = () => {
                     </div>
                   )
                 }
-              })}
+              })} */}
             </div>
           </div>
         </div>

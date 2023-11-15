@@ -25,7 +25,7 @@ const userSchema = new Schema({
     },
     phone: {
         type: Number,
-        default:""
+        default: ""
     },
     address: {
         house: String,
@@ -54,9 +54,9 @@ const userSchema = new Schema({
             default: 1,
         },
     }],
-    checkoutSession:[{
-        sessionId:{type:String},
-        orderId:{type:String},
+    checkoutSession: [{
+        sessionId: { type: String },
+        orderId: { type: String },
         createdAt: {
             type: Date,
             default: Date.now,
@@ -68,41 +68,41 @@ const userSchema = new Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'PRODUCT',
             },
-            name:{
+            name: {
                 type: String,
             },
-            image:{
+            image: {
                 type: String,
             },
             quantity: {
                 type: Number,
             },
-            discount:{
+            discount: {
                 type: Number,
             },
-            price:{
+            price: {
                 type: Number,
             }
         }],
-        orderId:{
-            type:String,
+        orderId: {
+            type: String,
         },
-        tax:{
+        tax: {
             type: Number,
         },
-        shipping:{
+        shipping: {
             type: Number,
         },
         total: {
             type: Number,
         },
-        payment_status:{
-            type:String,
+        payment_status: {
+            type: String,
         },
-        receiptUrl:{
-            type:String
+        receiptUrl: {
+            type: String
         },
-        shippingAddress:{
+        shippingAddress: {
 
         },
         createdAt: {
@@ -121,7 +121,7 @@ const userSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now,
-      },
+    },
 }, { collection: "users" });
 
 
