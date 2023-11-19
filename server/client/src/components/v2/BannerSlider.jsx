@@ -38,8 +38,8 @@ const BannerSlider = () => {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
+          slidesToShow: 1,
+          slidesToScroll: 1,
           infinite: true,
           dots: true,
         },
@@ -47,8 +47,8 @@ const BannerSlider = () => {
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
+          slidesToShow: 1,
+          slidesToScroll: 1,
           initialSlide: 2,
         },
       },
@@ -67,44 +67,44 @@ const BannerSlider = () => {
       <div className="main-banner">
         <Slider {...settings}>
           <div className="slide slide1">
-            <div class="xbox-content text-light">
+            <div className="xbox-content text-light">
               <h2>Start Your Audiophile Journey Here</h2>
               <p>
               <span>Like You, We Love Music</span> And we believe a Headphone is more than just an instrument for sound. It’s the key to a mind-blowing moment of emotion, bringing you closer to your favourite artist, and yourself.
               </p>
-              <a href="/#" class="xbox-btn">
+              <a href="/#" className="xbox-btn">
                 Join Now
-                <i class="fas fa-chevron-right"></i>
+                <i className="fas fa-chevron-right"></i>
               </a>
             </div>
             <img src={headphone1} alt="" width="100%" />
           </div>
           <div className="slide slide2">
-            <div class="xbox-content text-light">
+            <div className="xbox-content text-light">
               <h2>Meet a whole new class of laptops</h2>
               <p>
               Serious capability in our most portable pro laptop. 
               <br/>
               Impressively big. Impossibly thin.
               </p>
-              <a href="/#" class="xbox-btn">
+              <a href="/#" className="xbox-btn">
                 Join Now
-                <i class="fas fa-chevron-right"></i>
+                <i className="fas fa-chevron-right"></i>
               </a>
             </div>
             <img src={laptop1} alt="" width="100%" />
           </div>
           <div className="slide slide3">
-            <div class="xbox-content text-light">
+            <div className="xbox-content text-light">
               <h2>Xbox Game Pass Ultimate</h2>
               <p>
                 Xbox Game Pass Ultimate Xbox Live Gold and over 100 high-quality
                 console and PC games. Play together with friends and discover
                 your next favorite game.
               </p>
-              <a href="/#" class="xbox-btn">
+              <a href="/#" className="xbox-btn">
                 Join Now
-                <i class="fas fa-chevron-right"></i>
+                <i className="fas fa-chevron-right"></i>
               </a>
             </div>
             <img src={xbox} alt="" width="100%" />

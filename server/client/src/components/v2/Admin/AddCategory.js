@@ -7,7 +7,7 @@ const AddCategory = () => {
     const [subCategory, setSubCategory] = React.useState()
 
     function addcategory() {
-        fetch('/api/addcategory', {
+        fetch('/api/admin/addcategory', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

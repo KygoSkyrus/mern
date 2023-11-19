@@ -3,16 +3,10 @@ const mongoose = require('mongoose');
 const path = require("path")
 const app = express();
 const dotenv = require('dotenv');
-var cors = require('cors')
 
 dotenv.config({ path: './env/config.env' });
 app.use(express.json());
 
-var corsOptions = {
-  origin: 'https://shoppitt.onrender.com',
-  optionsSuccessStatus: 200,
-}
-app.use(cors(corsOptions))//not needed as frontend and server are hosted on same domain
 
 const db = process.env.dbURI;
 const port = process.env.PORT || 4000;

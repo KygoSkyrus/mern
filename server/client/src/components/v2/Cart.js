@@ -1,5 +1,6 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable no-eval */
-import React, { useRef } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -278,33 +279,33 @@ const Cart = () => {
             <h6 className='text-center my-5 d-flex justify-content-center align-items-center'>My Cart
               <img alt='' className='ms-2' src={theBagLogo} width="20px" />
             </h6>
-            <div class="row ">
-              <div class="col-lg-9 t-mb-30 mb-lg-0 theSection" >
-                <div class="row ">
-                  <div class="col-12">
-                    <div class="row ci-holder">
+            <div className="row ">
+              <div className="col-lg-9 t-mb-30 mb-lg-0 theSection" >
+                <div className="row ">
+                  <div className="col-12">
+                    <div className="row ci-holder">
                       <div className='row mb-3 p-2 pb-0 border-bottom cart-heading'>
-                        <div class="col-md-2"></div>
-                        <div class="col-md-10">
+                        <div className="col-md-2"></div>
+                        <div className="col-md-10">
                           <div className='d-flex flex-column justify-content-between h-100'>
                             <div className='row d-flex justify-content-between'>
-                              <div class="col-md-4">
+                              <div className="col-md-4">
                                 <h6>
                                   Item
                                 </h6>
                               </div>
-                              <div class="col-md-2">
+                              <div className="col-md-2">
                                 <h6>
                                   Price
                                 </h6>
                               </div>
-                              <div class="col-md-3">
+                              <div className="col-md-3">
                                 <h6>
                                   Quantity
                                 </h6>
 
                               </div>
-                              <div class="col-md-2">
+                              <div className="col-md-2">
                                 <h6>
                                   Total
                                 </h6>
@@ -318,17 +319,17 @@ const Cart = () => {
                         return (
                           <>
                             <div key={x._id} className='row  p-2 ci'>
-                              <div class="col-md-2 ci-img">
+                              <div className="col-md-2 ci-img">
                                 <div className='d-flex justify-content-center'>
                                   <img src={x.image} alt='' className='img-fluidt-minw-215' style={{ maxHeight: "100px" }} />
                                 </div>
                               </div>
 
-                              <div class="col-md-10 ci-detail">
+                              <div className="col-md-10 ci-detail">
                                 <div className='d-flex flex-column justify-content-between h-100'>
                                   <div className='row d-flex justify-content-between'>
 
-                                    <div class="col-md-4 ci-name">
+                                    <div className="col-md-4 ci-name">
                                       <Link to={`/product/${x._id}`} style={{ color: "inherit" }}>
                                         <h6>
                                           {x.name}
@@ -338,7 +339,7 @@ const Cart = () => {
                                           : <span className='text-danger'>Out of stock</span>}
                                       </Link>
                                     </div>
-                                    <div class="col-md-2 ci-price">
+                                    <div className="col-md-2 ci-price">
                                       <div className='d-flex align-items-end flex-column' style={{ width: "fit-content" }}>
                                         <section>
                                           <span style={{ fontSize: "12px" }}>&#8377;</span>
@@ -353,7 +354,7 @@ const Cart = () => {
 
                                       </div>
                                     </div>
-                                    <div class="col-md-3 ci-quantity">
+                                    <div className="col-md-3 ci-quantity">
 
                                       <div className='border d-flex row rounded-pill' style={{ width: "fit-content" }}>
                                         <span className='py-1 col-4 pointer' onClick={() => updateQuantity(x._id, "-", i, x.price, x.discount)} >-</span>
@@ -361,7 +362,7 @@ const Cart = () => {
                                         <span className='py-1 col-4 pointer' onClick={() => updateQuantity(x._id, "+", i, x.price, x.discount)}>+</span>
                                       </div>
                                     </div>
-                                    <div class="col-md-2 ci-total">
+                                    <div className="col-md-2 ci-total">
                                       <div>
                                         <span style={{ fontSize: "12px" }}>&#8377;</span>
                                         <span className='fs-6' ref={totalAmtRefs.current[i]}>{formatInINRwoSign.format(Math.floor(x.price - x.discount * x.price / 100) * tempObj[x._id])}</span>
@@ -373,8 +374,8 @@ const Cart = () => {
                               </div>
 
                               <div className='d-flex justify-content-end mb-3 border-bottom pb-3 ci-remove'>
-                                <u><span onClick={() => removeFromCart(x._id)} className='me-4 pointer'>Remove <i class="fa fa-trash fa-sm"></i></span></u>
-                                {!wishlistItems?.includes(x._id) && <u><span className='me-4 pointer' onClick={() => movetowishlist(x._id)}>Move to wishlist <i class="fa fa-heart fa-sm"></i></span></u>}
+                                <u><span onClick={() => removeFromCart(x._id)} className='me-4 pointer'>Remove <i className="fa fa-trash fa-sm"></i></span></u>
+                                {!wishlistItems?.includes(x._id) && <u><span className='me-4 pointer' onClick={() => movetowishlist(x._id)}>Move to wishlist <i className="fa fa-heart fa-sm"></i></span></u>}
                               </div>
                             </div>
                           </>
@@ -394,7 +395,7 @@ const Cart = () => {
                     <section>Do you have a Promo Code?</section>
 
                     <div className='d-flex justify-content-between my-2'>
-                      <span>Subtotal <i class="fa fa-question-circle fa-sm" aria-hidden="true"></i>
+                      <span>Subtotal <i className="fa fa-question-circle fa-sm" aria-hidden="true"></i>
                       </span>
                       <span ref={subtotal}>
                         {/* {Object.keys(priceObj).reduce((x,a)=>{
@@ -405,13 +406,13 @@ const Cart = () => {
                     </div>
 
                     <div className='d-flex justify-content-between my-2'>
-                      <span title='99 shipping & handling charge is applied under subtotal 1999'>Estimated Shipping & Handling <i class="fa fa-question-circle fa-sm" aria-hidden="true"></i>
+                      <span title='99 shipping & handling charge is applied under subtotal 1999'>Estimated Shipping & Handling <i className="fa fa-question-circle fa-sm" aria-hidden="true"></i>
                       </span>
                       <span ref={shippingCharge}>{sub < 1999 ? formatInINR.format(99) : "-"}</span>
                     </div>
 
                     <div className='d-flex justify-content-between my-2'>
-                      <span title='levies 10% service tax' data-bs-toggle="tooltip" data-bs-placement="right"  >Estimated Tax <i class="fa fa-question-circle fa-sm" aria-hidden="true"></i></span>
+                      <span title='levies 10% service tax' data-bs-toggle="tooltip" data-bs-placement="right"  >Estimated Tax <i className="fa fa-question-circle fa-sm" aria-hidden="true"></i></span>
                       <span ref={tax}>{formatInINR.format(Math.round(sub * 0.1))}</span>
                     </div>
 

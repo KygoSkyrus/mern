@@ -25,9 +25,22 @@ const ProductCardsCollection = () => {
 
   const [products, setProducts] = useState()
   const [trendingProducts, setTrendingProducts] = useState([])
-  const [curatedProducts,setCuratedProducts]=useState({})
-  // const tempObj=['xbox','iphone','DSLR',]
-  const tempObj={'xbox':{displayName:"Xbox One",displayImage:xbox},'iphone':{displayName:"Apple iPhone 13",displayImage:null},'DSLR':{displayName:"Digit GoCam 35",displayImage:dslr}}
+  const [curatedProducts, setCuratedProducts] = useState({})
+
+  const trendingProdObj = {
+    'xbox': {
+      displayName: "Xbox One",
+      displayImage: xbox
+    },
+    'iphone': {
+      displayName: "Apple iPhone 13",
+      displayImage: null
+    },
+    'DSLR': {
+      displayName: "Digit GoCam 35",
+      displayImage: dslr
+    }
+  }
 
   useEffect(() => {
     fetch('/api/getproducts', {
@@ -37,30 +50,24 @@ const ProductCardsCollection = () => {
       .then(res => res.json())
       .then(data => {
         console.log('products', data)
+        let prodArr = []
         data?.map((item, i) => {
-          if (i < 6) {
-            setTrendingProducts(current => [...current, item])
-          }
-          Object.keys(tempObj).forEach(x=>{
-            if(item.name.toLowerCase().includes(x) || item.category===x && !curatedProducts.hasOwnProperty(x)){
-              item.displayName=tempObj[x].displayName
-              item.displayImage=tempObj[x].displayImage
-              setCuratedProducts(current=>({...current,[x]:item}))
-              return 
+          if (i < 6) prodArr.push(item);
+          Object.keys(trendingProdObj).forEach(x => {
+            if (item.name.toLowerCase().includes(x) || item.category === x && !curatedProducts.hasOwnProperty(x)) {
+              item.displayName = trendingProdObj[x].displayName
+              item.displayImage = trendingProdObj[x].displayImage
+              setCuratedProducts(current => ({ ...current, [x]: item }))
+              return
             }
           })
-          // tempObj.forEach(x=>{
-          //   if(item.name.toLowerCase().includes(x) || item.category===x && !curatedProducts.hasOwnProperty(x)){
-          //     setCuratedProducts(current=>({...current,[x]:item}))
-          //     return 
-          //   }
-          // })
         })
+        setTrendingProducts(prodArr)
         setProducts(data)//save this data in redux
       })
   }, [])
 
-  console.log('ccc',curatedProducts)
+  console.log('ccc', curatedProducts)
   //RIPPLE--------------
   function createRipple(event) {
     //add position relative and overflow hidden on whichever element you want this effect
@@ -106,16 +113,16 @@ const ProductCardsCollection = () => {
             <div className='row'>
 
               <div className='col-md-6 col-lg-4'>
-                <section class="box bx1">
-                  <div class="content">
+                <section className="box bx1">
+                  <div className="content">
 
-                    <div class="left">
-                      <div class="product_img pimg1"></div>
-                      <div class="product_details">
-                        <h4 class="title">Electronics</h4>
-                        <p class="discription">Laptops, Tablets, VR headsets, Gaming consoles, Television, Computers, Camera etc</p>
-                        {/* <p class="pricing">₹824 <span class="price_original">₹4000</span> <span class="offer"> 79% OFF</span></p>
-              <p class="other">inclusive of all taxes</p> */}
+                    <div className="left">
+                      <div className="product_img pimg1"></div>
+                      <div className="product_details">
+                        <h4 className="title">Electronics</h4>
+                        <p className="discription">Laptops, Tablets, VR headsets, Gaming consoles, Television, Computers, Camera etc</p>
+                        {/* <p className="pricing">₹824 <span className="price_original">₹4000</span> <span className="offer"> 79% OFF</span></p>
+              <p className="other">inclusive of all taxes</p> */}
                       </div>
                     </div>
                   </div>
@@ -124,16 +131,16 @@ const ProductCardsCollection = () => {
 
 
               <div className='col-md-6 col-lg-4'>
-                <section class="box bx2">
-                  <div class="content">
-                    <div class="left">
+                <section className="box bx2">
+                  <div className="content">
+                    <div className="left">
                       <div className='p1-bg'>
-                        <div class="product_img pimg2"></div></div>
-                      <div class="product_details">
-                        <h4 class="title">Home Appliances</h4>
-                        <p class="discription">Refrigerator, Microwave, Vaccum cleaner, Air conditioner, Washing machine etc</p>
-                        {/* <p class="pricing"><span class="offer">UPTO 60% OFF</span></p>
-              <p class="other">inclusive of all taxes</p> */}
+                        <div className="product_img pimg2"></div></div>
+                      <div className="product_details">
+                        <h4 className="title">Home Appliances</h4>
+                        <p className="discription">Refrigerator, Microwave, Vaccum cleaner, Air conditioner, Washing machine etc</p>
+                        {/* <p className="pricing"><span className="offer">UPTO 60% OFF</span></p>
+              <p className="other">inclusive of all taxes</p> */}
                       </div>
                     </div>
                   </div>
@@ -141,15 +148,15 @@ const ProductCardsCollection = () => {
               </div>
 
               <div className='col-md-6 col-lg-4'>
-                <section class="box bx3">
-                  <div class="content">
-                    <div class="left">
-                      <div class="product_img pimg3"></div>
-                      <div class="product_details">
-                        <h4 class="title">Wearable Devices</h4>
-                        <p class="discription">Smartwatches, Earbuds, Headphones etc</p>
-                        {/* <p class="pricing">₹824 <span class="price_original">₹4000</span> <span class="offer"> 79% OFF</span></p>
-              <p class="other">inclusive of all taxes</p> */}
+                <section className="box bx3">
+                  <div className="content">
+                    <div className="left">
+                      <div className="product_img pimg3"></div>
+                      <div className="product_details">
+                        <h4 className="title">Wearable Devices</h4>
+                        <p className="discription">Smartwatches, Earbuds, Headphones etc</p>
+                        {/* <p className="pricing">₹824 <span className="price_original">₹4000</span> <span className="offer"> 79% OFF</span></p>
+              <p className="other">inclusive of all taxes</p> */}
                       </div>
                     </div>
                   </div>
@@ -164,10 +171,10 @@ const ProductCardsCollection = () => {
 
 
 
-      <nav class="menu position-relative gapBtw">
-        <div class="menu__item">
-          <div class="marquee">
-            <div class="marquee__inner">
+      <nav className="menu position-relative gapBtw">
+        <div className="menu__item">
+          <div className="marquee">
+            <div className="marquee__inner">
               <span>Shopp-itt</span>
               <span>Shopp-itt</span>
               <span>Shopp-itt</span>
@@ -177,59 +184,58 @@ const ProductCardsCollection = () => {
         </div>
       </nav>
 
-
       <div className='storedoor mt-2'>
         <div className='text'>All-in-one store <br />for all of your Electronic needs</div>
         <div className='doorImg'></div>
       </div>
 
       {/* PRODUCT 7 */}
-      <main class="main gapBtw">
+      <main className="main gapBtw">
         {/* <!-- Wrapper Section --> */}
-        <section class="section wrapper wrapper-section py-3">
-          <div class="container wrapper-column">
-            <div class="wrapper-figure">
+        <section className="section wrapper wrapper-section py-3">
+          <div className="container wrapper-column">
+            <div className="wrapper-figure">
               <img
                 src={controller}
                 // src="https://i.ibb.co/3msVHYZ/sneaker-image.png"
-                class="wrapper-image" loading="lazy" alt="Sneaker" />
+                className="wrapper-image" loading="lazy" alt="Sneaker" />
             </div>
-            <div class="wrapper-content">
-              <div class="wrapper-inform">
-                <span class="badge badge-darken">Controller</span>
-                <h1 class="heading-sm font-bold text-dark">GoGear Pro Wireless Gamepad</h1>
-                <p class="text-md font-regular text-wrap">
+            <div className="wrapper-content">
+              <div className="wrapper-inform">
+                <span className="badge badge-darken">Controller</span>
+                <h1 className="heading-sm font-bold text-dark">GoGear Pro Wireless Gamepad</h1>
+                <p className="text-md font-regular text-wrap">
                   Equipped with 2.4GHz wireless technology and supports up to 10 metres range. Integrated with dual intensity motor which allows a realistic gaming experience
                 </p>
               </div>
-              <div class="wrapper-detail">
-                <div class="price">
-                  <span class="text-md font-semi text-dark">Price:</span>
-                  <h3 class="text-xxl font-bold text-dark">&#8377;1999.00</h3>
+              <div className="wrapper-detail">
+                <div className="price">
+                  <span className="text-md font-semi text-dark">Price:</span>
+                  <h3 className="text-xxl font-bold text-dark">&#8377;1999.00</h3>
                 </div>
-                <div class="sizes">
-                  <span class="text-md font-semi text-dark">Color:</span>
-                  <ul class="sizes-list p-0">
-                    <li class="sizes-item is-select"><section></section></li>
-                    <li class="sizes-item"><section></section></li>
-                    <li class="sizes-item"><section></section></li>
-                    <li class="sizes-item"><section></section></li>
+                <div className="sizes">
+                  <span className="text-md font-semi text-dark">Color:</span>
+                  <ul className="sizes-list p-0">
+                    <li className="sizes-item is-select"><section></section></li>
+                    <li className="sizes-item"><section></section></li>
+                    <li className="sizes-item"><section></section></li>
+                    <li className="sizes-item"><section></section></li>
                   </ul>
                 </div>
-                {/* <div class="sizes">
-                  <span class="text-md font-semi text-dark">Sizes:</span>
-                  <ul class="sizes-list p-0">
-                    <li class="sizes-item is-select">37</li>
-                    <li class="sizes-item">38</li>
-                    <li class="sizes-item">39</li>
-                    <li class="sizes-item">40</li>
+                {/* <div className="sizes">
+                  <span className="text-md font-semi text-dark">Sizes:</span>
+                  <ul className="sizes-list p-0">
+                    <li className="sizes-item is-select">37</li>
+                    <li className="sizes-item">38</li>
+                    <li className="sizes-item">39</li>
+                    <li className="sizes-item">40</li>
                   </ul>
                 </div> */}
               </div>
-              <div class="wrapper-action">
-                <button class="btn btn-darken">Add to Bag</button>
-                <button class="btn btn-neutral">
-                  <i class="fa fa-heart"></i>
+              <div className="wrapper-action">
+                <Link to="/category/controllers"><button className="btn btn-darken">Buy now</button></Link>
+                <button className="btn btn-neutral">
+                  <i className="fa fa-heart"></i>
                 </button>
               </div>
             </div>
@@ -248,14 +254,14 @@ const ProductCardsCollection = () => {
 
       {/* XBOX AD */}
       <div className='container gapBtw'>
-        <section class="xbox">
-          <div class="xbox-content xboxAd">
+        <section className="xbox">
+          <div className="xbox-content xboxAd">
             <h2>Xbox Game Pass Ultimate</h2>
             <p>Xbox Game Pass Ultimate Xbox Live Gold and over 100 high-quality
               console and PC games. Play together with friends and discover your
               next favorite game.</p>
-            <a href="/#" class="xbox-btn">
-              Join Now <i class="fas fa-chevron-right"></i>
+            <a href="/#" className="xbox-btn">
+              Join Now <i className="fas fa-chevron-right"></i>
             </a>
           </div>
         </section>
@@ -265,7 +271,7 @@ const ProductCardsCollection = () => {
 
 
 
-      {/* <spline-viewer class="spline-player"  loading-anim url="https://prod.spline.design/XGRNABqigI-vYLoP/scene.splinecode"></spline-viewer> */}
+      {/* <spline-viewer className="spline-player"  loading-anim url="https://prod.spline.design/XGRNABqigI-vYLoP/scene.splinecode"></spline-viewer> */}
 
 
 
@@ -279,10 +285,10 @@ const ProductCardsCollection = () => {
               {trendingProducts?.map(x => {
                 return (
                   <div className='col-md-6 col-lg-4'>
-                    <div class="mini-card mdc-elevation--z4" >
-                      <div class="media-image mdc-card__media mdc-card__media--square" style={{ backgroundImage: `url(${x.image[0]})` }}>
-                        <div class="mdc-card__media-content">
-                          <div class="card-info">
+                    <div className="mini-card mdc-elevation--z4" >
+                      <div className="media-image mdc-card__media mdc-card__media--square" style={{ backgroundImage: `url(${x.image[0]})` }}>
+                        <div className="mdc-card__media-content">
+                          <div className="card-info">
                             <h1>{x.name}</h1>
                             <Link to={`/product/${x._id}`}>Explore</Link>
                             <h3>{x.category}</h3>
@@ -329,19 +335,19 @@ const ProductCardsCollection = () => {
 
 
       {/* PRODUCT 3 */}
-      {/* <div class="container">
+      {/* <div className="container">
 
-        <div class="card-3">
-          <img src={img1} class="card-img-top" alt="..." />
-          <div class="card3-body">
-            <div class="text-section">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card's
+        <div className="card-3">
+          <img src={img1} className="card-img-top" alt="..." />
+          <div className="card3-body">
+            <div className="text-section">
+              <h5 className="card-title">Card title</h5>
+              <p className="card-text">Some quick example text to build on the card's
                 content.</p>
             </div>
-            <div class="cta-section">
+            <div className="cta-section">
               <div>$129.00</div>
-              <a href="/#" class="btn btn-light">Buy Now</a>
+              <a href="/#" className="btn btn-light">Buy Now</a>
             </div>
           </div>
         </div>
@@ -364,13 +370,11 @@ const ProductCardsCollection = () => {
           <div className='col-12'>
             <div className='row'>
               {
-                Object.keys(curatedProducts).map(key=>{
-                  return(
+                Object.keys(curatedProducts).map(key => {
+                  return (
                     <div className='col-md-6 col-lg-4'>
                       <div class='cardN' data-category={key}>
                         <img
-                          // src='https://raw.githubusercontent.com/mohammadjarabah/codepen-assets/main/pens/mdwvNJP/images/shoes.png'
-                          // src={headphone1}
                           src={curatedProducts[key].displayImage || curatedProducts[key].image}
                           class='card__img' alt='' />
                         <h2 class='card__title'>{curatedProducts[key].displayName}</h2>
@@ -392,35 +396,12 @@ const ProductCardsCollection = () => {
                             <button className='btn btn-outline-warning text-light'>{curatedProducts[key].discount}% discount</button>
                           </div>
                         </div>
-                        <a href='/#' class='card__link'>Buy Now</a>
+                        <Link to={`/products/${curatedProducts[key]._id}`} class='card__link'>Buy Now</Link>
                       </div>
                     </div>
                   )
                 })
               }
-              {/* {products?.map((x, i) => {
-                let displayProd = ["iphone", "dslr", "xbox"]
-                if (displayProd.includes((x.category).toLowerCase())) {
-                  return (
-                    <div className='col-md-6 col-lg-4'>
-                      <div class='cardN' data-category={x.category}>
-                        <img
-                          // src='https://raw.githubusercontent.com/mohammadjarabah/codepen-assets/main/pens/mdwvNJP/images/shoes.png'
-                          // src={headphone1}
-                          src={controller}
-                          class='card__img' alt='' />
-                        <h2 class='card__title'>{x.name}</h2>
-                        <div class='card__content'>                    
-                          <div className='card__discount'>
-                            <button className='btn btn-outline-warning text-light'>{x.discount}% discount</button>
-                          </div>
-                        </div>
-                        <a href='/#' class='card__link'>Buy Now</a>
-                      </div>
-                    </div>
-                  )
-                }
-              })} */}
             </div>
           </div>
         </div>
@@ -443,16 +424,16 @@ const ProductCardsCollection = () => {
 
 
       {/* MACINTOX BANNER */}
-      {/* <div class="container gapBtw">
-        <div class="page">
-          <div class="left">
+      {/* <div className="container gapBtw">
+        <div className="page">
+          <div className="left">
             <h1>Get yourself a yoga Laptop</h1>
             <p className='page-text'>Lenovo's remarkable new personal computer</p>
             <button>See it in action</button>
 
           </div>
-          <div class="right">
-            <div class="img">
+          <div className="right">
+            <div className="img">
               <img alt='' src={products?.[4].image} />
               <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fsebastien-compagne.fr%2Fwebsite%2Fzpg%2Farcheologeek%2F1990_-_apple_mac_classic_II.png&f=1&nofb=1" alt='..' />
             </div>
@@ -470,20 +451,20 @@ const ProductCardsCollection = () => {
 
 
       {/* PRODUCT 9 */}
-      {/* <div class="product-card">
-        <div class="badge-pc">New Product</div>
-        <div class="product-tumb">
+      {/* <div className="product-card">
+        <div className="badge-pc">New Product</div>
+        <div className="product-tumb">
             <img src="https://cdn-icons-png.flaticon.com/512/2806/2806251.png" alt=''/>
         </div>
-        <div class="product-details">
-            <span class="product-catagory">T-Shirt</span>
+        <div className="product-details">
+            <span className="product-catagory">T-Shirt</span>
             <h4><a href="/#">New T-Shirt For Man</a></h4>
             <p>New Import T-Shirt For Man Very Rare Collection, If You Want Order Right Now</p>
-            <div class="product-bottom-details">
-                <div class="product-price"><small>$15.10</small>$7.99</div>
-                <div class="product-links">
-                    <a href="/#"><i class="fa fa-heart"></i></a>
-                    <a href="/#"><i class="fa fa-shopping-cart"></i></a>
+            <div className="product-bottom-details">
+                <div className="product-price"><small>$15.10</small>$7.99</div>
+                <div className="product-links">
+                    <a href="/#"><i className="fa fa-heart"></i></a>
+                    <a href="/#"><i className="fa fa-shopping-cart"></i></a>
                 </div>
             </div>
         </div>

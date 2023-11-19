@@ -79,7 +79,7 @@ const Order = () => {
 
         (showLoader ?
           <div className='d-flex justify-content-center align-items-center' style={{ height: "70vh" }}>
-            <div class="custom-loader"></div>
+            <div className="custom-loader"></div>
           </div> :
 
           (order ?
@@ -90,13 +90,13 @@ const Order = () => {
                   <i className='fa fa-calendar fa-regular'></i>&nbsp;&nbsp;{getFullDateStr(order.createdAt)}
                 </span>
               </div>
-              <div class="row justify-content-center">
-                <div class="col-lg-9 t-mb-30 mb-lg-0 theSection " >
-                  <div class="row ">
-                    <div class="col-12">
-                      <div class="row ms-0 border border-1  rounded-1">
+              <div className="row justify-content-center">
+                <div className="col-lg-9 t-mb-30 mb-lg-0 theSection " >
+                  <div className="row ">
+                    <div className="col-12">
+                      <div className="row ms-0 border border-1  rounded-1">
                         <div className='row mb-3 mx-0 p-2 pb-0 border-bottom' style={{ background: "#ebebeb" }}>
-                          <div class="col-md-6">
+                          <div className="col-md-6">
                             <div className='row justify-content-center'>
                               <div className='col-md-2 '></div>
                               <div className='col-md-8 text-center'>
@@ -106,19 +106,19 @@ const Order = () => {
                               </div>
                             </div>
                           </div>
-                          <div class="col-md-6 oi-other-heading">
+                          <div className="col-md-6 oi-other-heading">
                             <div className='row d-flex justify-content-between'>
-                              <div class="col-md-2 ">
+                              <div className="col-md-2 ">
                                 <h6>
                                   Price
                                 </h6>
                               </div>
-                              <div class="col-md-2 text-center">
+                              <div className="col-md-2 text-center">
                                 <h6>
                                   Quantity
                                 </h6>
                               </div>
-                              <div class="col-md-2 ">
+                              <div className="col-md-2 ">
                                 <h6>
                                   Total
                                 </h6>
@@ -131,7 +131,7 @@ const Order = () => {
                           return (
                             <>
                               <div key={x._id} className='row  align-items-center oi' >
-                                <div class="col-md-6">
+                                <div className="col-md-6">
                                   <div className='row justify-content-center align-items-center oi-top'>
                                     <div className='col-md-2 oi-img'>
                                       <Link className='d-flex flex-wrap order-lis-imgs' to={`/product/${x.productId}`}>
@@ -140,25 +140,25 @@ const Order = () => {
                                         </div>
                                       </Link>
                                     </div>
-                                    <Link class="col-md-6 oi-name" to={`/product/${x.productId}`} >
+                                    <Link className="col-md-6 oi-name" to={`/product/${x.productId}`} >
                                       {x.name}
                                     </Link>
                                   </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div className="col-md-6">
                                   <div className='d-flex flex-column justify-content-between h-100'>
                                     <div className='row d-flex justify-content-between oi-details'>
-                                      <div class="col-md-2">
+                                      <div className="col-md-2">
                                         <div className='d-flex align-items-end flex-column' style={{ width: "fit-content", margin: "auto" }}>
                                           <span className=''>{formatInINR.format(x.price)}</span>
                                         </div>
                                       </div>
-                                      <div class="col-md-2 text-center">
+                                      <div className="col-md-2 text-center">
                                         <span className=''>{x.quantity}</span>
                                       </div>
 
-                                      <div class="col-md-2 text-center oi-total">
+                                      <div className="col-md-2 text-center oi-total">
                                         <div className='d-flex align-items-end flex-column' style={{ width: "fit-content", margin: "auto" }}>
                                           <span className=''>{formatInINR.format((x.quantity * Math.floor(x.price - x.discount * x.price / 100)))}</span>
                                         </div>
@@ -179,7 +179,7 @@ const Order = () => {
                   </div>
                 </div>
 
-                <div class="col-lg-3 t-mb-30 mb-lg-0 p-img-sticky">
+                <div className="col-lg-3 t-mb-30 mb-lg-0 p-img-sticky">
                   <div className='border border-1  rounded-1'>
 
                     <h6 className='p-2 text-end' style={{ background: "rgb(235, 235, 235)" }}>Order summary</h6>

@@ -122,33 +122,33 @@ const Wishlist = () => {
                <h6 className='text-center my-5 d-flex justify-content-center align-items-center'>My Wishlist&nbsp;
               <i className='fa fa-heart text-danger'></i>
             </h6>
-              <div class="row justify-content-center">
-                <div class="col-lg-9 t-mb-30 mb-lg-0 theSection" >
-                  <div class="row ">
-                    <div class="col-12">
-                      <div class="row wi-holder">
+              <div className="row justify-content-center">
+                <div className="col-lg-9 t-mb-30 mb-lg-0 theSection" >
+                  <div className="row ">
+                    <div className="col-12">
+                      <div className="row wi-holder">
                         <div className='row mb-3 p-2 pb-0 border-bottom wList-heading'>
-                          <div class="col-md-2"></div>
-                          <div class="col-md-10">
+                          <div className="col-md-2"></div>
+                          <div className="col-md-10">
                             <div className='d-flex flex-column justify-content-between h-100'>
                               <div className='row d-flex justify-content-between'>
-                                <div class="col-md-4">
+                                <div className="col-md-4">
                                   <h6>
                                     Item
                                   </h6>
                                 </div>
-                                <div class="col-md-2">
+                                <div className="col-md-2">
                                   <h6>
                                     Price
                                   </h6>
                                 </div>
-                                <div class="col-md-2">
+                                <div className="col-md-2">
                                   <h6>
                                     Availability
                                   </h6>
 
                                 </div>
-                                <div class="col-md-2">
+                                <div className="col-md-2">
                                 </div>
                               </div>
                             </div>
@@ -159,17 +159,17 @@ const Wishlist = () => {
                           return (
                             <>
                               <div key={x._id} className='row  p-2 wi'>
-                                <div class="col-md-2 wi-img">
+                                <div className="col-md-2 wi-img">
                                   <div className='d-flex justify-content-center'>
                                     <img src={x.image} alt='' className='img-fluidt-minw-215' style={{ maxHeight: "80px" }} />
                                   </div>
                                 </div>
 
-                                <div class="col-md-10 wi-detail">
+                                <div className="col-md-10 wi-detail">
                                   <div className='d-flex flex-column justify-content-between h-100'>
                                     <div className='row d-flex justify-content-between'>
 
-                                      <div class="col-md-4 wi-name">
+                                      <div className="col-md-4 wi-name">
                                         <Link to={`/product/${x._id}`} style={{ color: "inherit" }}>
                                           <h6>
                                             {x.name}
@@ -177,7 +177,7 @@ const Wishlist = () => {
                                           </h6>
                                         </Link>
                                       </div>
-                                      <div class="col-md-2 wi-price">
+                                      <div className="col-md-2 wi-price">
                                         <div className='d-flex align-items-end flex-column' style={{ width: "fit-content" }}>
                                           <section>
                                             <span style={{ fontSize: "12px" }}>&#8377;</span>
@@ -192,20 +192,20 @@ const Wishlist = () => {
 
                                         </div>
                                       </div>
-                                      <div class="col-md-2 wi-stock">
+                                      <div className="col-md-2 wi-stock">
                                         {x.stock > 0 ? <span className='text-success'>In stock</span>
                                           : <span className='text-danger'>Out of stock</span>}
                                       </div>
 
-                                      <div class="col-md-2 wi-remove">
+                                      <div className="col-md-2 wi-remove">
                                         <button className="btn btn-warning px-4 rounded-pill text-light" onClick={() => addToCart(x._id)}>Add to cart</button>
 
                                         <div className='d-flex justify-content-end mt-2 ' style={{ marginRight: "-41px" }}>
                                           <u><span
                                             onClick={() => updatewishlist(x._id)}
-                                            className='me-4 pointer'>Remove <i class="fa fa-trash fa-sm "></i></span></u>
+                                            className='me-4 pointer'>Remove <i className="fa fa-trash fa-sm "></i></span></u>
                                         </div>
-                                        {/* <button className="btn btn-danger ms-2 rounded-pill text-light"><i class="fa fa-trash fa-sm"></i></button> */}
+                                        {/* <button className="btn btn-danger ms-2 rounded-pill text-light"><i className="fa fa-trash fa-sm"></i></button> */}
                                       </div>
 
                                     </div>
@@ -228,7 +228,7 @@ const Wishlist = () => {
             </div>
             :
             <div className='d-flex justify-content-center align-items-center' style={{ height: "70vh" }}>
-              <div class="custom-loader"></div>
+              <div className="custom-loader"></div>
             </div>)
         )
         :

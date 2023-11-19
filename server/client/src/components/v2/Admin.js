@@ -1,9 +1,8 @@
 import React from 'react'
-import { Link, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 
 import './../../assets/css/admin.css'
 import Nav from './Admin/Nav';
-import Toast from './Toast';
 import Dashboard from './Admin/Dashboard';
 import Loader from './Loader.jsx';
 import Orders from './Admin/Orders';

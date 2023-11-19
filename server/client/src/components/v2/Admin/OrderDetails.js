@@ -18,20 +18,20 @@ const OrderDetails = (props) => {
           <div className='d-flex justify-content-between p-2 px-3 mb-4 border-bottom rounded-1'>
             <div className='d-flex align-items-center'>
               <h6 className='d-inline text-black mb-0'>Order #{order.orderId}</h6>
-              <section class="bg-body border p-1 px-3 rounded ms-3">
+              <section className="bg-body border p-1 px-3 rounded ms-3">
                 {order.status}
               </section></div>
             <span className='align-self-center'>
               <i className='fa fa-calendar fa-regular'></i>&nbsp;&nbsp;{getFullDateStr(order.createdAt)}
             </span>
           </div>
-          <div class="row justify-content-center">
-            <div class="col-lg-9 t-mb-30 mb-lg-0 theSection "  >
-              <div class="row ">
-                <div class="col-12">
-                  <div class="row ms-0 border border-1  rounded-1">
+          <div className="row justify-content-center">
+            <div className="col-lg-9 t-mb-30 mb-lg-0 theSection "  >
+              <div className="row ">
+                <div className="col-12">
+                  <div className="row ms-0 border border-1  rounded-1">
                     <div className='row mb-3 mx-0 p-2 pb-0 border-bottom bg-body'>
-                      <div class="col-md-6">
+                      <div className="col-md-6">
                         <div className='row justify-content-center'>
                           <div className='col-md-2 '></div>
                           <div className='col-md-8 text-center'>
@@ -41,19 +41,19 @@ const OrderDetails = (props) => {
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div className="col-md-6">
                         <div className='row d-flex justify-content-between'>
-                          <div class="col-md-2 ">
+                          <div className="col-md-2 ">
                             <h6>
                               Price
                             </h6>
                           </div>
-                          <div class="col-md-2 text-center">
+                          <div className="col-md-2 text-center">
                             <h6>
                               Quantity
                             </h6>
                           </div>
-                          <div class="col-md-2 ">
+                          <div className="col-md-2 ">
                             <h6>
                               Total
                             </h6>
@@ -66,7 +66,7 @@ const OrderDetails = (props) => {
                       return (
                         <>
                           <div key={x._id} className='row  align-items-center' >
-                            <div class="col-md-6">
+                            <div className="col-md-6">
                               <div className='row justify-content-center align-items-center'>
                                 <div className='col-md-2 '>
                                   <Link className='d-flex flex-wrap order-lis-imgs' to={`/product/${x.productId}`}>
@@ -75,25 +75,25 @@ const OrderDetails = (props) => {
                                     </div>
                                   </Link>
                                 </div>
-                                <Link class="col-md-6" to={`/product/${x.productId}`} >
+                                <Link className="col-md-6" to={`/product/${x.productId}`} >
                                   {x.name}
                                 </Link>
                               </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div className="col-md-6">
                               <div className='d-flex flex-column justify-content-between h-100'>
                                 <div className='row d-flex justify-content-between'>
-                                  <div class="col-md-2">
+                                  <div className="col-md-2">
                                     <div className='d-flex align-items-end flex-column' style={{ width: "fit-content", margin: "auto" }}>
                                       <span className=''>{formatInINR.format(x.price)}</span>
                                     </div>
                                   </div>
-                                  <div class="col-md-2 text-center">
+                                  <div className="col-md-2 text-center">
                                     <span className=''>{x.quantity}</span>
                                   </div>
 
-                                  <div class="col-md-2 text-center">
+                                  <div className="col-md-2 text-center">
                                     <div className='d-flex align-items-end flex-column' style={{ width: "fit-content", margin: "auto" }}>
                                       <span className=''>{formatInINR.format((x.quantity * Math.floor(x.price - x.discount * x.price / 100)))}</span>
                                     </div>
@@ -114,9 +114,9 @@ const OrderDetails = (props) => {
               </div>
             </div>
 
-            <div class="col-lg-3 t-mb-30 mb-lg-0">
+            <div className="col-lg-3 t-mb-30 mb-lg-0">
               <div className='row'>
-                <div class="col-lg-12 mb-3">
+                <div className="col-lg-12 mb-3">
                   <div className='border border-1  rounded-1'>
 
                     <h6 className='p-2 text-end bg-body border-bottom'>Customer</h6>
@@ -142,7 +142,7 @@ const OrderDetails = (props) => {
                     <div className='my-2 px-3'>
                       <section className='text-end'><b>Address</b></section>
                       <section className='text-end d-grid pb-1'>
-                        <span style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }} class=" align-items-center d-flex justify-content-between" title={order?.user.line1}>
+                        <span style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }} className=" align-items-center d-flex justify-content-between" title={order?.user.line1}>
                           <i className='fa fa-location-pin me-2'></i>
                           Guru Gobind Singh Marg
                         </span>
@@ -155,7 +155,7 @@ const OrderDetails = (props) => {
 
                   </div>
                 </div>
-                <div class="col-lg-12">
+                <div className="col-lg-12">
                   <div className='border border-1  rounded-1'>
 
                     <h6 className='p-2 text-end bg-body border-bottom'>Order summary</h6>

@@ -33,17 +33,17 @@ const Homepage = () => {
       {/* {product ?
         product.map(x => {
           return (
-            <div class="container">
-              <div class="card-3">
-                <img src={x.image} class="card-img-top" alt="..." />
-                <div class="card3-body">
-                  <div class="text-section">
-                    <h5 class="card-title">{x.name}</h5>
+            <div className="container">
+              <div className="card-3">
+                <img src={x.image} className="card-img-top" alt="..." />
+                <div className="card3-body">
+                  <div className="text-section">
+                    <h5 className="card-title">{x.name}</h5>
                   
                   </div>
-                  <div class="cta-section">
+                  <div className="cta-section">
                     <div>{x.price}</div>
-                    <a href="/#" class="btn btn-light">Buy Now</a>
+                    <a href="/#" className="btn btn-light">Buy Now</a>
                   </div>
                 </div>
               </div>

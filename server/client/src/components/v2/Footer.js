@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom'
 
 const Footer = (props) => {
 
-	const { finalArr } = props;
+	const categoryArray = ["Home Appliances", "Video Game Accessories", "Wearable Devices", "Speakers", "Computer Accessories", "Storage Devices"]
+	const topPicksArray = ["laptops", "smartphones", "fitness trackers", "graphics cards", "playstation"]
+	const socialArray = ["fa-github", "fa-linkedin-in", "fa-twitter", "fa-instagram", "fa-facebook"]
 
 	return (
 		<>
@@ -15,7 +17,7 @@ const Footer = (props) => {
 								<div className="brand mx-auto mr-md-auto ml-md-0">
 									<Link to="" className="t-link">
 										{/* <section className="logo"></section> */}
-									<h6>SHOPP-ITT</h6>
+										<h6>SHOPP-ITT</h6>
 									</Link>
 								</div>
 							</div>
@@ -67,62 +69,31 @@ const Footer = (props) => {
 								</ul>
 							</div>
 							<div className="col-md-4 col-lg-2 t-mb-30 mb-lg-0">
-								<h5 className="t-blue mt-0 text-capitalize">top picks</h5>
-								<ul className="list">
-									<li className="t-mb-10">
-										<Link to="/category/tech" state={{ category: "tech" }} className="t-link text-capitalize t-link--light sm-text">
-											tech
-										</Link>
-									</li>
-									<li className="t-mb-10">
-										<Link to="/category/travel" state={{ category: "travel" }} className="t-link text-capitalize t-link--light sm-text">
-											travel
-										</Link>
-									</li>
-									<li className="t-mb-10">
-										<Link to="/category/lifestyle" state={{ category: "lifestyle" }} className="t-link text-capitalize t-link--light sm-text">
-											lifestyle
-										</Link>
-									</li>
-									<li className="t-mb-10">
-										<Link to="/category/business" state={{ category: "business" }} className="t-link text-capitalize t-link--light sm-text">
-											business
-										</Link>
-									</li>
-								</ul>
-							</div>
-							<div className="col-md-4 col-lg-2 t-mb-30 mb-lg-0">
 								<h5 className="t-blue mt-0 text-capitalize">categories</h5>
-								<ul className="list" id="footerCat">
-									{/* <li className="t-mb-10">
-								<Link to="#" className="t-link text-capitalize t-link--light sm-text">
-								</Link>
-							</li> */}
-							<li className="t-mb-10" >
-												<Link to={"/category/laptops" } className="t-link text-capitalize t-link--light sm-text">
-													Laptops
-												</Link>
-											</li>
-											<li className="t-mb-10" >
-												<Link to={"/category/smartphones" } className="t-link text-capitalize t-link--light sm-text">
-												Smartphones
-												</Link>
-											</li>
-											<li className="t-mb-10" >
-												<Link to={"/category/dslr" } className="t-link text-capitalize t-link--light sm-text">
-													DSLR
-												</Link>
-											</li>
-									{/* {finalArr?.map((x, index) => {
+								<ul className="list">
+									{categoryArray?.map(x => {
 										return (
-											<li className="t-mb-10" key={index}>
-												<Link to={"/category/" + x} state={{ category: x }} className="t-link text-capitalize t-link--light sm-text">
+											<li className="t-mb-10">
+												<Link to="" className="t-link text-capitalize t-link--light sm-text">
 													{x}
 												</Link>
 											</li>
 										)
-									})
-									} */}
+									})}
+								</ul>
+							</div>
+							<div className="col-md-4 col-lg-2 t-mb-30 mb-lg-0">
+								<h5 className="t-blue mt-0 text-capitalize">top picks</h5>
+								<ul className="list" id="footerCat">
+									{topPicksArray.map(x => {
+										return (
+											<li className="t-mb-10" >
+												<Link to={`/category/${x}`} className="t-link text-capitalize t-link--light sm-text" target='blank'>
+													{x}
+												</Link>
+											</li>
+										)
+									})}
 								</ul>
 							</div>
 							<div className="col-md-6 col-lg-3 t-mb-30 mb-lg-0">
@@ -136,66 +107,20 @@ const Footer = (props) => {
 							<div className="col-md-6 col-lg-3 t-mb-30 mb-lg-0">
 								<h5 className="t-blue mt-0 text-capitalize">follow us</h5>
 								<ul className="list d-flex follow mt-3">
-									<li>
-										<Link to="#" className="t-follow-link">
-											<span className="social-counter__icon social-counter__icon--be t-mr-8">
-												<span className="social-counter__icon-is">
-													<i className="fa-brands fa-github"></i>
-												</span>
-											</span>
-										</Link>
-									</li>
-									<li>
-										<Link to="#" className="t-follow-link">
-											<span className="social-counter__icon social-counter__icon--fb t-mr-8">
-												<span className="social-counter__icon-is">
-													<i className="fa-brands fa-linkedin-in"></i>
-												</span>
-											</span>
-										</Link>
-									</li>
-									<li>
-										<Link to="#" className="t-follow-link">
-											<span className="social-counter__icon social-counter__icon--tw t-mr-8">
-												<span className="social-counter__icon-is">
-													<i className="fa-brands fa-twitter"></i>
-												</span>
-											</span>
-										</Link>
-									</li>
-									<li>
-										<Link to="#" className="t-follow-link">
-											<span className="social-counter__icon social-counter__icon--ins t-mr-8">
-												<span className="social-counter__icon-is">
-													<i className="fa-brands fa-instagram"></i>
-												</span>
-											</span>
-										</Link>
-									</li>
-									<li>
-										<Link to="#" className="t-follow-link">
-											<span className="social-counter__icon social-counter__icon--in t-mr-8">
-												<span className="social-counter__icon-is">
-													<i className="fa-brands fa-facebook"></i>										</span>
-											</span>
-										</Link>
-									</li>
+									{socialArray.map(x => {
+										return (
+											<li>
+												<Link to="" className="t-follow-link">
+													<span className="social-counter__icon social-counter__icon--be t-mr-8">
+														<span className="social-counter__icon-is">
+															<i className={`fa-brands ${x}`}></i>
+														</span>
+													</span>
+												</Link>
+											</li>
+										)
+									})}
 								</ul>
-								{/* <div className="t-mt-30">
-							<h6 className="t-text-light text-capitalize">download app</h6>
-							<ul className="list row">
-								<li className="t-mr-8 t-mb-10 mb-xl-0">
-									<Link to="#" className="t-link">
-										<img src="assets/img/g-play.png" alt="blog" className="img-fluid" />
-									</Link>
-								</li>
-								<li>
-									<Link to="#" className="t-link">
-										<img src="assets/img/i-store.png" alt="blog" className="img-fluid" />
-									</Link>
-								</li>
-							</ul>
-						</div> */}
 							</div>
 						</div>
 					</div>

@@ -3,6 +3,7 @@ NOTE :::the issue that without internet you are not abke to acces db,,,setup the
 # Defects
 - remove the box shadow from dropdons in navbar in mobile view
 - add a nice loader for all the loading process (the new loader, implement that one),  make the same loader for both admin and front
+- if any of the resulted productas is clicked on search prod than the search bar should close and overlay shoul be removed
 - on order page show loader when fetching the order
 - recipt url get expirewd after a period , maybe the recipt can be copied to a canvas or img and store in server
 - remove to cart isnt rel time ,,no showng deleted items
@@ -105,7 +106,7 @@ https://dr5hn.github.io/countries-states-cities-database/
 
 
 
-# CATEGORY [architect]
+# CATEGORY [architecture]
 - about subcategory,,in each categoyr documnet there shoudl be field 'subcategory',,and this subcategory-- this will help in to show the heirrachy of categories,,
 - but the subcategoires will have their own document in categories collection and their sub will be empty
 - these category and subcategory can have similar products

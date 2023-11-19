@@ -1168,10 +1168,9 @@ input[type="number"]::-webkit-outer-spin-button {
 .description h5 {
   text-decoration: underline;
 }
-
 .description li {
   display: flex;
-  text-wrap: nowrap;
+  text-wrap: wrap;
 }
 .description .disc {
   transform: translateX(-12px);
@@ -2364,7 +2363,7 @@ main {
   .ci-total,
   .ci-quantity {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
   }
   .ci-quantity div {
     margin-right: -4px;
@@ -2465,7 +2464,7 @@ main {
   }
 
   .oi-details {
-    justify-content: end !important;
+    justify-content: flex-end !important;
   }
   .oi-details > div {
     width: fit-content;
@@ -2509,7 +2508,7 @@ main {
   }
   .wi-price {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
   }
   .wi-stock {
     position: absolute;

@@ -71,13 +71,13 @@ const OrderList = () => {
               <h6 className='text-center my-5 d-flex justify-content-center align-items-center'>My Cart&nbsp;
                 <i className='fa fa-box-open text-warning mt-1'></i>
               </h6>
-              <div class="row justify-content-center">
-                <div class="col-lg-9 t-mb-30 mb-lg-0 theSection" >
-                  <div class="row ">
-                    <div class="col-12">
-                      <div class="row ol-holder">
+              <div className="row justify-content-center">
+                <div className="col-lg-9 t-mb-30 mb-lg-0 theSection" >
+                  <div className="row ">
+                    <div className="col-12">
+                      <div className="row ol-holder">
                         <div className='row mb-3 p-2 pb-0 border-bottom oli-heading'>
-                          <div class="col-md-4">
+                          <div className="col-md-4">
                             <div className='row justify-content-center'>
                               <div className='col-md-4 text-center'>
                                 <h6>
@@ -87,25 +87,25 @@ const OrderList = () => {
                               <div className='col-md-4 '></div>
                             </div>
                           </div>
-                          <div class="col-md-8">
+                          <div className="col-md-8">
                             <div className='d-flex flex-column justify-content-between h-100'>
                               <div className='row d-flex justify-content-between'>
-                                <div class="col-md-2 text-center">
+                                <div className="col-md-2 text-center">
                                   <h6>
                                     Total
                                   </h6>
                                 </div>
-                                <div class="col-md-2 text-center">
+                                <div className="col-md-2 text-center">
                                   <h6>
                                     Payment status
                                   </h6>
                                 </div>
-                                <div class="col-md-2 text-center">
+                                <div className="col-md-2 text-center">
                                   <h6>
                                     Receipt
                                   </h6>
                                 </div>
-                                <div class="col-md-2">
+                                <div className="col-md-2">
                                   <h6 className='text-end'>Ordered at</h6>
                                 </div>
                               </div>
@@ -117,7 +117,7 @@ const OrderList = () => {
                           return (
                             <>
                               <div key={x._id} className='row p-2 align-items-center oli' >
-                                <div class="col-md-4 oli-images">
+                                <div className="col-md-4 oli-images">
                                   <div className='row justify-content-center'>
                                     <div className='col-md-4 '>
                                       <Link className='d-flex flex-wrap order-lis-imgs' to={`/orders/${x.orderId}`}>
@@ -133,14 +133,14 @@ const OrderList = () => {
                                         })}
                                       </Link>
                                     </div>
-                                    <Link class="col-md-4" to={`/orders/${x.orderId}`}></Link>
+                                    <Link className="col-md-4" to={`/orders/${x.orderId}`}></Link>
                                   </div>
                                 </div>
 
-                                <div class="col-md-8 oli-details-container">
+                                <div className="col-md-8 oli-details-container">
                                   <div className='d-flex flex-column justify-content-between h-100'>
                                     <div className='row d-flex justify-content-between oli-details'>
-                                      <div class="col-md-2">
+                                      <div className="col-md-2">
                                         <Link className='d-flex align-items-end flex-column' to={`/orders/${x.orderId}`} style={{ width: "fit-content", margin: "auto" }}>
                                           <section>
                                             <span style={{ fontSize: "12px" }}>&#8377;</span>
@@ -148,21 +148,21 @@ const OrderList = () => {
                                           </section>
                                         </Link>
                                       </div>
-                                      <div class="col-md-2 text-center">
+                                      <div className="col-md-2 text-center">
                                         {x.payment_status === "paid" ? <span className='text-success'>Paid</span>
                                           : <span className='text-danger'>Failed</span>}
                                       </div>
 
-                                      <div class="col-md-2 text-center">
+                                      <div className="col-md-2 text-center">
                                         {x?.hasOwnProperty('receiptUrl') ? <a href={x?.receiptUrl} >View</a> : "-"}
                                       </div>
 
-                                      <div class="col-md-2 ">
+                                      <div className="col-md-2 ">
                                         <section className='text-end'>{getDateStr(x.createdAt)}</section>
 
                                         {/* <div className='d-flex justify-content-end mt-2 ' style={{ marginRight: "-41px" }}>
                                       <u><span
-                                        className='me-4 pointer'>Remove <i class="fa fa-trash fa-sm "></i></span></u>
+                                        className='me-4 pointer'>Remove <i className="fa fa-trash fa-sm "></i></span></u>
                                     </div> */}
                                       </div>
 
@@ -175,7 +175,7 @@ const OrderList = () => {
                               <div className='d-flex justify-content-end mb-3 border-bottom pb-3 oli-divider'>
                                 {/* <u><span
                               // onClick={() => removeFromCart(x._id)} 
-                              className='me-4 pointer'>Remove <i class="fa fa-trash fa-sm"></i></span></u> */}
+                              className='me-4 pointer'>Remove <i className="fa fa-trash fa-sm"></i></span></u> */}
                               </div>
                             </>
                           )
@@ -191,7 +191,7 @@ const OrderList = () => {
             </div>
             :
             <div className='d-flex justify-content-center align-items-center' style={{ height: "70vh" }}>
-              <div class="custom-loader"></div>
+              <div className="custom-loader"></div>
             </div>)
         )
         :

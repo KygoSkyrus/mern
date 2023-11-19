@@ -73,7 +73,7 @@ const RealtedProducts = () => {
                   return (
                     <div className='col-md-6 col-lg-4'>
                       <div className='card2 card m-2 p-3 withborder'>
-                        {/* {i + 1 === randomNum && <div class="card-tag">New Product</div>} */}
+                        {/* {i + 1 === randomNum && <div className="card-tag">New Product</div>} */}
                         <div style={{ background: "#fff", height: "100%", minHeight: "200px", objectFit: "cover", display: "grid", placeItems: "center" }} className='rounded'>
                           <img src={x.image} className="card-img-top img-fluid" alt="..." />
                         </div>
@@ -81,8 +81,8 @@ const RealtedProducts = () => {
                           {/* this is not needed the caegory,,instead at the top show the whole heirarchy */}
                           <section className='product-catagory'>{x.category}</section>
                           <h5 className='title' title={x.name}><a href={`/product/${x._id}`}>{x.name}</a></h5>
-                          <div class="product-bottom-details">
-                            <div class="product-price">
+                          <div className="product-bottom-details">
+                            <div className="product-price">
                               {x.discount !== 0 &&
                                 <>
                                   <span className='extra-small' style={{ color: "#ec3b3b" }}>&#8377;</span>
@@ -101,9 +101,9 @@ const RealtedProducts = () => {
                                 </span>
                               }
                             </div>
-                            <div class="product-links">
+                            <div className="product-links">
                               {/* <span onClick={() => updatewishlist(x._id)} title={wishlistItems?.includes(x._id)? "Remove from wishlist":"Add to wishlist"}><i class={`fa fa-heart ${wishlistItems?.includes(x._id) && "text-danger"}`}></i></span>
-                                                        <span onClick={()=>addToCart(x._id)}><i class="fa fa-shopping-cart"></i></span> */}
+                                                        <span onClick={()=>addToCart(x._id)}><i className="fa fa-shopping-cart"></i></span> */}
                             </div>
                           </div>
                         </div>

@@ -106,11 +106,11 @@ const User = () => {
                 <div className='container my-5 user-form py-3 rounded'>
 
                     <section className='text-primary skip'>Skip for later</section>
-                    <div class="row my-4 user-form-holder">
-                        <div class="col-md-4 align-self-end" >
+                    <div className="row my-4 user-form-holder">
+                        <div className="col-md-4 align-self-end" >
                             <div className='row'>
                                 <div className='col-md-9 m-auto text-center'>
-                                    <img src={userDetail?.avtar} alt="" class="img-fluid t-minw-215 rounded" style={{ maxHeight: "223px", width: "223px" }} />
+                                    <img src={userDetail?.avtar} alt="" className="img-fluid t-minw-215 rounded" style={{ maxHeight: "223px", width: "223px" }} />
                                     <h5 className='my-2 mb-3 text-capitalize'>{userDetail?.firstname}&nbsp;{userDetail?.lastname}</h5>
                                         <button className={`w-100 signout-btn ${window.outerWidth>768 && " btn btn-outline-danger"}`} onClick={signOut}>{window.outerWidth>768 ?"Sign out":<i className='fa fa-sign-out-alt'></i>}</button>
                                 </div>
@@ -118,40 +118,40 @@ const User = () => {
 
                         </div>
 
-                        <div class="col-md-8 pe-5" >
+                        <div className="col-md-8 pe-5" >
 
-                            <form class="row g-3" >
-                                <div class="col-md-6">
-                                    <label for="inputEmail" class="form-label">First name</label>
-                                    <input type="text" value={userDetail?.firstname} class="form-control" id="inputEmail" style={{ cursor: "not-allowed" }} />
+                            <form className="row g-3" >
+                                <div className="col-md-6">
+                                    <label for="inputEmail" className="form-label">First name</label>
+                                    <input type="text" value={userDetail?.firstname} className="form-control" id="inputEmail" style={{ cursor: "not-allowed" }} />
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="inputPassword" class="form-label">Last name</label>
-                                    <input type="text" value={userDetail?.lastname} class="form-control" id="inputPassword" style={{ cursor: "not-allowed" }} />
+                                <div className="col-md-6">
+                                    <label for="inputPassword" className="form-label">Last name</label>
+                                    <input type="text" value={userDetail?.lastname} className="form-control" id="inputPassword" style={{ cursor: "not-allowed" }} />
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="inputEmail" class="form-label">Email</label>
-                                    <input type="email" value={userDetail?.email} class="form-control" id="inputEmail" style={{ cursor: "not-allowed" }} />
+                                <div className="col-md-6">
+                                    <label for="inputEmail" className="form-label">Email</label>
+                                    <input type="email" value={userDetail?.email} className="form-control" id="inputEmail" style={{ cursor: "not-allowed" }} />
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="inputPhone" class="form-label">Phone</label>
-                                    <input type="number" name='phone' class="form-control" id="inputPhone" value={address.phone} onChange={e => setAddress({ ...address, phone: e.target.value })} />
+                                <div className="col-md-6">
+                                    <label for="inputPhone" className="form-label">Phone</label>
+                                    <input type="number" name='phone' className="form-control" id="inputPhone" value={address.phone} onChange={e => setAddress({ ...address, phone: e.target.value })} />
                                 </div>
-                                {/* <div class="col-md-6">
-                        <label for="inputPassword4" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="inputPassword4" />
+                                {/* <div className="col-md-6">
+                        <label for="inputPassword4" className="form-label">Password</label>
+                        <input type="password" className="form-control" id="inputPassword4" />
                     </div> */}
-                                <div class="col-6">
-                                    <label for="inputAddress" class="form-label">House/Apartment</label>
-                                    <input type="text" name='house' class="form-control" id="inputAddress" placeholder="" value={address.house} onChange={e => setAddress({ ...address, house: e.target.value })} />
+                                <div className="col-6">
+                                    <label for="inputAddress" className="form-label">House/Apartment</label>
+                                    <input type="text" name='house' className="form-control" id="inputAddress" placeholder="" value={address.house} onChange={e => setAddress({ ...address, house: e.target.value })} />
                                 </div>
-                                <div class="col-6">
-                                    <label for="inputAddress" class="form-label">Street/Locality</label>
-                                    <input type="text" name='street' class="form-control" id="inputAddress" placeholder="" value={address.street} onChange={e => setAddress({ ...address, street: e.target.value })} />
+                                <div className="col-6">
+                                    <label for="inputAddress" className="form-label">Street/Locality</label>
+                                    <input type="text" name='street' className="form-control" id="inputAddress" placeholder="" value={address.street} onChange={e => setAddress({ ...address, street: e.target.value })} />
                                 </div>
-                                <div class="col-md-4">
-                                    <label for="inputState" class="form-label">State</label>
-                                    <select id="inputState" class="form-select" name='state' value={address.state} onChange={e => setAddress({ ...address, state: e.target.value })}>
+                                <div className="col-md-4">
+                                    <label for="inputState" className="form-label">State</label>
+                                    <select id="inputState" className="form-select" name='state' value={address.state} onChange={e => setAddress({ ...address, state: e.target.value })}>
                                         <option selected>Select state</option>
                                         {states.map(x => {
                                             return (
@@ -160,9 +160,9 @@ const User = () => {
                                         })}
                                     </select>
                                 </div>
-                                <div class="col-md-4">
-                                    <label for="inputCity" class="form-label">City</label>
-                                    <select id="inputCity" name='city' class="form-select" value={address.city} onChange={e => setAddress({ ...address, city: e.target.value })}>
+                                <div className="col-md-4">
+                                    <label for="inputCity" className="form-label">City</label>
+                                    <select id="inputCity" name='city' className="form-select" value={address.city} onChange={e => setAddress({ ...address, city: e.target.value })}>
                                         <option selected>Select City</option>
                                         {data[address.state]?.map(x => {
                                             return (
@@ -171,24 +171,24 @@ const User = () => {
                                         })}
                                     </select>
                                 </div>
-                                <div class="col-md-2">
-                                    <label for="inputZip" class="form-label">Zip</label>
-                                    <input type="text" name='pincode' class="form-control" id="inputZip" value={address.pincode} onChange={e => setAddress({ ...address, pincode: e.target.value })} />
+                                <div className="col-md-2">
+                                    <label for="inputZip" className="form-label">Zip</label>
+                                    <input type="text" name='pincode' className="form-control" id="inputZip" value={address.pincode} onChange={e => setAddress({ ...address, pincode: e.target.value })} />
                                 </div>
-                                <div class="col-md-2">
-                                    <label for="inputZip" class="form-label">Country</label>
-                                    <input type="text" value="India" name='country' class="form-control" id="inputZip" style={{ cursor: "not-allowed" }} />
+                                <div className="col-md-2">
+                                    <label for="inputZip" className="form-label">Country</label>
+                                    <input type="text" value="India" name='country' className="form-control" id="inputZip" style={{ cursor: "not-allowed" }} />
                                 </div>
-                                {/* <div class="col-12">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck" />
-                            <label class="form-check-label" for="gridCheck">
+                                {/* <div className="col-12">
+                        <div className="form-check">
+                            <input className="form-check-input" type="checkbox" id="gridCheck" />
+                            <label className="form-check-label" for="gridCheck">
                                 Check me out
                             </label>
                         </div>
                     </div> */}
-                                <div class="col-12">
-                                    <button type="button" class="btn btn-outline-warning w-100" onClick={updateAddress} >Update</button>
+                                <div className="col-12">
+                                    <button type="button" className="btn btn-outline-warning w-100" onClick={updateAddress} >Update</button>
                                 </div>
                             </form>
                         </div>

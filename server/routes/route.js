@@ -40,9 +40,41 @@ const authenticateUser = async (req, res, next) => {
 
     //this is for verifyng user and storing the user in request so the controlleer function dont have to access that from db again
     const { _id } = jwt.verify(token, process.env.SECRETKEY);
-    req.user = await USER.findOne({ _id })
+    let user = await USER.findOne({ _id }).populate('cartProducts')//populating field by mongoose virtual
+    if (!user) {
+        return res.status(404).json({ message: 'User not found.' });
+    }
+    req.user = user;
     next();
 };
+
+
+const authenticateAdmin = async (req, res, next) => {
+    const token = req.cookies.jwt;
+    if (!token)
+        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
+
+    //this is for verifyng user and storing the user in request so the controlleer function dont have to access that from db again
+    const { _id } = jwt.verify(token, process.env.SECRETKEY);
+    let user = await USER.findOne({ _id }).populate('cartProducts')//populating field by mongoose virtual
+    if (!user) {
+        return res.status(404).json({ message: 'User not found.' });
+    }
+
+    if(user.role!=="admin" && user.email!==process.env.ADMIN_ID){
+        return res.status(404).json({ message: 'Authentication failed!!!' });
+    }
+
+    req.user = user;//this may not be needed for admin
+    next();
+};
+
+/***********************************************************************
+ * 
+ ***************************** @USER_APIs ******************************
+ *
+***********************************************************************/
+
 
 
 
@@ -62,10 +94,10 @@ router.get('/api/getUserInfo', authenticateUser, async (req, res) => {
         //   .populate('wishlist.productId');
 
         //populating by mongoose virtual
-        const user = await USER.findById(decoded._id).populate('cartProducts');
-        if (!user) {
-            return res.status(404).json({ message: 'User not found.' });
-        }
+        // const user = await USER.findById(decoded._id).populate('cartProducts');
+        // if (!user) {
+        //     return res.status(404).json({ message: 'User not found.' });
+        // }
 
         res.status(200).json({ message: 'Access granted.', is_user_logged_in: true, user });
     } catch (error) {
@@ -112,10 +144,13 @@ router.post('/api/signup', async (req, res) => {
         //this and next cookie creatingis same as in signin,,create a commn function for this
         const token = await user.generateAuthToken();
         //console.log(token);
+        //add secure key
         res.cookie('jwt', token, {
             expires: new Date(Date.now() + 10800000),
-            httpOnly: true
+            httpOnly: true,
+            secure: process.env.NODE_ENV !== "development",
         });
+        //email may not be needed to be stored
         res.cookie('email', email, {
             expires: new Date(Date.now() + 10800000),
             httpOnly: true
@@ -170,33 +205,25 @@ router.post('/api/signin', async (req, res) => {
 
 //Update user's address
 router.post('/api/updatedaddress', authenticateUser, async (req, res) => {
-    const token = req.cookies.jwt;
+    // const token = req.cookies.jwt;
     try {
         const { address } = req.body;
         console.log('eueuue', address)
-        const decoded = jwt.verify(token, process.env.SECRETKEY);
+        // const decoded = jwt.verify(token, process.env.SECRETKEY);
 
         //this part can also be move to middleware
-        const user = await USER.findById(decoded._id);
-        if (!user) {
-            return res.status(404).json({ message: 'User not found.' });
-        }
-
-
-        // if()
+        // const user = await USER.findById(decoded._id);
+        // if (!user) {
+        //     return res.status(404).json({ message: 'User not found.' });
+        // }
 
         let updatedUser;
-
         updatedUser = await USER.findByIdAndUpdate(
             decoded._id,
-            { address: address, phone: (user.phone !== address.phone) ? address.phone : user.phone },
+            { address: address, phone: (req.user.phone !== address.phone) ? address.phone : req.user.phone },
             { new: true }
         ).populate('cartProducts');
         res.status(200).json({ message: 'User details updated.', user: updatedUser });
-
-
-
-
     } catch (err) {
         console.log(err)
         res.status(500).json({ message: 'Internal server error.' });
@@ -208,13 +235,13 @@ router.post('/api/updatedaddress', authenticateUser, async (req, res) => {
 
 /*********************************** CART ***********************************/
 router.post('/api/addtocart', authenticateUser, async (req, res) => {
-    const token = req.cookies.jwt;
+    // const token = req.cookies.jwt;
 
     try {
         const { productId } = req.body;
-        const decoded = jwt.verify(token, process.env.SECRETKEY);
+        // const decoded = jwt.verify(token, process.env.SECRETKEY);
 
-        const user = await USER.findById(decoded._id);
+        // const user = await USER.findById(decoded._id);
         //  if (!user) {
         //    return res.status(404).json({ message: 'User not found.' });
         //  }
@@ -225,19 +252,19 @@ router.post('/api/addtocart', authenticateUser, async (req, res) => {
         //  }
 
         // Find the product in the user's cart
-        const cartItem = user.cart.find(item => item.productId.toString() === productId);
+        const cartItem = req.user.cart.find(item => item.productId.toString() === productId);
 
         if (cartItem) {
             // If the product is already in the cart, increment the quantity
             cartItem.quantity += 1;
         } else {
             // If the product is not in the cart, add it with quantity 1
-            user.cart.push({ productId });
+            req.user.cart.push({ productId });
         }
 
         // Save the updated user
-        await user.save()
-        const populatedDoc = await USER.findById(decoded._id).populate('cartProducts');
+        await req.user.save()
+        const populatedDoc = await USER.findById(req.user._id).populate('cartProducts');
 
         res.status(200).json({ message: 'Product added to cart.', user: populatedDoc });
 
@@ -247,18 +274,18 @@ router.post('/api/addtocart', authenticateUser, async (req, res) => {
     }
 })
 router.post('/api/updatecart', authenticateUser, async (req, res) => {
-    const token = req.cookies.jwt;
+    // const token = req.cookies.jwt;
 
     try {
         const cartItems = req.body;
-        const decoded = jwt.verify(token, process.env.SECRETKEY);
+        // const decoded = jwt.verify(token, process.env.SECRETKEY);
         console.log('caritem', cartItems)
 
 
-        const user = await USER.findById(decoded._id);
+        // const user = await USER.findById(decoded._id);
 
         //this is not working 
-        let theCart = user.cart;
+        let theCart = req.user.cart;
         //console.log('thecart before',theCart)
         const updatedCartItems = theCart.map((existingCartItem) => {
 
@@ -288,8 +315,6 @@ router.post('/api/updatecart', authenticateUser, async (req, res) => {
             }
         });
 
-        //console.log('thecart after',theCart)
-
         // console.log('updatedUser--',updatedCartItems)
         const theUser = await USER.updateOne(
             { _id: decoded._id },
@@ -310,15 +335,15 @@ router.post('/api/updatecart', authenticateUser, async (req, res) => {
 })
 //remove from cart
 router.post('/api/removefromcart', authenticateUser, async (req, res) => {
-    const token = req.cookies.jwt;
+    // const token = req.cookies.jwt;
 
     try {
         const { productId } = req.body;
-        const decoded = jwt.verify(token, process.env.SECRETKEY);
+        // const decoded = jwt.verify(token, process.env.SECRETKEY);
 
         // Update the user's cart by removing the specified product
         const updatedUser = await USER.findByIdAndUpdate(
-            decoded._id,
+            req.user._id,
             { $pull: { cart: { productId } } },
             { new: true }
         ).populate('cartProducts');//to send the user populated with cart field
@@ -336,19 +361,19 @@ router.post('/api/removefromcart', authenticateUser, async (req, res) => {
 });
 //get cart items
 router.get('/api/getcartitems', authenticateUser, async (req, res) => {
-    const token = req.cookies.jwt;
+    // const token = req.cookies.jwt;
     //thi is common for most user actions ,so create a middleware function instead
     try {
 
-        const decoded = jwt.verify(token, process.env.SECRETKEY);
-        const user = await USER.findById(decoded._id).populate('cartProducts');
+        // const decoded = jwt.verify(token, process.env.SECRETKEY);
+        // const user = await USER.findById(decoded._id).populate('cartProducts');
 
-        if (!user) {
-            return res.status(404).json({ message: 'User not found.' });
-        }
+        // if (!user) {
+        //     return res.status(404).json({ message: 'User not found.' });
+        // }
 
         // Token is valid, user is signed in
-        res.status(200).json({ message: 'Access granted.', cartItems: user.cartProducts });
+        res.status(200).json({ message: 'Access granted.', cartItems: req.user.cartProducts });
 
     } catch (error) {
         console.error('Error removing product from cart:', error);
@@ -363,15 +388,15 @@ router.get('/api/getcartitems', authenticateUser, async (req, res) => {
 /*********************************** WISHLIST ***********************************/
 //adding and removing from wishlist
 router.post('/api/updatewishlist', authenticateUser, async (req, res) => {
-    const token = req.cookies.jwt;
+    // const token = req.cookies.jwt;
     try {
         const { productId } = req.body;
-        const decoded = jwt.verify(token, process.env.SECRETKEY);
+        // const decoded = jwt.verify(token, process.env.SECRETKEY);
 
-        const user = await USER.findById(decoded._id);
-        if (!user) {
-            return res.status(404).json({ message: 'User not found.' });
-        }
+        // const user = await USER.findById(decoded._id);
+        // if (!user) {
+        //     return res.status(404).json({ message: 'User not found.' });
+        // }
 
         // const product = await PRODUCT.findById(productId);
         //  if (!product) {
@@ -379,14 +404,14 @@ router.post('/api/updatewishlist', authenticateUser, async (req, res) => {
         //  }
 
         // Find the product in the user's cart
-        const wishlistItem = user.wishlist.find(item => item.toString() === productId);
+        const wishlistItem = req.user.wishlist.find(item => item.toString() === productId);
         console.log('wishlis', wishlistItem)
 
         let updatedUser;
         if (wishlistItem) {
             //removing the product from wishlist if already there
             updatedUser = await USER.findByIdAndUpdate(
-                decoded._id,
+                req.decoded._id,
                 { $pull: { wishlist: productId } },
                 { new: true }
             ).populate('cartProducts');
@@ -394,30 +419,28 @@ router.post('/api/updatewishlist', authenticateUser, async (req, res) => {
         } else {
             //adding the product to wishlist
             updatedUser = await USER.findByIdAndUpdate(
-                decoded._id,
+                req.decoded._id,
                 { $push: { wishlist: productId } },
                 { new: true }
             ).populate('cartProducts');
             res.status(200).json({ message: 'Product added to wishlist.', user: updatedUser });
         }
 
-
-
     } catch (err) {
         console.log(err)
         res.status(500).json({ message: 'Internal server error.' });
     }
 })
-//remove from cart
+//remove from cart and add to wishlist
 router.post('/api/movetowishlist', authenticateUser, async (req, res) => {
     //this is mostly same as removefromcart just the adding to wishlist part
-    const token = req.cookies.jwt;
+    // const token = req.cookies.jwt;
     try {
         const { productId } = req.body;
-        const decoded = jwt.verify(token, process.env.SECRETKEY);
+        // const decoded = jwt.verify(token, process.env.SECRETKEY);
 
         const updatedUser = await USER.findByIdAndUpdate(
-            decoded._id,
+            req.user._id,
             {
                 $pull: { cart: { productId } },//removing from cart
                 $push: { wishlist: productId }//adding to wishlist
@@ -438,7 +461,7 @@ router.post('/api/movetowishlist', authenticateUser, async (req, res) => {
 });
 //get wishlist items
 router.post('/api/getwishlistitems', authenticateUser, async (req, res) => {
-    const token = req.cookies.jwt;//the ids should be reterived from here and then the products should be queried/ ids are hefre bcz the wishlist array is being populated for every refresh just like cart  
+    // const token = req.cookies.jwt;//the ids should be reterived from here and then the products should be queried/ ids are hefre bcz the wishlist array is being populated for every refresh just like cart  
     const { ids } = req.body
 
     try {
@@ -453,8 +476,33 @@ router.post('/api/getwishlistitems', authenticateUser, async (req, res) => {
     }
 
 })
-/*********************************** WISHLIST ***********************************/
 
+/*********************************** ORDER ***********************************/
+router.get('/api/getorders', authenticateUser, async (req, res) => {
+
+    const { orderId } = req.query
+    // const token = req.cookies.jwt;
+
+
+    try {
+        // const decoded = jwt.verify(token, process.env.SECRETKEY);
+
+        let response = await USER.findOne({ _id: req.user._id }, { orders: 1, _id: 0 })
+        const order = response?.orders.find(item => item.orderId === orderId)
+        if (orderId) {
+            return res.status(200).json({ order });
+        } else {
+            return res.status(200).json({ user: response });
+        }
+
+
+    } catch (error) {
+        console.error('Error getting items from wishlist', error);
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+
+})
+/*********************************** ORDER ***********************************/
 
 
 /*********************************** CHECKOUT  ***********************************/
@@ -499,7 +547,7 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
         //meta data has 5 keys for orders details and rest 45 for products
         //maybe we wont need these five to be store in metadat as the session object will be created right here
         productList.orderId = orderId
-        productList.userId = decoded._id
+        productList.userId = decoded._id//should be req.user._id here
         productList.tax = data.tax
         productList.shipping = data.shipping
         productList.total = data.grandTotal
@@ -646,24 +694,15 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
 
 });
 
-//   GET /v1/checkout/sessions
-//using this uoy cann show all the checkout session whteher failed or succeed in admin panel
-
-router.get('/api/getcheckoutsession', async (req, res) => {
+router.get('/api/getcheckoutsession',authenticateUser, async (req, res) => {
     const { orderId } = req.query
-    const token = req.cookies.jwt;
-
     console.log('orderId', orderId)
-    if (!token) {
-        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
-    }
+
     try {
         const decoded = jwt.verify(token, process.env.SECRETKEY);
 
-        let response = await USER.findOne({ _id: decoded._id }, { checkoutSession: 1, _id: 0 })
-
         //extracting the session id mapped with order id
-        const checkoutSession = response?.checkoutSession.find(item => item.orderId === orderId)
+        const checkoutSession = req.user?.checkoutSession.find(item => item.orderId === orderId)
         console.log('checkoutSession', checkoutSession)
 
         const session = await stripe.checkout.sessions.retrieve(
@@ -754,32 +793,14 @@ router.get('/api/getcheckoutsession', async (req, res) => {
 
 
 
-/*********************************** ORDERS ***********************************/
-router.get('/api/getorders', authenticateUser, async (req, res) => {
-
-    const { orderId } = req.query
-    const token = req.cookies.jwt;
-
-
-    try {
-        const decoded = jwt.verify(token, process.env.SECRETKEY);
-
-        let response = await USER.findOne({ _id: decoded._id }, { orders: 1, _id: 0 })
-        const order = response?.orders.find(item => item.orderId === orderId)
-        if (orderId) {
-            return res.status(200).json({ order });
-        } else {
-            return res.status(200).json({ user: response });
-        }
+/***********************************************************************
+ * 
+ ***************************** @USER_APIs ******************************
+ *
+***********************************************************************/
 
 
-    } catch (error) {
-        console.error('Error getting items from wishlist', error);
-        res.status(500).json({ message: 'Internal server error.' });
-    }
 
-})
-/*********************************** ORDERS ***********************************/
 
 
 
@@ -816,6 +837,7 @@ router.get('/api/admin/getorders', async (req, res) => {
 
 })
 
+//admin rights only
 router.get('/api/admin/getusers', async (req, res) => {
 
     // const { orderId } = req.query
@@ -861,12 +883,84 @@ router.post("/api/admin/productvisibility", async (req, res) => {
         console.log(err);
     }
 });
+
+//this one should has authenitcate user mididleware for admin only
+router.post('/api/admin/addproducts', async (req, res) => {
+
+    const { name, price, description, category, image, stock } = req.body;
+    //console.log('dd', name, price, description, category, image, stock)
+
+    //const data= JSON.parse(req.body)
+
+    //here admin authnetication shopuld be done, all the modifications rights should be for admin only
+
+    const product = new PRODUCT({
+        name: name,
+        price: price,
+        description: description,
+        category: category,
+        image: image,
+        stock: stock,
+    })
+
+    product.save()
+        .then(response => {
+            console.log('response', response)
+            res.send({ is_product_added: true });
+        })
+        .catch(err => {
+            console.log(err)
+            res.send({ is_product_added: false });
+        })
+
+})
+
+router.post('/api/admin/editproduct', async (req, res) => {
+
+    const { name, price, description, category, image, stock, discount, id } = req.body;
+    console.log('dd', name, price, description, category, image, stock, discount, id)
+
+    //const data= JSON.parse(req.body)
+
+    try {
+        const result = await PRODUCT.findOneAndUpdate({ _id: id }, { $set: { name, price, description, category, image, stock, discount } }, { new: true })
+        if (result) {
+            res.send({ isProductEdited: true })
+        } else {
+            res.send({ isProductEdited: false })
+        }
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+router.post('/api/admin/addcategory', async (req, res) => {
+
+    const { name, subCategory } = req.body;
+    console.log('cat api', name, subCategory)
+
+
+    const catagory = new CATEGORY({
+        name: name,
+        subCategory: subCategory
+    })
+
+    catagory.save()
+        .then(response => {
+            res.send({ data: true });
+        })
+        .catch(err => {
+            console.log(err)
+            res.send({ data: false });
+        })
+
+})
 //ADMIN API *****************************************************************************
 
 
 
-
-/*********************************** PRODUCTS ***********************************/
+// APIs that dont need authentication so that everyone can access the basic features
+/*********************************** COMMON APIs ***********************************/
 router.get('/api/getproducts', async (req, res) => {
 
     //some authentication should be here too
@@ -919,81 +1013,6 @@ router.get('/api/getprodbyid', async (req, res) => {
 
 })
 
-router.post('/api/addproducts', async (req, res) => {
-
-    const { name, price, description, category, image, stock } = req.body;
-    //console.log('dd', name, price, description, category, image, stock)
-
-    //const data= JSON.parse(req.body)
-
-    //here admin authnetication shopuld be done, all the modifications rights should be for admin only
-
-    const product = new PRODUCT({
-        name: name,
-        price: price,
-        description: description,
-        category: category,
-        image: image,
-        stock: stock,
-    })
-
-    product.save()
-        .then(response => {
-            console.log('response', response)
-            res.send({ is_product_added: true });
-        })
-        .catch(err => {
-            console.log(err)
-            res.send({ is_product_added: false });
-        })
-
-})
-
-router.post('/api/editproduct', async (req, res) => {
-
-    const { name, price, description, category, image, stock, discount, id } = req.body;
-    console.log('dd', name, price, description, category, image, stock, discount, id)
-
-    //const data= JSON.parse(req.body)
-
-    try {
-        const result = await PRODUCT.findOneAndUpdate({ _id: id }, { $set: { name, price, description, category, image, stock, discount } }, { new: true })
-        if (result) {
-            res.send({ isProductEdited: true })
-        } else {
-            res.send({ isProductEdited: false })
-        }
-    } catch (error) {
-        console.log(error)
-    }
-})
-/*********************************** PRODUCTS ***********************************/
-
-
-
-/*********************************** CATEGORY ***********************************/
-router.post('/api/addcategory', async (req, res) => {
-
-    const { name, subCategory } = req.body;
-    console.log('cat api', name, subCategory)
-
-
-    const catagory = new CATEGORY({
-        name: name,
-        subCategory: subCategory
-    })
-
-    catagory.save()
-        .then(response => {
-            res.send({ data: true });
-        })
-        .catch(err => {
-            console.log(err)
-            res.send({ data: false });
-        })
-
-})
-
 router.get('/api/getcategory', async (req, res) => {
 
     await CATEGORY.find({})
@@ -1007,13 +1026,9 @@ router.get('/api/getcategory', async (req, res) => {
         })
 
 })
-/*********************************** CATEGORY ***********************************/
 
-
-
-//SEARCH QUERY-----------------------------------------------
-//NOTE::: this uses regex to get documents containing a specific word in db
 router.post("/api/searchprod", async (req, res) => {
+    //NOTE::: this uses regex to get documents containing a specific word in db
     const { value } = req.body;
     console.log("dgd", value)
 
@@ -1028,10 +1043,11 @@ router.post("/api/searchprod", async (req, res) => {
         console.log(err);
     }
 });
+/*********************************** COMMON APIs ***********************************/
 
 
 //deleting blog record
-router.post("/deleteblog", async (req, res) => {
+router.post("/deleteblog", authenticateAdmin, async (req, res) => {
     const details = req.body;
 
     try {

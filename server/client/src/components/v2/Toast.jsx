@@ -50,11 +50,11 @@ const Toast = () => {
       >
         {isSuccess ? (
           <span>
-            <i class="fa-solid fa-circle-check me-3"></i>
+            <i className="fa-solid fa-circle-check me-3"></i>
           </span>
         ) : (
           <span>
-            <i class="fa-solid fa-triangle-exclamation me-3"></i>
+            <i className="fa-solid fa-triangle-exclamation me-3"></i>
           </span>
         )}
 

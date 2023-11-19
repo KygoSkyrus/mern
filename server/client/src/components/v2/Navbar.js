@@ -195,7 +195,7 @@ const Navbar = () => {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <div class="menu-toggle is-active" id="mobile-menu"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
+            <div className="menu-toggle is-active" id="mobile-menu"><span className="bar"></span><span className="bar"></span><span className="bar"></span></div>
             {/* <span className="navbar-toggler-icon"></span> */}
           </button>
           <div
@@ -215,11 +215,11 @@ const Navbar = () => {
                   //onBlur={e => hideSearched(e)}
                   />
 
-                  <div class="search-dropdown display-none" id="searchdropdown">
+                  <div className="search-dropdown display-none" id="searchdropdown">
 
                     {searchedItems?.map(x => {
                       return (
-                        <section class="dropdown-item" key={x._id}>
+                        <section className="dropdown-item" key={x._id}>
                           <Link to={`/product/${x._id}`}>
                             <img className="me-3" src={x.image} alt="" height="50px" width="55px" />
                           </Link>
@@ -240,7 +240,7 @@ const Navbar = () => {
               <li className="nav-item position-relative dropdown">
                 <button
                   type="button"
-                  class="nav-link dropdown-toggle"
+                  className="nav-link dropdown-toggle"
                   id="dropdownCategory"
                   data-mdb-toggle="dropdown"
                   aria-expanded="false"
@@ -295,7 +295,7 @@ const Navbar = () => {
                                 data-index={i}
                               >
                                 {x.name}
-                                <ul class="child-category-m dropdown-menu shadow d-none"></ul>
+                                <ul className="child-category-m dropdown-menu shadow d-none"></ul>
                               </section>
                             </li>
                           );
@@ -345,7 +345,7 @@ const Navbar = () => {
                 <button
                   type="button"
                   // className="nav-link" id="dropdownCategory" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside"
-                  class="nav-link dropdown-toggle"
+                  className="nav-link dropdown-toggle"
                   id="profileDropdown"
                   data-mdb-toggle="dropdown"
                   aria-expanded="false"

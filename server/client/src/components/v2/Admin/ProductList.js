@@ -57,7 +57,7 @@ const Product = ({ details }) => {
             <th scope="row" className="align-middle">
                 <div className='text-center'> 
                     {/* <input className="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="..." /> */}
-                    <i class="fa fa-edit font-weight-100 pointer"  onClick={() => handlEditProduct(details)}></i>
+                    <i className="fa fa-edit font-weight-100 pointer"  onClick={() => handlEditProduct(details)}></i>
                 </div>
             </th>
 
