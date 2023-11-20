@@ -43,11 +43,11 @@ NOTE :::the issue that without internet you are not abke to acces db,,,setup the
 - have to addd the options for select actegoies in add prodduct also with the option to add super category
 - also check responsiveness betwwen 768-992
 - clear unneccsary stuff
-- add the part where user can add items to cart without logging in,,use cookies to store cart items
 
 
 
 # Wouldn't hurt to have (least priority)
+- add the part where user can add items to cart without logging in,,use cookies to store cart items
 - there can be a cicrle or whatever button for feedback at the bottom right asking for feedback for users overall experienece
 - make the images for product  go slide in slide no just disapper and display
 - can add on hover cart show cart items with two option of view cart and checkout oprtion (there is sample layout url also below somewhere)

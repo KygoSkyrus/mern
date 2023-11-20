@@ -151,8 +151,8 @@ userSchema.methods.generateAuthToken = async function () {
     try {
         let token = jwt.sign({ _id: this._id }, process.env.SECRETKEY);//generrates JWT token
         //this.tokens = this.tokens.concat({ token: token });//no need to save token in db
-        await this.save();
-        return token;
+        let user = await this.save();
+        return {token,user};
     } catch (err) {
         console.log(err);
     }

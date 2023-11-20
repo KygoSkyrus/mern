@@ -14,17 +14,12 @@ const User = () => {
 
 
     const dispatch = useDispatch();
-    const [user, setUser] = useState({})
     const userDetail = useSelector(state => state.user.user)
     const userLoggedIn = useSelector(state => state.user.isUserLoggedIn)
-
-    //console.log('jask', userDetail)
-
-
+    const [user, setUser] = useState({})
     const [address, setAddress] = useState({ house: '', street: '', state: '', city: '', pincode: '', phone: "" })
 
-
-
+    
     const updateAddress = () => {
         console.log('address---', address)
 
@@ -67,7 +62,7 @@ const User = () => {
     useEffect(() => {
         if (userDetail) {
             setUser({ ...user, email: userDetail.email, photo: userDetail.avtar, firstname: userDetail.firstname, lastname: userDetail.lastname })
-            setAddress({ house: userDetail.address.house, street: userDetail.address.street, state: userDetail.address.state, city: userDetail.address.city, pincode: userDetail.address.pincode, phone: userDetail.phone })
+            setAddress({ house: userDetail.address?.house, street: userDetail.address?.street, state: userDetail.address?.state, city: userDetail.address?.city, pincode: userDetail.address?.pincode, phone: userDetail.phone })
             console.log(user)
         } else {
             setUser(undefined)

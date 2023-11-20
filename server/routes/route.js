@@ -41,6 +41,8 @@ const authenticateUser = async (req, res, next) => {
     //this is for verifyng user and storing the user in request so the controlleer function dont have to access that from db again
     const { _id } = jwt.verify(token, process.env.SECRETKEY);
     let user = await USER.findOne({ _id }).populate('cartProducts')//populating field by mongoose virtual
+    //populating with regular populate which can cause performnace overhead
+    // const user = await USER.findById(decoded._id).populate('cart.productId').populate('wishlist.productId');
     if (!user) {
         return res.status(404).json({ message: 'User not found.' });
     }
@@ -52,17 +54,16 @@ const authenticateUser = async (req, res, next) => {
 const authenticateAdmin = async (req, res, next) => {
     const token = req.cookies.jwt;
     if (!token)
-        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
+        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false, isUserAuthenticated:false });
 
-    //this is for verifyng user and storing the user in request so the controlleer function dont have to access that from db again
     const { _id } = jwt.verify(token, process.env.SECRETKEY);
-    let user = await USER.findOne({ _id }).populate('cartProducts')//populating field by mongoose virtual
+    let user = await USER.findOne({ _id })
     if (!user) {
-        return res.status(404).json({ message: 'User not found.' });
+        return res.status(404).json({ message: 'User not found.',isUserAuthenticated:false });
     }
 
-    if(user.role!=="admin" && user.email!==process.env.ADMIN_ID){
-        return res.status(404).json({ message: 'Authentication failed!!!' });
+    if (user.role !== "admin" && user.email !== process.env.ADMIN_ID) {
+        return res.status(404).json({ message: 'Authentication failed!!!',isUserAuthenticated:false });
     }
 
     req.user = user;//this may not be needed for admin
@@ -79,29 +80,11 @@ const authenticateAdmin = async (req, res, next) => {
 
 
 /*********************************** USER ***********************************/
+//check if this api is needed to be called every time as every route has authentication  middleware //also make every route return user object maybe it will fullfilll this route's ojective completely
 router.get('/api/getUserInfo', authenticateUser, async (req, res) => {
-    const token = req.cookies.jwt;
-    //cookie timezone is fucked up,,
-    // console.log(new Date(Date.now() + 3600000))
     try {
-        const decoded = jwt.verify(token, process.env.SECRETKEY);
-        const { _id } = jwt.verify(token, process.env.SECRETKEY);
-        // Check if the token is expired
-
-        //populating with regular populate which can cause performnace overhead
-        // const user = await USER.findById(decoded._id)
-        //   .populate('cart.productId')
-        //   .populate('wishlist.productId');
-
-        //populating by mongoose virtual
-        // const user = await USER.findById(decoded._id).populate('cartProducts');
-        // if (!user) {
-        //     return res.status(404).json({ message: 'User not found.' });
-        // }
-
-        res.status(200).json({ message: 'Access granted.', is_user_logged_in: true, user });
+        res.status(200).json({ message: 'Access granted.', is_user_logged_in: true, user: req.user });
     } catch (error) {
-        console.log(error)
         res.status(401).json({ message: 'Invalid token.', is_user_logged_in: false });
     }
 });
@@ -109,54 +92,33 @@ router.get('/api/getUserInfo', authenticateUser, async (req, res) => {
 router.get('/api/signmeout', async (req, res) => {
     try {
         res.clearCookie('jwt')
-        res.clearCookie('email')
         res.status(200).json({ message: "User logged out!!!" })
     } catch (error) {
         res.status(500).json({ message: 'Internal server error.' });
     }
 })
 
-//i dont think jwt is doing anything here
 router.post('/api/signup', async (req, res) => {
 
     const { firstname, lastname, email, photo } = req.body;
-
-    //console.log(firstName, lastName, email, password);
-
-    // if (!firstName || !lastName || !email || !password) {
-    //     return res.status(422).json({ error: "fill all details" });
-    // }
 
     try {
         const userExist = await USER.findOne({ email: email });
 
         if (userExist) {
-            return res.status(422).json({ message: "User already exists!!! Try signing in instead", is_user_created: false, is_user_logged_in: false });
+            return res.status(422).json({ message: "User already exists!!! Try Signing in instead", is_user_created: false, is_user_logged_in: false });
         }
 
-        const user = new USER({ firstname: firstname, lastname: lastname, email: email, avtar: photo });
+        const newUser = new USER({ firstname: firstname, lastname: lastname, email: email, avtar: photo });
 
-        //hashing password
-
-        const newUser = await user.save();
-        console.log('dddd', newUser)
-
-        //this and next cookie creatingis same as in signin,,create a commn function for this
-        const token = await user.generateAuthToken();
-        //console.log(token);
-        //add secure key
+        const { token, user } = await newUser.generateAuthToken();
         res.cookie('jwt', token, {
             expires: new Date(Date.now() + 10800000),
             httpOnly: true,
             secure: process.env.NODE_ENV !== "development",
         });
-        //email may not be needed to be stored
-        res.cookie('email', email, {
-            expires: new Date(Date.now() + 10800000),
-            httpOnly: true
-        });
 
-        res.status(201).json({ message: "Account created successfully", is_user_created: true, is_user_logged_in: true, user: newUser })//send the user data
+        res.status(201).json({ message: "Account created successfully", is_user_created: true, is_user_logged_in: true, user })
 
     } catch (err) {
         console.log(err);
@@ -167,33 +129,17 @@ router.post('/api/signin', async (req, res) => {
 
     try {
         const { email } = req.body;
-
-        // if (!email || !password) {
-        //     return res.status(400).json({ error: "fill all details" });
-        // }
-
         const user = await USER.findOne({ email: email }).populate('cartProducts');
 
         if (user) {
-            // const isMatch = await bcrypt.compare(password, userLogin.password);
-
-            const token = await user.generateAuthToken();
-            //console.log(token);
-
+            const { token } = await user.generateAuthToken();
             res.cookie('jwt', token, {
                 expires: new Date(Date.now() + 10800000),
-                httpOnly: true
-            });
-            res.cookie('email', email, {
-                expires: new Date(Date.now() + 10800000),
-                httpOnly: true
+                httpOnly: true,
+                secure: process.env.NODE_ENV !== "development",
             });
 
-            res.status(200).json({ message: "User logged in successfully", is_user_logged_in: true, user });//send the user data alsong with the message
-            // if (!isMatch) {
-            //     res.status(400).json({ error: "invalid credentials" });
-            // } else {
-            // }
+            res.status(200).json({ message: "User logged in successfully", is_user_logged_in: true, user });//send the 
         } else {
             res.status(400).json({ message: "Account doesn't exists", is_user_logged_in: false, });
         }
@@ -694,7 +640,7 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
 
 });
 
-router.get('/api/getcheckoutsession',authenticateUser, async (req, res) => {
+router.get('/api/getcheckoutsession', authenticateUser, async (req, res) => {
     const { orderId } = req.query
     console.log('orderId', orderId)
 
@@ -806,6 +752,11 @@ router.get('/api/getcheckoutsession',authenticateUser, async (req, res) => {
 
 //ADMIN API *****************************************************************************
 //authenticate admin account too
+router.get('/api/admin/authentication', authenticateAdmin, async (req, res) => {
+    console.log('res.user',res.user)
+    res.status(200).json({message:"Admin Authentication Successfull!!!",isUserAuthenticated:true})
+})
+
 router.get('/api/admin/getorders', async (req, res) => {
     //this will get orders of all the users and not only one loggged in user
     //also chekc irst if the account accessing this route is admin only
