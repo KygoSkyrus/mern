@@ -38,7 +38,6 @@ const authenticateUser = async (req, res, next) => {
     if (!token)
         return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
 
-    //this is for verifyng user and storing the user in request so the controlleer function dont have to access that from db again
     const { _id } = jwt.verify(token, process.env.SECRETKEY);
     let user = await USER.findOne({ _id }).populate('cartProducts')//populating field by mongoose virtual
     //populating with regular populate which can cause performnace overhead
@@ -46,6 +45,8 @@ const authenticateUser = async (req, res, next) => {
     if (!user) {
         return res.status(404).json({ message: 'User not found.' });
     }
+
+    console.log('uueueue', user)
     req.user = user;
     next();
 };
@@ -54,16 +55,16 @@ const authenticateUser = async (req, res, next) => {
 const authenticateAdmin = async (req, res, next) => {
     const token = req.cookies.jwt;
     if (!token)
-        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false, isUserAuthenticated:false });
+        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false, isUserAuthenticated: false });
 
     const { _id } = jwt.verify(token, process.env.SECRETKEY);
     let user = await USER.findOne({ _id })
     if (!user) {
-        return res.status(404).json({ message: 'User not found.',isUserAuthenticated:false });
+        return res.status(404).json({ message: 'User not found.', isUserAuthenticated: false });
     }
 
     if (user.role !== "admin" && user.email !== process.env.ADMIN_ID) {
-        return res.status(404).json({ message: 'Authentication failed!!!',isUserAuthenticated:false });
+        return res.status(404).json({ message: 'Authentication failed!!!', isUserAuthenticated: false });
     }
 
     req.user = user;//this may not be needed for admin
@@ -75,7 +76,18 @@ const authenticateAdmin = async (req, res, next) => {
  ***************************** @USER_APIs ******************************
  *
 ***********************************************************************/
+router.get('/xx', async (req, res) => {
+    //655b706b0ad7052dc2ce74c8
 
+    // try {
+    //     let result = await USER.deleteOne({ _id: "655b706b0ad7052dc2ce74c8" })
+    //     if (result.deletedCount > 0) {
+    //         console.log('result', result)
+    //     }
+    // } catch (err) {
+    //     console.log(err);
+    // }
+})
 
 
 
@@ -101,6 +113,7 @@ router.get('/api/signmeout', async (req, res) => {
 router.post('/api/signup', async (req, res) => {
 
     const { firstname, lastname, email, photo } = req.body;
+    //need to handle more details when there is other methof of sign up other than google
 
     try {
         const userExist = await USER.findOne({ email: email });
@@ -149,23 +162,12 @@ router.post('/api/signin', async (req, res) => {
     }
 })
 
-//Update user's address
 router.post('/api/updatedaddress', authenticateUser, async (req, res) => {
-    // const token = req.cookies.jwt;
     try {
         const { address } = req.body;
-        console.log('eueuue', address)
-        // const decoded = jwt.verify(token, process.env.SECRETKEY);
 
-        //this part can also be move to middleware
-        // const user = await USER.findById(decoded._id);
-        // if (!user) {
-        //     return res.status(404).json({ message: 'User not found.' });
-        // }
-
-        let updatedUser;
-        updatedUser = await USER.findByIdAndUpdate(
-            decoded._id,
+        let updatedUser = await USER.findByIdAndUpdate(
+            req.user._id,
             { address: address, phone: (req.user.phone !== address.phone) ? address.phone : req.user.phone },
             { new: true }
         ).populate('cartProducts');
@@ -263,14 +265,14 @@ router.post('/api/updatecart', authenticateUser, async (req, res) => {
 
         // console.log('updatedUser--',updatedCartItems)
         const theUser = await USER.updateOne(
-            { _id: decoded._id },
+            { _id: req.user._id },
             { $set: { cart: theCart } }
         );
         console.log('theUser', theUser)
         //await USER.findByIdAndUpdate(decoded._id, { cart: updatedCartItems });
 
 
-        const populatedDoc = await USER.findById(decoded._id)//.populate('cartProducts');//cat=rtitems may not be needed here to populate
+        const populatedDoc = await USER.findById(req.user._id)//.populate('cartProducts');//cat=rtitems may not be needed here to populate
 
         res.status(200).json({ message: 'Quantity updated', user: populatedDoc });
 
@@ -357,7 +359,7 @@ router.post('/api/updatewishlist', authenticateUser, async (req, res) => {
         if (wishlistItem) {
             //removing the product from wishlist if already there
             updatedUser = await USER.findByIdAndUpdate(
-                req.decoded._id,
+                req.user._id,
                 { $pull: { wishlist: productId } },
                 { new: true }
             ).populate('cartProducts');
@@ -365,7 +367,7 @@ router.post('/api/updatewishlist', authenticateUser, async (req, res) => {
         } else {
             //adding the product to wishlist
             updatedUser = await USER.findByIdAndUpdate(
-                req.decoded._id,
+                req.user._id,
                 { $push: { wishlist: productId } },
                 { new: true }
             ).populate('cartProducts');
@@ -753,8 +755,8 @@ router.get('/api/getcheckoutsession', authenticateUser, async (req, res) => {
 //ADMIN API *****************************************************************************
 //authenticate admin account too
 router.get('/api/admin/authentication', authenticateAdmin, async (req, res) => {
-    console.log('res.user',res.user)
-    res.status(200).json({message:"Admin Authentication Successfull!!!",isUserAuthenticated:true})
+    console.log('res.user', res.user)
+    res.status(200).json({ message: "Admin Authentication Successfull!!!", isUserAuthenticated: true })
 })
 
 router.get('/api/admin/getorders', async (req, res) => {

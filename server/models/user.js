@@ -28,12 +28,12 @@ const userSchema = new Schema({
         default: ""
     },
     address: {
-        house: String,
-        street: String,
-        city: String,
-        pincode: String,
-        state: String,
-        country: String,
+        house: { type: String, default: "" },
+        street: { type: String, default: "" },
+        city: { type: String, default: "" },
+        pincode: { type: String, default: "" },
+        state: { type: String, default: "" },
+        country: { type: String, default: "" },
     },
     role: {
         type: String,
@@ -152,7 +152,7 @@ userSchema.methods.generateAuthToken = async function () {
         let token = jwt.sign({ _id: this._id }, process.env.SECRETKEY);//generrates JWT token
         //this.tokens = this.tokens.concat({ token: token });//no need to save token in db
         let user = await this.save();
-        return {token,user};
+        return { token, user };
     } catch (err) {
         console.log(err);
     }

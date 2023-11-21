@@ -115,6 +115,7 @@ const Cart = () => {
       .then(response => response.json())
       .then(data => {
         console.log('Updating cart item quantities on the server:', data);
+        //show acknolegment andtoast here 
         return data;
       })
       .catch(error => {

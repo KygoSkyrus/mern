@@ -17,18 +17,34 @@ const User = () => {
     const userDetail = useSelector(state => state.user.user)
     const userLoggedIn = useSelector(state => state.user.isUserLoggedIn)
     const [user, setUser] = useState({})
-    const [address, setAddress] = useState({ house: '', street: '', state: '', city: '', pincode: '', phone: "" })
+    const [address, setAddress] = useState({ house: "", street: '', city: '', pincode: '', state: '',country:'', phone: '' })
 
     
     const updateAddress = () => {
         console.log('address---', address)
+        console.log('userDetail',userDetail)
 
         let existingAddress = JSON.parse(JSON.stringify(userDetail.address))
-        existingAddress.phone = userDetail.phone? userDetail.phone : ""
+        existingAddress.phone = userDetail.phone
+        // existingAddress.phone = userDetail.phone? userDetail.phone : ""
 
-        console.log('before', existingAddress, address)
-        if (JSON.stringify(address) !== JSON.stringify(existingAddress)) {
+        // console.log('before',  
+        // address.house,existingAddress.house +"\n"+
+        // address.street,existingAddress.street +"\n"+
+        // address.city,existingAddress.city +"\n"+
+        // address.pincode,existingAddress.pincode +"\n"+
+        // address.state,existingAddress.state +"\n"+
+        // address.phone,existingAddress.phone +"\n"
+        // )
 
+        if(
+            address.house!==existingAddress.house ||
+            address.street!==existingAddress.street ||
+            address.city!==existingAddress.city ||
+            address.pincode!==existingAddress.pincode ||
+            address.state!==existingAddress.state ||
+            address.phone!==existingAddress.phone
+        ){
             let resp;
             fetch('/api/updatedaddress', {
                 method: "POST",
