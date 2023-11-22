@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { isProductUpdated } from './../redux/todoSlice'
 
@@ -8,6 +8,8 @@ import Product from './ProductList'
 
 const Dashboard = () => {
 
+    const filters=useRef();
+    const appliedFilters=useRef();
     const [products, setProducts] = useState(false) //to set products fetched from server
     const visibility = useSelector(state => state.productFormVisibility.visibility)// modal's visibility 
     const isUpdated = useSelector(state => state.isUpdated.product)
@@ -29,6 +31,11 @@ const Dashboard = () => {
             })
     }, [isUpdated])
 
+    const selectFilter = () => {
+        console.log('select filter',filters.current.classList)
+        filters.current.classList.remove('d-none')
+    }
+
 
     return (
         <>
@@ -36,106 +43,116 @@ const Dashboard = () => {
             <div >
                 {/* THE HEADER */}
                 <div className=' dash-header'>
-                <div className="p-3 overflow-auto d-flex bg-white-custom border-bottom shadow-sm">
+                    <div className="p-3 overflow-auto d-flex bg-white-custom border-bottom shadow-sm">
 
-                    {/* <!-- Left Side--> */}
-                    <div className="d-flex flex-grow-1 align-items-center">
-                        <h6 className="align-self-center mb-0 me-3 fw-semibold text-nowrap">
-                            Products
-                        </h6>
-                        <i className="fa-solid fa-shopping-bag"></i>
-                    </div>
-
-                    {/* <!-- Right Side--> */}
-                    <div className="d-flex h-stack gap-1 position-relative">
-
-                        {/* Dark Mode */}
-                        <div className='btn'>
-                            <input className="checkbox" type="checkbox" id="toggle" onChange={() => {
-                                document.querySelector('.adminView').classList.toggle('dark');
-                                document.querySelectorAll('.bg-white-custom').forEach(x => { x.classList.toggle('dark') })
-                            }} />
-                            <label className="toggle" htmlFor="toggle">
-                                <ion-icon className="icon icon--light" name="sunny-outline"></ion-icon>
-                                <ion-icon className="icon icon--dark" name="moon-outline"></ion-icon>
-                                <span className="ball"></span>
-                            </label>
+                        {/* <!-- Left Side--> */}
+                        <div className="d-flex flex-grow-1 align-items-center">
+                            <h6 className="align-self-center mb-0 me-3 fw-semibold text-nowrap">
+                                Products
+                            </h6>
+                            <i className="fa-solid fa-shopping-bag"></i>
                         </div>
-                        {/* <!-- List View --> */}
-                        <a href="/projects-list.html" className="btn btn-link btn-sm rounded-circle text-secondary" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="List View">
-                            <i className="fas fa-columns"></i>
-                        </a>
 
-                        {/* <!-- Grid View --> */}
-                        <a href="/projects-grid.html" className="btn btn-link btn-sm rounded-circle text-secondary" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="Grid View">
-                            <i className="fas fa-th"></i>
-                        </a>
+                        {/* <!-- Right Side--> */}
+                        <div className="d-flex h-stack gap-1 position-relative">
 
-                        {/* <!-- Table View --> */}
-                        <a href="/" className="btn btn-link btn-sm rounded-circle me-3 text-secondary active" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="Table View">
-                            <i className="fas fa-bars"></i>
-                        </a>
+                            {/* Dark Mode */}
+                            <div className='btn'>
+                                <input className="checkbox" type="checkbox" id="toggle" onChange={() => {
+                                    document.querySelector('.adminView').classList.toggle('dark');
+                                    document.querySelectorAll('.bg-white-custom').forEach(x => { x.classList.toggle('dark') })
+                                }} />
+                                <label className="toggle" htmlFor="toggle">
+                                    <ion-icon className="icon icon--light" name="sunny-outline"></ion-icon>
+                                    <ion-icon className="icon icon--dark" name="moon-outline"></ion-icon>
+                                    <span className="ball"></span>
+                                </label>
+                            </div>
+                            {/* <!-- List View --> */}
+                            <a href="/projects-list.html" className="btn btn-link btn-sm rounded-circle text-secondary" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="List View">
+                                <i className="fas fa-columns"></i>
+                            </a>
+
+                            {/* <!-- Grid View --> */}
+                            <a href="/projects-grid.html" className="btn btn-link btn-sm rounded-circle text-secondary" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="Grid View">
+                                <i className="fas fa-th"></i>
+                            </a>
+
+                            {/* <!-- Table View --> */}
+                            <a href="/" className="btn btn-link btn-sm rounded-circle me-3 text-secondary active" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="Table View">
+                                <i className="fas fa-bars"></i>
+                            </a>
 
 
-                        {/* <!-- Add Task/Project --> */}
+                            {/* <!-- Add Task/Project --> */}
 
-                        <button className="btn btn-light btn-sm rounded-circle" data-bs-toggle="modal" data-bs-target="#modalCreateProject">
-                            <i className="fas fa-plus" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="Add Project" aria-label="Add Project"></i>
-                        </button>
+                            <button className="btn btn-light btn-sm rounded-circle" data-bs-toggle="modal" data-bs-target="#modalCreateProject">
+                                <i className="fas fa-plus" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="Add Project" aria-label="Add Project"></i>
+                            </button>
 
+                        </div>
                     </div>
-                </div>
 
-                <div className="px-3 py-2 hstack gap-1 overflow-auto bg-white-custom border-bottom shadow-sm">
-                    <span className="badge rounded-pill py-2 pe-2 badge-add-filter" data-bs-toggle="modal" href="#modalStart" role="button">
-                        Select Filter <i className="fa fa-plus ms-1"></i>
-                    </span>
-
-                    <span className="badge badge-light-light rounded-pill text-dark py-2 fw-normal">
-                        <i className="fa fa-circle me-1 text-danger"></i>
-                        <span className="text-body me-1">Tag</span>Usability <span className="text-body small ms-1">(12)</span>
-                        <a href="/#" className="text-dark opacity-25 ms-1">
-                            <i className="fa fa-times-circle"></i>
-                        </a>
-                    </span>
-
-                    <a href="/#" className="badge badge-light-light text-dark rounded-pill py-2 text-decoration-none fw-normal">
-                        <i className="fa fa-calendar me-1 text-muted ms-1"></i>
-                        <span className="text-body me-1">Date</span>12 January 2019 <span className="text-body small ms-1">(12)</span>
-                        <span className="text-dark opacity-25 ms-1">
-                            <i className="fa fa-caret-down"></i>
+                    <div className="px-3 py-2 gap-1 bg-white-custom border-bottom shadow-sm d-flex align-items-center position-relative">
+                        <span className="badge rounded-pill py-2 pe-2 badge-add-filter" data-bs-toggle="modal" href="#modalStart" role="button" onClick={e => selectFilter()}>
+                            Select Filter <i className="fa fa-plus ms-1"></i>
+                        <div className='filters rounded-1 px-3 py-2 gap-1 bg-white shadow-m' ref={filters}>
+                            <section className='p-2 rounded-pill bg-light'>Catetrrreregory 1</section>
+                            <section className='p-2 rounded-pill bg-light'>Category 1</section>
+                            <section className='p-2 rounded-pill bg-light'>Category 1</section>
+                            <section className='p-2 rounded-pill bg-light'>Caterregory 1</section>
+                            <section className='p-2 rounded-pill bg-light'>Category 1</section>
+                            <section className='p-2 rounded-pill bg-light'>Categreory 1</section>
+                            <section className='p-2 rounded-pill bg-light'>Category 1</section>
+                            <section className='p-2 rounded-pill bg-light'>Category 1</section>
+                        </div>
                         </span>
-                    </a>
+                        <div className='hstack overflow-auto gap-1 py-2' ref={appliedFilters}>
+                            <span className="badge badge-light-light rounded-pill text-dark py-2 fw-normal">
+                                <i className="fa fa-circle me-1 text-danger"></i>
+                                <span className="text-body me-1">Tag</span>Usability <span className="text-body small ms-1">(12)</span>
+                                <a href="/#" className="text-dark opacity-25 ms-1">
+                                    <i className="fa fa-times-circle"></i>
+                                </a>
+                            </span>
 
-                    <span className="badge badge-avatar badge-light-light rounded-pill text-dark py-1 d-inline-flex align-items-center fw-normal">
-                        <div className="avatar-xs rounded-pill bg-dark opacity-25 small text-white d-flex align-items-center justify-content-center text-wrap small me-2">
-                            <span style={{ fontSize: "10px" }}>JM</span>
+                            <a href="/#" className="badge badge-light-light text-dark rounded-pill py-2 text-decoration-none fw-normal">
+                                <i className="fa fa-calendar me-1 text-muted ms-1"></i>
+                                <span className="text-body me-1">Date</span>12 January 2019 <span className="text-body small ms-1">(12)</span>
+                                <span className="text-dark opacity-25 ms-1">
+                                    <i className="fa fa-caret-down"></i>
+                                </span>
+                            </a>
+
+                            <span className="badge badge-avatar badge-light-light rounded-pill text-dark py-1 d-inline-flex align-items-center fw-normal">
+                                <div className="avatar-xs rounded-pill bg-dark opacity-25 small text-white d-flex align-items-center justify-content-center text-wrap small me-2">
+                                    <span style={{ fontSize: "10px" }}>JM</span>
+                                </div>
+                                <span className="text-body me-1">Person</span>Jane Marakesh <span className="text-body small ms-1">(12)</span>
+                                <a href="/#" className="text-dark opacity-25 ms-2">
+                                    <i className="fa fa-times-circle"></i>
+                                </a>
+                            </span>
+
+                            <span className="badge badge-avatar badge-light-light rounded-pill text-dark py-1 d-inline-flex align-items-center fw-normal">
+                                <div className="avatar-xs rounded-pill bg-dark opacity-25 small text-white d-flex align-items-center justify-content-center text-wrap small me-2">
+                                    <i className="fa fa-user" style={{ fontSize: "10px" }}></i>
+                                </div>
+                                <span className="text-body me-1">Person</span>Maria Novakovic <span className="text-body small ms-1">(12)</span>
+                                <a href="/#" className="text-dark opacity-25 ms-2">
+                                    <i className="fa fa-times-circle"></i>
+                                </a>
+                            </span>
+
+                            <span className="badge badge-avatar badge-light-light rounded-pill text-dark py-1 d-inline-flex align-items-center fw-normal">
+                                <img src="https://randomuser.me/api/portraits/women/65.jpg" className="rounded-pill me-2" alt="..." width="20" />
+                                <span className="text-body me-1">Person</span>Kayla Moinse <span className="text-body small mx-1">(12)</span>
+                                <a href="/#" className="text-dark opacity-25 ms-1">
+                                    <i className="fa fa-times-circle"></i>
+                                </a>
+                            </span>
                         </div>
-                        <span className="text-body me-1">Person</span>Jane Marakesh <span className="text-body small ms-1">(12)</span>
-                        <a href="/#" className="text-dark opacity-25 ms-2">
-                            <i className="fa fa-times-circle"></i>
-                        </a>
-                    </span>
-
-                    <span className="badge badge-avatar badge-light-light rounded-pill text-dark py-1 d-inline-flex align-items-center fw-normal">
-                        <div className="avatar-xs rounded-pill bg-dark opacity-25 small text-white d-flex align-items-center justify-content-center text-wrap small me-2">
-                            <i className="fa fa-user" style={{ fontSize: "10px" }}></i>
-                        </div>
-                        <span className="text-body me-1">Person</span>Maria Novakovic <span className="text-body small ms-1">(12)</span>
-                        <a href="/#" className="text-dark opacity-25 ms-2">
-                            <i className="fa fa-times-circle"></i>
-                        </a>
-                    </span>
-
-                    <span className="badge badge-avatar badge-light-light rounded-pill text-dark py-1 d-inline-flex align-items-center fw-normal">
-                        <img src="https://randomuser.me/api/portraits/women/65.jpg" className="rounded-pill me-2" alt="..." width="20" />
-                        <span className="text-body me-1">Person</span>Kayla Moinse <span className="text-body small mx-1">(12)</span>
-                        <a href="/#" className="text-dark opacity-25 ms-1">
-                            <i className="fa fa-times-circle"></i>
-                        </a>
-                    </span>
-
-                </div>
+                    </div>
                 </div>
 
                 {/* FILTER ROW */}

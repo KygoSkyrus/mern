@@ -1,6 +1,7 @@
 NOTE :::the issue that without internet you are not abke to acces db,,,setup the db on local
 
 # Defects
+- remove scroll bar from whole site {homepage from sure}
 - remove the box shadow from dropdons in navbar in mobile view
 - add a nice loader for all the loading process (the new loader, implement that one),  make the same loader for both admin and front
 - if any of the resulted productas is clicked on search prod than the search bar should close and overlay shoul be removed

@@ -33,7 +33,7 @@ const Admin = () => {
                 <Route path="/login" exact element={<AdminLogin />} />
             </Routes> */}
 
-            {isAuthSuccess ?
+            {/* {isAuthSuccess ? */}
                 <div className='adminView light'>
 
                     <Nav />
@@ -52,8 +52,8 @@ const Admin = () => {
                     </div>
                 </div>
 
-                : <BagLoader />
-            }
+            {/* //     : <BagLoader />
+            // } */}
 
             <Loader />
         </>

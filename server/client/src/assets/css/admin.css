@@ -185,6 +185,19 @@ a.nav-icons.active::before {
   z-index: 2;
 }
 
+/* filter */
+.filters{
+  position: absolute;
+  top: 50px;
+  left: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+.filters > section{
+  min-width: 150px;
+}
+/* filter */
+
 .hstack {
   display: flex;
   flex-direction: row;
