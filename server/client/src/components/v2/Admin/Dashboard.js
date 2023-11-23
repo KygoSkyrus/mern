@@ -8,14 +8,16 @@ import Product from './ProductList'
 
 const Dashboard = () => {
 
-    const filters=useRef();
-    const appliedFilters=useRef();
+    const filtersRef = useRef();
+    const dispatch = useDispatch()
+    const [open, setOpen] = useState(false);
     const [products, setProducts] = useState(false) //to set products fetched from server
+    const [appliedFilters,setAppliedFilters]=useState([])
     const visibility = useSelector(state => state.productFormVisibility.visibility)// modal's visibility 
     const isUpdated = useSelector(state => state.isUpdated.product)
 
+    let filtersArray=["category vq1","category vq2","category vq3","category","category v1","categoryfhdsfh vq1","category vqgfjs7",]//this should has icons too 
 
-    const dispatch = useDispatch()
 
     useEffect(() => {
         console.log('ue in hp')
@@ -31,11 +33,29 @@ const Dashboard = () => {
             })
     }, [isUpdated])
 
+    useEffect(()=>{
+        const handleClickOutside = (event) => {
+            if (!filtersRef?.current?.contains(event.target)) {
+              setOpen(false);
+            }
+          };
+          document.addEventListener("mousedown", handleClickOutside);
+    },[])
+
     const selectFilter = () => {
-        console.log('select filter',filters.current.classList)
-        filters.current.classList.remove('d-none')
+        setOpen(true)
     }
 
+    const applyFilter =(e)=>{
+        console.log('e',e.target.value)
+        if(!appliedFilters.includes(e.target.innerText))
+           setAppliedFilters(prevState=>[...prevState,e.target.innerText])
+    }
+
+    const removeFilter =(value)=>{
+        console.log('value',value)
+        setAppliedFilters(prevState=>prevState.filter(x=>x!==value))
+    }
 
     return (
         <>
@@ -96,61 +116,28 @@ const Dashboard = () => {
                     <div className="px-3 py-2 gap-1 bg-white-custom border-bottom shadow-sm d-flex align-items-center position-relative">
                         <span className="badge rounded-pill py-2 pe-2 badge-add-filter" data-bs-toggle="modal" href="#modalStart" role="button" onClick={e => selectFilter()}>
                             Select Filter <i className="fa fa-plus ms-1"></i>
-                        <div className='filters rounded-1 px-3 py-2 gap-1 bg-white shadow-m' ref={filters}>
-                            <section className='p-2 rounded-pill bg-light'>Catetrrreregory 1</section>
-                            <section className='p-2 rounded-pill bg-light'>Category 1</section>
-                            <section className='p-2 rounded-pill bg-light'>Category 1</section>
-                            <section className='p-2 rounded-pill bg-light'>Caterregory 1</section>
-                            <section className='p-2 rounded-pill bg-light'>Category 1</section>
-                            <section className='p-2 rounded-pill bg-light'>Categreory 1</section>
-                            <section className='p-2 rounded-pill bg-light'>Category 1</section>
-                            <section className='p-2 rounded-pill bg-light'>Category 1</section>
-                        </div>
+                           {open && <div className='filters rounded-1 px-3 py-2 gap-1 bg-white shadow-m' ref={filtersRef}>
+                                {filtersArray.map((filter,i)=>{
+                                    return(
+                                        <section className='p-2 rounded-pill bg-light' key={i}onClick={e=>applyFilter(e)} >{filter}</section>
+                                    )
+                                })}                       
+                            </div>}
                         </span>
-                        <div className='hstack overflow-auto gap-1 py-2' ref={appliedFilters}>
-                            <span className="badge badge-light-light rounded-pill text-dark py-2 fw-normal">
-                                <i className="fa fa-circle me-1 text-danger"></i>
-                                <span className="text-body me-1">Tag</span>Usability <span className="text-body small ms-1">(12)</span>
-                                <a href="/#" className="text-dark opacity-25 ms-1">
-                                    <i className="fa fa-times-circle"></i>
-                                </a>
-                            </span>
-
-                            <a href="/#" className="badge badge-light-light text-dark rounded-pill py-2 text-decoration-none fw-normal">
-                                <i className="fa fa-calendar me-1 text-muted ms-1"></i>
-                                <span className="text-body me-1">Date</span>12 January 2019 <span className="text-body small ms-1">(12)</span>
-                                <span className="text-dark opacity-25 ms-1">
-                                    <i className="fa fa-caret-down"></i>
+                        <div className='hstack overflow-auto gap-1 py-2' >
+                            {appliedFilters?.map((filter,i)=>{
+                                return(
+                                    <span className="badge badge-light-light rounded-pill text-dark py-2 fw-normal" key={i}>
+                                    <i className="fa fa-circle me-1 text-danger"></i>
+                                    {/* <i className="fa fa-calendar me-1 text-muted ms-1"></i> */}
+                                    {/* <i className="fa fa-user me-1 text-muted ms-1"></i> */}
+                                    <span className="me-1">{filter}</span>
+                                    <span className="text-dark opacity-25 ms-1 pointer" onClick={e=>removeFilter(filter)}>
+                                        <i className="fa fa-times-circle"></i>
+                                    </span>
                                 </span>
-                            </a>
-
-                            <span className="badge badge-avatar badge-light-light rounded-pill text-dark py-1 d-inline-flex align-items-center fw-normal">
-                                <div className="avatar-xs rounded-pill bg-dark opacity-25 small text-white d-flex align-items-center justify-content-center text-wrap small me-2">
-                                    <span style={{ fontSize: "10px" }}>JM</span>
-                                </div>
-                                <span className="text-body me-1">Person</span>Jane Marakesh <span className="text-body small ms-1">(12)</span>
-                                <a href="/#" className="text-dark opacity-25 ms-2">
-                                    <i className="fa fa-times-circle"></i>
-                                </a>
-                            </span>
-
-                            <span className="badge badge-avatar badge-light-light rounded-pill text-dark py-1 d-inline-flex align-items-center fw-normal">
-                                <div className="avatar-xs rounded-pill bg-dark opacity-25 small text-white d-flex align-items-center justify-content-center text-wrap small me-2">
-                                    <i className="fa fa-user" style={{ fontSize: "10px" }}></i>
-                                </div>
-                                <span className="text-body me-1">Person</span>Maria Novakovic <span className="text-body small ms-1">(12)</span>
-                                <a href="/#" className="text-dark opacity-25 ms-2">
-                                    <i className="fa fa-times-circle"></i>
-                                </a>
-                            </span>
-
-                            <span className="badge badge-avatar badge-light-light rounded-pill text-dark py-1 d-inline-flex align-items-center fw-normal">
-                                <img src="https://randomuser.me/api/portraits/women/65.jpg" className="rounded-pill me-2" alt="..." width="20" />
-                                <span className="text-body me-1">Person</span>Kayla Moinse <span className="text-body small mx-1">(12)</span>
-                                <a href="/#" className="text-dark opacity-25 ms-1">
-                                    <i className="fa fa-times-circle"></i>
-                                </a>
-                            </span>
+                                )
+                            })}
                         </div>
                     </div>
                 </div>

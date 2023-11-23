@@ -460,9 +460,7 @@ router.get('/api/getorders', authenticateUser, async (req, res) => {
 //IF the stirpe accont is activated than there may be a way to send invoice to user
 router.post('/create-checkout-session', authenticateUser, async (req, res) => {
 
-
     let line_items = []
-    const token = req.cookies.jwt;
     const orderId = uuidv4()
     let productList = {}//for metadata
 
@@ -486,16 +484,13 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
         - if the order is visible in order list page ten it means it was saved ,,,its simple just get the order from db with order id
     */
 
-    //thi is common for most user actions ,so create a middleware function instead
 
     try {
-        const decoded = jwt.verify(token, process.env.SECRETKEY);//for user id
-
         const data = JSON.parse(req.body.priceObj)
         //meta data has 5 keys for orders details and rest 45 for products
         //maybe we wont need these five to be store in metadat as the session object will be created right here
         productList.orderId = orderId
-        productList.userId = decoded._id//should be req.user._id here
+        productList.userId = req.user._id//should be req.user._id here
         productList.tax = data.tax
         productList.shipping = data.shipping
         productList.total = data.grandTotal
@@ -532,7 +527,6 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
             line_items.push(prod)
         })
 
-        //console.log('productList', productList)
 
         const session = await stripe.checkout.sessions.create({
             line_items,
@@ -540,7 +534,7 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
             payment_method_types: ['card'],
             success_url: process.env.NODE_ENV === "production" ? `https://shoppitt.onrender.com/orders/${orderId}` : `http://localhost:3006/orders/${orderId}`,
             cancel_url: process.env.NODE_ENV === "production" ? `https://shoppitt.onrender.com/user` : 'http://localhost:3006/user',
-            customer_email: req.cookies.email,
+            customer_email: req.user.email,
             metadata: productList,
             billing_address_collection: "required",
             // total_details:{
@@ -552,11 +546,9 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
 
         console.log('session', session)
         if (session) {
-
-
             //saving the session id with orderid in db 
             const user = await USER.findByIdAndUpdate(
-                decoded._id,
+                req.user._id,
                 {
                     $push: {
                         checkoutSession: {
@@ -638,8 +630,6 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
         console.error('something went wrong', error);
         res.status(500).json({ message: 'Internal server error.' });
     }
-
-
 });
 
 router.get('/api/getcheckoutsession', authenticateUser, async (req, res) => {
@@ -647,8 +637,6 @@ router.get('/api/getcheckoutsession', authenticateUser, async (req, res) => {
     console.log('orderId', orderId)
 
     try {
-        const decoded = jwt.verify(token, process.env.SECRETKEY);
-
         //extracting the session id mapped with order id
         const checkoutSession = req.user?.checkoutSession.find(item => item.orderId === orderId)
         console.log('checkoutSession', checkoutSession)
@@ -698,10 +686,11 @@ router.get('/api/getcheckoutsession', authenticateUser, async (req, res) => {
             //saving the order details in db
 
             const updatedUser = await USER.findByIdAndUpdate(
-                metadata.userId,
+                req.user._id,
                 { $push: { orders: order } },
                 { new: true }
             )//.populate('cartProducts');
+            console.log('updatedyuser',updatedUser)
 
             const theOrder = new ORDER({
                 orderId: metadata.orderId,
@@ -710,13 +699,9 @@ router.get('/api/getcheckoutsession', authenticateUser, async (req, res) => {
                 shipping: metadata.shipping,
                 payment_status: session.payment_status,
                 receiptUrl: paymentIntent?.charges?.data[0]?.receipt_url,
-                user: metadata.userId,
+                user: req.user._id,
                 products: prodArray,
                 shippingAddress: session.customer_details.address,
-                // paymentMethod: {
-                //   enum: ['Card', 'PayPal', 'Cash on Delivery', 'Other'],
-                //   default: 'Card',
-                // },
             })
             theOrder.save()
                 .then(response => {

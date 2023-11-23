@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { Route, Routes, useNavigate ,Navigate,Switch} from 'react-router-dom'
 
 import './../../assets/css/admin.css'
 import Nav from './Admin/Nav';
@@ -22,7 +22,7 @@ const Admin = () => {
             .then(res => {
                 console.log('reee', res.isUserAuthenticated)
                 setIsAuthSuccess(res.isUserAuthenticated)
-                if (!res.isUserAuthenticated) navigate('/admin/login')
+               // if (!res.isUserAuthenticated) navigate('/admin/login')
             })
     }, [])
 
@@ -41,11 +41,14 @@ const Admin = () => {
                     <div className='adminContainer'>
 
                         <Routes>
-                            <Route path="/login" exact element={<AdminLogin />} />
+                        {isAuthSuccess ? <> <Route path="/dashboard" exact element={<Dashboard />} /> </>: <><Navigate to="/login" /></>}
+                            {/* <><PrivateRoute path="/admin/dashboard" component={Dashboard} /></>
+                           <> <PrivateRoute path="/admin/orders" component={Orders} /></> */}
+                            {/* <Route path="/login" exact element={<AdminLogin />} />
                             
                             <Route path="/dashboard" exact element={<Dashboard />} />
                             <Route path="/orders" exact element={<Orders />} />
-                            <Route path="/users" exact element={<Users />} />
+                            <Route path="/users" exact element={<Users />} /> */}
                             {/* <Route path="/:id" exact element={<SingleBlog  />} /> */}
                             <Route path="*" element={<Error />} />
                         </Routes>
@@ -59,5 +62,17 @@ const Admin = () => {
         </>
     )
 }
+
+const PrivateRoute = ({ component: Component,isAuthSuccess, ...rest }) => {
+  
+    return (
+      <Route
+        {...rest}
+        render={(props) =>
+            isAuthSuccess ? <Component {...props} /> : <Navigate to="/login" />
+        }
+      />
+    );
+  };
 
 export default Admin
