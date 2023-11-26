@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { useParams,Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setUserDetails } from './redux/userSlice';
-import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSlice';
+import { debouncedApi } from './Utility';
+import { updatewishlist } from './Utility';
 
 const Category = () => {
     const { categoryId } = useParams()
@@ -28,60 +28,7 @@ const Category = () => {
     }, [])
 
 
-    //some apis are common and are being called from difeerent conponents..these can be moved to utility as a function
-    const updatewishlist = (productId) => {
-        let resp;
-        fetch(`/api/updatewishlist`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                productId
-            }),
-        })
-            .then(response => {
-                resp = response
-                return response.json()
-            })
-            .then(res => {
-                console.log('res add to wishlist', res)
-                if (resp.status === 200) {
-                    dispatch(setToastStatus({ isSuccess: true }))
-                    dispatch(setUserDetails({ user: res.user }))
-                } else {
-                    dispatch(setToastStatus({ isSuccess: false }))
-                }
-                dispatch(toastVisibility({ toast: true }))
-                dispatch(setToastContent({ message: res.message }))
-                console.log('response add wishlist', res)
-            })
-    }
 
-    const addToCart = (productId) => {
-        let resp;
-        fetch(`/api/addtocart`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                productId
-            }),
-        })
-            .then(response => {
-                resp = response
-                return response.json()
-            })
-            .then(res => {
-                console.log('res add to cart',res)
-                if (resp.status === 200) {
-                    dispatch(setToastStatus({ isSuccess: true }))
-                    dispatch(setUserDetails({ user: res.user }))
-                } else {
-                    dispatch(setToastStatus({ isSuccess: false }))
-                }
-                dispatch(toastVisibility({ toast: true }))
-                dispatch(setToastContent({ message: res.message }))
-                console.log('response add tocart', res)
-            })
-    }
 
 
     return (
@@ -125,8 +72,8 @@ const Category = () => {
                                                         }
                                                     </div>
                                                     <div className="product-links">
-                                                        <span onClick={() => updatewishlist(x._id)} title={wishlistItems?.includes(x._id)? "Remove from wishlist":"Add to wishlist"}><i class={`fa fa-heart ${wishlistItems?.includes(x._id) && "text-danger"}`}></i></span>
-                                                        <span onClick={()=>addToCart(x._id)}><i className="fa fa-shopping-cart"></i></span>
+                                                        <span onClick={() => updatewishlist(x._id,dispatch)} title={wishlistItems?.includes(x._id)? "Remove from wishlist":"Add to wishlist"}><i class={`fa fa-heart ${wishlistItems?.includes(x._id) && "text-danger"}`}></i></span>
+                                                        <span onClick={()=>debouncedApi(x._id,dispatch)}><i className="fa fa-shopping-cart"></i></span>
                                                     </div>
                                                 </div>
                                             </div>

@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { useDispatch, useSelector } from 'react-redux';
-import { setUserDetails } from './redux/userSlice';
-import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSlice';
+import { debouncedApi } from './Utility';
+import { updatewishlist } from './Utility';
+
 
 import wishlistImg from "./../../assets/images/newImg/collections/wishlistImg.gif"
 import LoginImg from "./../../assets/images/newImg/collections/login.png"
@@ -48,59 +49,7 @@ const Wishlist = () => {
 
   }, [wishlistItems])
 
-  const addToCart = (productId) => {
-    let resp;
-    fetch(`/api/addtocart`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        productId
-      }),
-    })
-      .then(response => {
-        resp = response
-        return response.json()
-      })
-      .then(res => {
-        console.log('res add to cart', res)
-        if (resp.status === 200) {
-          dispatch(setToastStatus({ isSuccess: true }))
-          dispatch(setUserDetails({ user: res.user }))
-        } else {
-          dispatch(setToastStatus({ isSuccess: false }))
-        }
-        dispatch(toastVisibility({ toast: true }))
-        dispatch(setToastContent({ message: res.message }))
-        console.log('response add tocart', res)
-      })
-  }
 
-  const updatewishlist = (productId) => {
-    let resp;
-    fetch(`/api/updatewishlist`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        productId
-      }),
-    })
-      .then(response => {
-        resp = response
-        return response.json()
-      })
-      .then(res => {
-        console.log('res add to wishlist', res)
-        if (resp.status === 200) {
-          dispatch(setToastStatus({ isSuccess: true }))
-          dispatch(setUserDetails({ user: res.user }))
-        } else {
-          dispatch(setToastStatus({ isSuccess: false }))
-        }
-        dispatch(toastVisibility({ toast: true }))
-        dispatch(setToastContent({ message: res.message }))
-        console.log('response add wishlist', res)
-      })
-  }
 
   return (
     <>
@@ -198,11 +147,11 @@ const Wishlist = () => {
                                       </div>
 
                                       <div className="col-md-2 wi-remove">
-                                        <button className="btn btn-warning px-4 rounded-pill text-light" onClick={() => addToCart(x._id)}>Add to cart</button>
+                                        <button className="btn btn-warning px-4 rounded-pill text-light" onClick={() => debouncedApi(x._id,dispatch)}>Add to cart</button>
 
                                         <div className='d-flex justify-content-end mt-2 ' style={{ marginRight: "-41px" }}>
                                           <u><span
-                                            onClick={() => updatewishlist(x._id)}
+                                            onClick={() => updatewishlist(x._id,dispatch)}
                                             className='me-4 pointer'>Remove <i className="fa fa-trash fa-sm "></i></span></u>
                                         </div>
                                         {/* <button className="btn btn-danger ms-2 rounded-pill text-light"><i className="fa fa-trash fa-sm"></i></button> */}

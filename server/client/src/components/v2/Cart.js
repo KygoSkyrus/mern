@@ -81,14 +81,6 @@ const Cart = () => {
 
       items[0].quantity = eval(`${tempObj[productId]} ${items[0].upOrDown} ${1}`)
       tempObj[productId] = eval(`${tempObj[productId]} ${items[0].upOrDown} ${1}`)
-      //other way of doing the above code
-      // if(items[0].upOrDown==="incre"){
-      //   items[0].quantity=tempObj[productId]+1
-      //   tempObj[productId]=tempObj[productId]+1
-      // }else{
-      //   items[0].quantity=tempObj.quantity-1
-      //   tempObj[productId]=tempObj[productId]-1
-      // }
 
       if (!seenProductIds.has(productId)) {
         uniqueCartItems.push(items);

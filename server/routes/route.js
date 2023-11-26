@@ -101,7 +101,7 @@ router.get('/api/getUserInfo', authenticateUser, async (req, res) => {
     }
 });
 
-router.get('/api/signmeout', async (req, res) => {
+router.get('/api/signmeout', authenticateUser, async (req, res) => {
     try {
         res.clearCookie('jwt')
         res.status(200).json({ message: "User logged out!!!" })
@@ -113,7 +113,7 @@ router.get('/api/signmeout', async (req, res) => {
 router.post('/api/signup', async (req, res) => {
 
     const { firstname, lastname, email, photo } = req.body;
-    //need to handle more details when there is other methof of sign up other than google
+    //need to handle more details when there is other method of signing up other than google
 
     try {
         const userExist = await USER.findOne({ email: email });
@@ -183,37 +183,20 @@ router.post('/api/updatedaddress', authenticateUser, async (req, res) => {
 
 /*********************************** CART ***********************************/
 router.post('/api/addtocart', authenticateUser, async (req, res) => {
-    // const token = req.cookies.jwt;
 
     try {
         const { productId } = req.body;
-        // const decoded = jwt.verify(token, process.env.SECRETKEY);
-
-        // const user = await USER.findById(decoded._id);
-        //  if (!user) {
-        //    return res.status(404).json({ message: 'User not found.' });
-        //  }
-
         const product = await PRODUCT.findById(productId);
-        //  if (!product) {
-        //    return res.status(404).json({ message: 'Product not found.' });
-        //  }
-
-        // Find the product in the user's cart
-        const cartItem = req.user.cart.find(item => item.productId.toString() === productId);
-
-        if (cartItem) {
-            // If the product is already in the cart, increment the quantity
-            cartItem.quantity += 1;
-        } else {
-            // If the product is not in the cart, add it with quantity 1
-            req.user.cart.push({ productId });
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found.' });
         }
 
-        // Save the updated user
-        await req.user.save()
-        const populatedDoc = await USER.findById(req.user._id).populate('cartProducts');
+        // Finding the product in the user's cart
+        const cartItem = req.user.cart.find(item => item.productId.toString() === productId);
+        cartItem ? cartItem.quantity += 1 : req.user.cart.push({ productId });
+        await req.user.save();
 
+        const populatedDoc = await USER.findById(req.user._id).populate('cartProducts');
         res.status(200).json({ message: 'Product added to cart.', user: populatedDoc });
 
     } catch (err) {
@@ -222,84 +205,40 @@ router.post('/api/addtocart', authenticateUser, async (req, res) => {
     }
 })
 router.post('/api/updatecart', authenticateUser, async (req, res) => {
-    // const token = req.cookies.jwt;
 
     try {
         const cartItems = req.body;
-        // const decoded = jwt.verify(token, process.env.SECRETKEY);
-        console.log('caritem', cartItems)
 
-
-        // const user = await USER.findById(decoded._id);
-
-        //this is not working 
         let theCart = req.user.cart;
-        //console.log('thecart before',theCart)
-        const updatedCartItems = theCart.map((existingCartItem) => {
-
-            const matchingCartItem = cartItems.find((newCartItem) => {
-                console.log('fff', newCartItem.productId.toString(), "   ", existingCartItem.productId.toString())
-                return newCartItem.productId.toString() === existingCartItem.productId.toString()
-            }
-            );
-
+        theCart.map((existingCartItem) => {
             cartItems.map(x => {
                 if (x.productId.toString() === existingCartItem.productId.toString()) {
                     existingCartItem.quantity = x.quantity;
                 }
             })
-
-            console.log('matchingcatritem', matchingCartItem)
-
-            if (matchingCartItem) {
-                // Update the quantity of the existing cart item
-                return {
-                    ...existingCartItem,
-                    quantity: matchingCartItem.quantity,
-                };
-            } else {
-                // Keep the existing cart item as is
-                return existingCartItem;
-            }
         });
 
-        // console.log('updatedUser--',updatedCartItems)
-        const theUser = await USER.updateOne(
+        await USER.updateOne(
             { _id: req.user._id },
             { $set: { cart: theCart } }
         );
-        console.log('theUser', theUser)
-        //await USER.findByIdAndUpdate(decoded._id, { cart: updatedCartItems });
 
-
-        const populatedDoc = await USER.findById(req.user._id)//.populate('cartProducts');//cat=rtitems may not be needed here to populate
-
+        const populatedDoc = await USER.findById(req.user._id)//.populate('cartProducts');//cartitems may not be needed here to populate
         res.status(200).json({ message: 'Quantity updated', user: populatedDoc });
-
     } catch (err) {
         console.log(err)
         res.status(500).json({ message: 'Internal server error.' });
     }
 })
-//remove from cart
 router.post('/api/removefromcart', authenticateUser, async (req, res) => {
-    // const token = req.cookies.jwt;
 
     try {
         const { productId } = req.body;
-        // const decoded = jwt.verify(token, process.env.SECRETKEY);
-
-        // Update the user's cart by removing the specified product
         const updatedUser = await USER.findByIdAndUpdate(
             req.user._id,
             { $pull: { cart: { productId } } },
             { new: true }
-        ).populate('cartProducts');//to send the user populated with cart field
-
-        console.log('remove fromcart-', updatedUser)
-        if (!updatedUser) {
-            return res.status(404).json({ message: 'User not found.' });
-        }
+        ).populate('cartProducts');
 
         res.status(200).json({ message: 'Product removed from cart.', user: updatedUser });
     } catch (error) {
@@ -307,27 +246,12 @@ router.post('/api/removefromcart', authenticateUser, async (req, res) => {
         res.status(500).json({ message: 'Internal server error.' });
     }
 });
-//get cart items
 router.get('/api/getcartitems', authenticateUser, async (req, res) => {
-    // const token = req.cookies.jwt;
-    //thi is common for most user actions ,so create a middleware function instead
     try {
-
-        // const decoded = jwt.verify(token, process.env.SECRETKEY);
-        // const user = await USER.findById(decoded._id).populate('cartProducts');
-
-        // if (!user) {
-        //     return res.status(404).json({ message: 'User not found.' });
-        // }
-
-        // Token is valid, user is signed in
         res.status(200).json({ message: 'Access granted.', cartItems: req.user.cartProducts });
-
     } catch (error) {
-        console.error('Error removing product from cart:', error);
         res.status(500).json({ message: 'Internal server error.' });
     }
-
 })
 /*********************************** CART ***********************************/
 
@@ -336,24 +260,12 @@ router.get('/api/getcartitems', authenticateUser, async (req, res) => {
 /*********************************** WISHLIST ***********************************/
 //adding and removing from wishlist
 router.post('/api/updatewishlist', authenticateUser, async (req, res) => {
-    // const token = req.cookies.jwt;
+
     try {
         const { productId } = req.body;
-        // const decoded = jwt.verify(token, process.env.SECRETKEY);
-
-        // const user = await USER.findById(decoded._id);
-        // if (!user) {
-        //     return res.status(404).json({ message: 'User not found.' });
-        // }
-
-        // const product = await PRODUCT.findById(productId);
-        //  if (!product) {
-        //    return res.status(404).json({ message: 'Product not found.' });
-        //  }
 
         // Find the product in the user's cart
         const wishlistItem = req.user.wishlist.find(item => item.toString() === productId);
-        console.log('wishlis', wishlistItem)
 
         let updatedUser;
         if (wishlistItem) {
@@ -381,59 +293,41 @@ router.post('/api/updatewishlist', authenticateUser, async (req, res) => {
 })
 //remove from cart and add to wishlist
 router.post('/api/movetowishlist', authenticateUser, async (req, res) => {
-    //this is mostly same as removefromcart just the adding to wishlist part
-    // const token = req.cookies.jwt;
+
     try {
         const { productId } = req.body;
-        // const decoded = jwt.verify(token, process.env.SECRETKEY);
-
         const updatedUser = await USER.findByIdAndUpdate(
             req.user._id,
             {
                 $pull: { cart: { productId } },//removing from cart
-                $push: { wishlist: productId }//adding to wishlist
+                $push: { wishlist: productId },//adding to wishlist
             },
             { new: true }
-        ).populate('cartProducts');//to send the user populated with cart field
-
-        // console.log('moved to wishlist', updatedUser)
-        if (!updatedUser) {
-            return res.status(404).json({ message: 'User not found.' });
-        }
+        ).populate('cartProducts');
 
         res.status(200).json({ message: 'Product moved to wishlist', user: updatedUser });
     } catch (error) {
-        console.error('Error removing product from cart:', error);
         res.status(500).json({ message: 'Internal server error.' });
     }
 });
-//get wishlist items
 router.post('/api/getwishlistitems', authenticateUser, async (req, res) => {
-    // const token = req.cookies.jwt;//the ids should be reterived from here and then the products should be queried/ ids are hefre bcz the wishlist array is being populated for every refresh just like cart  
-    const { ids } = req.body
 
+    const { ids } = req.body
     try {
         const items = await PRODUCT.find({ _id: { $in: ids } });
-        console.log('uuu', items)
-
         res.status(200).json({ items });
-
     } catch (error) {
-        console.error('Error getting items from wishlist', error);
         res.status(500).json({ message: 'Internal server error.' });
     }
-
 })
+/*********************************** WISHLIST ***********************************/
+
 
 /*********************************** ORDER ***********************************/
 router.get('/api/getorders', authenticateUser, async (req, res) => {
 
     const { orderId } = req.query
-    // const token = req.cookies.jwt;
-
-
     try {
-        // const decoded = jwt.verify(token, process.env.SECRETKEY);
 
         let response = await USER.findOne({ _id: req.user._id }, { orders: 1, _id: 0 })
         const order = response?.orders.find(item => item.orderId === orderId)
@@ -443,58 +337,32 @@ router.get('/api/getorders', authenticateUser, async (req, res) => {
             return res.status(200).json({ user: response });
         }
 
-
     } catch (error) {
-        console.error('Error getting items from wishlist', error);
         res.status(500).json({ message: 'Internal server error.' });
     }
-
 })
 /*********************************** ORDER ***********************************/
 
 
 /*********************************** CHECKOUT  ***********************************/
-//NOTE::: DONT LET USER ADD MORE THAN 50 ITEMS AS IT WOULD BREAK THE STRIPE,,metadata onkect can only have 50 keys(whihc are products in our case),,shgow user a waring that we dont support bulk order at the moment ,,out of 50, 4 key s reserved 
+//NOTE::: DONT LET USER ADD MORE THAN 50 ITEMS AS IT WOULD BREAK THE STRIPE,,metadata object can only have 50 keys(which are products in our case),show user a warning that we dont support bulk order at the moment ,out of 50, 3 keys reserved 
 
 //card for failing : 4000 0000 0000 0119
-//IF the stirpe accont is activated than there may be a way to send invoice to user
 router.post('/create-checkout-session', authenticateUser, async (req, res) => {
 
     let line_items = []
     const orderId = uuidv4()
     let productList = {}//for metadata
 
-    /*
-    -session is created,
-    - it has session id annd the metadata
-    - session id is mapped with orderid and saved in db
-    - when payment is done then the page will redirect to order page with orderid in url
-    - the order page can be openend two ways:::
-      
-    - order page will first query the order list (FIRST scenario) and if the order isnt found then it will chekc if there is a session for that order id (for SECOND scenario)
-    
-    - FIRST>>>when order is placed>>
-        - on order page with the order id reterive the session id from db
-        - with the session id the session can be reterived from stripe api and then in that session  id get the paymentIntent id and reterive that too for recipt url
-        - get the necessary stuff from metadata and also check if the paymnet is success
-        - if succeeded then save that in database,if failed then save in db with failed status,,,,,,
-        - if no cation is taken then dont save and also delte that session and orderid from db,,,and show payment isnt completed bcz no action was taken
-
-      - SECOND>>>when order is opened from orderList
-        - if the order is visible in order list page ten it means it was saved ,,,its simple just get the order from db with order id
-    */
-
-
     try {
         const data = JSON.parse(req.body.priceObj)
-        //meta data has 5 keys for orders details and rest 45 for products
+        //meta data has 5 keys for orders details and rest 47 for products
         //maybe we wont need these five to be store in metadat as the session object will be created right here
-        productList.orderId = orderId
-        productList.userId = req.user._id//should be req.user._id here
+        // productList.orderId = orderId
+        // productList.userId = req.user._id
         productList.tax = data.tax
         productList.shipping = data.shipping
         productList.total = data.grandTotal
-
 
         Object.keys(data.productList).forEach(x => {
             let prod = {}
@@ -515,6 +383,8 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
             prod.adjustable_quantity.minimum = 1
             prod.adjustable_quantity.maximum = 99
 
+            line_items.push(prod);
+
             //for metadata
             productList[x] = {}
             productList[x].name = data.productList[x].name
@@ -523,10 +393,7 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
             productList[x].quantity = data.productList[x].quantity
             productList[x].discount = data.productList[x].discount
             productList[x] = JSON.stringify(productList[x])//metadata only supports key value(only string) that's why its stringified
-
-            line_items.push(prod)
         })
-
 
         const session = await stripe.checkout.sessions.create({
             line_items,
@@ -544,10 +411,9 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
             //shipping_address_collection:"required"
         });
 
-        console.log('session', session)
+        // console.log('session', session)
         if (session) {
-            //saving the session id with orderid in db 
-            const user = await USER.findByIdAndUpdate(
+            await USER.findByIdAndUpdate(
                 req.user._id,
                 {
                     $push: {
@@ -558,72 +424,7 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
                     }
                 },
                 { new: true }
-            )//.populate('cartProducts');
-
-
-            // let metadata = session.metadata
-            // console.log('session', session)
-            // console.log('meta data', metadata)
-            // let order = {}
-            // order.orderId = orderId
-            // order.tax = metadata.tax
-            // order.shipping = metadata.shipping
-            // order.total = metadata.total
-            // order.payment_status = session.payment_status
-            // order.receiptUrl = ''
-            // order.products = []
-            // prodArray = []
-            // Object.keys(metadata).forEach(x => {
-            //     if (
-            //         x !== "tax" && x !== "total" && x !== "shipping" && x !== "orderId" && x !== "userId" &&
-            //         typeof metadata[x] === "string" // Checks if the value is a string
-            //     ) {
-            //         let tempObj = {}
-            //         //parsing the product details from metadata
-            //         const productData = JSON.parse(metadata[x]);
-            //         tempObj.productId = x
-            //         tempObj.name = productData.name
-            //         tempObj.image = productData.image
-            //         tempObj.quantity = productData.quantity
-            //         tempObj.discount = productData.discount
-            //         tempObj.price = productData.price
-            //         order.products.push(tempObj)
-            //         prodArray.push(tempObj)//for ORDER collection
-            //     }
-            // })
-
-            // //saving the order details in db
-
-            // const updatedUser = await USER.findByIdAndUpdate(
-            //     metadata.userId,
-            //     { $push: { orders: order } },
-            //     { new: true }
-            // )//.populate('cartProducts');
-
-            // const theOrder = new ORDER({
-            //     orderId: metadata.orderId,
-            //     totalAmount: metadata.total,
-            //     tax: metadata.tax,
-            //     shipping: metadata.shipping,
-            //     payment_status: sessionpayment_status,
-            //     receiptUrl: receiptUrl,
-            //     user: metadata.userId,
-            //     products: prodArray,
-            //     shippingAddress: session.customer_details.address,
-            //     // paymentMethod: {
-            //     //   enum: ['Card', 'PayPal', 'Cash on Delivery', 'Other'],
-            //     //   default: 'Card',
-            //     // },
-            // })
-            // theOrder.save()
-            //     .then(response => {
-            //         console.log('saved order', response)
-            //     })
-            //     .catch(err => {
-            //         console.log("errror-", err)
-            //         res.status(500).json({ message: 'Internal server error.' });
-            //     })
-
+            )
             res.redirect(303, session.url);//redirects to checkout page
         }
     } catch (error) {
@@ -633,28 +434,24 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
 });
 
 router.get('/api/getcheckoutsession', authenticateUser, async (req, res) => {
-    const { orderId } = req.query
-    console.log('orderId', orderId)
 
+    const { orderId } = req.query
     try {
         //extracting the session id mapped with order id
         const checkoutSession = req.user?.checkoutSession.find(item => item.orderId === orderId)
-        console.log('checkoutSession', checkoutSession)
+        const session = await stripe.checkout.sessions.retrieve(checkoutSession.sessionId);
 
-        const session = await stripe.checkout.sessions.retrieve(
-            checkoutSession.sessionId
-        );
         if (session?.payment_status === 'paid') {
 
-            //getting the payment intent
+            //retrieving the payment intent
             const paymentIntent = await stripe.paymentIntents.retrieve(
                 session.payment_intent
             );
-            console.log('payment_intent', paymentIntent)
+            // console.log('payment_intent', paymentIntent)
 
             let metadata = session.metadata
-            console.log('session', session)
-            console.log('metadata', metadata)
+            // console.log('session', session)
+            // console.log('metadata', metadata)
             let order = {}
             order.orderId = orderId
             order.tax = metadata.tax
@@ -666,12 +463,10 @@ router.get('/api/getcheckoutsession', authenticateUser, async (req, res) => {
             prodArray = []
             Object.keys(metadata).forEach(x => {
                 if (
-                    x !== "tax" && x !== "total" && x !== "shipping" && x !== "orderId" && x !== "userId" &&
-                    typeof metadata[x] === "string" // Checks if the value is a string
+                    x !== "tax" && x !== "total" && x !== "shipping" && typeof metadata[x] === "string" // Checks if the value is a string
                 ) {
                     let tempObj = {}
-                    //parsing the product details from metadata
-                    const productData = JSON.parse(metadata[x]);
+                    const productData = JSON.parse(metadata[x]);//parsing the product details from metadata
                     tempObj.productId = x
                     tempObj.name = productData.name
                     tempObj.image = productData.image
@@ -684,16 +479,15 @@ router.get('/api/getcheckoutsession', authenticateUser, async (req, res) => {
             })
 
             //saving the order details in db
-
             const updatedUser = await USER.findByIdAndUpdate(
                 req.user._id,
                 { $push: { orders: order } },
                 { new: true }
-            )//.populate('cartProducts');
-            console.log('updatedyuser',updatedUser)
+            )
+            // console.log('updatedyuser', updatedUser)
 
             const theOrder = new ORDER({
-                orderId: metadata.orderId,
+                orderId: orderId,
                 totalAmount: metadata.total,
                 tax: metadata.tax,
                 shipping: metadata.shipping,
@@ -713,12 +507,10 @@ router.get('/api/getcheckoutsession', authenticateUser, async (req, res) => {
                 })
 
             const data = updatedUser.orders.find(order => order.orderId === orderId)
-
             return res.status(200).json({ order: data });
         }
 
     } catch (error) {
-        console.error('Error session', error);
         res.status(500).json({ message: 'Internal server error.' });
     }
 })

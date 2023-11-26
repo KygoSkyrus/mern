@@ -52,3 +52,70 @@ export function getFullDateStr(date) {
     let d = new Date(date)
     return d.getDate() + " " + (m[d.getMonth()]) + " " + (d.getFullYear()) + ", " + (d.getHours() < 12 ? d.getHours() : d.getHours() - 12) + ":" + (d.getMinutes()) + " " + (d.getHours() < 12 ? "AM" : "PM")
   }
+
+
+  const addToCartAPI = async (productId,dispatch) => {
+    let resp;
+    fetch(`/api/addtocart`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            productId
+        }),
+    })
+        .then(response => {
+            resp = response
+            return response.json()
+        })
+        .then(res => {
+            console.log('res add to cart', res)
+            if (resp.status === 200) {
+                dispatch(setToastStatus({ isSuccess: true }))
+                dispatch(setUserDetails({ user: res.user }))
+            } else {
+                dispatch(setToastStatus({ isSuccess: false }))
+            }
+            dispatch(toastVisibility({ toast: true }))
+            dispatch(setToastContent({ message: res.message }))
+            console.log('response add tocart', res)
+        })
+}
+
+    // Debounce function to delay API calls by a specified time
+    function debounce(func, wait) {
+        let timeoutId;
+        return function (...args) {
+            const context = this;
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => func.apply(context, args), wait);
+        };
+    }
+
+    export const debouncedApi = debounce(addToCartAPI, 2000);
+
+    export const updatewishlist = (productId,dispatch) => {
+        let resp;
+        fetch(`/api/updatewishlist`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                productId
+            }),
+        })
+            .then(response => {
+                resp = response
+                return response.json()
+            })
+            .then(res => {
+                console.log('res add to wishlist', res)
+                if (resp.status === 200) {
+                    dispatch(setToastStatus({ isSuccess: true }))
+                    dispatch(setUserDetails({ user: res.user }))
+                } else {
+                    dispatch(setToastStatus({ isSuccess: false }))
+                }
+                dispatch(toastVisibility({ toast: true }))
+                dispatch(setToastContent({ message: res.message }))
+                console.log('response add wishlist', res)
+            })
+    }

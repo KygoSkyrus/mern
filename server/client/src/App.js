@@ -18,6 +18,7 @@ import Admin from './components/v2/Admin';
 import TheFront from './components/v2/TheFront';
 
 import Toast from './components/v2/Toast';
+import AdminLogin from './components/v2/Admin/AdminLogin';
 
 function App() {
 
@@ -120,6 +121,7 @@ const firebaseApp = initializeApp(firebaseConfig);
         <Routes>
           <Route path="/*" exact element={<TheFront />} />
           <Route path="/admin/*" exact element={<Admin firebaseApp={firebaseApp} />} />
+          <Route exact path='/login' element={<AdminLogin/>}/>
         </Routes>
 
 

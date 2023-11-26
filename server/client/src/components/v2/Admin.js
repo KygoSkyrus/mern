@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Route, Routes, useNavigate ,Navigate,Switch} from 'react-router-dom'
+import { Route, Routes, useNavigate ,Navigate,Outlet} from 'react-router-dom'
 
 import './../../assets/css/admin.css'
 import Nav from './Admin/Nav';
@@ -14,7 +14,7 @@ import AdminLogin from './Admin/AdminLogin.js';
 const Admin = () => {
 
     let navigate = useNavigate();
-    const [isAuthSuccess, setIsAuthSuccess] = useState(false)
+    const [isAuthSuccess, setIsAuthSuccess] = useState(null)
     //ONLY let this function run if the user is admin
     useEffect(() => {
         fetch('/api/admin/authentication')
@@ -29,49 +29,42 @@ const Admin = () => {
 
     return (
         <>
-            {/* <Routes>
-                <Route path="/login" exact element={<AdminLogin />} />
-            </Routes> */}
-
-            {/* {isAuthSuccess ? */}
                 <div className='adminView light'>
 
                     <Nav />
 
                     <div className='adminContainer'>
 
-                        <Routes>
-                        {isAuthSuccess ? <> <Route path="/dashboard" exact element={<Dashboard />} /> </>: <><Navigate to="/login" /></>}
-                            {/* <><PrivateRoute path="/admin/dashboard" component={Dashboard} /></>
-                           <> <PrivateRoute path="/admin/orders" component={Orders} /></> */}
-                            {/* <Route path="/login" exact element={<AdminLogin />} />
-                            
-                            <Route path="/dashboard" exact element={<Dashboard />} />
-                            <Route path="/orders" exact element={<Orders />} />
-                            <Route path="/users" exact element={<Users />} /> */}
-                            {/* <Route path="/:id" exact element={<SingleBlog  />} /> */}
-                            <Route path="*" element={<Error />} />
+                        <Routes>                     
+                            <Route path="/dashboard" exact element={<PrivateRoute isAuthSuccess={isAuthSuccess}><Dashboard/></PrivateRoute>} />
+                            <Route path="/orders" exact element={<PrivateRoute><Orders/></PrivateRoute>} />
+                            <Route path="/users" exact element={<PrivateRoute><Users/></PrivateRoute>} />                  
+                            <Route path="/*" exact element={<PrivateRoute><Error/></PrivateRoute>} />
+                            {/* <Route path="/:id" exact element={<SingleBlog />} /> */}                           
                         </Routes>
                     </div>
                 </div>
 
-            {/* //     : <BagLoader />
-            // } */}
-
-            <Loader />
+            <Error />
         </>
     )
 }
 
-const PrivateRoute = ({ component: Component,isAuthSuccess, ...rest }) => {
-  
+const PrivateRoute = ({element, isAuthSuccess}) => {
+  console.log('isAuthSuccess',isAuthSuccess)
+
+  if (isAuthSuccess === null) {
+    // Still loading, show a loader or any loading indicator
+    return <div>Loading...</div>;
+  }
     return (
-      <Route
-        {...rest}
-        render={(props) =>
-            isAuthSuccess ? <Component {...props} /> : <Navigate to="/login" />
+        <>
+         {isAuthSuccess?
+          element
+         : 
+          <Navigate to="/login" replace={true} />
         }
-      />
+        </>
     );
   };
 
