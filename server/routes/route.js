@@ -693,32 +693,24 @@ router.post('/api/admin/addcategory', async (req, res) => {
 /*********************************** COMMON APIs ***********************************/
 router.get('/api/getproducts', async (req, res) => {
 
-    //some authentication should be here too
-
-    //check if this is working fine fo dashboard
     const { limit } = req.query
-    console.log('hfhfd', limit)
-
     await PRODUCT.find({}).limit(limit)
         .then(response => {
-            // console.log(response)
             res.send(response)
         })
         .catch(error => {
             console.log(error)
             res.send({ error: error })
         })
-
 })
 
 router.get('/api/getprodbycategory', async (req, res) => {
 
     const { category } = req.query
-    console.log('categoryID', category)
+    // console.log('categoryID', category)
 
     PRODUCT.find({ category: category })
         .then(response => {
-            // console.log('sss', response)
             res.send({ products: response })
         })
         .catch(err => {
@@ -730,11 +722,9 @@ router.get('/api/getprodbycategory', async (req, res) => {
 router.get('/api/getprodbyid', async (req, res) => {
 
     const { prodId } = req.query
-    console.log('prodid', prodId)
 
     PRODUCT.find({ _id: prodId })
         .then(response => {
-            // console.log('sss', response)
             res.send({ product: response })
         })
         .catch(err => {
@@ -747,7 +737,6 @@ router.get('/api/getcategory', async (req, res) => {
 
     await CATEGORY.find({})
         .then(response => {
-            // console.log(response)
             res.send(response)
         })
         .catch(error => {
@@ -758,13 +747,11 @@ router.get('/api/getcategory', async (req, res) => {
 })
 
 router.post("/api/searchprod", async (req, res) => {
-    //NOTE::: this uses regex to get documents containing a specific word in db
     const { value } = req.body;
-    console.log("dgd", value)
 
     try {
         if (value === "") {
-            res.send([]); //an empty data object is sent
+            res.send([]); 
         } else {
             let result = await PRODUCT.find({ "name": { "$regex": value, "$options": "i" } })
             res.send(result);

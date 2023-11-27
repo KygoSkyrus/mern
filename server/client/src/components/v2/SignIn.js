@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSlice';
 import { isUserLoggedIn, setUserDetails } from './redux/userSlice';
-
+import { goWithGoogle } from './Utility';
 import loginImg from "./../../assets/images/login-cover.svg"
 
 
@@ -173,89 +173,89 @@ const SignIn = ({ firebaseApp }) => {
 
 
 
-    const signinAPI = (val, email, firstname, lastname, photo) => {
-        let resp;
-        fetch(`/api/${val}`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                firstname, lastname, email, photo
-            })
-        })
-            .then(response => {
-                resp = response;
-                return response.json()
-            })
-            .then(res => {
-                console.log("res.user", res.user)
-                if (resp.status === 200) {
-                    dispatch(setToastStatus({ isSuccess: true }))
-                } else {
-                    dispatch(setToastStatus({ isSuccess: false }))
-                }
-                document.getElementById('closeSignin').click()//closing the modal
+    // const signinAPI = (val, email, firstname, lastname, photo) => {
+    //     let resp;
+    //     fetch(`/api/${val}`, {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json"
+    //         },
+    //         body: JSON.stringify({
+    //             firstname, lastname, email, photo
+    //         })
+    //     })
+    //         .then(response => {
+    //             resp = response;
+    //             return response.json()
+    //         })
+    //         .then(res => {
+    //             console.log("res.user", res.user)
+    //             if (resp.status === 200) {
+    //                 dispatch(setToastStatus({ isSuccess: true }))
+    //             } else {
+    //                 dispatch(setToastStatus({ isSuccess: false }))
+    //             }
+    //             document.getElementById('closeSignin').click()//closing the modal
 
-                dispatch(toastVisibility({ toast: true }))
-                dispatch(setToastContent({ message: res.message }))
-                if (res.is_user_logged_in) {
-                    dispatch(isUserLoggedIn({ value: true }))
-                    dispatch(setUserDetails({ user: res.user }))
-                }
-            })
-    }
+    //             dispatch(toastVisibility({ toast: true }))
+    //             dispatch(setToastContent({ message: res.message }))
+    //             if (res.is_user_logged_in) {
+    //                 dispatch(isUserLoggedIn({ value: true }))
+    //                 dispatch(setUserDetails({ user: res.user }))
+    //             }
+    //         })
+    // }
 
-    const goWithGoogle = (val) => {
+    // const goWithGoogle = (val) => {
 
-        //with this the two things that google does for us is that it authentiicates the email id and make sure that no on uses soeonelse's id ,on signup you will have to chekc is the account already exist,,if dont only then create the account ,,,,on signin you have to check the same if the user even exist and if it does exist then resturn response that user exist and set the jwt
-        signInWithPopup(auth, provider)
-            .then((result) => {
-                console.log(result)
-                // This gives you a Google Access Token. You can use it to access the Google API.
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
-                //console.log(token, result.user);// The signed-in user info.
+    //     //with this the two things that google does for us is that it authentiicates the email id and make sure that no on uses soeonelse's id ,on signup you will have to chekc is the account already exist,,if dont only then create the account ,,,,on signin you have to check the same if the user even exist and if it does exist then resturn response that user exist and set the jwt
+    //     signInWithPopup(auth, provider)
+    //         .then((result) => {
+    //             console.log(result)
+    //             // This gives you a Google Access Token. You can use it to access the Google API.
+    //             const credential = GoogleAuthProvider.credentialFromResult(result);
+    //             const token = credential.accessToken;
+    //             //console.log(token, result.user);// The signed-in user info.
 
-                //after google authentication
-                if (token) {
-                    let dname = result.user.displayName.split(" ")
-                    let lastname = ''
-                    let firstname = dname[0]
-                    if (dname.length > 1) {
-                        lastname = dname[dname.length - 1]
-                    }
+    //             //after google authentication
+    //             if (token) {
+    //                 let dname = result.user.displayName.split(" ")
+    //                 let lastname = ''
+    //                 let firstname = dname[0]
+    //                 if (dname.length > 1) {
+    //                     lastname = dname[dname.length - 1]
+    //                 }
 
-                    if (val === 'signup') {
-                        signinAPI('signup', result.user.email, firstname, lastname, result.user.photoURL)
-                        navigate('/user');//sending user to user page for filling out other details
-                    } else {
-                        signinAPI('signin', result.user.email)
-                    }
-                }
+    //                 if (val === 'signup') {
+    //                     signinAPI('signup', result.user.email, firstname, lastname, result.user.photoURL)
+    //                     navigate('/user');//sending user to user page for filling out other details
+    //                 } else {
+    //                     signinAPI('signin', result.user.email)
+    //                 }
+    //             }
 
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                const email = error.email;
-                const credential = GoogleAuthProvider.credentialFromError(error);
-                console.log(
-                    "errorCode:",
-                    errorCode,
-                    ",",
-                    "errorMessage: ",
-                    errorMessage,
-                    ",",
-                    "email: ",
-                    email,
-                    ",",
-                    "credential:",
-                    credential
-                );
-            });
+    //         })
+    //         .catch((error) => {
+    //             const errorCode = error.code;
+    //             const errorMessage = error.message;
+    //             const email = error.email;
+    //             const credential = GoogleAuthProvider.credentialFromError(error);
+    //             console.log(
+    //                 "errorCode:",
+    //                 errorCode,
+    //                 ",",
+    //                 "errorMessage: ",
+    //                 errorMessage,
+    //                 ",",
+    //                 "email: ",
+    //                 email,
+    //                 ",",
+    //                 "credential:",
+    //                 credential
+    //             );
+    //         });
 
-    }
+    // }
 
 
     const toggleSignIn = (form) => {
@@ -302,7 +302,7 @@ const SignIn = ({ firebaseApp }) => {
                                         <section></section>
                                     </section>
 
-                                    <button className='btn btn-outline-info w-100 m-2' onClick={() => goWithGoogle('signup')}>Google</button>
+                                    <button className='btn btn-outline-info w-100 m-2' onClick={() => goWithGoogle('signup',navigate,dispatch)}>Google</button>
                                 </div>
 
                                 <div className={`signin-form d-flex justify-content-center align-items-center flex-column h-100 ${window.outerWidth < 768 && 'd-none'}`} >
@@ -318,7 +318,7 @@ const SignIn = ({ firebaseApp }) => {
                                         <section></section>
                                     </section>
 
-                                    <button className='btn btn-outline-info w-100 m-2' onClick={() => goWithGoogle('signin')}>Google</button>
+                                    <button className='btn btn-outline-info w-100 m-2' onClick={() => goWithGoogle('signin',navigate,dispatch)}>Google</button>
                                 </div>
                             </div>
                         </div>

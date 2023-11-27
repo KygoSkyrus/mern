@@ -4,6 +4,7 @@ NOTE :::the issue that without internet you are not abke to acces db,,,setup the
 
 - remove the box shadow from dropdons in navbar in mobile view
 - add a nice loader for all the loading process (the new loader, implement that one), make the same loader for both admin and front
+- when admin login than the pagfe is not redirected to the requested page, it just stucks i think
 - if any of the resulted productas is clicked on search prod than the search bar should close and overlay shoul be removed
 - on order page show loader when fetching the order
 - recipt url get expirewd after a period , maybe the recipt can be copied to a canvas or img and store in server

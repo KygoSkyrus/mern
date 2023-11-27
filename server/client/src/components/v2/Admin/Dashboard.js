@@ -5,6 +5,7 @@ import { isProductUpdated } from './../redux/todoSlice'
 
 import Modal from './../Modal'
 import Product from './ProductList'
+import Nav from './Nav'
 
 const Dashboard = () => {
 
@@ -59,6 +60,7 @@ const Dashboard = () => {
 
     return (
         <>
+                    <Nav />
 
             <div >
                 {/* THE HEADER */}

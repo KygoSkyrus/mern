@@ -121,7 +121,6 @@ const firebaseApp = initializeApp(firebaseConfig);
         <Routes>
           <Route path="/*" exact element={<TheFront />} />
           <Route path="/admin/*" exact element={<Admin firebaseApp={firebaseApp} />} />
-          <Route exact path='/login' element={<AdminLogin/>}/>
         </Routes>
 
 

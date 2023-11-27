@@ -28,7 +28,7 @@ const Category = () => {
     }, [])
 
 
-
+//show loader here if the products are not loaded
 
 
     return (

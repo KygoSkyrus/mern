@@ -288,7 +288,7 @@ img {
 
 /*********************************************** bag loader ************************************************* */
 .loader_container {
-  height: 300px;
+  height: 100%;
   background-color: #ffffff;
   display: grid;
   place-items: center;

@@ -402,6 +402,17 @@ width: 80vw;
 
 
 
+.admin-login{
+  /* position: absolute; */
+  left: 0;
+  width: 100vw;
+  background: white;
+}
+
+.admin-nav{
+  position: absolute;
+  top: 20%;
+}
 
 /******************** Dark mode *************************/
 .toggle {

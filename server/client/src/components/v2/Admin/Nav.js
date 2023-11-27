@@ -75,7 +75,7 @@ const Nav = () => {
   return (
     <>
 
-      <div className='d-flex align-items-center'>
+      <div className='d-flex align-items-center admin-nav'>
 
         <div className="btn-trapezoid-outline" onClick={e => handleSelectedOption(e)} >
           <Link className='nav-icons text-white py-1 my-1' data-link="dashboard" to='/admin/dashboard'>
