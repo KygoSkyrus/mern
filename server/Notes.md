@@ -10,6 +10,7 @@ NOTE :::the issue that without internet you are not abke to acces db,,,setup the
 - recipt url get expirewd after a period , maybe the recipt can be copied to a canvas or img and store in server
 - remove to cart isnt rel time ,,no showng deleted items
 - modals height is morr than vh
+- there should be like a grayout or low opacity loader when any api is hit tp show that api callis in progress
 - need to add toast status on admin side and also at the server response
 - check each and every categoryes..for example playstation is not showing up
 - try creating utility function,, for like toast,,,instead of writing those 3 lines everywhere//settoaststatus,content and visibility are three action that wil be dispatched from multiple componnets ,,instead create a common function and call it

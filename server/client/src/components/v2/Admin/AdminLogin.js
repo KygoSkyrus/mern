@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useParams,useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { goWithGoogle } from '../Utility'
 import theBagLogo from "./../../../assets/images/thebaglogo.png";
@@ -7,6 +7,8 @@ import theBagLogo from "./../../../assets/images/thebaglogo.png";
 
 const AdminLogin = () => {
 
+  const {route}=useParams()
+console.log('route',route)
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -18,7 +20,7 @@ const AdminLogin = () => {
         <div className="form-container my-4" style={{ maxWidth: "unset" }}>
           <div className="d-flex justify-content-center flex-column align-items-center mb-4">
             <img alt='' className='ms-2 mb-1' src={theBagLogo} width="20px" />
-            <section className='theLogo'>SHOPP ITT</section>
+            <section className='theLogo fw-bold'>SHOPP ITT</section>
           </div>
 
           <div className="panel">
@@ -51,7 +53,7 @@ const AdminLogin = () => {
                 <span >OR CONTINUE WITH</span>
                 <section></section>
               </section>
-              <button className='btn btn-outline-info w-100 m-2' onClick={() => goWithGoogle('signin', navigate, dispatch)}>Google</button>
+              <button className='btn btn-outline-info w-100 m-2' onClick={() => goWithGoogle('signin', navigate, dispatch,route, true)}>Google</button>
             </div>
           </div>
         </div>

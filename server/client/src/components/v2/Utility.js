@@ -1,5 +1,5 @@
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { setUserDetails, isUserLoggedIn } from './redux/userSlice';
+import { setUserDetails, isUserLoggedIn, setAdminAuthStatus } from './redux/userSlice';
 import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSlice';
 
 const getUser = (dispatch) => {
@@ -122,8 +122,8 @@ export const updatewishlist = (productId, dispatch) => {
 
 
 
-export const goWithGoogle = (val,navigate,dispatch) => {
-
+export const goWithGoogle = (val, navigate, dispatch, route, isAdminLogin) => {
+    console.log('isal', isAdminLogin)
     //with this the two things that google does for us is that it authentiicates the email id and make sure that no on uses soeonelse's id ,on signup you will have to chekc is the account already exist,,if dont only then create the account ,,,,on signin you have to check the same if the user even exist and if it does exist then resturn response that user exist and set the jwt
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
@@ -145,10 +145,10 @@ export const goWithGoogle = (val,navigate,dispatch) => {
                 }
 
                 if (val === 'signup') {
-                    signinAPI('signup', result.user.email, firstname, lastname, result.user.photoURL,dispatch)
+                    signinAPI('signup', result.user.email, firstname, lastname, result.user.photoURL, dispatch)
                     navigate('/user');//sending user to user page for filling out other details
                 } else {
-                    signinAPI('signin', result.user.email,'','','',dispatch)
+                    signinAPI('signin', result.user.email, '', '', '', dispatch, navigate, route, isAdminLogin)
                 }
             }
 
@@ -175,35 +175,48 @@ export const goWithGoogle = (val,navigate,dispatch) => {
 
 }
 
-const signinAPI = (val, email, firstname, lastname, photo, dispatch) => {
-  let resp;
-  fetch(`/api/${val}`, {
-      method: "POST",
-      headers: {
-          "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-          firstname, lastname, email, photo
-      })
-  })
-      .then(response => {
-          resp = response;
-          return response.json()
-      })
-      .then(res => {
-          console.log("res.user", res.user)
-          if (resp.status === 200) {
-              dispatch(setToastStatus({ isSuccess: true }))
-          } else {
-              dispatch(setToastStatus({ isSuccess: false }))
-          }
-          document.getElementById('closeSignin').click()//closing the modal
+const signinAPI = (val, email, firstname, lastname, photo, dispatch, navigate, route, isAdminLogin = false) => {
+    console.log('rrr', route)
 
-          dispatch(toastVisibility({ toast: true }))
-          dispatch(setToastContent({ message: res.message }))
-          if (res.is_user_logged_in) {
-              dispatch(isUserLoggedIn({ value: true }))
-              dispatch(setUserDetails({ user: res.user }))
-          }
-      })
+    let resp;
+    fetch(`/api/${val}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            firstname, lastname, email, photo, isAdminLogin
+        })
+    })
+        .then(response => {
+            resp = response;
+            return response.json()
+        })
+        .then(res => {
+            console.log("res.user", res.user)
+
+            if (resp.status === 200) {
+                dispatch(setToastStatus({ isSuccess: true }))
+            } else {
+                dispatch(setToastStatus({ isSuccess: false }))
+            }
+            dispatch(toastVisibility({ toast: true }))
+            dispatch(setToastContent({ message: res.message }))
+
+            if (isAdminLogin) {
+                console.log('navigate -1')
+                if (res.isUserAuthenticated) {
+                    dispatch(isUserLoggedIn({ value: true }))
+                    dispatch(setUserDetails({ user: res.user }))
+                    dispatch(setAdminAuthStatus({value:res.isUserAuthenticated}))
+                    navigate(`/admin/${route}`)//navigating to reuested route
+                }
+            } else {
+                document.getElementById('closeSignin').click()//closing the modal
+                if (res.is_user_logged_in) {
+                    dispatch(isUserLoggedIn({ value: true }))
+                    dispatch(setUserDetails({ user: res.user }))
+                }
+            }
+        })
 }

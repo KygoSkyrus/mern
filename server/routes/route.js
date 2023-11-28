@@ -141,10 +141,24 @@ router.post('/api/signup', async (req, res) => {
 router.post('/api/signin', async (req, res) => {
 
     try {
-        const { email } = req.body;
+        const { email, isAdminLogin } = req.body;
+        console.log('isAdminLogin',isAdminLogin)
         const user = await USER.findOne({ email: email }).populate('cartProducts');
 
         if (user) {
+            if(isAdminLogin){             
+                if (user.role !== "admin" && user.email !== process.env.ADMIN_ID) {
+                    return res.status(404).json({ message: 'Authentication failed!!!', isUserAuthenticated: false });
+                }else{
+                    const { token } = await user.generateAuthToken();
+                    res.cookie('jwt', token, {
+                        expires: new Date(Date.now() + 10800000),
+                        httpOnly: true,
+                        secure: process.env.NODE_ENV !== "development",
+                    });
+                    return res.status(200).json({ message: "Admin logged in successfully", isUserAuthenticated: true, user });
+                }
+            }
             const { token } = await user.generateAuthToken();
             res.cookie('jwt', token, {
                 expires: new Date(Date.now() + 10800000),
@@ -152,7 +166,7 @@ router.post('/api/signin', async (req, res) => {
                 secure: process.env.NODE_ENV !== "development",
             });
 
-            res.status(200).json({ message: "User logged in successfully", is_user_logged_in: true, user });//send the 
+            res.status(200).json({ message: "User logged in successfully", is_user_logged_in: true, user }); 
         } else {
             res.status(400).json({ message: "Account doesn't exists", is_user_logged_in: false, });
         }

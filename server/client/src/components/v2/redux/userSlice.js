@@ -23,6 +23,7 @@ const initialState={
         orders: [],
     },
     isUserLoggedIn: false,//this will be set true on ever rerender when the front component will check if user is loggedin,,on signin and on signup
+    isAdminAuthSuccess:null,
 }
 
 export const userSlice = createSlice({
@@ -45,10 +46,13 @@ export const userSlice = createSlice({
                     x.quantity=action.payload.quantity
                 }
             })
+        },
+        setAdminAuthStatus:(state,action)=>{
+            state.isAdminAuthSuccess = action.payload.value
         }
     }
 })
 
 
-export const { isUserLoggedIn, setUserDetails,manageQuantity } = userSlice.actions;
+export const { isUserLoggedIn, setUserDetails,manageQuantity,setAdminAuthStatus } = userSlice.actions;
 export const userReducer = userSlice.reducer

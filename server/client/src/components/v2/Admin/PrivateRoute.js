@@ -7,6 +7,7 @@ import BagLoader from '../BagLoader.jsx';
 const PrivateRoute = ({ isAuthSuccess, route }) => {
     console.log('isAuthSuccess', isAuthSuccess, route)
 
+
     if (isAuthSuccess === null) {
         // Still loading, show a loader or any loading indicator
         return <BagLoader />;
@@ -16,7 +17,7 @@ const PrivateRoute = ({ isAuthSuccess, route }) => {
         if (route === "orders") return <Orders />
         if (route === "users") return <Users />
     } else {
-        return <Navigate to={`/admin/login`} replace={true} />;
+        return <Navigate to={`/admin/login/${route}`} state={isAuthSuccess} />;
     }
 
 };
