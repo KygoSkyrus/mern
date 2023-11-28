@@ -148,7 +148,7 @@ router.post('/api/signin', async (req, res) => {
         if (user) {
             if(isAdminLogin){             
                 if (user.role !== "admin" && user.email !== process.env.ADMIN_ID) {
-                    return res.status(404).json({ message: 'Authentication failed!!!', isUserAuthenticated: false });
+                    return res.status(404).json({ message: 'Access denied!!!', isUserAuthenticated: false });
                 }else{
                     const { token } = await user.generateAuthToken();
                     res.cookie('jwt', token, {

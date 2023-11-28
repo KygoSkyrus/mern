@@ -147,7 +147,7 @@ const Dashboard = () => {
                 {/* FILTER ROW */}
 
 
-                <div className=" container-fluid px-0 ">
+                <div className="container-fluid px-0 admin-table-grid">
                     <div className="table-responsive-md">
                         <table className="table table-hover mt-2">
                             <thead className="border-bottom">

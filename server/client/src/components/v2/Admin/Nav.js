@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { productFormVisibility, setProductFormTitle } from './../redux/todoSlice'
@@ -7,10 +7,12 @@ import { clearProductForm } from './../redux/todoSlice'
 import { Link } from 'react-router-dom'
 
 const Nav = () => {
+
+  const adminNavRef = useRef();
   const dispatch = useDispatch()
 
   const visibility = useSelector(state => state.productFormVisibility.visibility)
-
+  const [isSidebarHidden,setIsSidebarHidden]=useState(true)
 
   useEffect(() => {
     // getSidebarWorking()
@@ -72,10 +74,35 @@ const Nav = () => {
   }
 
 
+  const hideShowSidebar = (e) => {
+    console.log('jfjdf',document.querySelectorAll('.admin-table-grid'))
+    if(e.currentTarget.dataset.ishidden==="true"){
+      adminNavRef.current.classList.remove('hideSidebar');
+      e.currentTarget.childNodes.forEach(x => {
+        x.style.borderRadius = "2px"
+        x.style.transform = x.classList.contains("upper")? "rotate(18deg) translateY(1.5px)":"rotate(-18deg) translateY(-1.5px)"
+      })
+      document.querySelectorAll('.admin-table-grid').forEach(x=>{
+        x.classList.add('slide-admin-table')
+      })
+      setIsSidebarHidden(false)
+    }else{
+      adminNavRef.current.classList.add('hideSidebar');
+      e.currentTarget.childNodes.forEach(x => {
+        // x.style.transform = "unset"
+        x.style.transform = x.classList.contains("upper")? "rotate(-18deg) translateY(1.5px)":"rotate(18deg) translateY(-1.5px)"
+      })
+      document.querySelectorAll('.admin-table-grid').forEach(x=>{
+        x.classList.remove('slide-admin-table')
+      })
+      setIsSidebarHidden(true)
+    }
+  }
+
   return (
     <>
 
-      <div className='d-flex align-items-center admin-nav'>
+      <div className='d-flex align-items-center admin-nav hideSidebar' ref={adminNavRef}>
 
         <div className="btn-trapezoid-outline" onClick={e => handleSelectedOption(e)} >
           <Link className='nav-icons text-white py-1 my-1' data-link="dashboard" to='/admin/dashboard'>
@@ -94,6 +121,10 @@ const Nav = () => {
             <i className="fa-solid fa-add" aria-hidden="true"></i>
           </section>
 
+        </div>
+        <div className='arrow pointer' data-ishidden={isSidebarHidden} onClick={(e) => hideShowSidebar(e)}>
+          <div className='upper'></div>
+          <div className='lower'></div>
         </div>
       </div>
 

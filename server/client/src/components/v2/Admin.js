@@ -10,10 +10,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const Admin = () => {
 
-    const dispatch=useDispatch();
+    const dispatch = useDispatch();
     // const [isAuthSuccess, setIsAuthSuccess] = useState(null)//can chnage it with the reduct state 
-    const isAuthSuccess =useSelector(state=>state.user.isAdminAuthSuccess)//using this may break stuff, 
-    console.log('isAuthSuccess--4-4-4-',isAuthSuccess)
+    const isAuthSuccess = useSelector(state => state.user.isAdminAuthSuccess)//using this may break stuff, 
+    console.log('isAuthSuccess--4-4-4-', isAuthSuccess)
     //ONLY let this function run if the user is admin
     useEffect(() => {
         fetch('/api/admin/authentication')
@@ -21,7 +21,7 @@ const Admin = () => {
             .then(res => {
                 console.log('reee', res.isUserAuthenticated)
                 // setIsAuthSuccess(res.isUserAuthenticated)
-                dispatch(setAdminAuthStatus({value:res.isUserAuthenticated}))
+                dispatch(setAdminAuthStatus({ value: res.isUserAuthenticated }))
             })
     }, [])
 
@@ -34,10 +34,9 @@ const Admin = () => {
                         <Route path="/dashboard" exact element={<PrivateRoute isAuthSuccess={isAuthSuccess} route='dashboard' />} />
                         <Route path="/orders" exact element={<PrivateRoute isAuthSuccess={isAuthSuccess} route='orders' />} />
                         <Route path="/users" exact element={<PrivateRoute isAuthSuccess={isAuthSuccess} route='users' />} />
-                        
+
                         <Route exact path='/login/:route' element={<AdminLogin />} />
                         <Route path="/*" exact element={<Error />} />
-                        {/* <Route path="/:id" exact element={<SingleBlog />} /> */}
                     </Routes>
                 </div>
             </div>

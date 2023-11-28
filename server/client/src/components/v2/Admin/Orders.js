@@ -12,6 +12,7 @@ import OrderDetails from './OrderDetails';
 
 import { formatInINRwoSign } from './../Utility'
 import { getDateStr } from './../Utility';
+import Nav from './Nav';
 
 const Orders = () => {
 
@@ -57,6 +58,7 @@ const Orders = () => {
 
     return (
         <>
+        <Nav/>
             {/* THIS HEADER IS SAME FOR DASHBOARD AND this page except the filter,,,create a common header */}
             <div >
                 {/* THE HEADER */}
@@ -166,7 +168,7 @@ const Orders = () => {
                 {/* FILTER ROW */}
 
 
-                <div className=" container-fluid px-0 ">
+                <div className="container-fluid px-0 admin-table-grid">
                     <div className="table-responsive-md">
                         <table className="table table-hover mt-2">
                             <thead className="border-bottom">
@@ -213,7 +215,7 @@ const Orders = () => {
                                                                     return (<div className="avatars__item pointer d-flex justify-content-center align-items-center bg-white text-secondary" >+{x.products.length - 3}</div>)
                                                                 } else {
                                                                     if (i < 3)
-                                                                        return (<div className={x.products.length === 1 && `ifOne`}>
+                                                                        return (<div className={x.products.length === 1? "ifOne":""}>
                                                                             <div className="align-items-center avatars__item bg-white d-flex justify-content-center pointer text-secondary"
                                                                                 // onMouseEnter={(e) => imagePreview(e)} onMouseLeave={(e) => hideImagePreview(e)} 
                                                                                 style={{ background: `url(${y.image})`, backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat", }}></div>
