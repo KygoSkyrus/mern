@@ -266,12 +266,8 @@ const Orders = () => {
                                                     </div>
                                                 </td>
 
-                                                <td className="align-middle text-center">
-                                                    <div className="btn-group ">
-                                                        <button className="small" type="button" >
-                                                            {getDateStr(x.createdAt)}
-                                                        </button>
-                                                    </div>
+                                                <td className="align-middle text-center small">
+                                                    {getDateStr(x.createdAt)}                           
                                                 </td>
                                             </tr>
                                         )

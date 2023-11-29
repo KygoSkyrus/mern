@@ -1,7 +1,7 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable no-eval */
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, redirect, useNavigate } from 'react-router-dom'
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserDetails } from './redux/userSlice';
@@ -17,6 +17,7 @@ import theBagLogo from "./../../assets/images/thebaglogo.png";
 
 const Cart = () => {
 
+  const navigate=useNavigate()
   const dispatch = useDispatch()
   const userDetail = useSelector(state => state.user.user)
   const userLoggedIn = useSelector(state => state.user.isUserLoggedIn)
@@ -60,7 +61,8 @@ const Cart = () => {
     priceObj.productList[x._id].discount = x.discount
   })
 
-  priceObj.shipping = (sub < 1999) ? 99 : 0; //shipping
+  // priceObj.shipping = (sub < 1999) ? 99 : 0; //shipping
+  priceObj.shipping = 99;
   priceObj.tax = Math.round(sub * 0.1);//tax
   priceObj.grandTotal = sub + (sub < 1999 ? 99 : 0) + Math.round(sub * 0.1)//grandtotal
   console.log('priceObj', priceObj)
@@ -168,18 +170,24 @@ const Cart = () => {
       subtotal.current.innerText = formatInINRwoSign.format(total);
 
       //setting SHIPPING if subtotal is less than 1999
-      shippingCharge.current.innerText = total < 1999 ? formatInINRwoSign.format(99) : "-";
-      priceObj.shipping = (total < 1999) ? 99 : 0
+      // shippingCharge.current.innerText = total < 1999 ? formatInINRwoSign.format(99) : "-";
+      // priceObj.shipping = (total < 1999) ? 99 : 0
+      shippingCharge.current.innerText = formatInINRwoSign.format(99);
+      priceObj.shipping = 99;
 
       //setting the TAX (10%) on the subtotal
       tax.current.innerText = formatInINRwoSign.format(Math.round(total * 0.1))
       priceObj.tax = Math.round(total * 0.1);
 
       //setting GRANDTOTAL (adding subtotal/shipping/tax)
-      grandTotal.current.innerText = formatInINRwoSign.format(total + (total < 1999 ? 99 : 0) + Math.round(total * 0.1))
-      priceObj.grandTotal = total + (total < 1999 ? 99 : 0) + Math.round(total * 0.1)
+      // grandTotal.current.innerText = formatInINRwoSign.format(total + (total < 1999 ? 99 : 0) + Math.round(total * 0.1))
+      // priceObj.grandTotal = total + (total < 1999 ? 99 : 0) + Math.round(total * 0.1)
+      grandTotal.current.innerText = formatInINRwoSign.format(total + 99 + Math.round(total * 0.1))
+      priceObj.grandTotal = total + 99 + Math.round(total * 0.1)
 
-      document.querySelector('[name=priceObj]').value = JSON.stringify(priceObj)//update the inout with priceobj
+      //un comment this is you r using form to create checkout session
+      // document.querySelector('[name=priceObj]').value = JSON.stringify(priceObj)//update the input with priceobj
+
 
       console.log('priceObj in up', priceObj)
       // Trigger the batched update in the background
@@ -247,6 +255,30 @@ const Cart = () => {
         dispatch(setToastContent({ message: res.message }))
         console.log('movetowishlist response', res)
         //also update the user from here too or elese the result wont be seen immediately
+      })
+  }
+
+
+
+  function createCheckoutSession(priceObj) {
+    let resp;
+    fetch(`/create-checkout-session`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        priceObj
+      }),
+    })
+      .then(response => {
+        resp = response;
+        return response.json()
+      })
+      .then(res => {
+        console.log('resp', resp)
+        if (resp.status === 200) {
+          redirect(res.url);
+          console.log('200')
+        }
       })
   }
 
@@ -399,9 +431,10 @@ const Cart = () => {
                     </div>
 
                     <div className='d-flex justify-content-between my-2'>
-                      <span title='99 shipping & handling charge is applied under subtotal 1999'>Estimated Shipping & Handling <i className="fa fa-question-circle fa-sm" aria-hidden="true"></i>
+                      <span title={`${formatInINR.format(99)} Shipping & Handling charge is applied`}>Estimated Shipping & Handling <i className="fa fa-question-circle fa-sm" aria-hidden="true"></i>
                       </span>
-                      <span ref={shippingCharge}>{sub < 1999 ? formatInINR.format(99) : "-"}</span>
+                      {/* <span ref={shippingCharge}>{sub < 1999 ? formatInINR.format(99) : "-"}</span> */}
+                      <span ref={shippingCharge}>{formatInINR.format(99)}</span>
                     </div>
 
                     <div className='d-flex justify-content-between my-2'>
@@ -411,13 +444,18 @@ const Cart = () => {
 
                     <div className='d-flex justify-content-between py-2 my-4 text-dark' style={{ borderBottom: "1px solid #dee2e6", borderTop: "1px solid #dee2e6" }}>
                       <span><b>Total</b></span>
-                      <span ref={grandTotal} className='fw-bolder'>{formatInINR.format(sub + (sub < 1999 ? 99 : 0) + Math.round(sub * 0.1))}</span>
+                      <span ref={grandTotal} className='fw-bolder'>{formatInINR.format(sub + 99 + Math.round(sub * 0.1))}</span>
                     </div>
 
-                    <form action="/create-checkout-session" method="POST">
-                      <input type="hidden" name='priceObj' value={JSON.stringify(priceObj)} />
-                      <button className='btn w-100 my-2' style={{ border: "1px solid rgb(0 0 0 / 16%)", background: "#ebebeb", borderTop: "0" }} type="submit">Checkout</button>
-                    </form>
+                    {/* <form
+                    action="/create-checkout-session" method="POST"
+                    > */}
+                      {/* <input type="hidden" name='priceObj' value={JSON.stringify(priceObj)} /> */}
+                      <button id='checkoutBtn' className='btn w-100 my-2' style={{ border: "1px solid rgb(0 0 0 / 16%)", background: "#ebebeb", borderTop: "0" }}
+                        //  type="submit"
+                        onClick={() => createCheckoutSession(JSON.stringify(priceObj))}
+                      >Checkout</button>
+                    {/* </form> */}
                     {/* <button className='btn w-100 my-2' style={{ border: "1px solid rgb(0 0 0 / 16%)", background: "#ebebeb", borderTop: "0" }} onClick={()=>handleCheckout()}>Checkout</button> */}
                   </div>
                 </div>
@@ -425,7 +463,9 @@ const Cart = () => {
             </div>
           </div>
         )
-        : <div className='container my-5'>
+        :
+        // move this to a common commponent
+        <div className='container my-5'>
           <div className='d-flex flex-column align-items-center m-auto' style={{ width: "fit-content" }}>
 
             <div><img src={LoginImg} alt='' />

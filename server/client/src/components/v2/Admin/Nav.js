@@ -75,16 +75,14 @@ const Nav = () => {
 
 
   const hideShowSidebar = (e) => {
-    console.log('jfjdf',document.querySelectorAll('.admin-table-grid'))
+    console.log('jfjdf',document.querySelector('.admin-table-grid'))
     if(e.currentTarget.dataset.ishidden==="true"){
-      adminNavRef.current.classList.remove('hideSidebar');
+      adminNavRef.current.classList.remove('hideSidebar');//hiding side navbar
       e.currentTarget.childNodes.forEach(x => {
         x.style.borderRadius = "2px"
         x.style.transform = x.classList.contains("upper")? "rotate(18deg) translateY(1.5px)":"rotate(-18deg) translateY(-1.5px)"
-      })
-      document.querySelectorAll('.admin-table-grid').forEach(x=>{
-        x.classList.add('slide-admin-table')
-      })
+      })//inverting arrow
+      document.querySelector('.admin-table-grid')?.classList.add('slide-admin-table')//sliding table with sidebar
       setIsSidebarHidden(false)
     }else{
       adminNavRef.current.classList.add('hideSidebar');

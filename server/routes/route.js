@@ -46,7 +46,7 @@ const authenticateUser = async (req, res, next) => {
         return res.status(404).json({ message: 'User not found.' });
     }
 
-    console.log('uueueue', user)
+    // console.log('uueueue', user)
     req.user = user;
     next();
 };
@@ -368,6 +368,8 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
     const orderId = uuidv4()
     let productList = {}//for metadata
 
+    console.log('req.body.priceObj--',req.body.priceObj)
+
     try {
         const data = JSON.parse(req.body.priceObj)
         //meta data has 5 keys for orders details and rest 47 for products
@@ -378,6 +380,24 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
         productList.shipping = data.shipping
         productList.total = data.grandTotal
 
+        // const taxRate = await stripe.taxRates.create({
+        //     display_name: 'Shipping',
+        //     description: 'Shipping charges',
+        //     percentage: data.shipping,
+        //     jurisdiction: 'DE',
+        //     inclusive: false,
+        //   });
+        
+        // const shippingRate = await stripe.shippingRates.create({
+        //     display_name: 'Shipping',
+        //     type: 'fixed_amount',
+        //     fixed_amount: {
+        //         amount: 9900,
+        //         currency: 'inr',
+        //     },
+        // });
+        // console.log('ttaxxxx------------',shippingRate.id)
+
         Object.keys(data.productList).forEach(x => {
             let prod = {}
 
@@ -386,9 +406,20 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
             prod.price_data.product_data = {}
             prod.price_data.product_data.name = data.productList[x].name
             if (data.grandTotal < 999999) {
-                prod.price_data.unit_amount = data.productList[x].price * 100
+                // prod.price_data.unit_amount = data.productList[x].price * 100
+                if(data.productList[x].discount){
+                    prod.price_data.unit_amount = Math.floor(data.productList[x].price * data.productList[x].discount / 100) * 100;
+                }else{
+                    prod.price_data.unit_amount = data.productList[x].price * 100;
+                }
             } else {
-                prod.price_data.unit_amount = data.productList[x].price
+                // prod.price_data.unit_amount = data.productList[x].price
+                if(data.productList[x].discount){
+
+                prod.price_data.unit_amount = Math.floor(data.productList[x].price * data.productList[x].discount / 100)
+                }else{
+                    prod.price_data.unit_amount = data.productList[x].price 
+                }
             }
             prod.quantity = data.productList[x].quantity
 
@@ -396,6 +427,9 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
             prod.adjustable_quantity.enabled = true
             prod.adjustable_quantity.minimum = 1
             prod.adjustable_quantity.maximum = 99
+
+            //txr_1OHhX4SJDEVNzqXlTmp6QliB
+            prod.tax_rates=[process.env.TAX_RATE_ID]
 
             line_items.push(prod);
 
@@ -409,6 +443,8 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
             productList[x] = JSON.stringify(productList[x])//metadata only supports key value(only string) that's why its stringified
         })
 
+        console.log('product LIST-----------------------',line_items)
+
         const session = await stripe.checkout.sessions.create({
             line_items,
             mode: 'payment',
@@ -418,14 +454,12 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
             customer_email: req.user.email,
             metadata: productList,
             billing_address_collection: "required",
-            // total_details:{
-            //     amount_discount:443,
-            //     amount_tax:33
-            // }
-            //shipping_address_collection:"required"
+            shipping_options:[{
+                shipping_rate:process.env.SHIPPING_RATE_ID,
+            }]
         });
 
-        // console.log('session', session)
+        console.log('session', session)
         if (session) {
             await USER.findByIdAndUpdate(
                 req.user._id,
@@ -439,7 +473,10 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
                 },
                 { new: true }
             )
-            res.redirect(303, session.url);//redirects to checkout page
+            console.log('redirect url',session.url)
+            // res.redirect(303, session.url);//redirects to checkout page
+
+            res.status(200).json({ url:session.url });
         }
     } catch (error) {
         console.error('something went wrong', error);

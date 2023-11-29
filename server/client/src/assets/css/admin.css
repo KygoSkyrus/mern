@@ -45,6 +45,7 @@
   box-shadow: 0px 0px 15px rgb(167 167 167 / 32%), 0px 0px 6px -2px rgba(0, 0, 0, 0.05); */
     border: 1px solid #bfbfbf;
     border-left: 0;
+    box-shadow: 2px 2px 10px rgb(182, 182, 182);
 }
 .btn-trapezoid-outline span {
   font-size: 15px;
@@ -52,16 +53,17 @@
   display: block;
   transform: perspective(160px) rotateX(-18deg) translateZ(4px) translateY(4px);
 }
-.btn-trapezoid-outline:hover {
-  background: #ffc107;
-  /* color: #136377 !important; */
-  transition: all 0.3s ease-in;
-  box-shadow: 2px 2px 10px rgb(182, 182, 182);
-}
 
 .nav-icons {
-  padding: 6px 15px;
+  margin: 6px 7px;
+  padding: 6px 9px;
   cursor: pointer;
+  background:none;
+  border-radius: 6px;
+  transition: var(--transition);
+}
+.nav-icons:hover{
+  background: #ffffff61;
 }
 
 a.nav-icons.active::before {
@@ -123,12 +125,10 @@ a.nav-icons.active::before {
   left: -39px;
 }
 .admin-table-grid{
-  position: relative;
-  left: 0;
   transition: var(--transition);
 }
 .slide-admin-table{
-  left: 39px;
+  width: calc(100% - 72px);
 }
 /****************************************** SIDE NAV **************************************************/
 
