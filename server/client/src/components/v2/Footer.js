@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const Footer = (props) => {
+const Footer = () => {
 
 	const categoryArray = ["Home Appliances", "Video Game Accessories", "Wearable Devices", "Speakers", "Computer Accessories", "Storage Devices"]
 	const topPicksArray = ["laptops", "smartphones", "fitness trackers", "graphics cards", "playstation"]
@@ -71,9 +71,9 @@ const Footer = (props) => {
 							<div className="col-md-4 col-lg-2 t-mb-30 mb-lg-0">
 								<h5 className="t-blue mt-0 text-capitalize">categories</h5>
 								<ul className="list">
-									{categoryArray?.map(x => {
+									{categoryArray?.map((x,i) => {
 										return (
-											<li className="t-mb-10">
+											<li className="t-mb-10" key={i}>
 												<Link to="" className="t-link text-capitalize t-link--light sm-text">
 													{x}
 												</Link>
@@ -85,9 +85,9 @@ const Footer = (props) => {
 							<div className="col-md-4 col-lg-2 t-mb-30 mb-lg-0">
 								<h5 className="t-blue mt-0 text-capitalize">top picks</h5>
 								<ul className="list" id="footerCat">
-									{topPicksArray.map(x => {
+									{topPicksArray.map((x,i) => {
 										return (
-											<li className="t-mb-10" >
+											<li className="t-mb-10" key={i} >
 												<Link to={`/category/${x}`} className="t-link text-capitalize t-link--light sm-text" target='blank'>
 													{x}
 												</Link>
@@ -107,10 +107,10 @@ const Footer = (props) => {
 							<div className="col-md-6 col-lg-3 t-mb-30 mb-lg-0">
 								<h5 className="t-blue mt-0 text-capitalize">follow us</h5>
 								<ul className="list d-flex follow mt-3">
-									{socialArray.map(x => {
+									{socialArray.map((x,i) => {
 										return (
 											<li>
-												<Link to="" className="t-follow-link">
+												<Link to="" className="t-follow-link" key={i}>
 													<span className="social-counter__icon social-counter__icon--be t-mr-8">
 														<span className="social-counter__icon-is">
 															<i className={`fa-brands ${x}`}></i>

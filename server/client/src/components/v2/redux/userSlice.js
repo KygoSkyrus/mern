@@ -22,7 +22,7 @@ const initialState={
         cart: [],
         orders: [],
     },
-    isUserLoggedIn: false,//this will be set true on ever rerender when the front component will check if user is loggedin,,on signin and on signup
+    isUserLoggedIn: null,//this will be set true on ever rerender when the front component will check if user is loggedin,,on signin and on signup
     isAdminAuthSuccess:null,
 }
 

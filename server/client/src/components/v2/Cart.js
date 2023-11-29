@@ -17,7 +17,7 @@ import theBagLogo from "./../../assets/images/thebaglogo.png";
 
 const Cart = () => {
 
-  const navigate=useNavigate()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const userDetail = useSelector(state => state.user.user)
   const userLoggedIn = useSelector(state => state.user.isUserLoggedIn)
@@ -276,8 +276,11 @@ const Cart = () => {
       .then(res => {
         console.log('resp', resp)
         if (resp.status === 200) {
-          redirect(res.url);
-          console.log('200')
+          window.location.href = res.url;
+        }else{
+          dispatch(setToastStatus({ isSuccess: false }))
+          dispatch(toastVisibility({ toast: true }))
+          dispatch(setToastContent({ message: res.message }))
         }
       })
   }
@@ -450,11 +453,11 @@ const Cart = () => {
                     {/* <form
                     action="/create-checkout-session" method="POST"
                     > */}
-                      {/* <input type="hidden" name='priceObj' value={JSON.stringify(priceObj)} /> */}
-                      <button id='checkoutBtn' className='btn w-100 my-2' style={{ border: "1px solid rgb(0 0 0 / 16%)", background: "#ebebeb", borderTop: "0" }}
-                        //  type="submit"
-                        onClick={() => createCheckoutSession(JSON.stringify(priceObj))}
-                      >Checkout</button>
+                    {/* <input type="hidden" name='priceObj' value={JSON.stringify(priceObj)} /> */}
+                    <button id='checkoutBtn' className='btn w-100 my-2' style={{ border: "1px solid rgb(0 0 0 / 16%)", background: "#ebebeb", borderTop: "0" }}
+                      //  type="submit"
+                      onClick={() => createCheckoutSession(JSON.stringify(priceObj))}
+                    >Checkout</button>
                     {/* </form> */}
                     {/* <button className='btn w-100 my-2' style={{ border: "1px solid rgb(0 0 0 / 16%)", background: "#ebebeb", borderTop: "0" }} onClick={()=>handleCheckout()}>Checkout</button> */}
                   </div>

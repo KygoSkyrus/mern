@@ -106,7 +106,7 @@ router.get('/api/signmeout', authenticateUser, async (req, res) => {
         res.clearCookie('jwt')
         res.status(200).json({ message: "User logged out!!!" })
     } catch (error) {
-        res.status(500).json({ message: 'Internal server error.' });
+        res.status(500).json({ message: 'Internal server error' });
     }
 })
 
@@ -188,7 +188,7 @@ router.post('/api/updatedaddress', authenticateUser, async (req, res) => {
         res.status(200).json({ message: 'User details updated.', user: updatedUser });
     } catch (err) {
         console.log(err)
-        res.status(500).json({ message: 'Internal server error.' });
+        res.status(500).json({ message: 'Internal server error' });
     }
 })
 /*********************************** USER ***********************************/
@@ -215,7 +215,7 @@ router.post('/api/addtocart', authenticateUser, async (req, res) => {
 
     } catch (err) {
         console.log(err)
-        res.status(500).json({ message: 'Internal server error.' });
+        res.status(500).json({ message: 'Internal server error' });
     }
 })
 router.post('/api/updatecart', authenticateUser, async (req, res) => {
@@ -241,7 +241,7 @@ router.post('/api/updatecart', authenticateUser, async (req, res) => {
         res.status(200).json({ message: 'Quantity updated', user: populatedDoc });
     } catch (err) {
         console.log(err)
-        res.status(500).json({ message: 'Internal server error.' });
+        res.status(500).json({ message: 'Internal server error' });
     }
 })
 router.post('/api/removefromcart', authenticateUser, async (req, res) => {
@@ -257,14 +257,14 @@ router.post('/api/removefromcart', authenticateUser, async (req, res) => {
         res.status(200).json({ message: 'Product removed from cart.', user: updatedUser });
     } catch (error) {
         console.error('Error removing product from cart:', error);
-        res.status(500).json({ message: 'Internal server error.' });
+        res.status(500).json({ message: 'Internal server error' });
     }
 });
 router.get('/api/getcartitems', authenticateUser, async (req, res) => {
     try {
         res.status(200).json({ message: 'Access granted.', cartItems: req.user.cartProducts });
     } catch (error) {
-        res.status(500).json({ message: 'Internal server error.' });
+        res.status(500).json({ message: 'Internal server error' });
     }
 })
 /*********************************** CART ***********************************/
@@ -302,7 +302,7 @@ router.post('/api/updatewishlist', authenticateUser, async (req, res) => {
 
     } catch (err) {
         console.log(err)
-        res.status(500).json({ message: 'Internal server error.' });
+        res.status(500).json({ message: 'Internal server error' });
     }
 })
 //remove from cart and add to wishlist
@@ -321,7 +321,7 @@ router.post('/api/movetowishlist', authenticateUser, async (req, res) => {
 
         res.status(200).json({ message: 'Product moved to wishlist', user: updatedUser });
     } catch (error) {
-        res.status(500).json({ message: 'Internal server error.' });
+        res.status(500).json({ message: 'Internal server error' });
     }
 });
 router.post('/api/getwishlistitems', authenticateUser, async (req, res) => {
@@ -331,7 +331,7 @@ router.post('/api/getwishlistitems', authenticateUser, async (req, res) => {
         const items = await PRODUCT.find({ _id: { $in: ids } });
         res.status(200).json({ items });
     } catch (error) {
-        res.status(500).json({ message: 'Internal server error.' });
+        res.status(500).json({ message: 'Internal server error' });
     }
 })
 /*********************************** WISHLIST ***********************************/
@@ -352,7 +352,7 @@ router.get('/api/getorders', authenticateUser, async (req, res) => {
         }
 
     } catch (error) {
-        res.status(500).json({ message: 'Internal server error.' });
+        res.status(500).json({ message: 'Internal server error' });
     }
 })
 /*********************************** ORDER ***********************************/
@@ -376,6 +376,11 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
         //maybe we wont need these five to be store in metadat as the session object will be created right here
         // productList.orderId = orderId
         // productList.userId = req.user._id
+
+        if(data.grandTotal>999999){
+            return res.status(500).json({ message: 'ShoppItt does not support bulk order currently.' });
+        }
+
         productList.tax = data.tax
         productList.shipping = data.shipping
         productList.total = data.grandTotal
@@ -473,14 +478,12 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
                 },
                 { new: true }
             )
-            console.log('redirect url',session.url)
-            // res.redirect(303, session.url);//redirects to checkout page
-
+            // res.redirect(303, session.url);
             res.status(200).json({ url:session.url });
         }
     } catch (error) {
         console.error('something went wrong', error);
-        res.status(500).json({ message: 'Internal server error.' });
+        res.status(500).json({ message: 'Internal server error' });
     }
 });
 
@@ -554,7 +557,7 @@ router.get('/api/getcheckoutsession', authenticateUser, async (req, res) => {
                 })
                 .catch(err => {
                     console.log("errror-", err)
-                    res.status(500).json({ message: 'Internal server error.' });
+                    res.status(500).json({ message: 'Internal server error' });
                 })
 
             const data = updatedUser.orders.find(order => order.orderId === orderId)
@@ -562,7 +565,7 @@ router.get('/api/getcheckoutsession', authenticateUser, async (req, res) => {
         }
 
     } catch (error) {
-        res.status(500).json({ message: 'Internal server error.' });
+        res.status(500).json({ message: 'Internal server error' });
     }
 })
 /*********************************** CHECKOUT  ***********************************/
@@ -613,7 +616,7 @@ router.get('/api/admin/getorders', async (req, res) => {
 
     } catch (error) {
         console.error('Error getting items from wishlist', error);
-        res.status(500).json({ message: 'Internal server error.' });
+        res.status(500).json({ message: 'Internal server error' });
     }
 
 })
@@ -643,7 +646,7 @@ router.get('/api/admin/getusers', async (req, res) => {
 
     } catch (error) {
         console.error('Error getting items from wishlist', error);
-        res.status(500).json({ message: 'Internal server error.' });
+        res.status(500).json({ message: 'Internal server error' });
     }
 
 })

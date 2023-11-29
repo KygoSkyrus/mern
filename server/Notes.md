@@ -1,5 +1,7 @@
 NOTE :::the issue that without internet you are not abke to acces db,,,setup the db on local
 
+
+test;; no order image and no wishlist ui for 
 # Defects
 
 - remove the box shadow from dropdons in navbar in mobile view
@@ -53,6 +55,7 @@ NOTE :::the issue that without internet you are not abke to acces db,,,setup the
 - there can be a cicrle or whatever button for feedback at the bottom right asking for feedback for users overall experienece
 - make the images for product go slide in slide no just disapper and display
 - can add on hover cart show cart items with two option of view cart and checkout oprtion (there is sample layout url also below somewhere)
+- instead of showing toast message that"product is removed from  cart or added" ,,add fhe product name 
 - can chnage toast design for user side( can make it more elegant)
 - think about converting the navbar into a small cicle hovering and on click it expands and become the navbar (in other words OR - on scroll dont keep the nav fixed, instead make a minifide nav which will stay floated at the top)
 - make the same loader for both admin and front...use logo,,and for admin just put a hat above the logo's top

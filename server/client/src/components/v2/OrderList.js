@@ -10,6 +10,8 @@ import LoginImg from "./../../assets/images/newImg/collections/login.png"
 
 import { getDateStr } from './Utility';
 import { formatInINRwoSign } from './Utility';
+import SignInToContinue from './SignInToContinue';
+import BagLoader from './BagLoader';
 
 const OrderList = () => {
 
@@ -47,25 +49,13 @@ const OrderList = () => {
 
   return (
     <>
+    {userLoggedIn === null ?
+        <BagLoader />
+        :
 
-
-      {userDetail && userLoggedIn ?
-
-        (orders?.length < 0 ?
-          <div className='d-flex flex-column align-items-center'>
-
-            <div>
-              <img src={noOrder} alt='' />
-            </div>
-            <h5 className='text-dark'>Ooops!!! No order found</h5>
-            <span className='text-center w-25'>
-              Looks like you have not ordered anything. Go ahead & explore our products
-            </span>
-            <button className='btn my-4 btn-outline-warning'>Continue shopping</button>
-
-          </div> :
-
-
+      userDetail && userLoggedIn ?
+        (orders?.length > 0 ?
+          
           (orders ?
             <div className='container orderList-page my-5'>
               <h6 className='text-center my-5 d-flex justify-content-center align-items-center'>My Cart&nbsp;
@@ -190,24 +180,23 @@ const OrderList = () => {
               </div>
             </div>
             :
-            <div className='d-flex justify-content-center align-items-center' style={{ height: "70vh" }}>
-              <div className="custom-loader"></div>
-            </div>)
+           <BagLoader/>)
+           :
+           <div className='d-flex flex-column align-items-center'>
+
+            <div>
+              <img src={noOrder} alt='' />
+            </div>
+            <h5 className='text-dark'>Ooops!!! No order found</h5>
+            <span className='text-center w-25'>
+              Looks like you have not ordered anything. Go ahead & explore our products
+            </span>
+            <button className='btn my-4 btn-outline-warning'>Continue shopping</button>
+
+          </div> 
         )
         :
-        <div className='container my-5'>
-          <div className='d-flex flex-column align-items-center m-auto' style={{ width: "fit-content" }}>
-
-            <div><img src={LoginImg} alt='' />
-            </div>
-            <h5 className='text-dark'>You are not logged in</h5>
-            <span className='text-center'>
-              Sign in to your account to continue
-            </span>
-            <button className='btn my-4 btn-outline-warning w-100' data-bs-toggle="modal" href="#exampleModalToggle">Sign in</button>
-
-          </div>
-        </div>
+       <SignInToContinue/>
       }
 
     </>

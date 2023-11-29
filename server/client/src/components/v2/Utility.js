@@ -13,8 +13,8 @@ const getUser = (dispatch) => {
         .then(res => {
             console.log('userindo', res, resp.status)
 
+            dispatch(isUserLoggedIn({ value: res.is_user_logged_in }))
             if (res.is_user_logged_in && resp.status === 200) {
-                dispatch(isUserLoggedIn({ value: true }))
                 dispatch(setUserDetails({ user: res.user }))
             } else {
                 //to show only session expired notification, bcz this api calls on ever reload due to which the access gratend notification will popup everytime
