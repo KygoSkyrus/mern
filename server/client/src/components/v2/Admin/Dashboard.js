@@ -8,6 +8,8 @@ import Product from './ProductList'
 import Nav from './Nav'
 import BagLoader from './../BagLoader'
 import Loader from '../Loader'
+import Filters from './Filters'
+import Header from './Header'
 const Dashboard = () => {
 
     const dispatch = useDispatch()
@@ -29,119 +31,13 @@ const Dashboard = () => {
             })
     }, [isUpdated])
 
-    /* EXCLUDING FILTER SYSTEM
-        const filtersRef = useRef();
-    const [open, setOpen] = useState(false);
-    const [appliedFilters, setAppliedFilters] = useState([])
-    let filtersArray = ["category v1", "category v2", "category v3", "category", "category v1", "category vq1", "category vq7",]//this should has icons too 
-
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (!filtersRef?.current?.contains(event.target)) {
-                setOpen(false);
-            }
-        };
-        document.addEventListener("mousedown", handleClickOutside);
-    }, [])
-    const selectFilter = () => {
-        setOpen(true)
-    }
-    const applyFilter = (e) => {
-        console.log('e', e.target.value)
-        if (!appliedFilters.includes(e.target.innerText))
-            setAppliedFilters(prevState => [...prevState, e.target.innerText])
-    }
-    const removeFilter = (value) => {
-        console.log('value', value)
-        setAppliedFilters(prevState => prevState.filter(x => x !== value))
-    }
-    */
 
     return (
         <>
             <Nav />
 
             <div >
-                {/* THE HEADER */}
-                <div className=' dash-header'>
-                    <div className="p-3 overflow-auto d-flex bg-white-custom border-bottom shadow-sm">
-
-                        {/* <!-- Left Side--> */}
-                        <div className="d-flex flex-grow-1 align-items-center">
-                            <h6 className="align-self-center mb-0 me-3 fw-semibold text-nowrap">
-                                Products
-                            </h6>
-                            <i className="fa-solid fa-shopping-bag"></i>
-                        </div>
-
-                        {/* <!-- Right Side--> */}
-                        <div className="d-flex h-stack gap-1 position-relative">
-
-                            {/* Dark Mode */}
-                            <div className='btn'>
-                                <input className="checkbox" type="checkbox" id="toggle" onChange={() => {
-                                    document.querySelector('.adminView').classList.toggle('dark');
-                                    document.querySelectorAll('.bg-white-custom').forEach(x => { x.classList.toggle('dark') })
-                                }} />
-                                <label className="toggle" htmlFor="toggle">
-                                    <ion-icon className="icon icon--light" name="sunny-outline"></ion-icon>
-                                    <ion-icon className="icon icon--dark" name="moon-outline"></ion-icon>
-                                    <span className="ball"></span>
-                                </label>
-                            </div>
-                            {/* <!-- List View --> */}
-                            <a href="/projects-list.html" className="btn btn-link btn-sm rounded-circle text-secondary" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="List View">
-                                <i className="fas fa-columns"></i>
-                            </a>
-
-                            {/* <!-- Grid View --> */}
-                            <a href="/projects-grid.html" className="btn btn-link btn-sm rounded-circle text-secondary" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="Grid View">
-                                <i className="fas fa-th"></i>
-                            </a>
-
-                            {/* <!-- Table View --> */}
-                            <a href="/" className="btn btn-link btn-sm rounded-circle me-3 text-secondary active" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="Table View">
-                                <i className="fas fa-bars"></i>
-                            </a>
-
-
-                            {/* <!-- Add Task/Project --> */}
-
-                            <button className="btn btn-light btn-sm rounded-circle" data-bs-toggle="modal" data-bs-target="#modalCreateProject">
-                                <i className="fas fa-plus" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="Add Project" aria-label="Add Project"></i>
-                            </button>
-
-                        </div>
-                    </div>
-
-                    {/* //excluding filter system
-                    <div className="px-3 py-2 gap-1 bg-white-custom border-bottom shadow-sm d-flex align-items-center position-relative">
-                        <span className="badge rounded-pill py-2 pe-2 badge-add-filter" data-bs-toggle="modal" href="#modalStart" role="button" onClick={e => selectFilter()}>
-                            Select Filter <i className="fa fa-plus ms-1"></i>
-                           {open && <div className='filters rounded-1 px-3 py-2 gap-1 bg-white shadow-m' ref={filtersRef}>
-                                {filtersArray.map((filter,i)=>{
-                                    return(
-                                        <section className='p-2 rounded-pill bg-light' key={i}onClick={e=>applyFilter(e)} >{filter}</section>
-                                    )
-                                })}                       
-                            </div>}
-                        </span>
-                        <div className='hstack overflow-auto gap-1 py-2' >
-                            {appliedFilters?.map((filter,i)=>{
-                                return(
-                                    <span className="badge badge-light-light rounded-pill text-dark py-2 fw-normal" key={i}>
-                                    <i className="fa fa-circle me-1 text-danger"></i>
-                                    <span className="me-1">{filter}</span>
-                                    <span className="text-dark opacity-25 ms-1 pointer" onClick={e=>removeFilter(filter)}>
-                                        <i className="fa fa-times-circle"></i>
-                                    </span>
-                                </span>
-                                )
-                            })}
-                        </div>
-                    </div> */}
-                </div>
-
+                <Header heading="Products" icon="fa-shopping-bag" />
 
                 {products ?
                     <div className="container-fluid px-0 admin-table-grid">
@@ -180,9 +76,9 @@ const Dashboard = () => {
 
             </div>
 
-            {visibility && <Modal />}
+            {/* {visibility && <Modal />} */}
 
-            <Loader/>
+            {/* <Loader/> */}
 
         </>
     )

@@ -18,13 +18,13 @@
 }
 
 /****************************************** SIDE NAV **************************************************/
-.admin-nav{
+.admin-nav {
   position: absolute;
-    top: 50%;
-    transform: translate(0%,-50%);
-    z-index: 3;
-    left: 0;
-    transition: var(--transition);
+  top: 50%;
+  transform: translate(0%, -50%);
+  z-index: 3;
+  left: 0;
+  transition: var(--transition);
 }
 .btn-trapezoid-outline {
   height: 325px;
@@ -43,9 +43,9 @@
   transition: all 0.6s ease-out;
   /* box-shadow: 0px 0px 15px rgb(23 22 22 / 32%), 0px 0px 6px -2px rgba(0, 0, 0, 0.05);
   box-shadow: 0px 0px 15px rgb(167 167 167 / 32%), 0px 0px 6px -2px rgba(0, 0, 0, 0.05); */
-    border: 1px solid #bfbfbf;
-    border-left: 0;
-    box-shadow: 2px 2px 10px rgb(182, 182, 182);
+  border: 1px solid #bfbfbf;
+  border-left: 0;
+  box-shadow: 2px 2px 10px rgb(182, 182, 182);
 }
 .btn-trapezoid-outline span {
   font-size: 15px;
@@ -58,11 +58,11 @@
   margin: 6px 7px;
   padding: 6px 9px;
   cursor: pointer;
-  background:none;
+  background: none;
   border-radius: 6px;
   transition: var(--transition);
 }
-.nav-icons:hover{
+.nav-icons:hover {
   background: #ffffff61;
 }
 
@@ -77,17 +77,18 @@ a.nav-icons.active::before {
   border-radius: 0 4px 4px 0;
 }
 
-.arrow{
+.arrow {
   width: 20px;
   height: 30px;
+  position: absolute;
+  left: 46px;
   display: flex;
-    flex-direction: column;
-    align-items: center;
-  position: relative;
+  flex-direction: column;
+  align-items: center;
   transition: var(--transition);
 }
 .arrow .lower,
-.arrow .upper{
+.arrow .upper {
   width: 5px;
   height: 15px;
   border-radius: 2px;
@@ -96,38 +97,38 @@ a.nav-icons.active::before {
   left: 0;
   transition: var(--transition);
 }
-.arrow .upper{
-  transform:rotate(18deg) translateY(1.5px);
+.arrow .upper {
+  transform: rotate(18deg) translateY(1.5px);
 }
-.arrow .lower{
-  transform:rotate(-18deg) translateY(-1.5px);
+.arrow .lower {
+  transform: rotate(-18deg) translateY(-1.5px);
 }
-.arrow:hover .upper{
+.arrow:hover .upper {
   background: rgb(57, 57, 57);
   animation: arrowHover 1s infinite linear;
 }
-.arrow:hover .lower{
+.arrow:hover .lower {
   background: rgb(57, 57, 57);
   animation: arrowHover 1s infinite linear;
 }
 @keyframes arrowHover {
   0% {
-    left: 0px; 
+    left: 0px;
   }
   50% {
-    left: 4px; 
+    left: 4px;
   }
   100% {
-    left: 0px; 
+    left: 0px;
   }
 }
-.hideSidebar{
+.hideSidebar {
   left: -39px;
 }
-.admin-table-grid{
+.admin-table-grid {
   transition: var(--transition);
 }
-.slide-admin-table{
+.slide-admin-table {
   width: calc(100% - 72px);
 }
 /****************************************** SIDE NAV **************************************************/
@@ -242,21 +243,21 @@ a.nav-icons.active::before {
   --bg-white-custom: rgba(255, 255, 255, 1);
 }
 
-.dash-header{
+.dash-header {
   position: sticky;
   top: 0;
   z-index: 2;
 }
 
 /* filter */
-.filters{
+.filters {
   position: absolute;
   top: 50px;
   left: 1rem;
   display: flex;
   flex-direction: column;
 }
-.filters > section{
+.filters > section {
   min-width: 150px;
 }
 /* filter */
@@ -330,7 +331,7 @@ a.nav-icons.active::before {
   transition: all 0.3s ease-in-out;
   display: none;
 }
-.bg-img-preview{
+.bg-img-preview {
   width: 150px;
   height: 120px;
   border-radius: 4px;
@@ -441,13 +442,12 @@ label {
 }
 /************************************************ PRODUCT FORM INPUTS ************************************************/
 
-
 /******************** ORDER DETAILS *************************/
-.orderDetails{
-width: 80vw;
-/* padding: 30px; */
+.orderDetails {
+  width: 80vw;
+  /* padding: 30px; */
 }
-.orderDetails .theSection{
+.orderDetails .theSection {
   height: 80vh;
   overflow: auto;
 }
@@ -463,9 +463,7 @@ width: 80vw;
 }
 /******************** ORDER DETAILS *************************/
 
-
-
-.admin-login{
+.admin-login {
   /* position: absolute; */
   left: 0;
   width: 100vw;

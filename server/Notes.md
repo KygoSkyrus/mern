@@ -7,6 +7,7 @@ test;; no order image and no wishlist ui for
 - need to have transparent loader for loaderduring api calls,
 - remove the box shadow from dropdons in navbar in mobile view
 - add a nice loader for all the loading process (the new loader, implement that one), make the same loader for both admin and front
+- add product from button and header is not looking good
 - when admin login than the pagfe is not redirected to the requested page, it just stucks i think
 - grey out out of stock items,, even on the cart page,,and also if you are letting even the unavialble items in the cart than dont calculate its price and neither send it at the backend
 - add a serach bar in admon instead of filters at the top right
@@ -68,6 +69,8 @@ test;; no order image and no wishlist ui for
   _product admin image upload_
 - initially only 3 reviews will be added in product schema,the rest will go to reviews table with the product id as key, so the tree reviews will be shown initailly and on cliccking view more the rest of reviews will be loaded from review table
 - admin menubar will be like hanging from ;left or maybe circular at any corner,,,will have desktop where it will show all products categories,,,orders completed and orders in progress
+- there should be two category options in product,category and subcategory,currently categoryes are actually sub categories, also tthis will be asked when Admin adds new product.
+- right next to category on product add page there should be a button to add a new category
 
 - we have to populat the ref field on signin and signup and also at getuserinfo//--not sure --->>and just call cart products and orders on their respective page,,cart ietms number badge number on navbar can be taken care by the cart length whihc is product id only>>>>the proble is aboout calling ten api to get cart order and wihslist on each page or keep them in app in advance from other actions,,which can be unneccesary though
   ------FINAL DECISON-- call the api on dedicated page ..on signin dont populate anithing...neither onget userdetails>>>>with this approach we wont need the getuseindo to send user indo also,,,ww will have the useefect on age in user component to gte user details,,,gthere might be somepage where we will need more than that,,for that we can eidt the getuseinfo to reurn bassic info like email and name after just checking the cookie presence>>>>>STILL NOT SURE ABOUT THIS,,,every render will call this dedicated api and it kinds of eleiminates redux and makes it like server side rendering

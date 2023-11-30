@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { productFormVisibility, clearProductForm, toastVisibility, setToastContent, isProductUpdated, setLoaderVisibility } from './../redux/todoSlice'
 
@@ -14,6 +14,7 @@ import okayIcon from "./../../../assets/images/okay-icon.png"
 
 const ProductForm = (props) => {
 
+    const [categories,setCategories]=useState()
     const [productData, setProductData] = React.useState({
         //  name: "", url: "", price: 0, description: "", category: "", image: null, stock: 0 
     })
@@ -27,9 +28,15 @@ const ProductForm = (props) => {
 
 
     useEffect(() => {
-        // console.log('--------------', productData, productState.name)
+        console.log('------productState----', productState)
         setProductData(productState)//setting the inputs to selected product to edit
+        fetch('/api/getcategory')
+        .then(res=>res.json())
+        .then(res=>{
+            setCategories(res.filter(item=>item.subCategory.length===0))
+        })
     }, [])
+    console.log('resss',categories)
 
 
     const handleInputChange = (e) => {
@@ -222,7 +229,10 @@ const ProductForm = (props) => {
                                     onClick={closeProductContainer}
                                     className="action-item cursor-pointer" >
                                     <i
-                                        className="fas fa-times"></i></span>
+                                        className="fas fa-times">
+                                            
+                                        </i>
+                                        </span>
                             </div>
                         </div>
                     </div>
@@ -254,31 +264,23 @@ const ProductForm = (props) => {
                                         id="description" rows="4" style={{height:"unset"}} required value={productData?.description} onChange={e => handleInputChange(e)}></textarea>
                                 </div>
 
-                                <div className="form-group">
+                                {/* <div className="form-group">
                                     <label htmlFor="category" className="font-weight-600">Category</label>
                                     <input type='text' name="category" placeholder="category" className="form-control"
                                         id="category" required value={productData?.category} onChange={e => handleInputChange(e)} />
-                                </div>
+                                </div> */}
                                 {/* Dropdown category */}
-                                {/* <div className="form-group">
+                                <div className="form-group">
                                     <label htmlFor="category" className="font-weight-600">Category</label>
-                                    <div className="">
-                                        <select className="form-control basic-single" name="category" id="category" value={productData?.category} onChange={e => handleInputChange(e)} required > */}
-                                            {/*this hsould be commented <optgroup label="Select Category" id="optgroup">
-                                                    {allCategory?.map(x => {
-                                                        return (<option value={x.category} key={x._id} >{x.category}</option>)
-                                                    })}
-                                                </optgroup> */}
-
-                                            {/* <option value=''>Select category</option> */}
-                                            {/*this hsould be commented <optgroup label="Select Category" id="optgroup" name="category" > */}
-                                            {/* <option value='first'>first</option>
-                                            <option value='second'>second</option>
-                                            <option value='smartphones'>smartphones</option> */}
-                                            {/*this hsould be commented </optgroup> */}
-                                        {/* </select>
-                                    </div>
-                                </div>  */}
+                                        <select className="form-control basic-single" name="category" id="category" value={productData?.category} onChange={e => handleInputChange(e)} required >
+                                            <option value=''>Select category</option>
+                                            {categories?.map((x,i)=>{
+                                                return(
+                                                    <option value={x.name} className='text-capitalize'>{x.name}</option>
+                                                )
+                                            })}
+                                        </select>
+                                </div> 
 
                                 <div className="form-group d-flex flex-column">
                                     <label htmlFor="image" className="font-weight-600" id="colorRed">File<span

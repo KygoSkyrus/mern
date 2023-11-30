@@ -44,7 +44,7 @@ const Navbar = () => {
 
         //total - 59
         //with parent - 34
-        //without parent - 11
+        //without parent - 11 (total categories with product - 45)
         // parent category - 14
         //this can be moved to down in jsx
         let catSubcatRelation = {}

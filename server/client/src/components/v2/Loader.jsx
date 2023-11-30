@@ -10,7 +10,7 @@ const Loader = () => {
   return (
     <>
       {/* the loader between process actions */}
-      {!loaderVisibility && (
+      {loaderVisibility && (
         // <div className="loader">
         //   <div className="bag-container">
         //     <div style={{ position: "relative" }}>

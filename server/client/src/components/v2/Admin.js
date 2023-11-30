@@ -7,12 +7,15 @@ import PrivateRoute from './Admin/PrivateRoute.js';
 import AdminLogin from './Admin/AdminLogin.js';
 import Error from './Error.js';
 import { useDispatch, useSelector } from 'react-redux';
+import Loader from './Loader.jsx';
+import Modal from './Modal.js';
 
 const Admin = () => {
 
     const dispatch = useDispatch();
     // const [isAuthSuccess, setIsAuthSuccess] = useState(null)//can chnage it with the reduct state 
     const isAuthSuccess = useSelector(state => state.user.isAdminAuthSuccess)//using this may break stuff, 
+    const visibility = useSelector(state => state.productFormVisibility.visibility)// modal's visibility 
     console.log('isAuthSuccess--4-4-4-', isAuthSuccess)
     //ONLY let this function run if the user is admin
     useEffect(() => {
@@ -40,6 +43,8 @@ const Admin = () => {
                     </Routes>
                 </div>
             </div>
+            {visibility && <Modal />}
+            <Loader/>
         </>
     )
 }

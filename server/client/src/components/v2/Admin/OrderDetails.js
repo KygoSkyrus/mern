@@ -10,6 +10,7 @@ const OrderDetails = (props) => {
       props.setSDetailsVisibility(false)
     }
   }
+  console.log('orderrr',order)
   return (
     <div className='activeProductContainer' style={{ placeItems: "center" }} onClick={e => closeProductContainer(e)}>
       <div className='bg-white h-100 rounded-1 orderDetails p-3'>
@@ -144,11 +145,11 @@ const OrderDetails = (props) => {
                       <section className='text-end d-grid pb-1'>
                         <span style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }} className=" align-items-center d-flex justify-content-between" title={order?.user.line1}>
                           <i className='fa fa-location-pin me-2'></i>
-                          Guru Gobind Singh Marg
+                          {order?.user?.address?.house} 
                         </span>
-                        <span style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}  title={order?.user.line1}>Delhi Sarai Rohilla Railway Station</span>
-                        <span>New Delhi, 110005</span>
-                        <span>Delhi,</span>
+                        <span style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}  title={order?.user.line1}>{order?.user?.address?.street}</span>
+                        <span>{order?.user?.address?.city}, {order?.user?.address?.pincode}</span>
+                        <span>{order?.user?.address?.state},</span>
                         <span>India</span>
                       </section>
                     </div>
