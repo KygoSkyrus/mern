@@ -60,9 +60,7 @@ const TheFront = ({ dl }) => {
                 <Route path="/user" exact element={<User />} />
                 <Route path="/orders" exact element={<OrderList />} />
                 <Route path="/orders/:orderId" exact element={<Order />} />
-
                 <Route path="*" exact element={<Error />} />
-                {/* <Route path="/:id" exact element={<SingleBlog  />} /> */}
             </Routes>
 
             <Footer />

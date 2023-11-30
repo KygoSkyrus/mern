@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import products from './dummy'
 import BannerSlider from './BannerSlider.jsx'
 
-import CategoryStripSlider from './CategoryStripSlider'
 
 import img1 from './../../assets/images/newImg/products/bluePhone.png'
 import headphone1 from './../../assets/images/newImg/collections/headphone1.webp'
@@ -479,7 +477,6 @@ const ProductCardsCollection = () => {
       {/* <SliderComponent/> */}
 
 
-      {/* <CategoryStripSlider /> */}
 
 
 

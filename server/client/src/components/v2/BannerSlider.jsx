@@ -5,9 +5,6 @@ import Slider from "react-slick";
 // import "slick-carousel/slick/slick-theme.css";
 
 // import banner1 from "./../../assets/images/newImg/collections/friday-sale.jpg";
-// import banner2 from "./../../assets/images/newImg/collections/electro-yellow.jpg";
-// import banner3 from "./../../assets/images/newImg/collections/electro-grey.jpg";
-// import banner4 from "./../../assets/images/newImg/collections/smartwatch.jpg";
 
 //ALL PNG IMAGES
 import headphone1 from "./../../assets/images/newImg/collections/headphone1.webp";

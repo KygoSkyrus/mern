@@ -21,7 +21,7 @@ const Wishlist = () => {
   console.log('userLoggedIn--', userLoggedIn)
 
   useEffect(() => {
-    console.log(wishlistItems,userLoggedIn)
+    console.log(wishlistItems, userLoggedIn)
     let resp;
     if (wishlistItems.length > 0) {
       console.log('333')
@@ -171,18 +171,19 @@ const Wishlist = () => {
                 </div>
               </div>
               :
-              <BagLoader/>
-              )
-              :<div className='d-flex flex-column align-items-center'>
-              <div><img src={wishlistImg} alt='' />
+              <BagLoader />
+            )
+            : 
+            <div className='d-flex flex-column align-items-center no-item-block'>
+              <div className='d-flex justify-content-center align-items-center'>
+                <img src={wishlistImg} className='no-data-img' alt='' />
               </div>
-              <h5 className='text-dark'>Your wishlist is empty</h5>
-              <span className='text-center w-25'>
+              <h5 className='text-dark mt-2'>Your wishlist is empty</h5>
+              <span className='text-center'>
                 Looks like you have not added anything to your wishlist. Go ahead & explore top categories
               </span>
               <button className='btn my-4 btn-outline-warning'>Continue shopping</button>
             </div>
-            
           )
           :
           <SignInToContinue />

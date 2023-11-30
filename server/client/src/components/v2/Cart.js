@@ -10,9 +10,10 @@ import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSl
 import RealtedProducts from './RealtedProducts';
 import { formatInINR } from './Utility';
 import { formatInINRwoSign } from './Utility';
-import emptyCartImg from "./../../assets/images/newImg/collections/emptycart.png"
-import LoginImg from "./../../assets/images/newImg/collections/login.png"
+import emptyCartImg from "./../../assets/images/newImg/collections/add-to-cart-animate.svg"
 import theBagLogo from "./../../assets/images/thebaglogo.png";
+import BagLoader from './BagLoader';
+import SignInToContinue from './SignInToContinue';
 
 
 const Cart = () => {
@@ -24,7 +25,7 @@ const Cart = () => {
   const wishlistItems = useSelector(state => state.user.user.wishlist)
   const cartItems = useSelector(state => state.user.user.cartProducts)
   const cart = useSelector(state => state.user.user.cart)
-  console.log('cart', cart)
+  console.log('cartItems', cartItems)
 
   const subtotal = React.useRef()
   const shippingCharge = React.useRef()
@@ -147,7 +148,6 @@ const Cart = () => {
   const debouncedBatchedUpdate = batch(debounce(updateCartItemQuantities, 1000), 2000);
 
   //NOTE:::: have to take care of object when item is removed from cart or moved to wishlist
-  //NOTE:::: currently the real price is being sent to checkmout page and not the discounted one(fox this)
 
   function updateQuantity(productId, val, i, price, discount) {
     const newQuantity = eval(`${parseInt(lineRefs.current[i].current.dataset.quantity)} ${val} ${1}`);
@@ -277,7 +277,7 @@ const Cart = () => {
         console.log('resp', resp)
         if (resp.status === 200) {
           window.location.href = res.url;
-        }else{
+        } else {
           dispatch(setToastStatus({ isSuccess: false }))
           dispatch(toastVisibility({ toast: true }))
           dispatch(setToastContent({ message: res.message }))
@@ -289,199 +289,191 @@ const Cart = () => {
 
   return (
     <>
-      {userDetail && userLoggedIn ?
-        (!cartItems?.length > 0 ?
-          <div className='d-flex flex-column align-items-center'>
-
-            <div><img src={emptyCartImg} alt='' />
-            </div>
-            <h5 className='text-dark'>Your cart is empty</h5>
-            <span className='text-center w-25'>
-              Looks like you have not added anything to your cart. Go ahead & explore top categories
-            </span>
-            <button className='btn my-4 btn-outline-warning'>Continue shopping</button>
-
-          </div> :
-
-          <div className='container cart-page my-5'>
-            <h6 className='text-center my-5 d-flex justify-content-center align-items-center'>My Cart
-              <img alt='' className='ms-2' src={theBagLogo} width="20px" />
-            </h6>
-            <div className="row ">
-              <div className="col-lg-9 t-mb-30 mb-lg-0 theSection" >
+      {userLoggedIn === null ?
+        <BagLoader />
+        :
+        userDetail && userLoggedIn ?
+          (cartItems?
+            (cartItems?.length > 0 ?
+              <div className='container cart-page my-5'>
+                <h6 className='text-center my-5 d-flex justify-content-center align-items-center'>My Cart
+                  <img alt='' className='ms-2' src={theBagLogo} width="20px" />
+                </h6>
                 <div className="row ">
-                  <div className="col-12">
-                    <div className="row ci-holder">
-                      <div className='row mb-3 p-2 pb-0 border-bottom cart-heading'>
-                        <div className="col-md-2"></div>
-                        <div className="col-md-10">
-                          <div className='d-flex flex-column justify-content-between h-100'>
-                            <div className='row d-flex justify-content-between'>
-                              <div className="col-md-4">
-                                <h6>
-                                  Item
-                                </h6>
-                              </div>
-                              <div className="col-md-2">
-                                <h6>
-                                  Price
-                                </h6>
-                              </div>
-                              <div className="col-md-3">
-                                <h6>
-                                  Quantity
-                                </h6>
-
-                              </div>
-                              <div className="col-md-2">
-                                <h6>
-                                  Total
-                                </h6>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                      </div>
-                      {cartItems.map((x, i) => {
-                        return (
-                          <>
-                            <div key={x._id} className='row  p-2 ci'>
-                              <div className="col-md-2 ci-img">
-                                <div className='d-flex justify-content-center'>
-                                  <img src={x.image} alt='' className='img-fluidt-minw-215' style={{ maxHeight: "100px" }} />
+                  <div className="col-lg-9 t-mb-30 mb-lg-0 theSection" >
+                    <div className="row ">
+                      <div className="col-12">
+                        <div className="row ci-holder">
+                          <div className='row mb-3 p-2 pb-0 border-bottom cart-heading'>
+                            <div className="col-md-2"></div>
+                            <div className="col-md-10">
+                              <div className='d-flex flex-column justify-content-between h-100'>
+                                <div className='row d-flex justify-content-between'>
+                                  <div className="col-md-4">
+                                    <h6>
+                                      Item
+                                    </h6>
+                                  </div>
+                                  <div className="col-md-2">
+                                    <h6>
+                                      Price
+                                    </h6>
+                                  </div>
+                                  <div className="col-md-3">
+                                    <h6>
+                                      Quantity
+                                    </h6>
+  
+                                  </div>
+                                  <div className="col-md-2">
+                                    <h6>
+                                      Total
+                                    </h6>
+                                  </div>
                                 </div>
                               </div>
-
-                              <div className="col-md-10 ci-detail">
-                                <div className='d-flex flex-column justify-content-between h-100'>
-                                  <div className='row d-flex justify-content-between'>
-
-                                    <div className="col-md-4 ci-name">
-                                      <Link to={`/product/${x._id}`} style={{ color: "inherit" }}>
-                                        <h6>
-                                          {x.name}
-                                        </h6>
-                                        {x.stock > 0 ?
-                                          <span className='text-success'>In stock</span>
-                                          : <span className='text-danger'>Out of stock</span>}
-                                      </Link>
-                                    </div>
-                                    <div className="col-md-2 ci-price">
-                                      <div className='d-flex align-items-end flex-column' style={{ width: "fit-content" }}>
-                                        <section>
-                                          <span style={{ fontSize: "12px" }}>&#8377;</span>
-                                          <span className='fs-6'>{formatInINRwoSign.format(Math.floor(x.price - x.discount * x.price / 100))}</span>
-                                        </section>
-                                        {x.discount !== 0 &&
-                                          <section style={{ fontWeight: "400", color: "#ff4460", lineHeight: "2px" }}>
-                                            <span style={{ fontSize: "10px" }}>&#8377;</span>
-                                            <span className='fs-7 extra-small' style={{ textDecoration: "line-through" }}>{x.price}</span>
-                                          </section>
-                                        }
-
-                                      </div>
-                                    </div>
-                                    <div className="col-md-3 ci-quantity">
-
-                                      <div className='border d-flex row rounded-pill' style={{ width: "fit-content" }}>
-                                        <span className='py-1 col-4 pointer' onClick={() => updateQuantity(x._id, "-", i, x.price, x.discount)} >-</span>
-                                        <span className='py-1 col-4' ref={lineRefs.current[i]} data-quantity={tempObj[x._id]} >{tempObj[x._id]}</span>
-                                        <span className='py-1 col-4 pointer' onClick={() => updateQuantity(x._id, "+", i, x.price, x.discount)}>+</span>
-                                      </div>
-                                    </div>
-                                    <div className="col-md-2 ci-total">
-                                      <div>
-                                        <span style={{ fontSize: "12px" }}>&#8377;</span>
-                                        <span className='fs-6' ref={totalAmtRefs.current[i]}>{formatInINRwoSign.format(Math.floor(x.price - x.discount * x.price / 100) * tempObj[x._id])}</span>
-                                      </div>
+                            </div>
+  
+                          </div>
+                          {cartItems?.map((x, i) => {
+                            return (
+                              <>
+                                <div key={x._id} className='row  p-2 ci'>
+                                  <div className="col-md-2 ci-img">
+                                    <div className='d-flex justify-content-center'>
+                                      <img src={x.image} alt='' className='img-fluidt-minw-215' style={{ maxHeight: "100px" }} />
                                     </div>
                                   </div>
-
+  
+                                  <div className="col-md-10 ci-detail">
+                                    <div className='d-flex flex-column justify-content-between h-100'>
+                                      <div className='row d-flex justify-content-between'>
+  
+                                        <div className="col-md-4 ci-name">
+                                          <Link to={`/product/${x._id}`} style={{ color: "inherit" }}>
+                                            <h6>
+                                              {x.name}
+                                            </h6>
+                                            {x.stock > 0 ?
+                                              <span className='text-success'>In stock</span>
+                                              : <span className='text-danger'>Out of stock</span>}
+                                          </Link>
+                                        </div>
+                                        <div className="col-md-2 ci-price">
+                                          <div className='d-flex align-items-end flex-column' style={{ width: "fit-content" }}>
+                                            <section>
+                                              <span style={{ fontSize: "12px" }}>&#8377;</span>
+                                              <span className='fs-6'>{formatInINRwoSign.format(Math.floor(x.price - x.discount * x.price / 100))}</span>
+                                            </section>
+                                            {x.discount !== 0 &&
+                                              <section style={{ fontWeight: "400", color: "#ff4460", lineHeight: "2px" }}>
+                                                <span style={{ fontSize: "10px" }}>&#8377;</span>
+                                                <span className='fs-7 extra-small' style={{ textDecoration: "line-through" }}>{x.price}</span>
+                                              </section>
+                                            }
+  
+                                          </div>
+                                        </div>
+                                        <div className="col-md-3 ci-quantity">
+  
+                                          <div className='border d-flex row rounded-pill' style={{ width: "fit-content" }}>
+                                            <span className='py-1 col-4 pointer' onClick={() => updateQuantity(x._id, "-", i, x.price, x.discount)} >-</span>
+                                            <span className='py-1 col-4' ref={lineRefs.current[i]} data-quantity={tempObj[x._id]} >{tempObj[x._id]}</span>
+                                            <span className='py-1 col-4 pointer' onClick={() => updateQuantity(x._id, "+", i, x.price, x.discount)}>+</span>
+                                          </div>
+                                        </div>
+                                        <div className="col-md-2 ci-total">
+                                          <div>
+                                            <span style={{ fontSize: "12px" }}>&#8377;</span>
+                                            <span className='fs-6' ref={totalAmtRefs.current[i]}>{formatInINRwoSign.format(Math.floor(x.price - x.discount * x.price / 100) * tempObj[x._id])}</span>
+                                          </div>
+                                        </div>
+                                      </div>
+  
+                                    </div>
+                                  </div>
+  
+                                  <div className='d-flex justify-content-end mb-3 border-bottom pb-3 ci-remove'>
+                                    <u><span onClick={() => removeFromCart(x._id)} className='me-4 pointer'>Remove <i className="fa fa-trash fa-sm"></i></span></u>
+                                    {!wishlistItems?.includes(x._id) && <u><span className='me-4 pointer' onClick={() => movetowishlist(x._id)}>Move to wishlist <i className="fa fa-heart fa-sm"></i></span></u>}
+                                  </div>
                                 </div>
-                              </div>
-
-                              <div className='d-flex justify-content-end mb-3 border-bottom pb-3 ci-remove'>
-                                <u><span onClick={() => removeFromCart(x._id)} className='me-4 pointer'>Remove <i className="fa fa-trash fa-sm"></i></span></u>
-                                {!wishlistItems?.includes(x._id) && <u><span className='me-4 pointer' onClick={() => movetowishlist(x._id)}>Move to wishlist <i className="fa fa-heart fa-sm"></i></span></u>}
-                              </div>
-                            </div>
-                          </>
-                        )
-                      })}
-
+                              </>
+                            )
+                          })}
+  
+                        </div>
+                      </div>
+                    </div>
+  
+                  </div>
+                  <div className='col-lg-3 mb-3 p-img-sticky '>
+                    <div className='row'>
+                      <div>
+                        <h5>Summary</h5>
+  
+                        <section>Do you have a Promo Code?</section>
+  
+                        <div className='d-flex justify-content-between my-2'>
+                          <span>Subtotal <i className="fa fa-question-circle fa-sm" aria-hidden="true"></i>
+                          </span>
+                          <span ref={subtotal}>
+                            {/* {Object.keys(priceObj).reduce((x,a)=>{
+                        return priceObj[x]+priceObj[a]
+                      })} */}
+                            {formatInINR.format(sub)}
+                          </span>
+                        </div>
+  
+                        <div className='d-flex justify-content-between my-2'>
+                          <span title={`${formatInINR.format(99)} Shipping & Handling charge is applied`}>Estimated Shipping & Handling <i className="fa fa-question-circle fa-sm" aria-hidden="true"></i>
+                          </span>
+                          {/* <span ref={shippingCharge}>{sub < 1999 ? formatInINR.format(99) : "-"}</span> */}
+                          <span ref={shippingCharge}>{formatInINR.format(99)}</span>
+                        </div>
+  
+                        <div className='d-flex justify-content-between my-2'>
+                          <span title='levies 10% service tax' data-bs-toggle="tooltip" data-bs-placement="right"  >Estimated Tax <i className="fa fa-question-circle fa-sm" aria-hidden="true"></i></span>
+                          <span ref={tax}>{formatInINR.format(Math.round(sub * 0.1))}</span>
+                        </div>
+  
+                        <div className='d-flex justify-content-between py-2 my-4 text-dark' style={{ borderBottom: "1px solid #dee2e6", borderTop: "1px solid #dee2e6" }}>
+                          <span><b>Total</b></span>
+                          <span ref={grandTotal} className='fw-bolder'>{formatInINR.format(sub + 99 + Math.round(sub * 0.1))}</span>
+                        </div>
+  
+                        {/* <form
+                      action="/create-checkout-session" method="POST"
+                      > */}
+                        {/* <input type="hidden" name='priceObj' value={JSON.stringify(priceObj)} /> */}
+                        <button id='checkoutBtn' className='btn w-100 my-2' style={{ border: "1px solid rgb(0 0 0 / 16%)", background: "#ebebeb", borderTop: "0" }}
+                          //  type="submit"
+                          onClick={() => createCheckoutSession(JSON.stringify(priceObj))}
+                        >Checkout</button>
+                        {/* </form> */}
+                        {/* <button className='btn w-100 my-2' style={{ border: "1px solid rgb(0 0 0 / 16%)", background: "#ebebeb", borderTop: "0" }} onClick={()=>handleCheckout()}>Checkout</button> */}
+                      </div>
                     </div>
                   </div>
                 </div>
-
               </div>
-              <div className='col-lg-3 mb-3 p-img-sticky '>
-                <div className='row'>
-                  <div>
-                    <h5>Summary</h5>
-
-                    <section>Do you have a Promo Code?</section>
-
-                    <div className='d-flex justify-content-between my-2'>
-                      <span>Subtotal <i className="fa fa-question-circle fa-sm" aria-hidden="true"></i>
-                      </span>
-                      <span ref={subtotal}>
-                        {/* {Object.keys(priceObj).reduce((x,a)=>{
-                      return priceObj[x]+priceObj[a]
-                    })} */}
-                        {formatInINR.format(sub)}
-                      </span>
-                    </div>
-
-                    <div className='d-flex justify-content-between my-2'>
-                      <span title={`${formatInINR.format(99)} Shipping & Handling charge is applied`}>Estimated Shipping & Handling <i className="fa fa-question-circle fa-sm" aria-hidden="true"></i>
-                      </span>
-                      {/* <span ref={shippingCharge}>{sub < 1999 ? formatInINR.format(99) : "-"}</span> */}
-                      <span ref={shippingCharge}>{formatInINR.format(99)}</span>
-                    </div>
-
-                    <div className='d-flex justify-content-between my-2'>
-                      <span title='levies 10% service tax' data-bs-toggle="tooltip" data-bs-placement="right"  >Estimated Tax <i className="fa fa-question-circle fa-sm" aria-hidden="true"></i></span>
-                      <span ref={tax}>{formatInINR.format(Math.round(sub * 0.1))}</span>
-                    </div>
-
-                    <div className='d-flex justify-content-between py-2 my-4 text-dark' style={{ borderBottom: "1px solid #dee2e6", borderTop: "1px solid #dee2e6" }}>
-                      <span><b>Total</b></span>
-                      <span ref={grandTotal} className='fw-bolder'>{formatInINR.format(sub + 99 + Math.round(sub * 0.1))}</span>
-                    </div>
-
-                    {/* <form
-                    action="/create-checkout-session" method="POST"
-                    > */}
-                    {/* <input type="hidden" name='priceObj' value={JSON.stringify(priceObj)} /> */}
-                    <button id='checkoutBtn' className='btn w-100 my-2' style={{ border: "1px solid rgb(0 0 0 / 16%)", background: "#ebebeb", borderTop: "0" }}
-                      //  type="submit"
-                      onClick={() => createCheckoutSession(JSON.stringify(priceObj))}
-                    >Checkout</button>
-                    {/* </form> */}
-                    {/* <button className='btn w-100 my-2' style={{ border: "1px solid rgb(0 0 0 / 16%)", background: "#ebebeb", borderTop: "0" }} onClick={()=>handleCheckout()}>Checkout</button> */}
-                  </div>
-                </div>
+              :
+              <div className='d-flex flex-column align-items-center no-item-block'>
+              <div>
+                <img src={emptyCartImg} alt='' className='no-item-img cart-img' />
               </div>
-            </div>
-          </div>
-        )
-        :
-        // move this to a common commponent
-        <div className='container my-5'>
-          <div className='d-flex flex-column align-items-center m-auto' style={{ width: "fit-content" }}>
-
-            <div><img src={LoginImg} alt='' />
-            </div>
-            <h5 className='text-dark'>You are not logged in</h5>
-            <span className='text-center'>
-              Sign in to your account to continue
-            </span>
-            <button className='btn my-4 btn-outline-warning w-100' data-bs-toggle="modal" href="#exampleModalToggle">Sign in</button>
-
-          </div>
-        </div>
-
+              <h5 className='text-dark'>Your cart is empty</h5>
+              <span className='text-center'>
+                Looks like you have not added anything to your cart. Go ahead & explore top categories
+              </span>
+              <button className='btn my-4 btn-outline-warning'>Continue shopping</button>
+            </div> 
+            )
+            :
+            <BagLoader/>
+          )
+          :
+          <SignInToContinue />
       }
 
       <RealtedProducts />

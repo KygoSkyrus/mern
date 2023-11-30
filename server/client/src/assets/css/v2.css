@@ -161,6 +161,11 @@ img {
 .h70{
   height: 70vh;
 }
+
+.no-data-img{
+  width: 80%;
+  mix-blend-mode: darken;
+}
 /*********************************************** basics COMMON*************************************************************/
 
 /*--------------------------------- the scroll up n down animation --------------------------------- */
@@ -689,6 +694,13 @@ img {
 /*---------------=====================----------- TOAST --------------------======================----------------*/
 
 /***************--------------------*************** ORDER LIST **************-------------------***************/
+.no-item-block span{
+  width: 25%;
+}
+.no-item-img{
+  width: 50vw;
+    max-width: 600px;
+}
 .order-lis-imgs {
   width: 100px;
 }
@@ -2397,6 +2409,12 @@ main {
   /* CART page */
 
   /* ORDERLIST PAGE OLI:ORDER_LIST_ITEM*/
+  .no-item-block span{
+    width: 80%;
+  }
+  .no-item-img{
+    width: 100vw;
+  }
   .orderList-page > h6 {
     margin: 32px 0 22px 0 !important;
   }
@@ -2810,4 +2828,10 @@ main {
     padding-left: calc(var(--bs-gutter-x) * 0.25);
   }
 }
+@media (min-width: 992px) {
+  .no-item-img.cart-img{
+    width: 35vw ;
+  } 
+}
+
 /* ---------------RESPONSIVE------------------------------------------------------------------------- */

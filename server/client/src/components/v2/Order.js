@@ -61,7 +61,6 @@ const Order = () => {
           //dispatch(setUserDetails({ user: res.user }))
         } else {
           setOrder(undefined)
-          setShowLoader(false)
           console.log('not 2000')
           //create an utility function whcih will updated these three state abd pass theese values (this is repeated on almost every api)
           dispatch(setToastStatus({ isSuccess: false }))
@@ -218,12 +217,12 @@ const Order = () => {
                 </div>
               </div>
               :
-              <div className='d-flex flex-column align-items-center justify-content-center h70'>
+              <div className='d-flex flex-column align-items-center justify-content-center mb-5 h70 no-item-block'>
                 <div>
-                  <img src={noOrder} alt='' />
+                  <img src={noOrder} alt='' className='no-item-img' />
                 </div>
                 <h5 className='text-dark'>Ooops!!! Incorrect Order ID</h5>
-                <span className='text-center w-25'>
+                <span className='text-center'>
                   Order doesn't exist. Please check Order ID and try again.
                 </span>
                 <button className='btn my-4 btn-outline-warning'><Link to='/orders'>Go back to Orders</Link></button>
