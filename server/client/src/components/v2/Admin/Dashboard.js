@@ -6,19 +6,14 @@ import { isProductUpdated } from './../redux/todoSlice'
 import Modal from './../Modal'
 import Product from './ProductList'
 import Nav from './Nav'
-
+import BagLoader from './../BagLoader'
+import Loader from '../Loader'
 const Dashboard = () => {
 
-    const filtersRef = useRef();
     const dispatch = useDispatch()
-    const [open, setOpen] = useState(false);
     const [products, setProducts] = useState(false) //to set products fetched from server
-    const [appliedFilters,setAppliedFilters]=useState([])
     const visibility = useSelector(state => state.productFormVisibility.visibility)// modal's visibility 
     const isUpdated = useSelector(state => state.isUpdated.product)
-
-    let filtersArray=["category vq1","category vq2","category vq3","category","category v1","categoryfhdsfh vq1","category vqgfjs7",]//this should has icons too 
-
 
     useEffect(() => {
         console.log('ue in hp')
@@ -34,33 +29,37 @@ const Dashboard = () => {
             })
     }, [isUpdated])
 
-    useEffect(()=>{
+    /* EXCLUDING FILTER SYSTEM
+        const filtersRef = useRef();
+    const [open, setOpen] = useState(false);
+    const [appliedFilters, setAppliedFilters] = useState([])
+    let filtersArray = ["category v1", "category v2", "category v3", "category", "category v1", "category vq1", "category vq7",]//this should has icons too 
+
+    useEffect(() => {
         const handleClickOutside = (event) => {
             if (!filtersRef?.current?.contains(event.target)) {
-              setOpen(false);
+                setOpen(false);
             }
-          };
-          document.addEventListener("mousedown", handleClickOutside);
-    },[])
-
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+    }, [])
     const selectFilter = () => {
         setOpen(true)
     }
-
-    const applyFilter =(e)=>{
-        console.log('e',e.target.value)
-        if(!appliedFilters.includes(e.target.innerText))
-           setAppliedFilters(prevState=>[...prevState,e.target.innerText])
+    const applyFilter = (e) => {
+        console.log('e', e.target.value)
+        if (!appliedFilters.includes(e.target.innerText))
+            setAppliedFilters(prevState => [...prevState, e.target.innerText])
     }
-
-    const removeFilter =(value)=>{
-        console.log('value',value)
-        setAppliedFilters(prevState=>prevState.filter(x=>x!==value))
+    const removeFilter = (value) => {
+        console.log('value', value)
+        setAppliedFilters(prevState => prevState.filter(x => x !== value))
     }
+    */
 
     return (
         <>
-                    <Nav />
+            <Nav />
 
             <div >
                 {/* THE HEADER */}
@@ -115,6 +114,7 @@ const Dashboard = () => {
                         </div>
                     </div>
 
+                    {/* //excluding filter system
                     <div className="px-3 py-2 gap-1 bg-white-custom border-bottom shadow-sm d-flex align-items-center position-relative">
                         <span className="badge rounded-pill py-2 pe-2 badge-add-filter" data-bs-toggle="modal" href="#modalStart" role="button" onClick={e => selectFilter()}>
                             Select Filter <i className="fa fa-plus ms-1"></i>
@@ -131,8 +131,6 @@ const Dashboard = () => {
                                 return(
                                     <span className="badge badge-light-light rounded-pill text-dark py-2 fw-normal" key={i}>
                                     <i className="fa fa-circle me-1 text-danger"></i>
-                                    {/* <i className="fa fa-calendar me-1 text-muted ms-1"></i> */}
-                                    {/* <i className="fa fa-user me-1 text-muted ms-1"></i> */}
                                     <span className="me-1">{filter}</span>
                                     <span className="text-dark opacity-25 ms-1 pointer" onClick={e=>removeFilter(filter)}>
                                         <i className="fa fa-times-circle"></i>
@@ -141,47 +139,50 @@ const Dashboard = () => {
                                 )
                             })}
                         </div>
-                    </div>
+                    </div> */}
                 </div>
 
-                {/* FILTER ROW */}
 
-
-                <div className="container-fluid px-0 admin-table-grid">
-                    <div className="table-responsive-md">
-                        <table className="table table-hover mt-2">
-                            <thead className="border-bottom">
-                                <tr>
-                                    <th scope="col" width="50"></th>
-                                    {/* <th scope="col" width="30"></th> */}
-                                    <th scope="col" className="small fw-normal">Product</th>
-                                    <th scope="col" className="small fw-normal">Category</th>
-                                    <th scope="col" className="small fw-normal">Price</th>
-                                    <th scope="col" className="small fw-normal">Images</th>
-                                    <th scope="col" className="small fw-normal">Discount(%)</th>
-                                    <th scope="col" className="small fw-normal">In stock</th>
-                                    <th scope="col" className="small fw-normal text-end">Rating</th>
-                                    <th scope="col" className="small fw-normal text-center">Visibility</th>
-                                    <th scope="col" className="small fw-normal"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {products ?
-                                    products.map(x => {
+                {products ?
+                    <div className="container-fluid px-0 admin-table-grid">
+                        <div className="table-responsive-md">
+                            <table className="table table-hover mt-2">
+                                <thead className="border-bottom">
+                                    <tr>
+                                        <th scope="col" width="50"></th>
+                                        {/* <th scope="col" width="30"></th> */}
+                                        <th scope="col" className="small fw-normal">Product</th>
+                                        <th scope="col" className="small fw-normal">Category</th>
+                                        <th scope="col" className="small fw-normal">Price</th>
+                                        <th scope="col" className="small fw-normal">Images</th>
+                                        <th scope="col" className="small fw-normal">Discount(%)</th>
+                                        <th scope="col" className="small fw-normal">In stock</th>
+                                        <th scope="col" className="small fw-normal text-end">Rating</th>
+                                        <th scope="col" className="small fw-normal text-center">Visibility</th>
+                                        <th scope="col" className="small fw-normal"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {products?.map(x => {
                                         return (
                                             <Product details={x} key={x._id} />
                                         )
-                                    })
-                                    : <tr className='d-flex justify-content-center align-items-center'><td><h1>...Loading</h1></td></tr>
-                                }
-                            </tbody>
-                        </table>
+                                    }) }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
+                    :
+                    <div style={{ height: "calc(100vh - 63px)" }}>
+                        <BagLoader />
+                    </div>
+                }
 
             </div>
 
             {visibility && <Modal />}
+
+            <Loader/>
 
         </>
     )
