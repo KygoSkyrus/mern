@@ -1,7 +1,6 @@
 NOTE :::the issue that without internet you are not abke to acces db,,,setup the db on local
 
 
-test;; no order image and no wishlist ui for 
 # Defects
 - fix table heading in admin
 - need to have transparent loader for loaderduring api calls,
@@ -10,6 +9,7 @@ test;; no order image and no wishlist ui for
 - add product from button and header is not looking good
 - when admin login than the pagfe is not redirected to the requested page, it just stucks i think
 - grey out out of stock items,, even on the cart page,,and also if you are letting even the unavialble items in the cart than dont calculate its price and neither send it at the backend
+- on last row in products table in admin if hovered over image,,its starts shaking
 - add a serach bar in admon instead of filters at the top right
 - if any of the resulted productas is clicked on search prod than the search bar should close and overlay shoul be removed
 - on order page show loader when fetching the order

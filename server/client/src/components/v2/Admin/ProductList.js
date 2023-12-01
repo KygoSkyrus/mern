@@ -81,7 +81,6 @@ const Product = ({ details }) => {
 
             <td className="align-middle">
                 <span className="badge badge-light-light rounded-pill text-dark py-1 fw-normal pe-3 ps-1">
-                    {/* <i className="fa fa-money-bill me-1 text-warning"></i> */}
                     <i className="fa fa-rupee me-1 text-warning"></i>
                     {details.price}
                 </span>
@@ -110,14 +109,13 @@ const Product = ({ details }) => {
                 {details.stock}
             </td>
 
-            <td className="align-middle text-end">
+            <td className="align-middle text-center">
                 <div className="btn-group">
-                    <button type="button" className="me-3 btn btn-badge border-0 rounded-pill text-decoration-none p-0 align-self-center" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" style={{ height: "26px !important", width: "26px !important" }}>
+                    {/* <button type="button" className="me-3 btn btn-badge border-0 rounded-pill text-decoration-none p-0 align-self-center" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" style={{ height: "26px !important", width: "26px !important" }}>
                         <i className="fa fa-expand small text-body"></i>
-                    </button>
+                    </button> */}
 
-                    <div className="dropdown-menu shadow pt-0 rounded-3 pb-0">
-                        {/* <!-- Right Close Button --> */}
+                    {/* <div className="dropdown-menu shadow pt-0 rounded-3 pb-0">
                         <span className="position-absolute top-0 start-100 translate-middle" style={{ zIndex: "999" }}>
                             <span className="fa-stack" style={{ fontSize: " 0.7em" }}>
                                 <i className="fa fa-circle fa-stack-2x text-dark"></i>
@@ -160,10 +158,8 @@ const Product = ({ details }) => {
                                 Add Users
                             </button>
                         </div>
-                    </div>
-
+                    </div> */}
                 </div>
-
                 {details.rating}
             </td>
 
@@ -181,7 +177,7 @@ const Product = ({ details }) => {
                     </button>
 
                     <ul className="dropdown-menu dropdown-menu-end shadow" aria-labelledby="dropdownMenuButton1">
-                        <li><h6 className="dropdown-header fw-normal">Options</h6></li>
+                        {/* <li><h6 className="dropdown-header fw-normal">Options</h6></li>
                         <li>
                             <a className="dropdown-item gap-2 d-flex" href="/#">
                                 <i className="fa fa-pen fa-fw me-2 opacity-50 align-self-center"></i> Edit this Task
@@ -197,13 +193,11 @@ const Product = ({ details }) => {
                                 <i className="fa fa-list fa-fw me-2 opacity-50 align-self-center"></i> Add Subtask
                             </a>
                         </li>
-                        <li><hr className="dropdown-divider" /></li>
+                        <li><hr className="dropdown-divider" /></li> */}
                         <li>
-
-                            <button type="button" className="dropdown-item gap-2 d-flex" data-bs-toggle="modal" data-bs-target="#modalDanger" >
+                            <button type="button" className="dropdown-item gap-2 d-flex" data-bs-toggle="modal" data-bs-target="#modalDanger" disabled>
                                 <i className="fa fa-trash fa-fw me-2 opacity-50 align-self-center"></i> Delete
                             </button>
-
                         </li>
                     </ul>
                 </div>
