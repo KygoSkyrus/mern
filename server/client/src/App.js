@@ -19,6 +19,7 @@ import TheFront from './components/v2/TheFront';
 
 import Toast from './components/v2/Toast';
 import AdminLogin from './components/v2/Admin/AdminLogin';
+import Loader from './components/v2/Loader';
 
 function App() {
 
@@ -117,13 +118,12 @@ const firebaseApp = initializeApp(firebaseConfig);
 
         <Toast />
 
-
         <Routes>
           <Route path="/*" exact element={<TheFront />} />
           <Route path="/admin/*" exact element={<Admin firebaseApp={firebaseApp} />} />
-w        </Routes>
+        </Routes>
 
-
+        <Loader/>
       </div>
     </BrowserRouter>
   );

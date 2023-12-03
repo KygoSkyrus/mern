@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { setCatSubcatRelation } from "./redux/productSlice";
-
 import theBagLogo from "./../../assets/images/thebaglogo.png";
 
 const Navbar = () => {
@@ -248,7 +247,7 @@ const Navbar = () => {
                   Category
                 </button>
                 <div
-                  className="shadow categoryListsHolder"
+                  className="shadow-s categoryListsHolder"
                   onMouseLeave={(e) => clearSubCategory(e)}
                 >
                   <ul
@@ -304,7 +303,7 @@ const Navbar = () => {
                     ) : (
                       <section className="text-center">...Loading</section>
                     )}
-                    <ul className="child-category display-none dropdown-menu shadow"></ul>
+                    <ul className="child-category display-none dropdown-menu shadow-sm"></ul>
                   </ul>
                 </div>
               </li>
@@ -353,7 +352,7 @@ const Navbar = () => {
                   Profile
                 </button>
                 <ul
-                  className="dropdown-menu shadow profileDropdownUL"
+                  className="dropdown-menu shadow-sm profileDropdownUL"
                   aria-labelledby="profileDropdown"
                 >
                   <li className="">

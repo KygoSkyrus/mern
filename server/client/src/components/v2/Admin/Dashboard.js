@@ -1,21 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { isProductUpdated } from './../redux/todoSlice'
 
+import { isProductUpdated } from '../redux/productSlice'
 
-import Modal from './../Modal'
 import Product from './ProductList'
 import Nav from './Nav'
 import BagLoader from './../BagLoader'
-import Loader from '../Loader'
-import Filters from './Filters'
 import Header from './Header'
+
+
 const Dashboard = () => {
 
     const dispatch = useDispatch()
     const [products, setProducts] = useState(false) //to set products fetched from server
-    const visibility = useSelector(state => state.productFormVisibility.visibility)// modal's visibility 
-    const isUpdated = useSelector(state => state.isUpdated.product)
+    const isUpdated = useSelector(state => state.product.product)
 
     useEffect(() => {
         console.log('ue in hp')
@@ -38,6 +36,7 @@ const Dashboard = () => {
 
             <div >
                 <Header heading="Products" icon="fa-shopping-bag" />
+                {/* <Filters/> */}
 
                 {products ?
                     <div className="container-fluid px-0 admin-table-grid">
@@ -63,7 +62,7 @@ const Dashboard = () => {
                                         return (
                                             <Product details={x} key={x._id} />
                                         )
-                                    }) }
+                                    })}
                                 </tbody>
                             </table>
                         </div>
@@ -77,7 +76,6 @@ const Dashboard = () => {
             </div>
 
             {/* {visibility && <Modal />} */}
-
             {/* <Loader/> */}
 
         </>

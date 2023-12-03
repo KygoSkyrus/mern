@@ -342,6 +342,17 @@ a.nav-icons.active::before {
   top: 100%;
   left: 12%;
 }
+
+.admin-table-grid table{
+  overflow: auto;
+}
+.admin-table-grid table thead{
+  position: sticky;
+  top: 60.5px;
+  background: #fafafa;
+  z-index: 9;
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+}
 /******************** DASHBOARD *************************/
 
 /******************** PRODUCT FORM MODAL *************************/
@@ -391,6 +402,19 @@ a.nav-icons.active::before {
 }
 .productForm:hover {
   box-shadow: 0px 5px 20px 0px #000000ba;
+}
+.productForm .card-header > div{
+  border-bottom: 1px solid #464646;
+  padding-bottom: 10px;
+}
+.productForm h6{
+  color: var(--yellow);
+}
+.productForm .closeBtn{
+  background: #818181;
+  padding: 4px 10px;
+  border-radius: 4px;
+  color: #000;
 }
 /******************** PRODUCT FORM MODAL *************************/
 

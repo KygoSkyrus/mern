@@ -1,24 +1,23 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable no-eval */
 import React from 'react'
-import { Link, redirect, useNavigate } from 'react-router-dom'
-
+import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
-import { setUserDetails } from './redux/userSlice';
-import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSlice';
 
 import RealtedProducts from './RealtedProducts';
-import { formatInINR } from './Utility';
+import SignInToContinue from './SignInToContinue';
+import BagLoader from './BagLoader';
+
+import { setUserDetails } from './redux/userSlice';
+import { invokeToast } from './redux/toastSlice';
+import { formatInINR, inProgressLoader } from './Utility';
 import { formatInINRwoSign } from './Utility';
 import emptyCartImg from "./../../assets/images/newImg/collections/add-to-cart-animate.svg"
 import theBagLogo from "./../../assets/images/thebaglogo.png";
-import BagLoader from './BagLoader';
-import SignInToContinue from './SignInToContinue';
 
 
 const Cart = () => {
 
-  const navigate = useNavigate()
   const dispatch = useDispatch()
   const userDetail = useSelector(state => state.user.user)
   const userLoggedIn = useSelector(state => state.user.isUserLoggedIn)
@@ -75,7 +74,7 @@ const Cart = () => {
   //debouce and debug--------------------------------------------
   // Simulated API function to update cart item quantities
   function updateCartItemQuantities(cartItems) {
-    // console.log('ccc', cartItems)
+    console.log('ccc', cartItems)
     const uniqueCartItems = [];
     const seenProductIds = new Set();
 
@@ -100,6 +99,7 @@ const Cart = () => {
     // Step 2: Create a new array with unique cart items
     const flattenedUniqueCartItems = uniqueCartItems.flat();
     console.log('flattened', flattenedUniqueCartItems)
+    let resp;
     return fetch('/api/updateCart', {
       method: 'POST',
       headers: {
@@ -108,15 +108,23 @@ const Cart = () => {
       body: JSON.stringify(flattenedUniqueCartItems),
     })
       .then(response => response.json())
+      .then(response => {
+        resp = response;
+        return response.json()
+      })
       .then(data => {
         console.log('Updating cart item quantities on the server:', data);
-        //show acknolegment andtoast here 
-        return data;
+        inProgressLoader(dispatch, false)
+        if (resp.status === 200) {
+          // invokeToast(dispatch, true, data.message)
+          dispatch(invokeToast({ isSuccess: true, message: data.message }))
+
+        } else {
+          // invokeToast(dispatch, false, data.message)
+          dispatch(invokeToast({ isSuccess: false, message: data.message }))
+
+        }
       })
-      .catch(error => {
-        console.error('Failed to update cart item quantities:', error);
-        throw error; // Rethrow the error for error handling in the calling code
-      });
   }
 
   // Debounce function to delay API calls by a specified time
@@ -145,11 +153,13 @@ const Cart = () => {
   }
 
   // Function to update cart item quantities on the server using debouncing and batching
-  const debouncedBatchedUpdate = batch(debounce(updateCartItemQuantities, 1000), 2000);
+  const debouncedBatchedUpdate = batch(debounce(updateCartItemQuantities, 100), 500);//wait period is reduced as the multiple click wont be an issue due to inProgressLoader
 
   //NOTE:::: have to take care of object when item is removed from cart or moved to wishlist
 
   function updateQuantity(productId, val, i, price, discount) {
+    inProgressLoader(dispatch, true)
+
     const newQuantity = eval(`${parseInt(lineRefs.current[i].current.dataset.quantity)} ${val} ${1}`);
 
     if (!newQuantity <= 0) {
@@ -198,6 +208,7 @@ const Cart = () => {
 
 
   const removeFromCart = (productId) => {
+    inProgressLoader(dispatch, true)
     let resp;
     fetch(`/api/removefromcart`, {
       method: "POST",
@@ -212,23 +223,25 @@ const Cart = () => {
       })
       .then(res => {
         console.log('resp', resp)
+        inProgressLoader(dispatch, false)
         if (resp.status === 200) {
           console.log('2000')
           console.log('updated user object', res.user)
-          dispatch(setToastStatus({ isSuccess: true }))
+          // invokeToast(dispatch, true, res.message)
+          dispatch(invokeToast({ isSuccess: true, message: res.message }))
           dispatch(setUserDetails({ user: res.user }))
         } else {
           console.log('not 2000')
-          dispatch(setToastStatus({ isSuccess: false }))
+          // invokeToast(dispatch, false, res.message)
+          dispatch(invokeToast({ isSuccess: false, message: res.message }))
         }
-        dispatch(toastVisibility({ toast: true }))
-        dispatch(setToastContent({ message: res.message }))
         console.log('remove from cart response', res)
         //also update the user from here too or elese the result wont be seen immediately
       })
   }
 
   const movetowishlist = (productId) => {
+    inProgressLoader(dispatch, true)
     let resp;
     fetch(`/api/movetowishlist`, {
       method: "POST",
@@ -243,16 +256,13 @@ const Cart = () => {
       })
       .then(res => {
         console.log('resp', resp)
+        inProgressLoader(dispatch, false)
         if (resp.status === 200) {
-          console.log('200')
-          dispatch(setToastStatus({ isSuccess: true }))
+          dispatch(invokeToast({ isSuccess: true, message: res.message }))
           dispatch(setUserDetails({ user: res.user }))
         } else {
-          console.log('not 200')
-          dispatch(setToastStatus({ isSuccess: false }))
+          dispatch(invokeToast({ isSuccess: false, message: res.message }))
         }
-        dispatch(toastVisibility({ toast: true }))
-        dispatch(setToastContent({ message: res.message }))
         console.log('movetowishlist response', res)
         //also update the user from here too or elese the result wont be seen immediately
       })
@@ -262,6 +272,7 @@ const Cart = () => {
 
   function createCheckoutSession(priceObj) {
     let resp;
+    inProgressLoader(dispatch, true)
     fetch(`/create-checkout-session`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -274,13 +285,13 @@ const Cart = () => {
         return response.json()
       })
       .then(res => {
+        inProgressLoader(dispatch, false)
         console.log('resp', resp)
         if (resp.status === 200) {
           window.location.href = res.url;
         } else {
-          dispatch(setToastStatus({ isSuccess: false }))
-          dispatch(toastVisibility({ toast: true }))
-          dispatch(setToastContent({ message: res.message }))
+          // invokeToast(dispatch, false, res.message)
+          dispatch(invokeToast({ isSuccess: false, message: res.message }))
         }
       })
   }
@@ -293,7 +304,7 @@ const Cart = () => {
         <BagLoader />
         :
         userDetail && userLoggedIn ?
-          (cartItems?
+          (cartItems ?
             (cartItems?.length > 0 ?
               <div className='container cart-page my-5'>
                 <h6 className='text-center my-5 d-flex justify-content-center align-items-center'>My Cart
@@ -323,7 +334,7 @@ const Cart = () => {
                                     <h6>
                                       Quantity
                                     </h6>
-  
+
                                   </div>
                                   <div className="col-md-2">
                                     <h6>
@@ -333,7 +344,7 @@ const Cart = () => {
                                 </div>
                               </div>
                             </div>
-  
+
                           </div>
                           {cartItems?.map((x, i) => {
                             return (
@@ -344,11 +355,11 @@ const Cart = () => {
                                       <img src={x.image} alt='' className='img-fluidt-minw-215' style={{ maxHeight: "100px" }} />
                                     </div>
                                   </div>
-  
+
                                   <div className="col-md-10 ci-detail">
                                     <div className='d-flex flex-column justify-content-between h-100'>
                                       <div className='row d-flex justify-content-between'>
-  
+
                                         <div className="col-md-4 ci-name">
                                           <Link to={`/product/${x._id}`} style={{ color: "inherit" }}>
                                             <h6>
@@ -371,11 +382,11 @@ const Cart = () => {
                                                 <span className='fs-7 extra-small' style={{ textDecoration: "line-through" }}>{x.price}</span>
                                               </section>
                                             }
-  
+
                                           </div>
                                         </div>
                                         <div className="col-md-3 ci-quantity">
-  
+
                                           <div className='border d-flex row rounded-pill' style={{ width: "fit-content" }}>
                                             <span className='py-1 col-4 pointer' onClick={() => updateQuantity(x._id, "-", i, x.price, x.discount)} >-</span>
                                             <span className='py-1 col-4' ref={lineRefs.current[i]} data-quantity={tempObj[x._id]} >{tempObj[x._id]}</span>
@@ -389,10 +400,10 @@ const Cart = () => {
                                           </div>
                                         </div>
                                       </div>
-  
+
                                     </div>
                                   </div>
-  
+
                                   <div className='d-flex justify-content-end mb-3 border-bottom pb-3 ci-remove'>
                                     <u><span onClick={() => removeFromCart(x._id)} className='me-4 pointer'>Remove <i className="fa fa-trash fa-sm"></i></span></u>
                                     {!wishlistItems?.includes(x._id) && <u><span className='me-4 pointer' onClick={() => movetowishlist(x._id)}>Move to wishlist <i className="fa fa-heart fa-sm"></i></span></u>}
@@ -401,19 +412,19 @@ const Cart = () => {
                               </>
                             )
                           })}
-  
+
                         </div>
                       </div>
                     </div>
-  
+
                   </div>
                   <div className='col-lg-3 mb-3 p-img-sticky '>
                     <div className='row'>
                       <div>
                         <h5>Summary</h5>
-  
+
                         <section>Do you have a Promo Code?</section>
-  
+
                         <div className='d-flex justify-content-between my-2'>
                           <span>Subtotal <i className="fa fa-question-circle fa-sm" aria-hidden="true"></i>
                           </span>
@@ -424,24 +435,24 @@ const Cart = () => {
                             {formatInINR.format(sub)}
                           </span>
                         </div>
-  
+
                         <div className='d-flex justify-content-between my-2'>
                           <span title={`${formatInINR.format(99)} Shipping & Handling charge is applied`}>Estimated Shipping & Handling <i className="fa fa-question-circle fa-sm" aria-hidden="true"></i>
                           </span>
                           {/* <span ref={shippingCharge}>{sub < 1999 ? formatInINR.format(99) : "-"}</span> */}
                           <span ref={shippingCharge}>{formatInINR.format(99)}</span>
                         </div>
-  
+
                         <div className='d-flex justify-content-between my-2'>
                           <span title='levies 10% service tax' data-bs-toggle="tooltip" data-bs-placement="right"  >Estimated Tax <i className="fa fa-question-circle fa-sm" aria-hidden="true"></i></span>
                           <span ref={tax}>{formatInINR.format(Math.round(sub * 0.1))}</span>
                         </div>
-  
+
                         <div className='d-flex justify-content-between py-2 my-4 text-dark' style={{ borderBottom: "1px solid #dee2e6", borderTop: "1px solid #dee2e6" }}>
                           <span><b>Total</b></span>
                           <span ref={grandTotal} className='fw-bolder'>{formatInINR.format(sub + 99 + Math.round(sub * 0.1))}</span>
                         </div>
-  
+
                         {/* <form
                       action="/create-checkout-session" method="POST"
                       > */}
@@ -459,18 +470,18 @@ const Cart = () => {
               </div>
               :
               <div className='d-flex flex-column align-items-center no-item-block'>
-              <div>
-                <img src={emptyCartImg} alt='' className='no-item-img cart-img' />
+                <div>
+                  <img src={emptyCartImg} alt='' className='no-item-img cart-img' />
+                </div>
+                <h5 className='text-dark'>Your cart is empty</h5>
+                <span className='text-center'>
+                  Looks like you have not added anything to your cart. Go ahead & explore top categories
+                </span>
+                <button className='btn my-4 btn-outline-warning'>Continue shopping</button>
               </div>
-              <h5 className='text-dark'>Your cart is empty</h5>
-              <span className='text-center'>
-                Looks like you have not added anything to your cart. Go ahead & explore top categories
-              </span>
-              <button className='btn my-4 btn-outline-warning'>Continue shopping</button>
-            </div> 
             )
             :
-            <BagLoader/>
+            <BagLoader />
           )
           :
           <SignInToContinue />

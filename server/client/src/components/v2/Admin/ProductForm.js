@@ -1,69 +1,45 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { productFormVisibility, clearProductForm, toastVisibility, setToastContent, isProductUpdated, setLoaderVisibility } from './../redux/todoSlice'
-
-
-// ADD PRODUCT --------------------------------------
 import { v4 as uuidv4 } from 'uuid';
-//firebase
-// import { initializeApp } from 'firebase/app';
-import { getStorage, ref, uploadBytes, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import { getStorage, ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 
-import okayIcon from "./../../../assets/images/okay-icon.png"
-
+import { setProductFormVisibility, clearProductForm } from '../redux/productFormSlice'
+import { setLoaderVisibility } from '../redux/loaderSlice';
+import { isProductUpdated } from '../redux/productSlice';
+import { invokeToast } from '../redux/toastSlice';
 
 const ProductForm = (props) => {
 
-    const [categories,setCategories]=useState()
-    const [productData, setProductData] = React.useState({
-        //  name: "", url: "", price: 0, description: "", category: "", image: null, stock: 0 
-    })
-
-
     const dispatch = useDispatch()
-
-    const productState = useSelector(state => state.productForm.productData)//here the productForm is name of the slice
-    const title = useSelector(state => state.productFormVisibility.title)
+    const [categories, setCategories] = useState()
+    const [productData, setProductData] = React.useState({})
+    const title = useSelector(state => state.productForm.title)
+    const productState = useSelector(state => state.productForm.productData)
     // console.log('pddd', productState, title)
 
+    const storage = getStorage(props.firebaseApp);
 
     useEffect(() => {
         console.log('------productState----', productState)
-        setProductData(productState)//setting the inputs to selected product to edit
+        setProductData(productState)//setting the inputs with selected product details on edit
         fetch('/api/getcategory')
-        .then(res=>res.json())
-        .then(res=>{
-            setCategories(res.filter(item=>item.subCategory.length===0))
-        })
+            .then(res => res.json())
+            .then(res => {
+                setCategories(res.filter(item => item.subCategory.length === 0))
+            })
     }, [])
-    console.log('resss',categories)
+    console.log('resss', categories)
 
-
-    const handleInputChange = (e) => {
-        setProductData({ ...productData, [e.target.name]: e.target.value })
+    const closeProductFormContainer = () => {
+        dispatch(setProductFormVisibility({ visibility: false }));
     }
-
-    const closeProductContainer = () => {
-        //add the clearing from dispatch here too as we are clearing the form basically ine evry close
-        dispatch(productFormVisibility({ visibility: false }));
-    }
-
-
-
-    //-------------------- FIREBASE -----------------------
-    const storage = getStorage(props.firebaseApp);
-    //-------------------- FIREBASE -----------------------
-
-
 
     async function sendData(e) {
         e.preventDefault()//this stops page to refresh if the form submission is used with type submit button
-        
-        dispatch(setLoaderVisibility({loader:true}))
 
+        dispatch(setLoaderVisibility({ loader: true }))
 
         console.log('pd', productData, productState)
-
 
         let tempArr = [];
         //when images are chnaged (will run for : newProduct/editProduct)
@@ -111,14 +87,16 @@ const ProductForm = (props) => {
             if (JSON.stringify(productData) !== JSON.stringify(productState)) {
                 //when things other than images are changed
                 console.log('----------------------caalomg apo')
+                closeProductFormContainer()//closing modal
                 addProductAPI(undefined)
-            }else{
+            } else {
                 //nothing changed
-                dispatch(toastVisibility({ toast: true }))
-                dispatch(setToastContent({message:`No changes were made"}`}))
-
                 dispatch(clearProductForm())//clearing form
-                closeProductContainer()//closing modal
+                closeProductFormContainer()//closing modal
+
+                dispatch(setLoaderVisibility({ loader: false }))
+                // invokeToast(dispatch,true,`No changes were made`)
+                dispatch(invokeToast({isSuccess:true,message:'No changes were made'}))
             }
 
         }
@@ -128,19 +106,20 @@ const ProductForm = (props) => {
     function addProductAPI(image) {
 
         let apiURL;
-        let img=image;//for add product
+        let img = image;//for add product
         if (title === "Edit product") {
             apiURL = "/api/admin/editproduct";
-            if(image){
-                img= [productState.image,image].flat()
-            }else{
-                img=productData.image;
+            if (image) {
+                img = [productState.image, image].flat()
+            } else {
+                img = productData.image;
             }
         } else {
             apiURL = "/api/admin/addproducts";
         }
 
         // NOTE::(UPDATE:::ITS WORKING NOW)TRY CHECKING WITH MULTIPLE IMAGES,,maybe bcz if internet is not working...image is troubling//also when edited is done,,then its giving cannot remoeve child from node errror on clearform function///last image from newly added image is being left behind
+        let resp;
         fetch(apiURL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -151,30 +130,35 @@ const ProductForm = (props) => {
                 description: productData.description,
                 category: productData.category,
                 stock: productData.stock,
-                discount:productData.discount,
+                discount: productData.discount,
                 image: img,
                 id: productData._id
             }),
-        }).then(response => response.json())
+        })
+            .then(response => {
+                resp = response;
+                return response.json()
+            })
             .then(data => {
-                // console.log('dd', data)
-                dispatch(setLoaderVisibility({loader:false}))
-                closeProductContainer()//closing modal
-                dispatch(toastVisibility({ toast: true }))
-                if (data.is_product_added || data.isProductEdited) {                   
-                    dispatch(setToastContent({message:`Product has been ${title==="Add product"? "added":"edited"}`}))
+                dispatch(setLoaderVisibility({ loader: false }))
+
+                if (resp.status === 200) {
+                    // invokeToast(dispatch,true,data.message)
+                    dispatch(invokeToast({isSuccess:true,message:data.message}))
                     //also to do thta you need to store the all the product in redux and then the edited product can be updated there
                     dispatch(isProductUpdated({ updateProduct: true }))//reloading the product list to show updated list
                 } else {
-                    //resetting the fields
-                    dispatch(setToastContent({message:`Product couldn't be added. Something went wrong!"}`}))
+                    // invokeToast(dispatch,false,data.message)
+                    dispatch(invokeToast({isSuccess:false,message:data.message}))
                 }
             })
             .catch(err => console.log(err))
 
     }
 
- 
+    const handleInputChange = (e) => {
+        setProductData({ ...productData, [e.target.name]: e.target.value })
+    }
 
     function settingUrl(e) {
         let title = e.target.value;
@@ -184,7 +168,7 @@ const ProductForm = (props) => {
     }
 
     function setDynamicLabel(e) {
-        //you can write the ogic to create the object url and store it in array state wihich will update the image holder like in edit componnent
+        //you can write the logic to create the object url and store it in array state wihich will update the image holder like in edit componnent
         // console.log('setdynmaic')
         let imageHolder = document.getElementById('imageHolder')
         imageHolder.innerHTML = "";
@@ -223,16 +207,15 @@ const ProductForm = (props) => {
                         <div>
                             <h6 className="fs-17 font-weight-600 mb-0">{title}</h6>
                         </div>
-                        <div className="text-right pointer">
+                        <div className="text-right pointer closeBtn">
                             <div className="actions">
                                 <span
-                                    onClick={closeProductContainer}
+                                    onClick={()=>closeProductFormContainer()}
                                     className="action-item cursor-pointer" >
                                     <i
                                         className="fas fa-times">
-                                            
-                                        </i>
-                                        </span>
+                                    </i>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -261,7 +244,7 @@ const ProductForm = (props) => {
                                 <div className="form-group">
                                     <label htmlFor="description" className="font-weight-600">Description</label>
                                     <textarea name="description" placeholder="description" className="form-control"
-                                        id="description" rows="4" style={{height:"unset"}} required value={productData?.description} onChange={e => handleInputChange(e)}></textarea>
+                                        id="description" rows="4" style={{ height: "unset" }} required value={productData?.description} onChange={e => handleInputChange(e)}></textarea>
                                 </div>
 
                                 {/* <div className="form-group">
@@ -272,15 +255,15 @@ const ProductForm = (props) => {
                                 {/* Dropdown category */}
                                 <div className="form-group">
                                     <label htmlFor="category" className="font-weight-600">Category</label>
-                                        <select className="form-control basic-single" name="category" id="category" value={productData?.category} onChange={e => handleInputChange(e)} required >
-                                            <option value=''>Select category</option>
-                                            {categories?.map((x,i)=>{
-                                                return(
-                                                    <option value={x.name} className='text-capitalize'>{x.name}</option>
-                                                )
-                                            })}
-                                        </select>
-                                </div> 
+                                    <select className="form-control basic-single pointer" name="category" id="category" value={productData?.category} onChange={e => handleInputChange(e)} required >
+                                        <option value=''>Select category</option>
+                                        {categories?.map((x, i) => {
+                                            return (
+                                                <option value={x.name} className='text-capitalize'>{x.name}</option>
+                                            )
+                                        })}
+                                    </select>
+                                </div>
 
                                 <div className="form-group d-flex flex-column">
                                     <label htmlFor="image" className="font-weight-600" id="colorRed">File<span
@@ -320,7 +303,7 @@ const ProductForm = (props) => {
                                             id="rating" required />
                                     </div> */}
 
-                                <button id="go" type='submit' >
+                                <button id="go" type='submit' className='btn btn-outline-warning w-100' >
                                     {title}
                                 </button>
                             </form>
@@ -328,7 +311,6 @@ const ProductForm = (props) => {
                     </div>
                 </div>
             </div>
-     
         </>
     )
 }

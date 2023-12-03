@@ -1,18 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { productFormVisibility, setProductFormTitle } from './../redux/todoSlice'
-
-import { clearProductForm } from './../redux/todoSlice'
-import { Link } from 'react-router-dom'
+import { setProductFormVisibility, setProductFormTitle } from '../redux/productFormSlice'
+import { clearProductForm } from '../redux/productFormSlice'
 
 const Nav = () => {
 
   const adminNavRef = useRef();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const visibility = useSelector(state => state.productFormVisibility.visibility)
-  const [isSidebarHidden,setIsSidebarHidden]=useState(true)
+  const productFormVisibility = useSelector(state => state.productForm.visibility)
+  const [isSidebarHidden, setIsSidebarHidden] = useState(true)
 
   useEffect(() => {
     // getSidebarWorking()
@@ -20,11 +19,10 @@ const Nav = () => {
   }, [])
 
   const handleAddClick = () => {
-    if (!visibility) {
+    if (!productFormVisibility) {
       dispatch(clearProductForm());
-      dispatch(productFormVisibility({ visibility: !visibility }));
+      dispatch(setProductFormVisibility({ visibility: !productFormVisibility }));
       dispatch(setProductFormTitle({ title: "Add product" }))
-      console.log('ccc')
     }
   };
 
@@ -75,22 +73,22 @@ const Nav = () => {
 
 
   const hideShowSidebar = (e) => {
-    console.log('jfjdf',document.querySelector('.admin-table-grid'))
-    if(e.currentTarget.dataset.ishidden==="true"){
+    console.log('jfjdf', document.querySelector('.admin-table-grid'))
+    if (e.currentTarget.dataset.ishidden === "true") {
       adminNavRef.current.classList.remove('hideSidebar');//hiding side navbar
       e.currentTarget.childNodes.forEach(x => {
         x.style.borderRadius = "2px"
-        x.style.transform = x.classList.contains("upper")? "rotate(18deg) translateY(1.5px)":"rotate(-18deg) translateY(-1.5px)"
+        x.style.transform = x.classList.contains("upper") ? "rotate(18deg) translateY(1.5px)" : "rotate(-18deg) translateY(-1.5px)"
       })//inverting arrow
       document.querySelector('.admin-table-grid')?.classList.add('slide-admin-table')//sliding table with sidebar
       setIsSidebarHidden(false)
-    }else{
+    } else {
       adminNavRef.current.classList.add('hideSidebar');
       e.currentTarget.childNodes.forEach(x => {
         // x.style.transform = "unset"
-        x.style.transform = x.classList.contains("upper")? "rotate(-18deg) translateY(1.5px)":"rotate(18deg) translateY(-1.5px)"
+        x.style.transform = x.classList.contains("upper") ? "rotate(-18deg) translateY(1.5px)" : "rotate(18deg) translateY(-1.5px)"
       })
-      document.querySelectorAll('.admin-table-grid').forEach(x=>{
+      document.querySelectorAll('.admin-table-grid').forEach(x => {
         x.classList.remove('slide-admin-table')
       })
       setIsSidebarHidden(true)

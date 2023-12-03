@@ -1,7 +1,7 @@
 //firebase
 import { initializeApp } from 'firebase/app';
 import { getStorage, ref, uploadBytes, getDownloadURL, uploadBytesResumable } from "firebase/storage";
-
+import {v4 as uuidv4} from 'uuid'
 const firebaseConfig = {
     apiKey: process.env.apiKey,
     authDomain: "shopp-itt.firebaseapp.com",

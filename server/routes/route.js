@@ -142,14 +142,14 @@ router.post('/api/signin', async (req, res) => {
 
     try {
         const { email, isAdminLogin } = req.body;
-        console.log('isAdminLogin',isAdminLogin)
+        console.log('isAdminLogin', isAdminLogin)
         const user = await USER.findOne({ email: email }).populate('cartProducts');
 
         if (user) {
-            if(isAdminLogin){             
+            if (isAdminLogin) {
                 if (user.role !== "admin" && user.email !== process.env.ADMIN_ID) {
                     return res.status(404).json({ message: 'Access denied!!!', isUserAuthenticated: false });
-                }else{
+                } else {
                     const { token } = await user.generateAuthToken();
                     res.cookie('jwt', token, {
                         expires: new Date(Date.now() + 10800000),
@@ -166,7 +166,7 @@ router.post('/api/signin', async (req, res) => {
                 secure: process.env.NODE_ENV !== "development",
             });
 
-            res.status(200).json({ message: "User logged in successfully", is_user_logged_in: true, user }); 
+            res.status(200).json({ message: "User logged in successfully", is_user_logged_in: true, user });
         } else {
             res.status(400).json({ message: "Account doesn't exists", is_user_logged_in: false, });
         }
@@ -260,6 +260,7 @@ router.post('/api/removefromcart', authenticateUser, async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 });
+//NOT_IN_USE
 router.get('/api/getcartitems', authenticateUser, async (req, res) => {
     try {
         res.status(200).json({ message: 'Access granted.', cartItems: req.user.cartProducts });
@@ -368,7 +369,7 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
     const orderId = uuidv4()
     let productList = {}//for metadata
 
-    console.log('req.body.priceObj--',req.body.priceObj)
+    console.log('req.body.priceObj--', req.body.priceObj)
 
     try {
         const data = JSON.parse(req.body.priceObj)
@@ -377,7 +378,7 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
         // productList.orderId = orderId
         // productList.userId = req.user._id
 
-        if(data.grandTotal>999999){
+        if (data.grandTotal > 999999) {
             return res.status(500).json({ message: 'ShoppItt does not support bulk order currently.' });
         }
 
@@ -392,7 +393,7 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
         //     jurisdiction: 'DE',
         //     inclusive: false,
         //   });
-        
+
         // const shippingRate = await stripe.shippingRates.create({
         //     display_name: 'Shipping',
         //     type: 'fixed_amount',
@@ -412,18 +413,18 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
             prod.price_data.product_data.name = data.productList[x].name
             if (data.grandTotal < 999999) {
                 // prod.price_data.unit_amount = data.productList[x].price * 100
-                if(data.productList[x].discount){
+                if (data.productList[x].discount) {
                     prod.price_data.unit_amount = Math.floor(data.productList[x].price * data.productList[x].discount / 100) * 100;
-                }else{
+                } else {
                     prod.price_data.unit_amount = data.productList[x].price * 100;
                 }
             } else {
                 // prod.price_data.unit_amount = data.productList[x].price
-                if(data.productList[x].discount){
+                if (data.productList[x].discount) {
 
-                prod.price_data.unit_amount = Math.floor(data.productList[x].price * data.productList[x].discount / 100)
-                }else{
-                    prod.price_data.unit_amount = data.productList[x].price 
+                    prod.price_data.unit_amount = Math.floor(data.productList[x].price * data.productList[x].discount / 100)
+                } else {
+                    prod.price_data.unit_amount = data.productList[x].price
                 }
             }
             prod.quantity = data.productList[x].quantity
@@ -434,7 +435,7 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
             prod.adjustable_quantity.maximum = 99
 
             //txr_1OHhX4SJDEVNzqXlTmp6QliB
-            prod.tax_rates=[process.env.TAX_RATE_ID]
+            prod.tax_rates = [process.env.TAX_RATE_ID]
 
             line_items.push(prod);
 
@@ -448,7 +449,7 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
             productList[x] = JSON.stringify(productList[x])//metadata only supports key value(only string) that's why its stringified
         })
 
-        console.log('product LIST-----------------------',line_items)
+        console.log('product LIST-----------------------', line_items)
 
         const session = await stripe.checkout.sessions.create({
             line_items,
@@ -459,8 +460,8 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
             customer_email: req.user.email,
             metadata: productList,
             billing_address_collection: "required",
-            shipping_options:[{
-                shipping_rate:process.env.SHIPPING_RATE_ID,
+            shipping_options: [{
+                shipping_rate: process.env.SHIPPING_RATE_ID,
             }]
         });
 
@@ -479,7 +480,7 @@ router.post('/create-checkout-session', authenticateUser, async (req, res) => {
                 { new: true }
             )
             // res.redirect(303, session.url);
-            res.status(200).json({ url:session.url });
+            res.status(200).json({ url: session.url });
         }
     } catch (error) {
         console.error('something went wrong', error);
@@ -645,7 +646,7 @@ router.get('/api/admin/getusers', async (req, res) => {
             })
 
     } catch (error) {
-        console.error('Error getting items from wishlist', error);
+        console.error('Error fetching users list', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 
@@ -656,15 +657,13 @@ router.post("/api/admin/productvisibility", async (req, res) => {
     const details = req.body;
     console.log("s--s-s-s-s", details)
     try {
-        //findByIdAndUpdate: is the alternatice to directly use id
         let result = await PRODUCT.findOneAndUpdate({ _id: details.id }, { visibility: details.visibility }, { new: true })
         if (result) {
-            res.send({ isSet: true })
-        } else {
-            res.send({ isSet: false })
+            return res.status(200).json({ message:`Product visibility has been turned ${details.visibility ? "off" : "on"}` });
         }
     } catch (err) {
         console.log(err);
+        res.status(500).json({ message: 'Internal server error' });
     }
 });
 
@@ -690,11 +689,11 @@ router.post('/api/admin/addproducts', async (req, res) => {
     product.save()
         .then(response => {
             console.log('response', response)
-            res.send({ is_product_added: true });
+            res.status(200).json({ message: `Product has been added` });
         })
         .catch(err => {
             console.log(err)
-            res.send({ is_product_added: false });
+            res.status(500).json({ message: "Product couldn't be added. Something went wrong" });
         })
 
 })
@@ -702,19 +701,16 @@ router.post('/api/admin/addproducts', async (req, res) => {
 router.post('/api/admin/editproduct', async (req, res) => {
 
     const { name, price, description, category, image, stock, discount, id } = req.body;
-    console.log('dd', name, price, description, category, image, stock, discount, id)
-
-    //const data= JSON.parse(req.body)
+    // console.log('dd', name, price, description, category, image, stock, discount, id)
 
     try {
         const result = await PRODUCT.findOneAndUpdate({ _id: id }, { $set: { name, price, description, category, image, stock, discount } }, { new: true })
         if (result) {
-            res.send({ isProductEdited: true })
-        } else {
-            res.send({ isProductEdited: false })
+            res.status(200).json({ message: `Product has been edited` });
         }
     } catch (error) {
         console.log(error)
+        res.status(500).json({ message: "Product couldn't be edited. Something went wrong" });
     }
 })
 
@@ -805,7 +801,7 @@ router.post("/api/searchprod", async (req, res) => {
 
     try {
         if (value === "") {
-            res.send([]); 
+            res.send([]);
         } else {
             let result = await PRODUCT.find({ "name": { "$regex": value, "$options": "i" } })
             res.send(result);

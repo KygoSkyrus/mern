@@ -1,6 +1,7 @@
 import React from 'react'
-import { useNavigate,useParams,useLocation } from 'react-router-dom';
+import { useNavigate,useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+
 import { goWithGoogle } from '../Utility'
 import theBagLogo from "./../../../assets/images/thebaglogo.png";
 

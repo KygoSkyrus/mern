@@ -1,11 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { categoryArray, topPicksArray, socialArray } from './Utility'
 
 const Footer = () => {
-
-	const categoryArray = ["Home Appliances", "Video Game Accessories", "Wearable Devices", "Speakers", "Computer Accessories", "Storage Devices"]
-	const topPicksArray = ["laptops", "smartphones", "fitness trackers", "graphics cards", "playstation"]
-	const socialArray = ["fa-github", "fa-linkedin-in", "fa-twitter", "fa-instagram", "fa-facebook"]
 
 	return (
 		<>

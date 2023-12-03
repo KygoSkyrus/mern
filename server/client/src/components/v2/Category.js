@@ -4,7 +4,7 @@ import { useParams, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 
 import BagLoader from './BagLoader';
-import { debouncedApi } from './Utility';
+import { debouncedApi, inProgressLoader } from './Utility';
 import { updatewishlist } from './Utility';
 
 const Category = () => {
@@ -28,6 +28,10 @@ const Category = () => {
 
     }, [])
 
+    const addToCart = (productId) => {
+        inProgressLoader(dispatch, true)
+        debouncedApi(productId, dispatch)
+    }
 
     return (
         <>
@@ -42,7 +46,8 @@ const Category = () => {
                                         <div className='col-md-6 col-lg-4'>
                                             <div className='card2 card'>
                                                 {i + 1 === randomNum && <div className="card-tag">New Product</div>}
-                                                <div style={{ background: "#fff", height: "100%", minHeight: "275px", objectFit: "cover", display: "grid", placeItems: "center" }}>
+                                                {x.stock===0 && <div className="card-tag">Out of stock</div>}
+                                                <div style={{ background: "#fff", height: "100%", minHeight: "275px", objectFit: "cover", display: "grid", placeItems: "center" }} className={x.stock===0?'grayscale':''}>
                                                     <img src={x.image} className="card-img-top" alt="..." />
                                                 </div>
                                                 <div className="card-body border-none p-0">
@@ -71,7 +76,8 @@ const Category = () => {
                                                         </div>
                                                         <div className="product-links">
                                                             <span onClick={() => updatewishlist(x._id, dispatch)} title={wishlistItems?.includes(x._id) ? "Remove from wishlist" : "Add to wishlist"}><i class={`fa fa-heart ${wishlistItems?.includes(x._id) && "text-danger"}`}></i></span>
-                                                            <span onClick={() => debouncedApi(x._id, dispatch)}><i className="fa fa-shopping-cart"></i></span>
+                                                          
+                                                            <button onClick={() => addToCart(x._id)} disabled={x.stock===0?true:false} className={x.stock===0?'notAllowed':''}><i className="fa fa-shopping-cart"></i></button>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -1,20 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-
 import { useDispatch, useSelector } from 'react-redux';
-// import { setUserDetails } from './redux/userSlice';
-// import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSlice';
-
-// import noOrder from "./../../assets/images/newImg/collections/noOrder.svg"
-// import LoginImg from "./../../assets/images/newImg/collections/login.png"
 
 import OrderDetails from './OrderDetails';
-
-import { formatInINRwoSign } from './../Utility'
-import { getDateStr } from './../Utility';
 import Nav from './Nav';
 import Header from './Header';
 import BagLoader from '../BagLoader';
+
+import { invokeToast } from '../redux/toastSlice';
+import { formatInINRwoSign } from './../Utility'
+import { getDateStr } from './../Utility';
 
 const Orders = () => {
 
@@ -38,15 +33,10 @@ const Orders = () => {
             })
             .then(res => {
                 if (resp.status === 200) {
-                    console.log('2000')
-                    console.log('order list reponse', res)
                     setOrders(res.data)
-                    //dispatch(setUserDetails({ user: res.user }))
                 } else {
-                    console.log('not 2000')
-                    //   dispatch(setToastStatus({ isSuccess: false }))
-                    //   dispatch(toastVisibility({ toast: true }))
-                    //   dispatch(setToastContent({ message: res.message }))
+                    // invokeToast(dispatch,false,res.message)
+                    dispatch(invokeToast({ isSuccess: false, message: res.message }))
                 }
             })
     }, [])

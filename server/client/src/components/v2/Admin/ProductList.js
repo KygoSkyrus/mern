@@ -1,22 +1,23 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { productFormVisibility, setProductFormTitle, setProductForm, toastVisibility, setToastContent, setLoaderVisibility } from '../redux/todoSlice'
+
+import { setProductFormVisibility, setProductFormTitle, setProductForm } from '../redux/productFormSlice'
+import { setLoaderVisibility } from '../redux/loaderSlice';
+import { invokeToast } from '../redux/toastSlice';
 
 const Product = ({ details }) => {
 
-
-    const visibility = useSelector(state => state.productFormVisibility.visibility)// modal's visibility
+    const productFormVisibility = useSelector(state => state.productForm.visibility)// modal's visibility
     const dispatch = useDispatch()
-
 
     const handlEditProduct = (product) => {
         dispatch(setProductForm(product)) //setting the product form with currently selected product for editing
-        dispatch(productFormVisibility({ visibility: !visibility })); //setting modal's visibility
+        dispatch(setProductFormVisibility({ visibility: !productFormVisibility })); //setting modal's visibility
         dispatch(setProductFormTitle({ title: "Edit product" })) // setting modal's title
     };
 
     //on hover the product image preview
-    const imagePreview = (e) => {
+    const showImagePreview = (e) => {
         e.target.nextElementSibling.style.backgroundImage = e.target.style['background-image']//placing the same image to the hover preview
         e.target.nextElementSibling.classList.add('display-block')
         e.target.parentElement.querySelector('.bg-img-preview').classList.add('display-block')
@@ -30,7 +31,7 @@ const Product = ({ details }) => {
     async function setProductVisibility(e, details) {
         dispatch(setLoaderVisibility({ loader: true }))//loader turned on
         e.target.classList.toggle('clr-red')
-
+        let resp;
         fetch("/api/admin/productvisibility", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -38,26 +39,28 @@ const Product = ({ details }) => {
                 id: details._id, visibility: !details.visibility
             }),
         })
-            .then(res => res.json())
+            .then(response => {
+                resp = response
+                return response.json()
+            })
             .then(data => {
                 dispatch(setLoaderVisibility({ loader: false }))//loader turned off
-                dispatch(toastVisibility({ toast: true }))
-                if (data.isSet) {
-                    dispatch(setToastContent({ message: `Product visibility has been turned ${details.visibility ? "off" : "on"}` }))
+                if (resp.status === 200) {
+                    // invokeToast(dispatch,true,data.message)
+                    dispatch(invokeToast({isSuccess:true,message:data.message}))
                 } else {
-                    dispatch(setToastContent({ message: `Something went wrong!` }))
+                    // invokeToast(dispatch,false,data.message)
+                    dispatch(invokeToast({isSuccess:false,message:data.message}))
                 }
             })
     }
 
-
-
     return (
         <tr key={details._id}>
             <th scope="row" className="align-middle">
-                <div className='text-center'> 
+                <div className='text-center'>
                     {/* <input className="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="..." /> */}
-                    <i className="fa fa-edit font-weight-100 pointer"  onClick={() => handlEditProduct(details)}></i>
+                    <i className="fa fa-edit font-weight-100 pointer" onClick={() => handlEditProduct(details)}></i>
                 </div>
             </th>
 
@@ -91,7 +94,7 @@ const Product = ({ details }) => {
                     <div className="avatars d-flex position-relative">
                         {details.image.map(x => {
                             return (<>
-                                <div className="avatars__item pointer" onMouseEnter={(e) => imagePreview(e)} onMouseLeave={(e) => hideImagePreview(e)} style={{ background: `url(${x})`, backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat", }}></div>
+                                <div className="avatars__item pointer" onMouseEnter={(e) => showImagePreview(e)} onMouseLeave={(e) => hideImagePreview(e)} style={{ background: `url(${x})`, backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat", }}></div>
                                 <div className='image-preview'></div>
                             </>
                             )

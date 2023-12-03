@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setToastStatus, setToastContent, toastVisibility } from './redux/todoSlice';
-import { isUserLoggedIn, setUserDetails } from './redux/userSlice';
-
-import LoginImg from "./../../assets/images/newImg/collections/login.png"
-
-import { data } from '../../assets/state-city';
-import SignInToContinue from './SignInToContinue';
 import BagLoader from './BagLoader';
+import SignInToContinue from './SignInToContinue';
 
-const states = ['Andaman and Nicobar Islands', 'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chandigarh', 'Chhattisgarh', 'Dadra and Nagar Haveli and Daman and Diu', 'Delhi', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jammu and Kashmir', 'Jharkhand', 'Karnataka', 'Kerala', 'Ladakh', 'Lakshadweep', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Puducherry', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal']
+import { invokeToast } from './redux/toastSlice';
+import { isUserLoggedIn, setUserDetails } from './redux/userSlice';
+import { inProgressLoader } from './Utility';
+import { data, states } from '../../assets/state-city';
+
 
 const User = () => {
-
 
     const dispatch = useDispatch();
     const userDetail = useSelector(state => state.user.user)
@@ -25,6 +22,7 @@ const User = () => {
     const updateAddress = () => {
         console.log('address---', address)
         console.log('userDetail', userDetail)
+        inProgressLoader(dispatch, true)
 
         let existingAddress = JSON.parse(JSON.stringify(userDetail.address))
         existingAddress.phone = userDetail.phone
@@ -60,15 +58,20 @@ const User = () => {
                     return response.json()
                 })
                 .then(res => {
+                    inProgressLoader(dispatch, false)
                     console.log('update address response', res)
                     if (resp.status === 200) {
                         dispatch(setUserDetails({ user: res.user }))//clearing user details
-                        dispatch(setToastStatus({ isSuccess: true }))
+                        // dispatch(setToastStatus({ isSuccess: true }))
+                        // invokeToast(dispatch,true,res.message)
+                        dispatch(invokeToast({ isSuccess: true, message: res.message }))
                     } else {
-                        dispatch(setToastStatus({ isSuccess: false }))
+                        // invokeToast(dispatch,false,res.message)
+                        dispatch(invokeToast({ isSuccess: false, message: res.message }))
+                        // dispatch(setToastStatus({ isSuccess: false }))
                     }
-                    dispatch(setToastContent({ message: res.message }))
-                    dispatch(toastVisibility({ toast: true }))
+                    // dispatch(setToastContent({ message: res.message }))
+                    // dispatch(toastVisibility({ toast: true }))
                 })
         } else {
             alert('No changes applied!!')
@@ -87,11 +90,10 @@ const User = () => {
         }
 
     }, [userDetail])//when the data gets loaded in store
-    // console.log(user)
 
 
     const signOut = () => {
-        console.log('sign')
+        inProgressLoader(dispatch, true)
         let resp;
         fetch('/api/signmeout')
             .then(response => {
@@ -99,16 +101,16 @@ const User = () => {
                 return response.json()
             })
             .then(res => {
-                console.log('sign me out response', res)
+                inProgressLoader(dispatch, false)
                 if (resp.status === 200) {
                     dispatch(isUserLoggedIn({ value: false }))
                     dispatch(setUserDetails({ user: undefined }))//clearing user details
-                    dispatch(setToastStatus({ isSuccess: true }))
+                    // invokeToast(dispatch,true,res.message)
+                    dispatch(invokeToast({ isSuccess: true, message: res.message }))
                 } else {
-                    dispatch(setToastStatus({ isSuccess: false }))
+                    // invokeToast(dispatch,false,res.message)
+                    dispatch(invokeToast({ isSuccess: false, message: res.message }))
                 }
-                dispatch(setToastContent({ message: res.message }))
-                dispatch(toastVisibility({ toast: true }))
             })
     }
 
@@ -128,7 +130,7 @@ const User = () => {
                                     <div className='col-md-9 m-auto text-center'>
                                         <img src={userDetail?.avtar} alt="" className="img-fluid t-minw-215 rounded" style={{ maxHeight: "223px", width: "223px" }} />
                                         <h5 className='my-2 mb-3 text-capitalize'>{userDetail?.firstname}&nbsp;{userDetail?.lastname}</h5>
-                                        <button className={`w-100 signout-btn ${window.outerWidth > 768 && " btn btn-outline-danger"}`} onClick={signOut}>{window.outerWidth > 768 ? "Sign out" : <i className='fa fa-sign-out-alt'></i>}</button>
+                                        <button className={`w-100 signout-btn ${window.outerWidth > 768 && " btn btn-outline-danger"}`} onClick={() => signOut()}>{window.outerWidth > 768 ? "Sign out" : <i className='fa fa-sign-out-alt'></i>}</button>
                                     </div>
                                 </div>
 
@@ -204,7 +206,7 @@ const User = () => {
                         </div>
                     </div> */}
                                     <div className="col-12">
-                                        <button type="button" className="btn btn-outline-warning w-100" onClick={updateAddress} >Update</button>
+                                        <button type="button" className="btn btn-outline-warning w-100" onClick={() => updateAddress()} >Update</button>
                                     </div>
                                 </form>
                             </div>

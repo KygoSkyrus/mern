@@ -1,18 +1,13 @@
-import React, { useEffect, useState } from 'react'
-// import {util} from '@material/ripple/index';
-
-import ProductCardsCollection from './ProductCardsCollection.js'
+import React from 'react'
 import BannerSlider from './BannerSlider.jsx'
+import ProductCardsCollection from './ProductCardsCollection.js'
 
 const Homepage = () => {
-
-
   return (
     <>
       <div className='mb-5'>
         <BannerSlider />
       </div>
-
       <ProductCardsCollection/>
     </>
   )

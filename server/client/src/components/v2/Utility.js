@@ -1,6 +1,7 @@
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { setUserDetails, isUserLoggedIn, setAdminAuthStatus } from './redux/userSlice';
-import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSlice';
+import { setLoaderVisibility } from './redux/loaderSlice';
+import { toastVisibility, setToastContent, setToastStatus } from "./redux/toastSlice";
 
 const getUser = (dispatch) => {
 
@@ -53,6 +54,16 @@ export function getFullDateStr(date) {
     return d.getDate() + " " + (m[d.getMonth()]) + " " + (d.getFullYear()) + ", " + (d.getHours() < 12 ? d.getHours() : d.getHours() - 12) + ":" + (d.getMinutes()) + " " + (d.getHours() < 12 ? "AM" : "PM")
 }
 
+export function inProgressLoader(dispatch, val) {
+    dispatch(setLoaderVisibility({ loader: val }))
+    handleOverflow(val)
+}
+
+export function handleOverflow(val) {
+    console.log('handoverflow')
+    const root = document.getElementById('root')
+    val ? root.classList.add('overflowHidden') : root.classList.remove('overflowHidden')
+}
 
 const addToCartAPI = async (productId, dispatch) => {
     let resp;
@@ -68,6 +79,7 @@ const addToCartAPI = async (productId, dispatch) => {
             return response.json()
         })
         .then(res => {
+            inProgressLoader(dispatch, false)
             console.log('res add to cart', res)
             if (resp.status === 200) {
                 dispatch(setToastStatus({ isSuccess: true }))
@@ -91,9 +103,10 @@ function debounce(func, wait) {
     };
 }
 
-export const debouncedApi = debounce(addToCartAPI, 2000);
+export const debouncedApi = debounce(addToCartAPI, 500);
 
 export const updatewishlist = (productId, dispatch) => {
+    inProgressLoader(dispatch, true)
     let resp;
     fetch(`/api/updatewishlist`, {
         method: "POST",
@@ -108,6 +121,7 @@ export const updatewishlist = (productId, dispatch) => {
         })
         .then(res => {
             console.log('res add to wishlist', res)
+            inProgressLoader(dispatch, false)
             if (resp.status === 200) {
                 dispatch(setToastStatus({ isSuccess: true }))
                 dispatch(setUserDetails({ user: res.user }))
@@ -208,7 +222,7 @@ const signinAPI = (val, email, firstname, lastname, photo, dispatch, navigate, r
                 if (res.isUserAuthenticated) {
                     dispatch(isUserLoggedIn({ value: true }))
                     dispatch(setUserDetails({ user: res.user }))
-                    dispatch(setAdminAuthStatus({value:res.isUserAuthenticated}))
+                    dispatch(setAdminAuthStatus({ value: res.isUserAuthenticated }))
                     navigate(`/admin/${route}`)//navigating to reuested route
                 }
             } else {
@@ -220,3 +234,16 @@ const signinAPI = (val, email, firstname, lastname, photo, dispatch, navigate, r
             }
         })
 }
+
+
+function invokeToast(dispatch, isSuccess, message) {
+    dispatch(invokeToast({ isSuccess, message }))
+    // dispatch(toastVisibility({ toast: true }))
+    // dispatch(setToastStatus({ isSuccess: isSuccess }))
+    // dispatch(setToastContent({ message: message }))
+}
+
+
+export const categoryArray = ["Home Appliances", "Video Game Accessories", "Wearable Devices", "Speakers", "Computer Accessories", "Storage Devices"]
+export const topPicksArray = ["laptops", "smartphones", "fitness trackers", "graphics cards", "playstation"]
+export const socialArray = ["fa-github", "fa-linkedin-in", "fa-twitter", "fa-instagram", "fa-facebook"]

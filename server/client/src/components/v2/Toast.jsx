@@ -1,7 +1,7 @@
-import React from "react";
-import { useRef } from "react";
-import { toastVisibility,setToastContent } from "./redux/todoSlice";
+import React,{ useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
+import { toastVisibility, setToastContent } from "./redux/toastSlice";
 
 const Toast = () => {
   let timer;
@@ -18,18 +18,18 @@ const Toast = () => {
     timer = setTimeout(() => {
       toastContainer.current.classList.remove("active");
       dispatch(toastVisibility({ toast: false })); //setting visibility to flase
-      dispatch(setToastContent({ message: "" }))//and content empty
+      dispatch(setToastContent({ message: "" })); //and content empty
     }, 3500);
   };
 
   const isToastVisible = useSelector(
-    (state) => state.productFormVisibility.toast
+    (state) => state.toast.toast
   );
   const isSuccess = useSelector(
-    (state) => state.productFormVisibility.isSuccess
+    (state) => state.toast.isSuccess
   );
   const message = useSelector(
-    (state) => state.productFormVisibility.toastContent
+    (state) => state.toast.toastContent
   );
 
   if (isToastVisible) {
@@ -39,7 +39,7 @@ const Toast = () => {
   return (
     <>
       <div
-        className="toastContainer"
+        className="toastContainer shadow rounded-1"
         ref={toastContainer}
         onClick={hideToast}
         style={{

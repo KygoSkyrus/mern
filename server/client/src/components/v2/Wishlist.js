@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-
 import { useDispatch, useSelector } from 'react-redux';
-import { debouncedApi } from './Utility';
-import { updatewishlist } from './Utility';
 
-
-import wishlistImg from "./../../assets/images/newImg/collections/wishlistImg.gif"
 import BagLoader from './BagLoader';
 import SignInToContinue from './SignInToContinue';
+
+import { invokeToast } from './redux/toastSlice';
+import { debouncedApi, inProgressLoader, updatewishlist } from './Utility';
+import wishlistImg from "./../../assets/images/newImg/collections/wishlistImg.gif"
 
 const Wishlist = () => {
 
@@ -17,8 +16,6 @@ const Wishlist = () => {
   const userDetail = useSelector(state => state.user.user)
   const userLoggedIn = useSelector(state => state.user.isUserLoggedIn)
   const [products, setProducts] = useState()
-
-  console.log('userLoggedIn--', userLoggedIn)
 
   useEffect(() => {
     console.log(wishlistItems, userLoggedIn)
@@ -38,21 +35,21 @@ const Wishlist = () => {
         })
         .then(res => {
           if (resp.status === 200) {
-            //set products in a state
             setProducts(res.items)
           } else {
-            //set toast that not logged in or prodcts not found
-            //dispatch(setToastStatus({ isSuccess: false }))
-            // dispatch(toastVisibility({ toast: true }))
-            // dispatch(setToastContent({ message: res.message }))
+            // invokeToast(dispatch,false,res.message)
+            dispatch(invokeToast({ isSuccess: false, message: res.message }))
           }
-          console.log('wishlist items res', res)
         })
     }
 
   }, [wishlistItems])
 
 
+  const addToCart = (productId) => {
+    inProgressLoader(dispatch, true)
+    debouncedApi(productId, dispatch)
+  }
 
   return (
     <>
@@ -105,7 +102,7 @@ const Wishlist = () => {
                                 <div key={x._id} className='row  p-2 wi'>
                                   <div className="col-md-2 wi-img">
                                     <div className='d-flex justify-content-center'>
-                                      <img src={x.image} alt='' className='img-fluidt-minw-215' style={{ maxHeight: "80px" }} />
+                                      <img src={x.image} alt='' className={`img-fluidt-minw-215 ${x.stock===0?'grayscale':''}`} style={{ maxHeight: "80px" }} />
                                     </div>
                                   </div>
 
@@ -142,7 +139,7 @@ const Wishlist = () => {
                                         </div>
 
                                         <div className="col-md-2 wi-remove">
-                                          <button className="btn btn-warning px-4 rounded-pill text-light" onClick={() => debouncedApi(x._id, dispatch)}>Add to cart</button>
+                                          <button className={`btn btn-warning px-4 rounded-pill text-light ${x.stock===0?'notAllowed':''}`} onClick={() => addToCart(x._id)} disabled={x.stock===0?true:false}>Add to cart</button>
 
                                           <div className='d-flex justify-content-end mt-2 ' style={{ marginRight: "-41px" }}>
                                             <u><span
@@ -173,7 +170,7 @@ const Wishlist = () => {
               :
               <BagLoader />
             )
-            : 
+            :
             <div className='d-flex flex-column align-items-center no-item-block'>
               <div className='d-flex justify-content-center align-items-center'>
                 <img src={wishlistImg} className='no-data-img' alt='' />
@@ -188,9 +185,6 @@ const Wishlist = () => {
           :
           <SignInToContinue />
       }
-
-
-
 
 
       <div>Recommended products</div>

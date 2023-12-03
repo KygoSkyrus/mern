@@ -149,6 +149,12 @@
   width: 50%;
 }
 
+.overflowHidden{
+  overflow: hidden;
+  height: 100vh;
+}
+
+
 /******************************************** responsive**********************************************/
 @media (max-width: 991px) {
   .abc {

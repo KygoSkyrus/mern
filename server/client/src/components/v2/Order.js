@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-
 import { useDispatch, useSelector } from 'react-redux';
-import { setUserDetails } from './redux/userSlice';
-import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSlice';
 
-import { formatInINR, getFullDateStr } from './Utility';
-import noOrder from "./../../assets/images/newImg/collections/noOrder.svg"
 import SignInToContinue from './SignInToContinue';
 import BagLoader from './BagLoader';
+
+import { invokeToast } from './redux/toastSlice';
+import { formatInINR, getFullDateStr } from './Utility';
+import noOrder from "./../../assets/images/newImg/collections/noOrder.svg"
 
 
 
@@ -52,9 +51,8 @@ const Order = () => {
                   console.log('checkout sessio', res)
                   setOrder(res.order)
                 } else {
-                  dispatch(setToastStatus({ isSuccess: false }))
-                  dispatch(toastVisibility({ toast: true }))
-                  dispatch(setToastContent({ message: res.message }))
+                  // invokeToast(dispatch,false,res.message)
+                  dispatch(invokeToast({isSuccess:false,message:res.message}))
                 }
               })
           }
@@ -63,9 +61,8 @@ const Order = () => {
           setOrder(undefined)
           console.log('not 2000')
           //create an utility function whcih will updated these three state abd pass theese values (this is repeated on almost every api)
-          dispatch(setToastStatus({ isSuccess: false }))
-          dispatch(toastVisibility({ toast: true }))
-          dispatch(setToastContent({ message: res.message }))
+          // invokeToast(dispatch,false,res.message)
+          dispatch(invokeToast({isSuccess:false,message:res.message}))
         }
 
       })

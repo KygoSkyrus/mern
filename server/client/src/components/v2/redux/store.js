@@ -1,16 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import {productFormVisibilityReducer,productFormReducer, isUpdatedReducer} from './todoSlice';
-import { userReducer } from './userSlice';
+import { productFormReducer } from './productFormSlice';
 import { productReducer } from './productSlice';
+import { userReducer } from './userSlice';
+import { toastReducer } from './toastSlice';
+import { loaderReducer } from './loaderSlice';
 
 const store = configureStore({
-    reducer: {
-      productFormVisibility: productFormVisibilityReducer,
-      productForm:productFormReducer,
-      isUpdated:isUpdatedReducer,
-      user:userReducer,
-      product:productReducer
-    }
+  reducer: {
+    productForm: productFormReducer,
+    product: productReducer,
+    user: userReducer,
+    loader:loaderReducer,
+    toast: toastReducer,
+  }
 })
 export default store; 

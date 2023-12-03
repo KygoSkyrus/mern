@@ -1,7 +1,7 @@
 import React,{useRef,useEffect,useState} from 'react'
 
 const Filters = () => {
-        const filtersRef = useRef();
+    const filtersRef = useRef();
     const [open, setOpen] = useState(false);
     const [appliedFilters, setAppliedFilters] = useState([])
     let filtersArray = ["category v1", "category v2", "category v3", "category", "category v1", "category vq1", "category vq7",]//this should has icons too 

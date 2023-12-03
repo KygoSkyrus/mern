@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-
 import { useDispatch, useSelector } from 'react-redux';
-import { setUserDetails } from './redux/userSlice';
-import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSlice';
 
-import noOrder from "./../../assets/images/newImg/collections/noOrder.svg"
-import LoginImg from "./../../assets/images/newImg/collections/login.png"
-
-import { getDateStr } from './Utility';
-import { formatInINRwoSign } from './Utility';
 import SignInToContinue from './SignInToContinue';
 import BagLoader from './BagLoader';
+
+import noOrder from "./../../assets/images/newImg/collections/noOrder.svg"
+import { invokeToast } from './redux/toastSlice';
+import { getDateStr } from './Utility';
+import { formatInINRwoSign } from './Utility';
 
 const OrderList = () => {
 
@@ -40,9 +37,8 @@ const OrderList = () => {
           //dispatch(setUserDetails({ user: res.user }))
         } else {
           console.log('not 2000')
-          dispatch(setToastStatus({ isSuccess: false }))
-          dispatch(toastVisibility({ toast: true }))
-          dispatch(setToastContent({ message: res.message }))
+          // invokeToast(dispatch,false,res.message)
+          dispatch(invokeToast({isSuccess:false,message:res.message}))
         }
       })
   }, [])

@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import BannerSlider from './BannerSlider.jsx'
-
 
 import img1 from './../../assets/images/newImg/products/bluePhone.png'
 import headphone1 from './../../assets/images/newImg/collections/headphone1.webp'
 
-import controller from "./../../assets/images/newImg/collections/controller.png";
 
 import cart3d from "./../../assets/images/newImg/collections/3dCart.png";
 import storeDoor from "./../../assets/images/newImg/collections/storeDoor.png";
@@ -15,6 +12,7 @@ import wearables1 from "./../../assets/images/newImg/collections/wearables1.jpg"
 import wearables2 from "./../../assets/images/newImg/collections/wearables2.jpg";
 
 //curated prodcuts image
+import controller from "./../../assets/images/newImg/collections/controller.png";
 import xbox from "./../../assets/images/newImg/collections/xbox.png";
 import dslr from "./../../assets/images/newImg/collections/dslr.png";
 

@@ -4,7 +4,7 @@ import BagLoader from "./BagLoader";
 
 const Loader = () => {
   const loaderVisibility = useSelector(
-    (state) => state.productFormVisibility.loader
+    (state) => state.loader.loader
   );
 
   return (
@@ -20,7 +20,7 @@ const Loader = () => {
         //   </div>
         //   <section>LOADING...</section>
         // </div>
-        <div style={{position: "absolute",top: 0,width: "100vw",height: "100vh",background:"#303030a8", zIndex: 4}}> 
+        <div style={{position: "absolute",top: 0,width: "100vw",height: "100vh",background:"#303030a8", zIndex: 10000}}> 
           <BagLoader/>
         </div>
       )}

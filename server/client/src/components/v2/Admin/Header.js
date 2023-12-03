@@ -49,7 +49,8 @@ const Header = ({ heading, icon }) => {
                 <i className="fas fa-plus" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="Add Project" aria-label="Add Project"></i>
             </button> */}
 
-                    <button className="btn btn-light btn-sm rounded-circle" data-bs-toggle="modal" data-bs-target="#modalCreateProject">
+                    <button className="btn btn-light btn-sm rounded-circle text-secondary" data-bs-toggle="modal" data-bs-target="#modalCreateProject">
+                        {/* <input type='text' /> */}
                         <i className="fas fa-search" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="Add Project" aria-label="Add Project"></i>
                     </button>
 

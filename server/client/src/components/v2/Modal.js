@@ -1,23 +1,23 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { productFormVisibility } from './redux/todoSlice'
 
 import ProductForm from './Admin/ProductForm'
+import { setProductFormVisibility } from './redux/productFormSlice'
 
 const Modal = () => {
 
-    const visibility = useSelector(state => state.productFormVisibility.visibility)
+    const productFormVisibility = useSelector(state => state.productForm.visibility)
     const dispatch = useDispatch()
 
-    const closeProductContainer = (e) => {
+    const closeProductFormContainer = (e) => {
         if (e.target !== document.querySelector('.productForm')) {
-            dispatch(productFormVisibility({ visibility: false }));
+            dispatch(setProductFormVisibility({ visibility: false }));
         }
     }
 
     return (
         <>
-            <div className={visibility ? "activeProductContainer" : "editProductContainer"} onClick={e => closeProductContainer(e)}></div>
+            <div className={productFormVisibility ? "activeProductContainer" : "editProductContainer"} onClick={e => closeProductFormContainer(e)}></div>
             <ProductForm />
         </>
     )

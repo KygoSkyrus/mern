@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-
 import { useDispatch, useSelector } from 'react-redux';
 
-
-import { formatInINRwoSign } from './../Utility'
+import { invokeToast } from '../redux/toastSlice';
 import { getDateStr } from './../Utility';
 import Nav from './Nav';
 import BagLoader from '../BagLoader';
@@ -12,11 +9,11 @@ import Header from './Header';
 
 const Users = () => {
 
+    const dispatch = useDispatch()
     const [users, setUsers] = useState()
     const userDetail = useSelector(state => state.user.user)
     const userLoggedIn = useSelector(state => state.user.isUserLoggedIn)
     console.log('is loggedin', userLoggedIn, userDetail)
-
 
 
     useEffect(() => {
@@ -28,21 +25,13 @@ const Users = () => {
             })
             .then(res => {
                 if (resp.status === 200) {
-                    console.log('2000')
-                    console.log('user list reponse', res)
                     setUsers(res.data)
-                    //dispatch(setUserDetails({ user: res.user }))
                 } else {
-                    console.log('not 2000')
-                    //   dispatch(setToastStatus({ isSuccess: false }))
-                    //   dispatch(toastVisibility({ toast: true }))
-                    //   dispatch(setToastContent({ message: res.message }))
+                    // invokeToast(dispatch, false, res.message)
+                    dispatch(invokeToast({isSuccess:false,message:res.message}))
                 }
             })
     }, [])
-
-
-
 
     return (
         <>
@@ -116,8 +105,6 @@ const Users = () => {
                         <BagLoader />
                     </div>
                 }
-
-
             </div>
         </>
     )

@@ -1,28 +1,22 @@
 import React, { useEffect } from 'react'
 import { Route, Routes } from "react-router-dom";
+import { useDispatch } from 'react-redux';
 
 import Navbar from "./Navbar"
 import Homepage from "./Homepage"
-import Toast from './Toast';
 import Footer from './Footer';
-
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import Category from './Category';
 import ProductPage from './ProductPage';
 import Cart from './Cart';
 import User from './User';
-
-import { useDispatch } from 'react-redux';
-import { setUserDetails, isUserLoggedIn } from './redux/userSlice';
-import { toastVisibility, setToastContent, setToastStatus } from './redux/todoSlice';
-
-
-import getUser from './Utility';
 import Wishlist from './Wishlist';
+import Order from './Order';
 import OrderList from './OrderList';
 import Error from './Error';
-import Order from './Order';
+import getUser from './Utility';
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const TheFront = ({ dl }) => {
 

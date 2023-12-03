@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { getFullDateStr, formatInINR } from '../Utility'
 
 const OrderDetails = (props) => {
+
   const order = props.details
   const closeProductContainer = (e) => {
     if (e.target !== document.querySelector('.orderDetails')) {
@@ -11,6 +12,8 @@ const OrderDetails = (props) => {
     }
   }
   console.log('orderrr',order)
+
+  
   return (
     <div className='activeProductContainer' style={{ placeItems: "center" }} onClick={e => closeProductContainer(e)}>
       <div className='bg-white h-100 rounded-1 orderDetails p-3'>

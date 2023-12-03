@@ -1,54 +1,60 @@
 NOTE :::the issue that without internet you are not abke to acces db,,,setup the db on local
 
+# PRIORITY
 
-# Defects
-- fix table heading in admin
-- need to have transparent loader for loaderduring api calls,
+# done
+
+- disable out pf stock product,, just show a out of tag everywherre the product is hwon and when user checks out tha show a toast that "this product is out of stock, remove from cart in oerder to proceed"
+- implement success error toast in admin and than make a utility functiin for that toast call
+- implement loader on every actions on front and admin both
 - remove the box shadow from dropdons in navbar in mobile view
+- on order page show loader when fetching the order
+- all these inProgressLoader anf invoke toast function could be redux reducers, in that way we dont have to send the dispatch param and also we wont need to call three different dispatch such as showcontent,visibility and status
+- fix slice file name
+- also uninstall unneccessary pacakges
+- need to have transparent loader for loaderduring api calls,
 - add a nice loader for all the loading process (the new loader, implement that one), make the same loader for both admin and front
-- add product from button and header is not looking good
+- have to addd the options for select actegoies in add prodduct also with the option to add super category
 - when admin login than the pagfe is not redirected to the requested page, it just stucks i think
 - grey out out of stock items,, even on the cart page,,and also if you are letting even the unavialble items in the cart than dont calculate its price and neither send it at the backend
-- on last row in products table in admin if hovered over image,,its starts shaking
-- add a serach bar in admon instead of filters at the top right
-- if any of the resulted productas is clicked on search prod than the search bar should close and overlay shoul be removed
-- on order page show loader when fetching the order
-- recipt url get expirewd after a period , maybe the recipt can be copied to a canvas or img and store in server
 - remove to cart isnt rel time ,,no showng deleted items
 - modals height is morr than vh
-- there should be like a grayout or low opacity loader when any api is hit tp show that api callis in progress
 - need to add toast status on admin side and also at the server response
 - check each and every categoryes..for example playstation is not showing up
 - try creating utility function,, for like toast,,,instead of writing those 3 lines everywhere//settoaststatus,content and visibility are three action that wil be dispatched from multiple componnets ,,instead create a common function and call it
-- have to find a way to update the cart number at navabr whenevrr item added or incremented
-- cureently the categoyr page is breaking the Link chaain an dreloading the appp
-- when session ecxipred the wishlist page is not showing toast and also hide the loader if the session exppired and sghow to login
-- delete product and disable product all stuff..all basic things that were in skyblog,,just copy
-- on hompgae add by category options for products
-- add a message that selling fast or something when stock is less than 5
-- add dicount field for product whihc will be dfault to 0 and admin can set the discount whenever
-- for now there is no option to update queantity from profuct page ,,it willl be only be done from cart page
-- we dont need the image upload progress in here,,instead add a loader to shoup product add status
+- when session exipred the wishlist page is not showing toast and also hide the loader if the session exppired and sghow to login
 - grey out when products when they are out of stocks
-- when new image is added,,refresh the list
-- show HOME > Order > order id for order page
-- stripe does not accept payemnt more than 999,999 (error)StripeInvalidRequestError: The Checkout Session's total amount due must be no more than ₹999,999.99.
-- fix admin filter
 - sticky navbar in admin dasboard
 - image preview background
+- stripe does not accept payemnt more than 999,999 (error)StripeInvalidRequestError: The Checkout Session's total amount due must be no more than ₹999,999.99.
+- when any action gets complete then dont refresh the page just reload the stuff and show toast about the action
+- in product form fix the add/edit button at bottom
+
+# Defects
+- dont let front display any product which is marked invisible
+- add a serach bar in admon instead of filters at the top right
+- on last row in products table in admin if hovered over image,,its starts shaking
+- if any of the resulted productas is clicked on search prod than the search bar should close and overlay shoul be removed
+- recipt url get expirewd after a period , maybe the recipt can be copied to a canvas or img and store in server
+- there should be like a grayout or low opacity loader when any api is hit tp show that api callis in progress
+- have to find a way to update the cart number at navabr whenevrr item added or incremented
+- add discount to every product
+- delete product and disable product all stuff..all basic things that were in skyblog,,just copy
+- add dicount field for product whihc will be dfault to 0 and admin can set the discount whenever
+- when new image is added,,refresh the list
 - have to add logic for eerror page or we can show like item not found for id routes....where if the url has wrong id,,the error page wont go as the router dosnt know it thats a wrong it ,,it will still redirect to pri=docut page,,there u have to check if the response from the server is null than show that item is not found,,,this goes for prdocts,orders,categoryes ewveruthing whihc has id route
 - set isuserloggedin to false whenever session expired is returned bcz it needs to refersh to show s=the signin option back when expired while the app is running
-- dont focus on discount now,, let irt as it is,,later add a field in product form where seller will update discount
 - one backspaceing in otp inputs,,two digits are getting erased
 - if product has more tha one image then its not uploading the other images on slow network,,its an issue
 - there should be an option to delete a prooduct but before deleting chekc thta produict is is an anyone's cart or is pending to be deleived, if not only than let it be deleted
-- in product form fix the add/edit button at bottom
 - on every action like on adding prodcut pr deleeting ,,all repsonse from serever,,,add a notification for that response,,,let user now what has been done and then dont refresh the page,,,call the required api which will update the page
-- when any action gets complete then dont refresh the page just reload the stuff and show toast about the action
+- when a order is completed than reduce the quantity of all the ordered products by the quanty they are bought
+- add the new images in banner
+- on hompgae add by category options for products
+- add a message that selling fast or something when stock is less than 5
 
 # TODO
 
-- have to addd the options for select actegoies in add prodduct also with the option to add super category
 - also check responsiveness betwwen 768-992
 - clear unneccsary stuff
 
@@ -56,9 +62,13 @@ NOTE :::the issue that without internet you are not abke to acces db,,,setup the
 
 - add the part where user can add items to cart without logging in,,use cookies to store cart items
 - there can be a cicrle or whatever button for feedback at the bottom right asking for feedback for users overall experienece
+- currently the categoyr page is breaking the Link chaain an reloading the appp
+- add product from button and header is not looking good
 - make the images for product go slide in slide no just disapper and display
 - can add on hover cart show cart items with two option of view cart and checkout oprtion (there is sample layout url also below somewhere)
-- instead of showing toast message that"product is removed from  cart or added" ,,add fhe product name 
+- table heading in admin can be sticky
+- fix admin filter
+- instead of showing toast message that"product is removed from cart or added" ,,add fhe product name
 - can chnage toast design for user side( can make it more elegant)
 - think about converting the navbar into a small cicle hovering and on click it expands and become the navbar (in other words OR - on scroll dont keep the nav fixed, instead make a minifide nav which will stay floated at the top)
 - make the same loader for both admin and front...use logo,,and for admin just put a hat above the logo's top

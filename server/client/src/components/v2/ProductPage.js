@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 
-import { debouncedApi } from './Utility';
+import { debouncedApi, inProgressLoader } from './Utility';
 import { updatewishlist } from './Utility';
 
 import RelatedProducts from './RealtedProducts'
@@ -42,6 +42,11 @@ const ProductPage = () => {
         })
     }
 
+    const addToCart = (productId) => {
+        inProgressLoader(dispatch, true)
+        debouncedApi(productId, dispatch)//since we have added an overlay while the api fetches, we dont need to debounce api
+        //thats the reason debounce wait time is decreased to almost nothing
+    }
 
 
     return (
@@ -95,9 +100,16 @@ const ProductPage = () => {
                                 </div>
 
                                 <div className='d-flex gap-2 mt-3'>
-                                    <button className='btn buy-btn'>Buy Now</button>
-                                    <button className='btn cart-btn' onClick={()=>debouncedApi(productId,dispatch)}>Add to cart</button>
-                                    <button className='btn wishlist-btn' onClick={()=>updatewishlist(productId,dispatch)} title={wishlistItems?.includes(product._id) ? "Remove from wishlist" : "Add to wishlist"}>
+                                    {product.stock === 0 ?
+                                        <section className='outOfStock'>Currently unavailable</section>
+                                        :
+                                        <>
+                                            <button className='btn buy-btn'>Buy Now</button>
+                                            <button className='btn cart-btn' onClick={() => addToCart(productId)}>Add to cart</button>
+                                        </>
+                                    }
+
+                                    <button className='btn wishlist-btn' onClick={() => updatewishlist(productId, dispatch)} title={wishlistItems?.includes(product._id) ? "Remove from wishlist" : "Add to wishlist"}>
                                         <i class={`fa fa-heart ${wishlistItems?.includes(product._id) && "text-danger"}`}></i>
                                     </button>
                                 </div>
