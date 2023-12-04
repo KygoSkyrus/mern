@@ -12,6 +12,7 @@ import Header from './Header'
 const Dashboard = () => {
 
     const dispatch = useDispatch()
+    const [searchedQuery,setSearchedQuery]=useState()
     const [products, setProducts] = useState(false) //to set products fetched from server
     const isUpdated = useSelector(state => state.product.product)
 
@@ -29,13 +30,21 @@ const Dashboard = () => {
             })
     }, [isUpdated])
 
+    useEffect(()=>{
+        if(searchedQuery){
+            let searchedProd=products?.filter(x=>x.name.includes(searchedQuery))
+            console.log('uueueue for searche qyery',searchedProd)
+     //   setProducts(searchedProd)
+        
+        }
+    },[searchedQuery])
 
     return (
         <>
             <Nav />
 
             <div >
-                <Header heading="Products" icon="fa-shopping-bag" />
+                <Header heading="Products" icon="fa-shopping-bag" setSearchedQuery={setSearchedQuery} />
                 {/* <Filters/> */}
 
                 {products ?

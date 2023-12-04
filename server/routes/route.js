@@ -761,6 +761,7 @@ router.get('/api/getprodbycategory', async (req, res) => {
 
     PRODUCT.find({ category: category })
         .then(response => {
+            response=response.filter(x=>x.visibility)
             res.send({ products: response })
         })
         .catch(err => {
@@ -775,6 +776,7 @@ router.get('/api/getprodbyid', async (req, res) => {
 
     PRODUCT.find({ _id: prodId })
         .then(response => {
+            response=response.filter(x=>x.visibility)
             res.send({ product: response })
         })
         .catch(err => {

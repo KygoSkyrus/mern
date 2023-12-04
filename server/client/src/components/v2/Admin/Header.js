@@ -1,6 +1,13 @@
 import React from 'react'
 
-const Header = ({ heading, icon }) => {
+const Header = ({ heading, icon, setSearchedQuery }) => {
+
+
+    const handleSearch=(e)=>{
+        console.log('fjdjj',e.target.value)
+        setSearchedQuery(e.target.value)
+    }
+
     return (
         <div className=' dash-header'>
             <div className="p-3 overflow-auto d-flex bg-white-custom border-bottom shadow-sm">
@@ -50,7 +57,7 @@ const Header = ({ heading, icon }) => {
             </button> */}
 
                     <button className="btn btn-light btn-sm rounded-circle text-secondary" data-bs-toggle="modal" data-bs-target="#modalCreateProject">
-                        {/* <input type='text' /> */}
+                        <input type='search' onChange={(e)=>handleSearch(e)} />
                         <i className="fas fa-search" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="Add Project" aria-label="Add Project"></i>
                     </button>
 

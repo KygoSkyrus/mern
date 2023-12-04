@@ -29,9 +29,10 @@ NOTE :::the issue that without internet you are not abke to acces db,,,setup the
 - stripe does not accept payemnt more than 999,999 (error)StripeInvalidRequestError: The Checkout Session's total amount due must be no more than ₹999,999.99.
 - when any action gets complete then dont refresh the page just reload the stuff and show toast about the action
 - in product form fix the add/edit button at bottom
+- dont let front display any product which is marked invisible
+
 
 # Defects
-- dont let front display any product which is marked invisible
 - add a serach bar in admon instead of filters at the top right
 - on last row in products table in admin if hovered over image,,its starts shaking
 - if any of the resulted productas is clicked on search prod than the search bar should close and overlay shoul be removed

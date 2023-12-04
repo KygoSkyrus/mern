@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 import img1 from './../../assets/images/newImg/products/bluePhone.png'
 import headphone1 from './../../assets/images/newImg/collections/headphone1.webp'
+import headphone2 from "./../../assets/images/newImg/collections/headphone2.webp";
 
 
 import cart3d from "./../../assets/images/newImg/collections/3dCart.png";
@@ -325,6 +326,7 @@ const ProductCardsCollection = () => {
             </div>
           </div>
         </div>
+        <section class="gapBtw theLine" style={{ width: "80%", height: "1px", background: "#d6d6d6", textAlign: "center",marginRight: "auto",marginLeft:"auto" }}></section>
       </div>
       {/* filler images */}
 
@@ -354,6 +356,33 @@ const ProductCardsCollection = () => {
 
 
 
+      <div class="bg-danger ">
+        <div className='container align-items-center bg-danger d-flex justify-content-between gapBtw'>
+            <div className="xbox-content text-light">
+              <span className='text-dark fw-400 fs-3'>New Arrival</span>
+              <h2 className='fw-light' style={{letterSpacing:"8px"}}><i className='fa fa-headphones-alt me-2'></i>PREMIUM SOUND</h2>
+
+           <div style={{ background: 'linear-gradient(to top, #7c0b7c, #de41de)', paddingLeft: "4px"}}>
+            <ul className='bg-danger ps-3'>
+              <li>
+                Surround sound experience
+              </li>
+              <li>Noise reduction</li>
+              <li>Noise isolation</li>
+            </ul>
+            </div>   
+              <span>Like You, We Love Music</span> And we believe a Headphone is more than just an instrument for sound. It’s the key to a mind-blowing moment of emotion, bringing you closer to your favourite artist, and yourself.
+            
+            <div className='my-2'>
+              <a href="/#" className="xbox-btn" target="blank">
+                Join Now
+                <i className="fas fa-chevron-right"></i>
+              </a>
+            </div>
+            </div>
+            <img src={headphone2} alt="" width="500px" />
+          </div> 
+          </div>
 
 
 
@@ -407,11 +436,6 @@ const ProductCardsCollection = () => {
 
 
       {/* PRODUCT 2 */}
-
-
-
-
-
 
 
 

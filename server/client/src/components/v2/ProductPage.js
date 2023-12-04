@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { debouncedApi, inProgressLoader } from './Utility';
 import { updatewishlist } from './Utility';
 
+import noProd from './../../assets/images/newImg/collections/product-not-found.jpg'
 import RelatedProducts from './RealtedProducts'
 import BagLoader from './BagLoader';
 
@@ -25,7 +26,7 @@ const ProductPage = () => {
             .then(response => response.json())
             .then(res => {
                 console.log('response', res.product[0])
-                setProduct(res.product[0])
+                setProduct(res.product)
             })
     }, [])
 
@@ -52,29 +53,41 @@ const ProductPage = () => {
     return (
         <>
             {product ?
+            product.length===0?
+            <div className='d-flex flex-column align-items-center justify-content-center h70 no-item-block'>
+            <div>
+              <img src={noProd} alt='' width={'100%'} style={{ width: "200px", mixBlendMode: "darken"}}/>
+            </div>
+            <h5 className='text-dark'>Ooops!!! Something went wrong</h5>
+            <span className='text-center'>
+              Product unavailable
+            </span>
+            <button className='btn my-4 btn-outline-warning'>Continue shopping</button>
+          </div>
+            :
                 <div className='container my-5'>
                     <div className="row t-mb-30">
                         <div className="col-md-6 p-img-sticky" >
                             <div className="product--left-img t-flex-100 t-mb-30 mb-md-0">
                                 <div className='row '>
                                     <div className='additional-images row col-md-2'>
-                                        {product.image.map((x, i) => {
+                                        {product[0].image.map((x, i) => {
                                             return (
                                                 <img src={x} alt="" class={`optional-img img-fluid w-100 t-minw-215 pointer  ${i === 0 && "selected-border"}`} onClick={e => setImage(e)} />
                                             )
                                         })}
                                     </div>
                                     <div className='col-md-9'>
-                                        <img src={product.image[0]} ref={prodImage} alt="" className="img-fluid w-100 t-minw-215" />
+                                        <img src={product[0].image[0]} ref={prodImage} alt="" className="img-fluid w-100 t-minw-215" />
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className="col-md-6">
                             <div className="product--right-content t-flex-100">
-                                <h6 className='navigation-q text-capitalize'><Link to='/' >Home</Link> {catSubcatRelation[product.category] && (<><span></span> {catSubcatRelation[product.category]}</>)} <span></span> {product.category}</h6>
+                                <h6 className='navigation-q text-capitalize'><Link to='/' >Home</Link> {catSubcatRelation[product[0].category] && (<><span></span> {catSubcatRelation[product.category]}</>)} <span></span> {product.category}</h6>
                                 <h4 className="post__title t-mt-10 t-md-34-lg-1875">
-                                    <a className="t-link t-link--secondary" href="/">{product.name}</a>
+                                    <a className="t-link t-link--secondary" href="/">{product[0].name}</a>
                                 </h4>
                                 <div className='rating-stars text-warning'>
                                     <i className="fa-solid fa-star" aria-hidden="true"></i>
@@ -88,19 +101,19 @@ const ProductPage = () => {
                                     <section className='d-flex align-items-center'>
                                         <span className='fs-4' style={{ fontWeight: "600" }}>
                                             <span style={{ fontSize: "12px" }}>&#8377;</span>
-                                            {product.price}
+                                            {product[0].price}
                                         </span>
                                         <span className='discount-percent mx-2'>
                                             25% off
                                         </span>
                                     </section>
                                     <section className='extra-small'>
-                                        M.R.P. <span style={{ color: "#ec3b3b" }} >&#8377;{product.price}</span>
+                                        M.R.P. <span style={{ color: "#ec3b3b" }} >&#8377;{product[0].price}</span>
                                     </section>
                                 </div>
 
                                 <div className='d-flex gap-2 mt-3'>
-                                    {product.stock === 0 ?
+                                    {product[0].stock === 0 ?
                                         <section className='outOfStock'>Currently unavailable</section>
                                         :
                                         <>
@@ -109,8 +122,8 @@ const ProductPage = () => {
                                         </>
                                     }
 
-                                    <button className='btn wishlist-btn' onClick={() => updatewishlist(productId, dispatch)} title={wishlistItems?.includes(product._id) ? "Remove from wishlist" : "Add to wishlist"}>
-                                        <i class={`fa fa-heart ${wishlistItems?.includes(product._id) && "text-danger"}`}></i>
+                                    <button className='btn wishlist-btn' onClick={() => updatewishlist(productId, dispatch)} title={wishlistItems?.includes(product[0]._id) ? "Remove from wishlist" : "Add to wishlist"}>
+                                        <i class={`fa fa-heart ${wishlistItems?.includes(product[0]._id) && "text-danger"}`}></i>
                                     </button>
                                 </div>
 
@@ -133,7 +146,7 @@ const ProductPage = () => {
                                     <h5 className="grey mb-3">Description</h5>
                                     <p className="mb-0">
                                         <ul>
-                                            {product.description.split("--").map(x => {
+                                            {product[0].description.split("--").map(x => {
                                                 return (
                                                     <li>
                                                         <section className='disc'>&#8226;</section>

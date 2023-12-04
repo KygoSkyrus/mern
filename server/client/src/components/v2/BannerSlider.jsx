@@ -54,19 +54,46 @@ const BannerSlider = () => {
   return (
     <>
       <div className="main-banner">
-        <Slider {...settings}>
+        <Slider {...settings}>        
           <div className="slide slide1">
             <div className="xbox-content text-light">
               <h2>Start Your Audiophile Journey Here</h2>
               <p>
               <span>Like You, We Love Music</span> And we believe a Headphone is more than just an instrument for sound. It’s the key to a mind-blowing moment of emotion, bringing you closer to your favourite artist, and yourself.
               </p>
-              <a href="/#" className="xbox-btn">
+              <a href="/category/headphones" className="xbox-btn" target="blank">
                 Join Now
                 <i className="fas fa-chevron-right"></i>
               </a>
             </div>
             <img src={headphone1} alt="" width="100%" />
+          </div>
+          {/* <div className="slide slide1">
+            <div className="xbox-content text-light">
+              <h2>Start Your Audiophile Journey Here</h2>
+              <p>
+              <span>Like You, We Love Music</span> And we believe a Headphone is more than just an instrument for sound. It’s the key to a mind-blowing moment of emotion, bringing you closer to your favourite artist, and yourself.
+              </p>
+              <a href="/#" className="xbox-btn" target="blank">
+                Join Now
+                <i className="fas fa-chevron-right"></i>
+              </a>
+            </div>
+            <img src={headphone2} alt="" width="100%" />
+          </div> */}
+          <div className="slide slide4">
+            <div className="xbox-content text-light">
+              <h2><i className="fa-brands fa-apple me-2"></i>iPhone 13 Pro</h2>
+              <p>
+              <span className="fs-1">Experience a new Era of Speed</span>
+              <section className="fs-4">Available Now</section>
+              </p>
+              <a href="/product/64c68fbe2dd4e9cac1dcf1d7" className="xbox-btn" target="blank">
+                Explore
+                <i className="fas fa-chevron-right"></i>
+              </a>
+            </div>
+            <img src={iphone4} alt="" width="100%" />
           </div>
           <div className="slide slide2">
             <div className="xbox-content text-light">
@@ -76,7 +103,7 @@ const BannerSlider = () => {
               <br/>
               Impressively big. Impossibly thin.
               </p>
-              <a href="/#" className="xbox-btn">
+              <a href="/category/laptops" className="xbox-btn" target="blank">
                 Join Now
                 <i className="fas fa-chevron-right"></i>
               </a>
@@ -91,7 +118,7 @@ const BannerSlider = () => {
                 console and PC games. Play together with friends and discover
                 your next favorite game.
               </p>
-              <a href="/#" className="xbox-btn">
+              <a href="/product/64c9e48a9512ccd6d6ac28b8" className="xbox-btn" target="blank">
                 Join Now
                 <i className="fas fa-chevron-right"></i>
               </a>
