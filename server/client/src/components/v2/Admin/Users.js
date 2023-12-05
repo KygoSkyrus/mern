@@ -2,15 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
 import { invokeToast } from '../redux/toastSlice';
-import { getDateStr } from './../Utility';
+import { findSubString, getDateStr } from './../Utility';
 import Nav from './Nav';
 import BagLoader from '../BagLoader';
 import Header from './Header';
 
+let allUsers;
 const Users = () => {
 
     const dispatch = useDispatch()
     const [users, setUsers] = useState()
+    const [searchedQuery, setSearchedQuery] = useState()
     const userDetail = useSelector(state => state.user.user)
     const userLoggedIn = useSelector(state => state.user.isUserLoggedIn)
     console.log('is loggedin', userLoggedIn, userDetail)
@@ -26,19 +28,30 @@ const Users = () => {
             .then(res => {
                 if (resp.status === 200) {
                     setUsers(res.data)
+                    allUsers = res.data;
                 } else {
-                    // invokeToast(dispatch, false, res.message)
-                    dispatch(invokeToast({isSuccess:false,message:res.message}))
+                    dispatch(invokeToast({ isSuccess: false, message: res.message }))
                 }
             })
     }, [])
+
+    useEffect(() => {
+        let searchedUser = allUsers?.filter(x => {
+            return (
+                findSubString(x.firstname,searchedQuery) ||
+                findSubString(x.lastname,searchedQuery) ||
+                findSubString(x.email,searchedQuery)
+            )
+        })
+        setUsers(searchedUser)
+    }, [searchedQuery])
 
     return (
         <>
             <Nav />
 
             <div >
-                <Header heading="Users" icon="fa-user" />
+                <Header heading="Users" icon="fa-user" setSearchedQuery={setSearchedQuery} />
 
                 {users ?
                     <div className="container-fluid px-0 admin-table-grid">

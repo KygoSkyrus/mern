@@ -243,6 +243,10 @@ function invokeToast(dispatch, isSuccess, message) {
     // dispatch(setToastContent({ message: message }))
 }
 
+export function findSubString(str, subStr) {
+    return str.toLowerCase().includes(subStr.toLowerCase());
+}
+
 
 export const categoryArray = ["Home Appliances", "Video Game Accessories", "Wearable Devices", "Speakers", "Computer Accessories", "Storage Devices"]
 export const topPicksArray = ["laptops", "smartphones", "fitness trackers", "graphics cards", "playstation"]

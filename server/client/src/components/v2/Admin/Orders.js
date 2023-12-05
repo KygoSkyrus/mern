@@ -8,18 +8,18 @@ import Header from './Header';
 import BagLoader from '../BagLoader';
 
 import { invokeToast } from '../redux/toastSlice';
-import { formatInINRwoSign } from './../Utility'
-import { getDateStr } from './../Utility';
+import { findSubString, formatInINRwoSign, getDateStr } from './../Utility'
 
+let allOrders;
 const Orders = () => {
 
     const [orders, setOrders] = useState()
     const dispatch = useDispatch()
     const userDetail = useSelector(state => state.user.user)
     const userLoggedIn = useSelector(state => state.user.isUserLoggedIn)
+    const [searchedQuery, setSearchedQuery] = useState()
     console.log('is loggedin', userLoggedIn, userDetail)
 
-    //const detailsVisibility = useSelector(state => state.orderDetailsVisibility.visibility)// order details modal's visibility 
 
     const [detailsVisibility, setSDetailsVisibility] = useState(false)
     const [details, setDetails] = useState()
@@ -34,12 +34,28 @@ const Orders = () => {
             .then(res => {
                 if (resp.status === 200) {
                     setOrders(res.data)
+                    allOrders = res.data;
                 } else {
-                    // invokeToast(dispatch,false,res.message)
                     dispatch(invokeToast({ isSuccess: false, message: res.message }))
                 }
             })
     }, [])
+
+    useEffect(() => {
+        let searchedOrder = allOrders?.filter(x => {
+            return (
+                findSubString(x.user.firstname,searchedQuery) ||
+                findSubString(x.user.lastname,searchedQuery) ||
+                findSubString(x.user.email,searchedQuery) ||
+                findSubString(x.orderId,searchedQuery) ||
+                findSubString(x.payment_status,searchedQuery) ||
+                findSubString(x.status,searchedQuery)
+            )
+        })
+        setOrders(searchedOrder)
+    }, [searchedQuery])
+
+
 
 
     const orderDetails = (x) => {
@@ -54,7 +70,7 @@ const Orders = () => {
             {/* THIS HEADER IS SAME FOR DASHBOARD AND this page except the filter,,,create a common header */}
             <div >
 
-                <Header heading="Orders" icon="fa-table" />
+                <Header heading="Orders" icon="fa-table" setSearchedQuery={setSearchedQuery} />
 
                 {orders ?
                     <div className="container-fluid px-0 admin-table-grid">

@@ -243,11 +243,33 @@ a.nav-icons.active::before {
   --bg-white-custom: rgba(255, 255, 255, 1);
 }
 
+/* HEADER */
 .dash-header {
   position: sticky;
   top: 0;
   z-index: 2;
 }
+.searchInput{
+   width: 0px ;
+   padding: 0;
+   border: none;
+   transition: var(--transition);
+}
+.searchInput:focus-visible{
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #a5a5a5;
+}
+.searchInputActive{
+  width: 250px ;
+  border-bottom: 1px solid #a5a5a5;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+.searchBtn:hover{
+  background-color: #f8f9fa !important;
+}
+/* HEADER */
 
 /* filter */
 .filters {
@@ -350,7 +372,7 @@ a.nav-icons.active::before {
   position: sticky;
   top: 60.5px;
   background: #fafafa;
-  z-index: 9;
+  z-index: 5;
   box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
 }
 /******************** DASHBOARD *************************/

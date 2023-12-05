@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { isProductUpdated } from '../redux/productSlice'
-
 import Product from './ProductList'
 import Nav from './Nav'
-import BagLoader from './../BagLoader'
 import Header from './Header'
+import BagLoader from './../BagLoader'
 
+import { isProductUpdated } from '../redux/productSlice'
+import { findSubString } from '../Utility'
 
+let allProducts;
 const Dashboard = () => {
 
     const dispatch = useDispatch()
-    const [searchedQuery,setSearchedQuery]=useState()
+    const [searchedQuery, setSearchedQuery] = useState()
     const [products, setProducts] = useState(false) //to set products fetched from server
     const isUpdated = useSelector(state => state.product.product)
 
@@ -24,20 +25,21 @@ const Dashboard = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log('products', data)
                 setProducts(data)//save this data in redux
+                allProducts = data;
                 dispatch(isProductUpdated({ updateProduct: false }))//setting to false after reloading the product list
             })
     }, [isUpdated])
 
-    useEffect(()=>{
-        if(searchedQuery){
-            let searchedProd=products?.filter(x=>x.name.includes(searchedQuery))
-            console.log('uueueue for searche qyery',searchedProd)
-     //   setProducts(searchedProd)
-        
-        }
-    },[searchedQuery])
+    useEffect(() => {
+        let searchedProd = allProducts?.filter(x => {
+            return (
+                findSubString(x.name, searchedQuery) ||
+                findSubString(x.category, searchedQuery)
+            )
+        })
+        setProducts(searchedProd)
+    }, [searchedQuery])
 
     return (
         <>
@@ -67,9 +69,9 @@ const Dashboard = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {products?.map(x => {
+                                    {products?.map((x,i)=> {
                                         return (
-                                            <Product details={x} key={x._id} />
+                                            <Product details={x} key={i} />
                                         )
                                     })}
                                 </tbody>

@@ -2,10 +2,16 @@ import React from 'react'
 
 const Header = ({ heading, icon, setSearchedQuery }) => {
 
-
     const handleSearch=(e)=>{
-        console.log('fjdjj',e.target.value)
         setSearchedQuery(e.target.value)
+    }
+
+    const showSearchInput=()=>{
+        setSearchedQuery('')
+        document.getElementById('searchInput').classList.toggle('searchInputActive')
+        document.querySelector('.fa-search').classList.toggle('fa-times');
+        document.querySelector('.fa-search').classList.toggle('ms-2');
+        document.querySelector('.searchBtn').classList.toggle('rounded-circle');
     }
 
     return (
@@ -35,30 +41,22 @@ const Header = ({ heading, icon, setSearchedQuery }) => {
                             <span className="ball"></span>
                         </label>
                     </div>
-                    {/* <!-- List View --> */}
-                    <a href="/projects-list.html" className="btn btn-link btn-sm rounded-circle text-secondary" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="List View">
+                    
+                    {/* <a href="/projects-list.html" className="btn btn-link btn-sm rounded-circle text-secondary" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="List View">
                         <i className="fas fa-columns"></i>
                     </a>
 
-                    {/* <!-- Grid View --> */}
                     <a href="/projects-grid.html" className="btn btn-link btn-sm rounded-circle text-secondary" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="Grid View">
                         <i className="fas fa-th"></i>
                     </a>
 
-                    {/* <!-- Table View --> */}
                     <a href="/" className="btn btn-link btn-sm rounded-circle me-3 text-secondary active" aria-current="page" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="Table View">
                         <i className="fas fa-bars"></i>
-                    </a>
+                    </a> */}
 
-
-                    {/* <!-- Add Task/Project --> */}
-                    {/* <button className="btn btn-light btn-sm rounded-circle" data-bs-toggle="modal" data-bs-target="#modalCreateProject">
-                <i className="fas fa-plus" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="Add Project" aria-label="Add Project"></i>
-            </button> */}
-
-                    <button className="btn btn-light btn-sm rounded-circle text-secondary" data-bs-toggle="modal" data-bs-target="#modalCreateProject">
-                        <input type='search' onChange={(e)=>handleSearch(e)} />
-                        <i className="fas fa-search" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="Add Project" aria-label="Add Project"></i>
+                    <button className="btn btn-light btn-sm rounded-circle text-secondary searchBtn d-flex align-items-center" >
+                        <input type='text' id='searchInput' className='searchInput rounded-1' onChange={(e)=>handleSearch(e)} />
+                        <i onClick={()=>showSearchInput()} className="fas fa-search" title=""></i>
                     </button>
 
                 </div>

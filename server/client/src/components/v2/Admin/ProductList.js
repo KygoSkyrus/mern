@@ -21,6 +21,9 @@ const Product = ({ details }) => {
         e.target.nextElementSibling.style.backgroundImage = e.target.style['background-image']//placing the same image to the hover preview
         e.target.nextElementSibling.classList.add('display-block')
         e.target.parentElement.querySelector('.bg-img-preview').classList.add('display-block')
+
+        e.target.nextElementSibling.style.bottom="100%";
+        e.target.parentElement.querySelector('.bg-img-preview').style.bottom="100%";
     }
     const hideImagePreview = (e) => {
         e.target.nextElementSibling.classList.remove('display-block')
@@ -46,10 +49,8 @@ const Product = ({ details }) => {
             .then(data => {
                 dispatch(setLoaderVisibility({ loader: false }))//loader turned off
                 if (resp.status === 200) {
-                    // invokeToast(dispatch,true,data.message)
                     dispatch(invokeToast({isSuccess:true,message:data.message}))
                 } else {
-                    // invokeToast(dispatch,false,data.message)
                     dispatch(invokeToast({isSuccess:false,message:data.message}))
                 }
             })

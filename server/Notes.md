@@ -30,10 +30,9 @@ NOTE :::the issue that without internet you are not abke to acces db,,,setup the
 - when any action gets complete then dont refresh the page just reload the stuff and show toast about the action
 - in product form fix the add/edit button at bottom
 - dont let front display any product which is marked invisible
-
+- add a serach bar in admon instead of filters at the top right
 
 # Defects
-- add a serach bar in admon instead of filters at the top right
 - on last row in products table in admin if hovered over image,,its starts shaking
 - if any of the resulted productas is clicked on search prod than the search bar should close and overlay shoul be removed
 - recipt url get expirewd after a period , maybe the recipt can be copied to a canvas or img and store in server
@@ -48,6 +47,7 @@ NOTE :::the issue that without internet you are not abke to acces db,,,setup the
 - one backspaceing in otp inputs,,two digits are getting erased
 - if product has more tha one image then its not uploading the other images on slow network,,its an issue
 - there should be an option to delete a prooduct but before deleting chekc thta produict is is an anyone's cart or is pending to be deleived, if not only than let it be deleted
+- login withemail and passsword should be enabled
 - on every action like on adding prodcut pr deleeting ,,all repsonse from serever,,,add a notification for that response,,,let user now what has been done and then dont refresh the page,,,call the required api which will update the page
 - when a order is completed than reduce the quantity of all the ordered products by the quanty they are bought
 - add the new images in banner
