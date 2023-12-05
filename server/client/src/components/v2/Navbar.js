@@ -27,12 +27,25 @@ const Navbar = () => {
     );
   };
 
+  useEffect(() => {
+    if(window.innerWidth<992){
+      document.addEventListener("mousedown", e=>handleClickOutside(e));
+    }
+}, [])
+
+function handleClickOutside(event) {
+  // this function runs on every click on the app to check if nav dropdown is expanded
+  const toggler=document.querySelector('.navbar-toggler')?.getAttribute('aria-expanded')
+    if (!document.querySelector('.navbar')?.contains(event.target) && toggler==='true') {
+      document.querySelector('.navbar-toggler').click()
+    }
+}
 
   useEffect(() => {
     fetch("/api/getcategory")
       .then((response) => response.json())
       .then((res) => {
-        console.log("res", res);
+        // console.log("res", res);
         setCategories(res);
         // let tempObject = {}
         let tempArray = [];
@@ -58,7 +71,7 @@ const Navbar = () => {
             tempArray.splice(tempArray.indexOf(x.name.toLowerCase()), 1); //finally removing the parent category after subcat is removed
           }
         });
-        console.log("s", tempArray, catSubcatRelation);
+        // console.log("s", tempArray, catSubcatRelation);
         dispatch(setCatSubcatRelation({ val: catSubcatRelation }))//dispatch child parent relation to use on product page and in navifgation queue where ever reqjired
 
         setChildWithoutParent([...childWithoutParent, ...tempArray]);
@@ -72,8 +85,8 @@ const Navbar = () => {
     childCategoryElem.innerHTML = ""; //clearing the previous subCat
     childCategoryElem.classList.remove("display-none");
 
-    let ul=e.target.childNodes[1]
-    if(ul) ul.innerHTML=""
+    let ul = e.target.childNodes[1]
+    if (ul) ul.innerHTML = ""
     categories[e.target.dataset.index]?.subCategory?.map((x) => {
       let li = document.createElement("li");
       let a = document.createElement("a");
@@ -83,12 +96,12 @@ const Navbar = () => {
       a.classList.add("dropdown-item", "gap-2", "d-flex");
       li.appendChild(a);
 
-      if(window.outerWidth<992){
+      if (window.outerWidth < 992) {
         ul.appendChild(li)
-      }else{
+      } else {
         childCategoryElem.appendChild(li);
       }
-    });    
+    });
   };
 
   const clearSubCategory = (e) => {
@@ -112,7 +125,7 @@ const Navbar = () => {
           console.log("query response", data);
           setSearchedItems(data)
           document.querySelector('.search-overlay').classList.remove('display-none')//puts the overlay
-          
+
 
           document.querySelector('.custom-loader').classList.add('display-none')
           if (data.length === 0) {
@@ -194,8 +207,11 @@ const Navbar = () => {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <div className="menu-toggle is-active" id="mobile-menu"><span className="bar"></span><span className="bar"></span><span className="bar"></span></div>
-            {/* <span className="navbar-toggler-icon"></span> */}
+            <div className="menu-toggle is-active" id="mobile-menu">
+              <span className="bar"></span>
+              <span className="bar"></span>
+              <span className="bar"></span>
+            </div>
           </button>
           <div
             className="collapse navbar-collapse "
@@ -218,7 +234,7 @@ const Navbar = () => {
 
                     {searchedItems?.map(x => {
                       return (
-                        <section className="dropdown-item" key={x._id}>
+                        <section className="dropdown-item" key={x._id} onClick={() => hideSearched()}>
                           <Link to={`/product/${x._id}`}>
                             <img className="me-3" src={x.image} alt="" height="50px" width="55px" />
                           </Link>

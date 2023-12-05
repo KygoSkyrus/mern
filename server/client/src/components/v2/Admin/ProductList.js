@@ -5,8 +5,8 @@ import { setProductFormVisibility, setProductFormTitle, setProductForm } from '.
 import { setLoaderVisibility } from '../redux/loaderSlice';
 import { invokeToast } from '../redux/toastSlice';
 
-const Product = ({ details }) => {
-
+const Product = ({ details,areLastTwoRow }) => {
+console.log('areLastTwoRow',details.name,areLastTwoRow)
     const productFormVisibility = useSelector(state => state.productForm.visibility)// modal's visibility
     const dispatch = useDispatch()
 
@@ -18,12 +18,16 @@ const Product = ({ details }) => {
 
     //on hover the product image preview
     const showImagePreview = (e) => {
-        e.target.nextElementSibling.style.backgroundImage = e.target.style['background-image']//placing the same image to the hover preview
-        e.target.nextElementSibling.classList.add('display-block')
-        e.target.parentElement.querySelector('.bg-img-preview').classList.add('display-block')
+        const previewElemm=e.target.nextElementSibling;
+        const bgElem =e.target.parentElement.querySelector('.bg-img-preview');
 
-        e.target.nextElementSibling.style.bottom="100%";
-        e.target.parentElement.querySelector('.bg-img-preview').style.bottom="100%";
+        previewElemm.style.backgroundImage = e.target.style['background-image']//placing the same image to the hover preview
+        previewElemm.classList.add('display-block')
+        bgElem.classList.add('display-block')
+        if(areLastTwoRow){
+            previewElemm.classList.add('bottom100')
+            bgElem.classList.add('bottom100')
+        }
     }
     const hideImagePreview = (e) => {
         e.target.nextElementSibling.classList.remove('display-block')

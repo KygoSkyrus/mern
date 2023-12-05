@@ -71,7 +71,7 @@ const Dashboard = () => {
                                 <tbody>
                                     {products?.map((x,i)=> {
                                         return (
-                                            <Product details={x} key={i} />
+                                            <Product details={x} key={i} areLastTwoRow={i>=products?.length-2} />
                                         )
                                     })}
                                 </tbody>

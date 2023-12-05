@@ -247,7 +247,7 @@ a.nav-icons.active::before {
 .dash-header {
   position: sticky;
   top: 0;
-  z-index: 2;
+  z-index: 3;
 }
 .searchInput{
    width: 0px ;
@@ -363,6 +363,10 @@ a.nav-icons.active::before {
   z-index: 1;
   top: 100%;
   left: 12%;
+}
+.bottom100{
+  bottom: 100%;
+  top: unset;
 }
 
 .admin-table-grid table{

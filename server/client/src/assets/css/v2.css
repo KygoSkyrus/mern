@@ -470,12 +470,13 @@ img {
   top: 54px;
   background: #fff;
   box-shadow: var(--shadow-small);
-  max-height: 500px;
   min-height: 74px;
+  max-height: calc(100vh - 100px);
   overflow: auto;
   border-radius: 6px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+  z-index: 1;
 }
 .search-dropdown::-webkit-scrollbar {
   width: 4px;
@@ -1208,7 +1209,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 .offers p,
 .services p {
-  text-wrap: nowrap;
+  text-wrap: pretty;
 }
 .offers h5,
 .services h6,
@@ -2870,6 +2871,9 @@ main {
   .no-item-img.cart-img{
     width: 35vw ;
   } 
+  .offers p, .services p {
+    text-wrap: pretty;
+}
 }
 
 /* ---------------RESPONSIVE------------------------------------------------------------------------- */

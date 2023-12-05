@@ -31,13 +31,13 @@ NOTE :::the issue that without internet you are not abke to acces db,,,setup the
 - in product form fix the add/edit button at bottom
 - dont let front display any product which is marked invisible
 - add a serach bar in admon instead of filters at the top right
-
-# Defects
 - on last row in products table in admin if hovered over image,,its starts shaking
 - if any of the resulted productas is clicked on search prod than the search bar should close and overlay shoul be removed
-- recipt url get expirewd after a period , maybe the recipt can be copied to a canvas or img and store in server
 - there should be like a grayout or low opacity loader when any api is hit tp show that api callis in progress
 - have to find a way to update the cart number at navabr whenevrr item added or incremented
+
+# Defects
+- new headphone banner in homepage,,set the width of ikmage inn mobile view
 - add discount to every product
 - delete product and disable product all stuff..all basic things that were in skyblog,,just copy
 - add dicount field for product whihc will be dfault to 0 and admin can set the discount whenever
@@ -53,6 +53,7 @@ NOTE :::the issue that without internet you are not abke to acces db,,,setup the
 - add the new images in banner
 - on hompgae add by category options for products
 - add a message that selling fast or something when stock is less than 5
+- recipt url get expirewd after a period , maybe the recipt can be copied to a canvas or img and store in server
 
 # TODO
 

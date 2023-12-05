@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState={
+const initialState = {
     catSubcatRelation: {},
     isProductUpdated: false,
+    isSearchBarHidden: false,
 }
 
 export const productSlice = createSlice({
@@ -13,26 +14,14 @@ export const productSlice = createSlice({
             state.catSubcatRelation = action.payload.val
         },
         isProductUpdated: (state, action) => {
-			state.isProductUpdated = action.payload.updateProduct
-		}
+            state.isProductUpdated = action.payload.updateProduct
+        },
+        hideSearchBar: (state, action) => {
+            state.isSearchBarHidden = action.payload.value
+        }
     }
 })
 
 
-// export const isProductUpdatedSlice = createSlice({
-// 	name: "isUpdated",
-// 	initialState: {
-// 		product: false,
-// 	},
-// 	reducers: {
-// 		isProductUpdated: (state, action) => {
-// 			state.product = action.payload.updateProduct
-// 		}
-// 	}
-// })
-// export const { isProductUpdated } = isProductUpdatedSlice.actions;
-
-
-
-export const { setCatSubcatRelation ,isProductUpdated} = productSlice.actions;
+export const { setCatSubcatRelation, isProductUpdated, hideSearchBar } = productSlice.actions;
 export const productReducer = productSlice.reducer
