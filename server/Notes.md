@@ -35,12 +35,11 @@ NOTE :::the issue that without internet you are not abke to acces db,,,setup the
 - if any of the resulted productas is clicked on search prod than the search bar should close and overlay shoul be removed
 - there should be like a grayout or low opacity loader when any api is hit tp show that api callis in progress
 - have to find a way to update the cart number at navabr whenevrr item added or incremented
+- add discount to every product
+- new headphone banner in homepage,,set the width of image in mobile view
+- add discount field for product which will be default to 0 and admin can set the discount whenever
 
 # Defects
-- new headphone banner in homepage,,set the width of ikmage inn mobile view
-- add discount to every product
-- delete product and disable product all stuff..all basic things that were in skyblog,,just copy
-- add dicount field for product whihc will be dfault to 0 and admin can set the discount whenever
 - when new image is added,,refresh the list
 - have to add logic for eerror page or we can show like item not found for id routes....where if the url has wrong id,,the error page wont go as the router dosnt know it thats a wrong it ,,it will still redirect to pri=docut page,,there u have to check if the response from the server is null than show that item is not found,,,this goes for prdocts,orders,categoryes ewveruthing whihc has id route
 - set isuserloggedin to false whenever session expired is returned bcz it needs to refersh to show s=the signin option back when expired while the app is running

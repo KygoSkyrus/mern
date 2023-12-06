@@ -3,8 +3,8 @@ import { useNavigate,useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { goWithGoogle } from '../Utility'
-import theBagLogo from "./../../../assets/images/thebaglogo.png";
-
+// import theBagLogo from "./../../../assets/images/thebaglogo.png";
+import adminHat from './../../../assets/images/newImg/collections/hat-48.png'
 
 const AdminLogin = () => {
 
@@ -20,7 +20,8 @@ console.log('route',route)
       <div className="form-wrapper m-auto shadow-s rounded-1" style={{ width: "30%", minWidth: "300px" }}>
         <div className="form-container my-4" style={{ maxWidth: "unset" }}>
           <div className="d-flex justify-content-center flex-column align-items-center mb-4">
-            <img alt='' className='ms-2 mb-1' src={theBagLogo} width="20px" />
+            <img src={adminHat} alt='' style={{width: "30px", }} />
+            {/* <img alt='' className='mb-1' src={theBagLogo} width="20px" /> */}
             <section className='theLogo fw-bold'>SHOPP ITT</section>
           </div>
 

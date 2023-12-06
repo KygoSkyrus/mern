@@ -2011,7 +2011,8 @@ main {
     center/cover;
   margin-bottom: 20px;
 }
-.xbox-content {
+.xbox-content,
+.filler-content {
   width: 40%;
   padding: 50px 0 0 30px;
 }
@@ -2365,6 +2366,18 @@ main {
   .follow li {
     margin-right: 10px;
   }
+
+
+
+  /* HEADPHONE-FILLER */
+.headphone-filler{
+  flex-direction: column-reverse;
+}
+.headphone-filler img{
+  width: 100%;
+}
+/* HEADPHONE-FILLER */
+
 
   /* black cards */
   .blackCards {
@@ -2807,6 +2820,24 @@ main {
   }
   /* Banner */
 
+
+  /* Headphone-filler */
+  .filler-content {
+    width: 100%;
+    padding: 30px;
+}
+.filler-content>section{
+  text-align: center;
+}
+.filler-content>h2{
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 28px;
+
+}
+  /* Headphone-filler */
+
+
   /* yellow stuff */
   .bx1,
   .bx2,
@@ -2836,6 +2867,16 @@ main {
     font-size: 20px;
   }
   /* store door */
+
+  /* footer */
+  .footer-top{
+    padding-bottom: 0;
+    text-align: center;
+  }
+  .footer-top>div div:nth-child(2){
+    display: none;
+  }
+  /* footer */
 
   /* ----------------------------HOMEPAGE------------------------------*/
 }

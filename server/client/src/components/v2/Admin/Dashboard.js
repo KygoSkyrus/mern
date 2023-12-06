@@ -15,7 +15,7 @@ const Dashboard = () => {
     const dispatch = useDispatch()
     const [searchedQuery, setSearchedQuery] = useState()
     const [products, setProducts] = useState(false) //to set products fetched from server
-    const isUpdated = useSelector(state => state.product.product)
+    const isUpdated = useSelector(state => state.product.isProductUpdated)
 
     useEffect(() => {
         console.log('ue in hp')

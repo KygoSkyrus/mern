@@ -141,8 +141,10 @@ const ProductForm = (props) => {
             })
             .then(data => {
                 dispatch(setLoaderVisibility({ loader: false }))
+                closeProductFormContainer()//closing modal
 
                 if (resp.status === 200) {
+                    console.log('dm',data.message)
                     // invokeToast(dispatch,true,data.message)
                     dispatch(invokeToast({isSuccess:true,message:data.message}))
                     //also to do thta you need to store the all the product in redux and then the edited product can be updated there

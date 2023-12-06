@@ -6,7 +6,6 @@ import { setLoaderVisibility } from '../redux/loaderSlice';
 import { invokeToast } from '../redux/toastSlice';
 
 const Product = ({ details,areLastTwoRow }) => {
-console.log('areLastTwoRow',details.name,areLastTwoRow)
     const productFormVisibility = useSelector(state => state.productForm.visibility)// modal's visibility
     const dispatch = useDispatch()
 
