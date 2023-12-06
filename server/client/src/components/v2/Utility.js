@@ -235,16 +235,8 @@ const signinAPI = (val, email, firstname, lastname, photo, dispatch, navigate, r
         })
 }
 
-
-function invokeToast(dispatch, isSuccess, message) {
-    dispatch(invokeToast({ isSuccess, message }))
-    // dispatch(toastVisibility({ toast: true }))
-    // dispatch(setToastStatus({ isSuccess: isSuccess }))
-    // dispatch(setToastContent({ message: message }))
-}
-
 export function findSubString(str, subStr) {
-    return str.toLowerCase().includes(subStr.toLowerCase());
+    return str?.toLowerCase()?.includes(subStr?.toLowerCase());
 }
 
 

@@ -27,19 +27,16 @@ const Navbar = () => {
     );
   };
 
-  useEffect(() => {
-    if(window.innerWidth<992){
-      document.addEventListener("mousedown", e=>handleClickOutside(e));
-    }
-}, [])
 
-function handleClickOutside(event) {
-  // this function runs on every click on the app to check if nav dropdown is expanded
-  const toggler=document.querySelector('.navbar-toggler')?.getAttribute('aria-expanded')
-    if (!document.querySelector('.navbar')?.contains(event.target) && toggler==='true') {
-      document.querySelector('.navbar-toggler').click()
-    }
-}
+  function handleNavBar(val) {
+    const toggler = document.querySelector('.navbar-toggler')
+    const isNavExpanded = toggler?.getAttribute('aria-expanded')
+    const overlay=document.querySelector('.navbar-overlay')
+
+    isNavExpanded==="true"? overlay.classList.remove('display-none'): overlay.classList.add('display-none')
+    if (val) toggler.click() //when overlay is clicked
+  }
+
 
   useEffect(() => {
     fetch("/api/getcategory")
@@ -178,6 +175,8 @@ function handleClickOutside(event) {
     root.style.height = "unset"
     root.style.overflow = "unset"
     setSearchedItems(undefined)
+
+    handleNavBar(true)//to close navbar and hide overlay
   }
 
   return (
@@ -206,6 +205,7 @@ function handleClickOutside(event) {
             aria-controls="navbarSupportedContent"
             aria-expanded="false"
             aria-label="Toggle navigation"
+            onClick={() => handleNavBar()}
           >
             <div className="menu-toggle is-active" id="mobile-menu">
               <span className="bar"></span>
@@ -396,7 +396,10 @@ function handleClickOutside(event) {
           </div>
         </div>
       </nav>
-      <div className="search-overlay display-none" onClick={hideSearched}></div>
+      <div className="search-overlay display-none" onClick={() => hideSearched()}></div>
+
+      <div className="navbar-overlay display-none" onClick={() => handleNavBar(true)}></div>
+
     </>
   );
 };

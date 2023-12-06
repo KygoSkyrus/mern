@@ -2,10 +2,7 @@ import React from "react";
 import Slider from "react-slick";
 
 import headphone1 from "./../../assets/images/newImg/collections/headphone1.webp";
-import headphone2 from "./../../assets/images/newImg/collections/headphone2.webp";
-import iphone3 from "./../../assets/images/newImg/collections/iphone3.png";
 import iphone4 from "./../../assets/images/newImg/collections/iphone4.png";
-import iphone5 from "./../../assets/images/newImg/collections/iphone5.png";
 import laptop1 from "./../../assets/images/newImg/collections/laptop1.png";
 import xbox from "./../../assets/images/newImg/collections/xbox.png";
 
@@ -17,7 +14,7 @@ const BannerSlider = () => {
     slidesToShow: 1, //how many slides will be shown
     slidesToScroll: 1, //at onescroll how many slide will be slid
     fade: true, //slide fades on change
-    // autoplay: true,autoplaySpeed: 4000,cssEase: "linear",// to keep playing automatically
+    autoplay: true,autoplaySpeed: 4000,cssEase: "linear",// to keep playing automatically
     // initialSlide: 1, //tells from where to start
     //lazyLoad: true,
     // adaptiveHeight: true,//for unequal heights

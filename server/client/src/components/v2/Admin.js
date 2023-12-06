@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setAdminAuthStatus } from './redux/userSlice.js';
+import { isUserLoggedIn, setAdminAuthStatus } from './redux/userSlice.js';
 
 import './../../assets/css/admin.css'
 import PrivateRoute from './Admin/PrivateRoute.js';

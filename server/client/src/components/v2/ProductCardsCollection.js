@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import img1 from './../../assets/images/newImg/products/bluePhone.png'
 import headphone1 from './../../assets/images/newImg/collections/headphone1.webp'
 import headphone2 from "./../../assets/images/newImg/collections/headphone2.webp";
+import iphone3 from "./../../assets/images/newImg/collections/iphone3.png";
+// import iphone5 from "./../../assets/images/newImg/collections/iphone5.png";
 
 
 import cart3d from "./../../assets/images/newImg/collections/3dCart.png";
@@ -64,7 +66,6 @@ const ProductCardsCollection = () => {
       })
   }, [])
 
-  console.log('ccc', curatedProducts)
   //RIPPLE--------------
   function createRipple(event) {
     //add position relative and overflow hidden on whichever element you want this effect

@@ -615,6 +615,16 @@ img {
 .profileDropdownUL {
   right: 0;
 }
+
+.navbar-overlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  background: #ffffff00;
+  z-index: 998;
+}
 /*---------------------------------------------- NAVBAR ---------------------------------------------------*/
 
 /*---------------------------------------------- FOOTER ---------------------------------------------------*/
@@ -788,6 +798,9 @@ input[type="number"] {
 .signup-form {
   left: 0;
   opacity: 1;
+}
+.signin-form h5 {
+  text-align: center;
 }
 /******************************************** signin.js **********************************************/
 
@@ -2013,7 +2026,7 @@ main {
 }
 .xbox-content,
 .filler-content {
-  width: 40%;
+  width: 47%;
   padding: 50px 0 0 30px;
 }
 .xbox-btn {
@@ -2354,7 +2367,6 @@ main {
   }
   .profileDropdownUL{
     position: static;
-    width: fit-content;
   }
   /* NAV */
 }
@@ -2697,9 +2709,6 @@ main {
     width: 100%;
     padding: 0px 20px;
     justify-content: start !important;
-  }
-  .signin-form h5 {
-    text-align: center;
   }
   /* SIGNIN Modal */
 

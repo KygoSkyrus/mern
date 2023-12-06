@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, sendSignInLinkToEmail, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, sendSignInLinkToEmail, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 import { goWithGoogle } from './Utility';
 import loginImg from "./../../assets/images/login-cover.svg"
@@ -9,23 +9,52 @@ import loginImg from "./../../assets/images/login-cover.svg"
 
 const SignIn = ({ firebaseApp }) => {
 
-    const [email, setemail] = useState({});
-    const [password, setpassword] = useState('');
-
-    const [phone, setphone] = useState();
-    const [otp, setOtp] = useState(["", "", "", "", "", ""])
-
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const [email, setemail] = useState('');
+    const [password, setpassword] = useState('');
+    const [phone, setphone] = useState();
+    const [otp, setOtp] = useState(["", "", "", "", "", ""])
 
 
     //FIREBASE_________________________________
     // const app = initializeApp(firebaseConfig);
     const auth = getAuth();
-    const provider = new GoogleAuthProvider();
+    // const provider = new GoogleAuthProvider();
 
+    function createUserAccountFirebase() {
+        console.log('eee', email, password)
 
-    //hide the sign fom navbar if user is logged in
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed up 
+                const user = userCredential.user;
+                console.log('user cred', user)
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log('error', errorCode, errorMessage)
+            });
+    }
+
+    function loginUserFirebase() {
+        signInWithEmailAndPassword(auth, email, password).then(
+            (response) => {
+                console.log('signinresss', response)
+                //   navigate("/home");
+            }
+        );
+    }
+
+    // import { getAuth, signOut } from "firebase/auth";
+    //     const auth = getAuth();
+    // signOut(auth).then(() => {
+    //   // Sign-out successful.
+    // }).catch((error) => {
+    //   // An error happened.
+    // });
+
 
     function OTPInput() {
 
@@ -130,43 +159,9 @@ const SignIn = ({ firebaseApp }) => {
         e.preventDefault()
     }
 
-    const emailVerification = () => {
-        console.log('eeee', email)
-        const actionCodeSettings = {
-            // URL you want to redirect back to. The domain (www.example.com) for this
-            // URL must be in the authorized domains list in the Firebase Console.
-            url: 'https://shopp-itt.firebaseapp.com',
-            // This must be true.
-            handleCodeInApp: true,
-            // iOS: {
-            //     bundleId: 'com.example.ios'
-            // },
-            // android: {
-            //     packageName: 'com.example.android',
-            //     installApp: true,
-            //     minimumVersion: '12'
-            // },
-            // dynamicLinkDomain: 'http://shopp-itt.firebaseapp.com'
-        };
-
-        sendSignInLinkToEmail(auth, email, actionCodeSettings)
-            .then(() => {
-                // The link was successfully sent. Inform the user.
-                // Save the email locally so you don't need to ask the user for it again
-                // if they open the link on the same device.
-                window.localStorage.setItem('emailForSignIn', email);
-                // ...
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                // ...
-            });
 
 
-    }
-
-
+    //toggles between signIn and signUp form
     const toggleSignIn = (form) => {
         let signin = document.querySelector('.signin-form')
         let signup = document.querySelector('.signup-form')
@@ -187,7 +182,10 @@ const SignIn = ({ firebaseApp }) => {
                 signin.style.right = '50%'
             }
         }
+        setemail('')
+        setpassword('')
     }
+
     return (
         <div className="modal fade signin" id="exampleModalToggle" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-dialog-centered w-75">
@@ -202,8 +200,9 @@ const SignIn = ({ firebaseApp }) => {
                             <div className='signup-form d-flex justify-content-center align-items-center flex-column h-100' >
                                 <h5 className='text-dark'>Create an account</h5>
                                 <section className='text-center'>Enter your email below to create your account</section>
-                                <input type="email" className="form-control my-2" name="email" id="email" placeholder="Email address" aria-describedby="emailHelp" value={email.signupEmail} onChange={(e) => setemail({ ...email, signupEmail: e.target.value })} />
-                                <button className='btn btn-outline-warning w-100' onClick={emailVerification}>Create account</button>
+                                <input type="email" className="form-control my-2" name="email" id="email" placeholder="Email address" aria-describedby="emailHelp" value={email} onChange={(e) => setemail(e.target.value)} />
+                                <input type="password" className="form-control" id="password" name="password" placeholder="Password*" value={password} onChange={(e) => setpassword(e.target.value)} />
+                                <button className='btn btn-outline-warning w-100 my-2' onClick={() => createUserAccountFirebase()}>Create account</button>
 
                                 <section className='my-3 text-end w-100 pointer' onClick={() => toggleSignIn('signin')}>Exsiting user? Signin</section>
                                 <section className='continue-with position-relative w-100 text-center'>
@@ -217,9 +216,9 @@ const SignIn = ({ firebaseApp }) => {
                             <div className={`signin-form d-flex justify-content-center align-items-center flex-column h-100 ${window.outerWidth < 768 && 'd-none'}`} >
                                 <h5 className='text-dark'>SignIn to your account</h5>
                                 <section className='text-center'>Enter your email and password to signin to your account</section>
-                                <input type="email" className="form-control my-2" name="email" id="email" placeholder="Email address" aria-describedby="emailHelp" value={email.signinEmail} onChange={(e) => setemail({ ...email, signinEmail: e.target.value })} />
+                                <input type="email" className="form-control my-2" name="email" id="email" placeholder="Email address" aria-describedby="emailHelp" value={email} onChange={(e) => setemail(e.target.value)} />
                                 <input type="password" className="form-control" id="password" name="password" placeholder="Password*" value={password} onChange={(e) => setpassword(e.target.value)} />
-                                <button className='btn btn-outline-warning w-100 my-2' onClick={emailVerification}>Sign In</button>
+                                <button className='btn btn-outline-warning w-100 my-2' onClick={() => loginUserFirebase()}>Sign In</button>
 
                                 <section className='my-3 text-end w-100 pointer' onClick={() => toggleSignIn('signup')}>New user? Create an account</section>
                                 <section className='continue-with position-relative w-100 text-center'>

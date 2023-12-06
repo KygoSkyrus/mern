@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate,useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { goWithGoogle } from '../Utility'
 // import theBagLogo from "./../../../assets/images/thebaglogo.png";
@@ -9,9 +9,13 @@ import adminHat from './../../../assets/images/newImg/collections/hat-48.png'
 const AdminLogin = () => {
 
   const {route}=useParams()
-console.log('route',route)
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const isAdminLoggedIn=useSelector(state=>state.user.isAdminAuthSuccess)
+
+  useEffect(()=>{
+    if(isAdminLoggedIn) navigate('/admin/dashboard')
+  },[isAdminLoggedIn])
 
   return (
     <div
@@ -20,7 +24,7 @@ console.log('route',route)
       <div className="form-wrapper m-auto shadow-s rounded-1" style={{ width: "30%", minWidth: "300px" }}>
         <div className="form-container my-4" style={{ maxWidth: "unset" }}>
           <div className="d-flex justify-content-center flex-column align-items-center mb-4">
-            <img src={adminHat} alt='' style={{width: "30px", }} />
+            <img src={adminHat} alt='' style={{width: "30px",transform: "translate(-36px, 8px) rotate(-22deg)" }} />
             {/* <img alt='' className='mb-1' src={theBagLogo} width="20px" /> */}
             <section className='theLogo fw-bold'>SHOPP ITT</section>
           </div>

@@ -38,24 +38,18 @@ NOTE :::the issue that without internet you are not abke to acces db,,,setup the
 - add discount to every product
 - new headphone banner in homepage,,set the width of image in mobile view
 - add discount field for product which will be default to 0 and admin can set the discount whenever
+- when new image is added,,refresh the list
+- set isuserloggedin to false whenever session expired is returned bcz it needs to refersh to show the signin option back when expired while the app is running
+- on every action like on adding prodcut pr deleeting ,,all repsonse from serever,,,add a notification for that response,,,let user now what has been done and then dont refresh the page,,,call the required api which will update the page
 
 # Defects
-- when new image is added,,refresh the list
-- have to add logic for eerror page or we can show like item not found for id routes....where if the url has wrong id,,the error page wont go as the router dosnt know it thats a wrong it ,,it will still redirect to pri=docut page,,there u have to check if the response from the server is null than show that item is not found,,,this goes for prdocts,orders,categoryes ewveruthing whihc has id route
-- set isuserloggedin to false whenever session expired is returned bcz it needs to refersh to show s=the signin option back when expired while the app is running
-- one backspaceing in otp inputs,,two digits are getting erased
-- if product has more tha one image then its not uploading the other images on slow network,,its an issue
-- there should be an option to delete a prooduct but before deleting chekc thta produict is is an anyone's cart or is pending to be deleived, if not only than let it be deleted
-- login withemail and passsword should be enabled
-- on every action like on adding prodcut pr deleeting ,,all repsonse from serever,,,add a notification for that response,,,let user now what has been done and then dont refresh the page,,,call the required api which will update the page
+- if product has more than one image then its not uploading the other images on slow network,,its an issue
+- login with email and passsword should be enabled
 - when a order is completed than reduce the quantity of all the ordered products by the quanty they are bought
-- add the new images in banner
-- on hompgae add by category options for products
 - add a message that selling fast or something when stock is less than 5
-- recipt url get expirewd after a period , maybe the recipt can be copied to a canvas or img and store in server
+- one backspaceing in otp inputs,,two digits are getting erased
 
 # TODO
-
 - also check responsiveness betwwen 768-992
 - clear unneccsary stuff
 
@@ -63,6 +57,7 @@ NOTE :::the issue that without internet you are not abke to acces db,,,setup the
 
 - add the part where user can add items to cart without logging in,,use cookies to store cart items
 - there can be a cicrle or whatever button for feedback at the bottom right asking for feedback for users overall experienece
+- add the new images in banner
 - currently the categoyr page is breaking the Link chaain an reloading the appp
 - add product from button and header is not looking good
 - make the images for product go slide in slide no just disapper and display
@@ -71,6 +66,7 @@ NOTE :::the issue that without internet you are not abke to acces db,,,setup the
 - fix admin filter
 - instead of showing toast message that"product is removed from cart or added" ,,add fhe product name
 - can chnage toast design for user side( can make it more elegant)
+- recipt url get expirewd after a period , maybe the recipt can be copied to a canvas or img and store in server(in testmode its not worth it to go through this much trouble)
 - think about converting the navbar into a small cicle hovering and on click it expands and become the navbar (in other words OR - on scroll dont keep the nav fixed, instead make a minifide nav which will stay floated at the top)
 - make the same loader for both admin and front...use logo,,and for admin just put a hat above the logo's top
   _product admin image upload_
