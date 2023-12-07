@@ -55,16 +55,16 @@ const authenticateUser = async (req, res, next) => {
 const authenticateAdmin = async (req, res, next) => {
     const token = req.cookies.jwt;
     if (!token)
-        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false, isUserAuthenticated: false });
+        return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
 
     const { _id } = jwt.verify(token, process.env.SECRETKEY);
     let user = await USER.findOne({ _id })
     if (!user) {
-        return res.status(404).json({ message: 'User not found.', isUserAuthenticated: false });
+        return res.status(404).json({ message: 'User not found.', is_user_logged_in: false });
     }
 
     if (user.role !== "admin" && user.email !== process.env.ADMIN_ID) {
-        return res.status(404).json({ message: 'Authentication failed!!!', isUserAuthenticated: false });
+        return res.status(404).json({ message: 'Authentication failed!!!', is_user_logged_in: false });
     }
 
     req.user = user;//this may not be needed for admin
@@ -114,7 +114,7 @@ router.post('/api/signup', async (req, res) => {
 
     const { firstname, lastname, email, photo } = req.body;
     //need to handle more details when there is other method of signing up other than google
-
+console.log('firstname, lastname, email, photo',firstname, lastname, email, photo)
     try {
         const userExist = await USER.findOne({ email: email });
 
@@ -148,7 +148,7 @@ router.post('/api/signin', async (req, res) => {
         if (user) {
             if (isAdminLogin) {
                 if (user.role !== "admin" && user.email !== process.env.ADMIN_ID) {
-                    return res.status(404).json({ message: 'Access denied!!!', isUserAuthenticated: false });
+                    return res.status(404).json({ message: 'Access denied!!!', is_user_logged_in: false });
                 } else {
                     const { token } = await user.generateAuthToken();
                     res.cookie('jwt', token, {
@@ -156,7 +156,7 @@ router.post('/api/signin', async (req, res) => {
                         httpOnly: true,
                         secure: process.env.NODE_ENV !== "development",
                     });
-                    return res.status(200).json({ message: "Admin logged in successfully", isUserAuthenticated: true, user });
+                    return res.status(200).json({ message: "Admin logged in successfully", is_user_logged_in: true, user });
                 }
             }
             const { token } = await user.generateAuthToken();
@@ -588,7 +588,7 @@ router.get('/api/getcheckoutsession', authenticateUser, async (req, res) => {
 //authenticate admin account too
 router.get('/api/admin/authentication', authenticateAdmin, async (req, res) => {
     console.log('res.user', res.user)
-    res.status(200).json({ message: "Admin Authentication Successfull!!!", isUserAuthenticated: true })
+    res.status(200).json({ message: "Admin Authentication Successfull!!!", is_user_logged_in: true })
 })
 
 router.get('/api/admin/getorders', async (req, res) => {

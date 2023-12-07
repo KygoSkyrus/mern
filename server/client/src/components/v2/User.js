@@ -16,6 +16,7 @@ const User = () => {
     const userDetail = useSelector(state => state.user.user)
     const userLoggedIn = useSelector(state => state.user.isUserLoggedIn)
     const [user, setUser] = useState({})
+    const [name,setName]=useState({firstname:"",lastname:""})
     const [address, setAddress] = useState({ house: "", street: '', city: '', pincode: '', state: '', country: '', phone: '' })
 
 
@@ -83,6 +84,7 @@ const User = () => {
     useEffect(() => {
         if (userDetail) {
             setUser({ ...user, email: userDetail.email, photo: userDetail.avtar, firstname: userDetail.firstname, lastname: userDetail.lastname })
+            setName({firstname: userDetail.firstname, lastname: userDetail.lastname})
             setAddress({ house: userDetail.address?.house, street: userDetail.address?.street, state: userDetail.address?.state, city: userDetail.address?.city, pincode: userDetail.address?.pincode, phone: userDetail.phone })
             console.log(user)
         } else {
@@ -105,10 +107,8 @@ const User = () => {
                 if (resp.status === 200) {
                     dispatch(isUserLoggedIn({ value: false }))
                     dispatch(setUserDetails({ user: undefined }))//clearing user details
-                    // invokeToast(dispatch,true,res.message)
                     dispatch(invokeToast({ isSuccess: true, message: res.message }))
                 } else {
-                    // invokeToast(dispatch,false,res.message)
                     dispatch(invokeToast({ isSuccess: false, message: res.message }))
                 }
             })
@@ -140,16 +140,16 @@ const User = () => {
 
                                 <form className="row g-3" >
                                     <div className="col-md-6">
-                                        <label for="inputEmail" className="form-label">First name</label>
-                                        <input type="text" value={userDetail?.firstname} className="form-control" id="inputEmail" style={{ cursor: "not-allowed" }} />
+                                        <label for="inputFirstName" className="form-label">First name</label>
+                                        <input type="text" value={name?.firstname} onChange={e => setName({ ...name, firstname: e.target.value })} className="form-control" id="inputFirstName" />
                                     </div>
                                     <div className="col-md-6">
-                                        <label for="inputPassword" className="form-label">Last name</label>
-                                        <input type="text" value={userDetail?.lastname} className="form-control" id="inputPassword" style={{ cursor: "not-allowed" }} />
+                                        <label for="inputLastName" className="form-label">Last name</label>
+                                        <input type="text" value={name?.lastname} onChange={e => setName({ ...name, lastname: e.target.value })} className="form-control" id="inputLastName" />
                                     </div>
                                     <div className="col-md-6">
                                         <label for="inputEmail" className="form-label">Email</label>
-                                        <input type="email" value={userDetail?.email} className="form-control" id="inputEmail" style={{ cursor: "not-allowed" }} />
+                                        <input type="email" value={userDetail?.email} className="form-control" id="inputEmail" readOnly style={{ cursor: "not-allowed" }} />
                                     </div>
                                     <div className="col-md-6">
                                         <label for="inputPhone" className="form-label">Phone</label>

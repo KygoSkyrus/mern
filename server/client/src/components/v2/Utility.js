@@ -1,7 +1,7 @@
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { setUserDetails, isUserLoggedIn, setAdminAuthStatus } from './redux/userSlice';
 import { setLoaderVisibility } from './redux/loaderSlice';
-import { toastVisibility, setToastContent, setToastStatus } from "./redux/toastSlice";
+import { toastVisibility, setToastContent, setToastStatus, invokeToast } from "./redux/toastSlice";
 
 const getUser = (dispatch) => {
 
@@ -123,13 +123,11 @@ export const updatewishlist = (productId, dispatch) => {
             console.log('res add to wishlist', res)
             inProgressLoader(dispatch, false)
             if (resp.status === 200) {
-                dispatch(setToastStatus({ isSuccess: true }))
+                dispatch(invokeToast({ isSuccess: true, message: res.message }))
                 dispatch(setUserDetails({ user: res.user }))
             } else {
-                dispatch(setToastStatus({ isSuccess: false }))
+                dispatch(invokeToast({ isSuccess: false, message: res.message }))
             }
-            dispatch(toastVisibility({ toast: true }))
-            dispatch(setToastContent({ message: res.message }))
             console.log('response add wishlist', res)
         })
 }
@@ -189,7 +187,7 @@ export const goWithGoogle = (val, navigate, dispatch, route, isAdminLogin) => {
 
 }
 
-const signinAPI = (val, email, firstname, lastname, photo, dispatch, navigate, route, isAdminLogin = false) => {
+export const signinAPI = (val, email, firstname, lastname, photo, dispatch, navigate, route, isAdminLogin = false) => {
     console.log('rrr', route)
 
     let resp;
@@ -210,27 +208,22 @@ const signinAPI = (val, email, firstname, lastname, photo, dispatch, navigate, r
             console.log("res.user", res.user)
 
             if (resp.status === 200) {
-                dispatch(setToastStatus({ isSuccess: true }))
+                dispatch(invokeToast({ isSuccess: true, message: res.message }))
             } else {
-                dispatch(setToastStatus({ isSuccess: false }))
+                dispatch(invokeToast({ isSuccess: false, message: res.message }))
             }
-            dispatch(toastVisibility({ toast: true }))
-            dispatch(setToastContent({ message: res.message }))
 
-            if (isAdminLogin) {
-                console.log('navigate -1')
-                if (res.isUserAuthenticated) {
-                    dispatch(isUserLoggedIn({ value: true }))
-                    dispatch(setUserDetails({ user: res.user }))
-                    dispatch(setAdminAuthStatus({ value: res.isUserAuthenticated }))
-                    navigate(`/admin/${route}`)//navigating to reuested route
-                }
+            if (res.is_user_logged_in) {
+                dispatch(isUserLoggedIn({ value: true }))
+                dispatch(setUserDetails({ user: res.user }))
+            }
+
+            if (isAdminLogin && res.is_user_logged_in) {
+                // console.log('navigate -1')
+                    dispatch(setAdminAuthStatus({ value: res.is_user_logged_in }))
+                    navigate(`/admin/${route}`)//navigating to requested route
             } else {
                 document.getElementById('closeSignin').click()//closing the modal
-                if (res.is_user_logged_in) {
-                    dispatch(isUserLoggedIn({ value: true }))
-                    dispatch(setUserDetails({ user: res.user }))
-                }
             }
         })
 }

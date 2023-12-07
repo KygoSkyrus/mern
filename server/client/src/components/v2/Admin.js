@@ -23,9 +23,9 @@ const Admin = () => {
         fetch('/api/admin/authentication')
             .then(res => res.json())
             .then(res => {
-                console.log('reee', res.isUserAuthenticated)
-                // setIsAuthSuccess(res.isUserAuthenticated)
-                dispatch(setAdminAuthStatus({ value: res.isUserAuthenticated }))
+                console.log('reee', res.is_user_logged_in)
+                // setIsAuthSuccess(res.is_user_logged_in)
+                dispatch(setAdminAuthStatus({ value: res.is_user_logged_in }))
             })
     }, [])
 
