@@ -41,9 +41,9 @@ NOTE :::the issue that without internet you are not abke to acces db,,,setup the
 - when new image is added,,refresh the list
 - set isuserloggedin to false whenever session expired is returned bcz it needs to refersh to show the signin option back when expired while the app is running
 - on every action like on adding prodcut pr deleeting ,,all repsonse from serever,,,add a notification for that response,,,let user now what has been done and then dont refresh the page,,,call the required api which will update the page
+- if product has more than one image then its not uploading the other images on slow network,,its an issue
 
 # Defects
-- if product has more than one image then its not uploading the other images on slow network,,its an issue
 - login with email and passsword should be enabled
 - when a order is completed than reduce the quantity of all the ordered products by the quanty they are bought
 - add a message that selling fast or something when stock is less than 5
@@ -145,7 +145,7 @@ https://dr5hn.github.io/countries-states-cities-database/
 ### forever notes
 
 - you cannot just send an object in post reuqest as it would show [object] in backend as formdata does not accept object as a value, so always stringfy your object before posting
-
+- avoid using foreach or callback loops when you have async process inside the loop
 - when you have to put a stick position to a navabar or any element remember that the parent shoudl hav emore height than the element to be sticky and on sticky element give top properyty ,,only sticky wont do anything you need top,,
 - https://codepen.io/polypane/full/LYdvPze
 - https://polypane.app/css-3d-transform-examples/

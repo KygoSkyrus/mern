@@ -379,7 +379,7 @@ const ProductCardsCollection = () => {
               </span> 
             
             <div className='my-2'>
-              <a href="/#" className="xbox-btn" target="blank">
+              <a href="/#" className="xbox-btn" target="_blank">
                 Explore more
                 <i className="fas fa-chevron-right"></i>
               </a>

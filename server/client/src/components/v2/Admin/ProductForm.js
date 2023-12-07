@@ -39,7 +39,7 @@ const ProductForm = (props) => {
 
         dispatch(setLoaderVisibility({ loader: true }))
 
-        console.log('pd', productData, productState)
+        console.log('pd', productData, productData.image.length, productState)
 
         let tempArr = [];
         //when images are chnaged (will run for : newProduct/editProduct)
@@ -47,12 +47,13 @@ const ProductForm = (props) => {
 
             console.log('insite upload', typeof (productData.image), typeof (productState.image))
 
-            Array.from(productData.image).forEach(async (x, index) => {
-                console.log(index + ": ", x)
+
+            for(let index=0;index<productData.image.length;index++){
+                console.log(index + ": ", productData.image[index])
 
                 let imageRef = ref(storage, "shoppitt/" + uuidv4());
 
-                const uploadTask = uploadBytesResumable(imageRef, x);
+                const uploadTask = uploadBytesResumable(imageRef, productData.image[index]);
                 uploadTask.on('state_changed',
                     (snapshot) => {
                         switch (snapshot.state) {
@@ -75,12 +76,11 @@ const ProductForm = (props) => {
                                 console.log('File available at', downloadURL);
                                 tempArr.push(downloadURL)
                                 if (index === productData.image.length - 1 && downloadURL) addProductAPI(tempArr)
-                            });
+                            });      
                         console.log('---------------------------------->>>>>>>>>>>>>>>>>')
                     }
                 );
-
-            })
+            }
         } else {
             //when images are not chnaged (will run for : editProduct) ONLY [bcz newproduct doest fire unless image is slected]
             console.log('no new images are there')

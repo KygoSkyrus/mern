@@ -208,7 +208,7 @@ const Order = () => {
                         : <span className='text-danger'><b>Failed</b></span>}
                     </div>
                     <div className='d-flex justify-content-end my-2 px-3'>
-                      <a href={`${order.receiptUrl}`} target='blank' className='text-decoration-underline'>View Receipt</a>
+                      <a href={`${order.receiptUrl}`} target='_blank' className='text-decoration-underline' rel='noreferrer'>View Receipt</a>
                     </div>
                   </div>
                 </div>

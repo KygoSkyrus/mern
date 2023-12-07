@@ -85,7 +85,7 @@ const Footer = () => {
 									{topPicksArray.map((x,i) => {
 										return (
 											<li className="t-mb-10" key={i} >
-												<Link to={`/category/${x}`} className="t-link text-capitalize t-link--light sm-text" target='blank'>
+												<Link to={`/category/${x}`} className="t-link text-capitalize t-link--light sm-text" target='_blank'>
 													{x}
 												</Link>
 											</li>
