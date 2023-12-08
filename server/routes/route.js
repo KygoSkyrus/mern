@@ -46,6 +46,10 @@ const authenticateUser = async (req, res, next) => {
         return res.status(404).json({ message: 'User not found.' });
     }
 
+    if (!user.firstname) {
+        return res.status(404).json({ message: 'Please add your name to proceed further', name:false });
+    }
+
     // console.log('uueueue', user)
     req.user = user;
     next();

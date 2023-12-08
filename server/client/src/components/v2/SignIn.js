@@ -43,7 +43,7 @@ const SignIn = ({ firebaseApp }) => {
                 console.log('error', errorCode, errorMessage)
                 // document.getElementById('closeSignin').click()//closing the modal
                 setUserCredentials({ email: '', password: '' })
-let errMsg=errorMessage;
+                let errMsg=errorMessage;
                 if(errorCode==='auth/email-already-in-use') errMsg="User already exists!!! Try Signing in instead"
                 dispatch(invokeToast({ isSuccess: false, message: errMsg }))
             });

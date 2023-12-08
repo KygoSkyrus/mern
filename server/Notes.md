@@ -48,6 +48,9 @@ NOTE :::the issue that without internet you are not abke to acces db,,,setup the
 - when a order is completed than reduce the quantity of all the ordered products by the quanty they are bought
 - add a message that selling fast or something when stock is less than 5
 - one backspaceing in otp inputs,,two digits are getting erased
+- serch bar on admin make it full length and hide other things when clicked
+- table header is not stciky in admin
+
 
 # TODO
 - also check responsiveness betwwen 768-992
