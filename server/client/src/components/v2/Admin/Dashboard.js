@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Product from './ProductList'
 import Nav from './Nav'
 import Header from './Header'
-import BagLoader from './../BagLoader'
+import BagLoader from '../loaders/BagLoader'
 
 import { isProductUpdated } from '../redux/productSlice'
 import { findSubString } from '../Utility'

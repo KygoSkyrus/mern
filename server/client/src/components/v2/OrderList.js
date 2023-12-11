@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 
 import SignInToContinue from './SignInToContinue';
-import BagLoader from './BagLoader';
+import BagLoader from './loaders/BagLoader';
 
 import noOrder from "./../../assets/images/newImg/collections/noOrder.svg"
 import { invokeToast } from './redux/toastSlice';
@@ -23,7 +23,7 @@ const OrderList = () => {
 
   useEffect(() => {
     let resp;
-    fetch(`/api/getorders`)
+    fetch('/api/user/getorders')
       .then(response => {
         resp = response
         return response.json()
@@ -57,7 +57,7 @@ const OrderList = () => {
               :
               (orders?.length > 0 ?
                 <div className='container orderList-page my-5'>
-                  <h6 className='text-center my-5 d-flex justify-content-center align-items-center'>My Cart&nbsp;
+                  <h6 className='text-center my-5 d-flex justify-content-center align-items-center'>My Orders&nbsp;
                     <i className='fa fa-box-open text-warning mt-1'></i>
                   </h6>
                   <div className="row justify-content-center">
@@ -179,7 +179,7 @@ const OrderList = () => {
                   </div>
                 </div>
                 :
-                <div className='d-flex flex-column align-items-center justify-content-center h70 no-item-block'>
+                <div className='d-flex flex-column align-items-center justify-content-center no-item-block'>
                   <div>
                     <img src={noOrder} alt='' width={'100%'} className='no-item-img' />
                   </div>

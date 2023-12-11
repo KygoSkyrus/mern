@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 
 import SignInToContinue from './SignInToContinue';
-import BagLoader from './BagLoader';
+import BagLoader from './loaders/BagLoader';
 
 import { invokeToast } from './redux/toastSlice';
 import { formatInINR, getFullDateStr } from './Utility';
@@ -27,7 +27,7 @@ const Order = () => {
 
   useEffect(() => {
     let resp;
-    fetch(`/api/getorders?orderId=${orderId}`)
+    fetch(`/api/user/getorders?orderId=${orderId}`)
       .then(response => {
         resp = response
         return response.json()
@@ -41,7 +41,7 @@ const Order = () => {
           } else {
             let status;
             //this api looks for checkoutsession and save the order is not saved in db and returns the order
-            fetch(`/api/getcheckoutsession?orderId=${orderId}`)
+            fetch(`/api/user/getcheckoutsession?orderId=${orderId}`)
               .then(response => {
                 status = response.status
                 return response.json()

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
-import BagLoader from './BagLoader';
+import BagLoader from './loaders/BagLoader';
 import SignInToContinue from './SignInToContinue';
 
 import { invokeToast } from './redux/toastSlice';
 import { isUserLoggedIn, setUserDetails } from './redux/userSlice';
-import { inProgressLoader } from './Utility';
+import { getAvatarUrl, inProgressLoader, signOut } from './Utility';
 import { data, states } from '../../assets/state-city';
 
 
@@ -16,14 +16,14 @@ const User = () => {
     const userDetail = useSelector(state => state.user.user)
     const userLoggedIn = useSelector(state => state.user.isUserLoggedIn)
     const [user, setUser] = useState({})
-    const [name,setName]=useState({firstname:"",lastname:""})
+    const [name, setName] = useState({ firstname: "", lastname: "" })
     const [address, setAddress] = useState({ house: "", street: '', city: '', pincode: '', state: '', country: '', phone: '' })
+    const [selectedAvatar, setSelectedAvatar] = useState('')
 
 
     const updateAddress = () => {
         console.log('address---', address)
         console.log('userDetail', userDetail)
-        inProgressLoader(dispatch, true)
 
         let existingAddress = JSON.parse(JSON.stringify(userDetail.address))
         existingAddress.phone = userDetail.phone
@@ -44,14 +44,21 @@ const User = () => {
             address.city !== existingAddress.city ||
             address.pincode !== existingAddress.pincode ||
             address.state !== existingAddress.state ||
-            address.phone !== existingAddress.phone
+            address.phone !== existingAddress.phone ||
+            name.firstname !== userDetail.firstname ||
+            name.lastname !== userDetail.lastname ||
+            selectedAvatar !== userDetail.avtar
         ) {
+            inProgressLoader(dispatch, true)
             let resp;
-            fetch('/api/updatedaddress', {
+            fetch('/api/user/updateaddress', {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    address
+                    firstname: name.firstname,
+                    lastname: name.lastname,
+                    avtar: selectedAvatar,
+                    address,
                 }),
             })
                 .then(response => {
@@ -63,19 +70,13 @@ const User = () => {
                     console.log('update address response', res)
                     if (resp.status === 200) {
                         dispatch(setUserDetails({ user: res.user }))//clearing user details
-                        // dispatch(setToastStatus({ isSuccess: true }))
-                        // invokeToast(dispatch,true,res.message)
                         dispatch(invokeToast({ isSuccess: true, message: res.message }))
                     } else {
-                        // invokeToast(dispatch,false,res.message)
                         dispatch(invokeToast({ isSuccess: false, message: res.message }))
-                        // dispatch(setToastStatus({ isSuccess: false }))
                     }
-                    // dispatch(setToastContent({ message: res.message }))
-                    // dispatch(toastVisibility({ toast: true }))
                 })
         } else {
-            alert('No changes applied!!')
+            dispatch(invokeToast({ isSuccess: false, message: "No changes are made" }))
         }
 
     }
@@ -84,7 +85,8 @@ const User = () => {
     useEffect(() => {
         if (userDetail) {
             setUser({ ...user, email: userDetail.email, photo: userDetail.avtar, firstname: userDetail.firstname, lastname: userDetail.lastname })
-            setName({firstname: userDetail.firstname, lastname: userDetail.lastname})
+            setName({ firstname: userDetail.firstname, lastname: userDetail.lastname })
+            setSelectedAvatar(userDetail.avtar)
             setAddress({ house: userDetail.address?.house, street: userDetail.address?.street, state: userDetail.address?.state, city: userDetail.address?.city, pincode: userDetail.address?.pincode, phone: userDetail.phone })
             console.log(user)
         } else {
@@ -94,25 +96,22 @@ const User = () => {
     }, [userDetail])//when the data gets loaded in store
 
 
-    const signOut = () => {
-        inProgressLoader(dispatch, true)
-        let resp;
-        fetch('/api/signmeout')
-            .then(response => {
-                resp = response;
-                return response.json()
-            })
-            .then(res => {
-                inProgressLoader(dispatch, false)
-                if (resp.status === 200) {
-                    dispatch(isUserLoggedIn({ value: false }))
-                    dispatch(setUserDetails({ user: undefined }))//clearing user details
-                    dispatch(invokeToast({ isSuccess: true, message: res.message }))
-                } else {
-                    dispatch(invokeToast({ isSuccess: false, message: res.message }))
-                }
-            })
+   
+
+    function showAvatarEditBtn(val) {
+        const editBtn = document.querySelector('.avatar-edit-btn');
+        if (val) {
+            editBtn.classList.remove('d-none')
+        } else {
+            editBtn.classList.add('d-none')
+        }
     }
+
+    function setUserAvatar(){
+        document.querySelector('.userAvatar').src=selectedAvatar
+        document.getElementById('closeAvatarModal').click()
+    }
+
 
 
     return (
@@ -123,14 +122,19 @@ const User = () => {
                 userDetail && userLoggedIn ?
                     <div className='container my-5 user-form py-3 rounded'>
 
-                        <section className='text-primary skip'>Skip for later</section>
+                        {/* <section className='text-primary skip'>Skip for later</section> */}
                         <div className="row my-4 user-form-holder">
                             <div className="col-md-4 align-self-end" >
                                 <div className='row'>
                                     <div className='col-md-9 m-auto text-center'>
-                                        <img src={userDetail?.avtar} alt="" className="img-fluid t-minw-215 rounded" style={{ maxHeight: "223px", width: "223px" }} />
+                                        <div className='avatar-container position-relative d-flex justify-content-center' onMouseEnter={e => showAvatarEditBtn(true)} onMouseLeave={e => showAvatarEditBtn(false)}>
+                                            <img src={userDetail?.avtar} alt="" className="userAvatar img-fluid t-minw-215 rounded-circle" style={{ maxHeight: "223px", width: "223px" }} />
+                                            <div className='avatar-edit-btn' data-bs-toggle="modal" href="#avatarModal">
+                                                <i className='fa fa-edit fa-2x'></i>
+                                            </div>
+                                        </div>
                                         <h5 className='my-2 mb-3 text-capitalize'>{userDetail?.firstname}&nbsp;{userDetail?.lastname}</h5>
-                                        <button className={`w-100 signout-btn ${window.outerWidth > 768 && " btn btn-outline-danger"}`} onClick={() => signOut()}>{window.outerWidth > 768 ? "Sign out" : <i className='fa fa-sign-out-alt'></i>}</button>
+                                        <button className={`w-100 signout-btn ${window.outerWidth > 768 && " btn btn-outline-danger"}`} onClick={() => signOut(dispatch)}>{window.outerWidth > 768 ? "Sign out" : <i className='fa fa-sign-out-alt'></i>}</button>
                                     </div>
                                 </div>
 
@@ -212,7 +216,28 @@ const User = () => {
                             </div>
 
                         </div>
+
+                        <div className="modal fade " id="avatarModal" tabIndex="-1" aria-labelledby="avatarModalLabel" aria-hidden="true">
+                            <div className="modal-dialog modal-dialog-centered w-75 m-auto">
+                                <div className="modal-content " style={{ width: "80vw" }}>
+                                    <button type="button" id='closeAvatarModal' className="btn-close d-none" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                                    <div className="modal-body">
+                                        <div className='d-flex justify-content-center flex-wrap' style={{ zIndex: 2, gap: "10px" }}>
+                                            {Array.from(Array(20).keys()).map((x, i) => {
+                                                return <img src={getAvatarUrl(i + 1)} alt='' width='50px' onClick={e => setSelectedAvatar(e.target.src)} className={`${getAvatarUrl(i + 1) === selectedAvatar ? 'slectedAvatar' : ''}`} />
+                                            })}
+                                            <button className='btn btn-outline-info w-100 m-2 mt-4'
+                                              onClick={() => setUserAvatar()}
+                                            >Select Avatar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
+
                     :
                     <SignInToContinue />
             }

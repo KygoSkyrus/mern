@@ -59,7 +59,7 @@ const BannerSlider = () => {
               <span>Like You, We Love Music</span> And we believe a Headphone is more than just an instrument for sound. It’s the key to a mind-blowing moment of emotion, bringing you closer to your favourite artist, and yourself.
               </p>
               <a href="/category/headphones" className="xbox-btn" target="blank">
-                Join Now
+                Explore Now
                 <i className="fas fa-chevron-right"></i>
               </a>
             </div>
@@ -101,7 +101,7 @@ const BannerSlider = () => {
               Impressively big. Impossibly thin.
               </p>
               <a href="/category/laptops" className="xbox-btn" target="blank">
-                Join Now
+                Explore Now
                 <i className="fas fa-chevron-right"></i>
               </a>
             </div>
@@ -116,7 +116,7 @@ const BannerSlider = () => {
                 your next favorite game.
               </p>
               <a href="/product/64c9e48a9512ccd6d6ac28b8" className="xbox-btn" target="blank">
-                Join Now
+                Explore Now
                 <i className="fas fa-chevron-right"></i>
               </a>
             </div>

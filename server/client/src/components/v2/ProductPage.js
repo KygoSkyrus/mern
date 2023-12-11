@@ -6,8 +6,8 @@ import { debouncedApi, inProgressLoader } from './Utility';
 import { updatewishlist } from './Utility';
 
 import noProd from './../../assets/images/newImg/collections/product-not-found.jpg'
-import RelatedProducts from './RealtedProducts'
-import BagLoader from './BagLoader';
+import RelatedProducts from './RelatedProducts'
+import BagLoader from './loaders/BagLoader';
 
 const ProductPage = () => {
 
@@ -20,13 +20,13 @@ const ProductPage = () => {
     console.log('catSubcatRelation', catSubcatRelation)
 
     useEffect(() => {
-        console.log('product id', productId)
         fetch(`/api/getprodbyid/?prodId=${productId}`)
             .then(response => response.json())
             .then(res => {
                 console.log('response', res.product[0])
                 setProduct(res.product)
             })
+        // console.log('product id', productId,catSubcatRelation[product[0]?.category])
     }, [productId])
 
     const setImage = (e) => {
@@ -84,7 +84,7 @@ const ProductPage = () => {
                             </div>
                             <div className="col-md-6">
                                 <div className="product--right-content t-flex-100">
-                                    <h6 className='navigation-q text-capitalize'><Link to='/' >Home</Link> {catSubcatRelation[product[0].category] && (<><span></span> {catSubcatRelation[product.category]}</>)} <span></span> {product.category}</h6>
+                                    <h6 className='navigation-q text-capitalize'><Link to='/' >Home</Link> {catSubcatRelation[product[0].category] && (<><span></span> {catSubcatRelation[product[0].category]}</>)} <span></span> {product[0].category}</h6>
                                     <h4 className="post__title t-mt-10 t-md-34-lg-1875">
                                         <a className="t-link t-link--secondary" href="/">{product[0].name}</a>
                                     </h4>
@@ -100,15 +100,17 @@ const ProductPage = () => {
                                         <section className='d-flex align-items-center'>
                                             <span className='fs-4' style={{ fontWeight: "600" }}>
                                                 <span style={{ fontSize: "12px" }}>&#8377;</span>
-                                                {product[0].price}
+                                                {Math.floor(product[0].price - product[0].discount * product[0].price / 100)}
                                             </span>
                                             <span className='discount-percent mx-2'>
-                                                25% off
+                                                {product[0].discount}% off
                                             </span>
                                         </section>
                                         <section className='extra-small'>
                                             M.R.P. <span style={{ color: "#ec3b3b" }} >&#8377;{product[0].price}</span>
                                         </section>
+                                        {product[0].stock < 10 &&
+                                            <section className='mt-1 fst-italic' style={{ color: "green" }}>Only {product[0].stock} left in stock, Hurry up</section>}
                                     </div>
 
                                     <div className='d-flex gap-2 mt-3'>
@@ -164,7 +166,7 @@ const ProductPage = () => {
                 :
                 <BagLoader />
             }
-            <RelatedProducts />
+            <RelatedProducts title="Related Products" />
         </>
     )
 }

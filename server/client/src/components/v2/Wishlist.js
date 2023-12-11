@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 
-import BagLoader from './BagLoader';
+import BagLoader from './loaders/BagLoader';
 import SignInToContinue from './SignInToContinue';
 
 import { invokeToast } from './redux/toastSlice';
 import { debouncedApi, inProgressLoader, updatewishlist } from './Utility';
 import wishlistImg from "./../../assets/images/newImg/collections/wishlistImg.gif"
+import RelatedProducts from './RelatedProducts';
 
 const Wishlist = () => {
 
@@ -22,7 +23,7 @@ const Wishlist = () => {
     let resp;
     if (wishlistItems.length > 0) {
       console.log('333')
-      fetch(`/api/getwishlistitems`, {
+      fetch('/api/user/getwishlistitems', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -102,7 +103,7 @@ const Wishlist = () => {
                                 <div key={x._id} className='row  p-2 wi'>
                                   <div className="col-md-2 wi-img">
                                     <div className='d-flex justify-content-center'>
-                                      <img src={x.image} alt='' className={`img-fluidt-minw-215 ${x.stock===0?'grayscale':''}`} style={{ maxHeight: "80px" }} />
+                                      <img src={x.image} alt='' className={`img-fluidt-minw-215 ${x.stock === 0 ? 'grayscale' : ''}`} style={{ maxHeight: "80px" }} />
                                     </div>
                                   </div>
 
@@ -139,7 +140,7 @@ const Wishlist = () => {
                                         </div>
 
                                         <div className="col-md-2 wi-remove">
-                                          <button className={`btn btn-warning px-4 rounded-pill text-light ${x.stock===0?'notAllowed':''}`} onClick={() => addToCart(x._id)} disabled={x.stock===0?true:false}>Add to cart</button>
+                                          <button className={`btn btn-warning px-4 rounded-pill text-light ${x.stock === 0 ? 'notAllowed' : ''}`} onClick={() => addToCart(x._id)} disabled={x.stock === 0 ? true : false}>Add to cart</button>
 
                                           <div className='d-flex justify-content-end mt-2 ' style={{ marginRight: "-41px" }}>
                                             <u><span
@@ -186,8 +187,8 @@ const Wishlist = () => {
           <SignInToContinue />
       }
 
+      <RelatedProducts title="You may also like" />
 
-      <div>Recommended products</div>
     </>
   )
 }

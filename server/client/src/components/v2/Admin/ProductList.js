@@ -59,6 +59,30 @@ const Product = ({ details,areLastTwoRow }) => {
             })
     }
 
+    function deleteProduct(id){
+        dispatch(setLoaderVisibility({ loader: true }))
+        let resp;
+        fetch("/api/admin/deleteproduct", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                id
+            }),
+        })
+            .then(response => {
+                resp = response
+                return response.json()
+            })
+            .then(data => {
+                dispatch(setLoaderVisibility({ loader: false }))
+                if (resp.status === 200) {
+                    dispatch(invokeToast({isSuccess:true,message:data.message}))
+                } else {
+                    dispatch(invokeToast({isSuccess:false,message:data.message}))
+                }
+            })
+    }
+
     return (
         <tr key={details._id}>
             <th scope="row" className="align-middle">
@@ -203,7 +227,7 @@ const Product = ({ details,areLastTwoRow }) => {
                         <li><hr className="dropdown-divider" /></li> */}
                         <li>
                             <button type="button" className="dropdown-item gap-2 d-flex" data-bs-toggle="modal" data-bs-target="#modalDanger" disabled>
-                                <i className="fa fa-trash fa-fw me-2 opacity-50 align-self-center"></i> Delete
+                                <i className="fa fa-trash fa-fw me-2 opacity-50 align-self-center" onClick={()=>deleteProduct(details._id)}></i> Delete
                             </button>
                         </li>
                     </ul>

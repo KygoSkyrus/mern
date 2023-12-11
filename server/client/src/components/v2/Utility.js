@@ -6,7 +6,7 @@ import { toastVisibility, setToastContent, setToastStatus, invokeToast } from ".
 const getUser = (dispatch) => {
 
     let resp;
-    fetch('/api/getUserInfo',)
+    fetch('/api/user/getUserInfo',)
         .then(response => {
             resp = response
             return response.json()
@@ -67,7 +67,7 @@ export function handleOverflow(val) {
 
 const addToCartAPI = async (productId, dispatch) => {
     let resp;
-    fetch(`/api/addtocart`, {
+    fetch('/api/user/addtocart', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -108,7 +108,7 @@ export const debouncedApi = debounce(addToCartAPI, 500);
 export const updatewishlist = (productId, dispatch) => {
     inProgressLoader(dispatch, true)
     let resp;
-    fetch(`/api/updatewishlist`, {
+    fetch('/api/user/updatewishlist', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -228,11 +228,42 @@ export const signinAPI = (val, email, firstname, lastname, photo, dispatch, navi
         })
 }
 
+
+
+export function signOut (dispatch) {
+    inProgressLoader(dispatch, true)
+    let resp;
+    fetch('/api/user/signmeout')
+        .then(response => {
+            resp = response;
+            return response.json()
+        })
+        .then(res => {
+            inProgressLoader(dispatch, false)
+            if (resp.status === 200) {
+                    dispatch(setAdminAuthStatus({ value: false }))//for admin
+                    dispatch(isUserLoggedIn({ value: false }))
+                dispatch(setUserDetails({ user: undefined }))//clearing user details
+                dispatch(invokeToast({ isSuccess: true, message: res.message }))
+            } else {
+                dispatch(invokeToast({ isSuccess: false, message: res.message }))
+            }
+        })
+}
+
+
 export function findSubString(str, subStr) {
     return str?.toLowerCase()?.includes(subStr?.toLowerCase());
 }
 
 
+//CONSTS
 export const categoryArray = ["Home Appliances", "Video Game Accessories", "Wearable Devices", "Speakers", "Computer Accessories", "Storage Devices"]
 export const topPicksArray = ["laptops", "smartphones", "fitness trackers", "graphics cards", "playstation"]
 export const socialArray = ["fa-github", "fa-linkedin-in", "fa-twitter", "fa-instagram", "fa-facebook"]
+
+export const defaultAvatar='https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/avatar%2FuserAvatar%20(6).png?alt=media&token=8fb50e10-daf9-402a-b020-65495494e14a'
+
+export function getAvatarUrl(i){
+    return `https://firebasestorage.googleapis.com/v0/b/shopp-itt.appspot.com/o/avatar%2Favatar%20(${i}).png?alt=media&token=4c4b0ea3-519f-430c-9f0f-8c24df8d163c`
+}
