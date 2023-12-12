@@ -14,7 +14,7 @@ const BannerSlider = () => {
     slidesToShow: 1, //how many slides will be shown
     slidesToScroll: 1, //at onescroll how many slide will be slid
     fade: true, //slide fades on change
-    autoplay: true,autoplaySpeed: 4000,cssEase: "linear",// to keep playing automatically
+    autoplay: true,autoplaySpeed: 2500,cssEase: "linear",// to keep playing automatically
     // initialSlide: 1, //tells from where to start
     //lazyLoad: true,
     // adaptiveHeight: true,//for unequal heights
@@ -83,7 +83,7 @@ const BannerSlider = () => {
               <h2><i className="fa-brands fa-apple me-2"></i>iPhone 13 Pro</h2>
               <p>
               <span className="fs-1">Experience a new Era of Speed</span>
-              <section className="fs-4">Available Now</section>
+              <span className="fs-4 d-block text-light">Available Now</span>
               </p>
               <a href="/product/64c68fbe2dd4e9cac1dcf1d7" className="xbox-btn" target="blank">
                 Explore

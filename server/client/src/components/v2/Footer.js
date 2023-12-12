@@ -106,8 +106,8 @@ const Footer = () => {
 								<ul className="list d-flex follow mt-3">
 									{socialArray.map((x,i) => {
 										return (
-											<li>
-												<Link to="" className="t-follow-link" key={i}>
+											<li key={i}>
+												<Link to="" className="t-follow-link">
 													<span className="social-counter__icon social-counter__icon--be t-mr-8">
 														<span className="social-counter__icon-is">
 															<i className={`fa-brands ${x}`}></i>

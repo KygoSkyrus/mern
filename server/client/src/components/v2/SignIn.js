@@ -251,8 +251,8 @@ const SignIn = ({ firebaseApp }) => {
                                 <h5 className='text-dark'>Create an account</h5>
                                 <section className='text-center'>Enter your email below to create your account</section>
                                 <input type="text" className="form-control mt-2" name="username" id="username" placeholder="Your name" value={userCredentials?.username} onChange={(e) => setUserCredentials({ ...userCredentials, username: e.target.value })} />
-                                <input type="email" className="form-control my-2" name="email" id="email" placeholder="Email address" aria-describedby="emailHelp" value={userCredentials?.email} onChange={(e) => setUserCredentials({ ...userCredentials, email: e.target.value })} />
-                                <input type="password" className="form-control" id="password" name="password" placeholder="Password*" value={userCredentials?.password} onChange={(e) => setUserCredentials({ ...userCredentials, password: e.target.value })} />
+                                <input type="email" className="form-control my-2" name="email" id="email1" placeholder="Email address" aria-describedby="emailHelp" value={userCredentials?.email} onChange={(e) => setUserCredentials({ ...userCredentials, email: e.target.value })} />
+                                <input type="password" className="form-control" id="password1" name="password" placeholder="Password*" value={userCredentials?.password} onChange={(e) => setUserCredentials({ ...userCredentials, password: e.target.value })} />
                                 <button className='btn btn-outline-warning w-100 my-2' onClick={() => createUserAccountFirebase()}>Create account</button>
 
                                 <section className='my-3 text-end w-100 pointer' onClick={() => toggleSignIn('signin')}>Exsiting user? Signin</section>
@@ -267,8 +267,8 @@ const SignIn = ({ firebaseApp }) => {
                             <div className={`signin-form d-flex justify-content-center align-items-center flex-column h-100 ${window.outerWidth < 768 && 'd-none'}`} >
                                 <h5 className='text-dark'>SignIn to your account</h5>
                                 <section className='text-center'>Enter your email and password to signin to your account</section>
-                                <input type="email" className="form-control my-2" name="email" id="email" placeholder="Email address" aria-describedby="emailHelp" value={userCredentials?.email} onChange={(e) => setUserCredentials({ ...userCredentials, email: e.target.value })} />
-                                <input type="password" className="form-control" id="password" name="password" placeholder="Password*" value={userCredentials?.password} onChange={(e) => setUserCredentials({ ...userCredentials, password: e.target.value })} />
+                                <input type="email" className="form-control my-2" name="email" id="email2" placeholder="Email address" aria-describedby="emailHelp" value={userCredentials?.email} onChange={(e) => setUserCredentials({ ...userCredentials, email: e.target.value })} />
+                                <input type="password" className="form-control" id="password2" name="password" placeholder="Password*" value={userCredentials?.password} onChange={(e) => setUserCredentials({ ...userCredentials, password: e.target.value })} />
                                 <button className='btn btn-outline-warning w-100 my-2' onClick={() => loginUserFirebase()}>Sign In</button>
 
                                 <section className='my-3 text-end w-100 pointer' onClick={() => toggleSignIn('signup')}>New user? Create an account</section>
