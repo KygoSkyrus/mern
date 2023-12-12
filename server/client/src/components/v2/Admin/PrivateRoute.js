@@ -2,7 +2,7 @@ import { Navigate } from 'react-router-dom'
 import Dashboard from './Dashboard.js';
 import Orders from './Orders.js'
 import Users from './Users.js'
-import BagLoader from '../BagLoader.jsx';
+import BagLoader from '../loaders/BagLoader'
 
 const PrivateRoute = ({ isAuthSuccess, route }) => {
     console.log('isAuthSuccess', isAuthSuccess, route)

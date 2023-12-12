@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
-import { goWithGoogle, signinAPI } from './Utility';
+import { goWithGoogle, signinAPI,defaultAvatar } from './Utility';
 import loginImg from "./../../assets/images/login-cover.svg"
 import { invokeToast } from './redux/toastSlice';
 
@@ -12,9 +12,7 @@ const SignIn = ({ firebaseApp }) => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const [email, setemail] = useState('');
-    const [password, setpassword] = useState('');
-    const [userCredentials, setUserCredentials] = useState({ email: '', password: '' });
+    const [userCredentials, setUserCredentials] = useState({ email: '', password: '',username:'' });
     const [phone, setphone] = useState();
     const [otp, setOtp] = useState(["", "", "", "", "", ""])
 
@@ -22,27 +20,50 @@ const SignIn = ({ firebaseApp }) => {
     //FIREBASE_________________________________
     // const app = initializeApp(firebaseConfig);
     const auth = getAuth();
-    // const provider = new GoogleAuthProvider();
 
     function createUserAccountFirebase() {
-        console.log('eee', userCredentials)
-        
+        // console.log('eee', userCredentials,userCredentials?.username?.trim().length)
+        let name=userCredentials?.username?.trim();
+
+        if(name?.length===0 || userCredentials?.email.length===0 || userCredentials?.password.length===0){
+            dispatch(invokeToast({ isSuccess: false, message: 'Name is a mandatory field, Enter your name to proceed further' }))
+            setUserCredentials({...userCredentials,username:''})
+            return;
+        }
+        // console.log('ccc', name)
+
+        name=name.split(' ')
+
+        // console.log('splitted name', name)
+        let firstname='';
+        let lastname='';
+        for (const str of name) {
+              if (!firstname) {
+                firstname = str;
+              } else if (!lastname) {
+                lastname = str;
+                break; 
+              }
+          }
+
+        console.log('fname', firstname,lastname)
+
         createUserWithEmailAndPassword(auth, userCredentials?.email, userCredentials?.password)
             .then((response) => {
                 // Signed up 
                 const user = response.user;
                 console.log('user cred', user)
 
-                signinAPI('signup', user?.email, "", "", user?.photoURL, dispatch)
+                signinAPI('signup', user?.email, firstname, lastname, defaultAvatar, dispatch)
                 navigate('/user');//sending user to user page for filling out other details
-                setUserCredentials({ email: '', password: '' })
+                setUserCredentials({ email: '', password: '',username:''  })
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 console.log('error', errorCode, errorMessage)
                 // document.getElementById('closeSignin').click()//closing the modal
-                setUserCredentials({ email: '', password: '' })
+                setUserCredentials({ email: '', password: '',username:'' })
                 let errMsg=errorMessage;
                 if(errorCode==='auth/email-already-in-use') errMsg="User already exists!!! Try Signing in instead"
                 dispatch(invokeToast({ isSuccess: false, message: errMsg }))
@@ -60,7 +81,7 @@ const SignIn = ({ firebaseApp }) => {
 
                 signinAPI('signin', user?.email, "", "", user?.photoURL, dispatch)
                 navigate('/user');//sending user to user page for filling out other details
-                setUserCredentials({ email: '', password: '' })
+                setUserCredentials({ email: '', password: '',username:''  })
                 // setemail('')
                 // setpassword('')
             }
@@ -72,7 +93,7 @@ const SignIn = ({ firebaseApp }) => {
             // document.getElementById('closeSignin').click()//closing the modal
             // setemail('')
             // setpassword('')
-            setUserCredentials({ email: '', password: '' })
+            setUserCredentials({ email: '', password: '',username:'' })
             dispatch(invokeToast({ isSuccess: false, message: "Authentication Failed, Invalid email/password" }))
         });
     }
@@ -212,8 +233,7 @@ const SignIn = ({ firebaseApp }) => {
                 signin.style.right = '50%'
             }
         }
-        setemail('')
-        setpassword('')
+        setUserCredentials({ email: '', password: '',username:'' })
     }
 
     return (
@@ -230,6 +250,7 @@ const SignIn = ({ firebaseApp }) => {
                             <div className='signup-form d-flex justify-content-center align-items-center flex-column h-100' >
                                 <h5 className='text-dark'>Create an account</h5>
                                 <section className='text-center'>Enter your email below to create your account</section>
+                                <input type="text" className="form-control mt-2" name="username" id="username" placeholder="Your name" value={userCredentials?.username} onChange={(e) => setUserCredentials({ ...userCredentials, username: e.target.value })} />
                                 <input type="email" className="form-control my-2" name="email" id="email" placeholder="Email address" aria-describedby="emailHelp" value={userCredentials?.email} onChange={(e) => setUserCredentials({ ...userCredentials, email: e.target.value })} />
                                 <input type="password" className="form-control" id="password" name="password" placeholder="Password*" value={userCredentials?.password} onChange={(e) => setUserCredentials({ ...userCredentials, password: e.target.value })} />
                                 <button className='btn btn-outline-warning w-100 my-2' onClick={() => createUserAccountFirebase()}>Create account</button>

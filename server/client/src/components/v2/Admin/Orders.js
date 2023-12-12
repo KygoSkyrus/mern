@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import OrderDetails from './OrderDetails';
 import Nav from './Nav';
 import Header from './Header';
-import BagLoader from '../BagLoader';
+import BagLoader from '../loaders/BagLoader'
 
 import { invokeToast } from '../redux/toastSlice';
 import { findSubString, formatInINRwoSign, getDateStr } from './../Utility'

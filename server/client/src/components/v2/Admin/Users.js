@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { invokeToast } from '../redux/toastSlice';
 import { findSubString, getDateStr } from './../Utility';
 import Nav from './Nav';
-import BagLoader from '../BagLoader';
+import BagLoader from '../loaders/BagLoader'
 import Header from './Header';
 
 let allUsers;

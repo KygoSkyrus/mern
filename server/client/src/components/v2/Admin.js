@@ -8,7 +8,7 @@ import './../../assets/css/admin.css'
 import PrivateRoute from './Admin/PrivateRoute.js';
 import AdminLogin from './Admin/AdminLogin.js';
 import Error from './Error.js';
-import Modal from './Modal.js';
+import Modal from './Admin/Modal.js';
 
 const Admin = () => {
 
@@ -27,7 +27,7 @@ const Admin = () => {
                 // setIsAuthSuccess(res.is_user_logged_in)
                 dispatch(setAdminAuthStatus({ value: res.is_user_logged_in }))
             })
-    }, [])
+    }, [isAuthSuccess])
 
 
     return (

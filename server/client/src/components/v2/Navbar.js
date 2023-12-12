@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { setCatSubcatRelation } from "./redux/productSlice";
 import theBagLogo from "./../../assets/images/thebaglogo.png";
+import { signOut } from "./Utility";
 
 const Navbar = () => {
   const [categories, setCategories] = useState();
@@ -351,11 +352,6 @@ const Navbar = () => {
                   Orders
                 </Link>
               </li> */}
-              <li className="nav-item ">
-                <Link to="/admin/dashboard" className="nav-link">
-                  Admin
-                </Link>
-              </li>
               <li className="nav-item position-relative dropdown">
                 <button
                   type="button"
@@ -385,6 +381,16 @@ const Navbar = () => {
                     <Link className="dropdown-item gap-2 d-flex" to="/orders">
                       Orders
                     </Link>
+                  </li>
+                  <li className="">
+                <Link to="/admin/dashboard" className="dropdown-item gap-2 d-flex">
+                  Admin
+                </Link>
+              </li>
+                  <li className="">
+                    <span className="dropdown-item gap-2 d-flex pointer" onClick={()=>signOut(dispatch)}>
+                      Log out
+                    </span>
                   </li>
                 </ul>
                 {/* <Link to="/user" className="nav-link">

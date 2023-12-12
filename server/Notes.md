@@ -42,22 +42,29 @@ NOTE :::the issue that without internet you are not abke to acces db,,,setup the
 - set isuserloggedin to false whenever session expired is returned bcz it needs to refersh to show the signin option back when expired while the app is running
 - on every action like on adding prodcut pr deleeting ,,all repsonse from serever,,,add a notification for that response,,,let user now what has been done and then dont refresh the page,,,call the required api which will update the page
 - if product has more than one image then its not uploading the other images on slow network,,its an issue
+- login with email and passsword should be enabled
+- add a message that selling fast or something when stock is less than 5
+- admin serchbar showuld take whole width on mobile
+- imprpve file system
+- fix controllers and routes for front too
+- add loagout option for admin
+- remove unneccesary images
+- on routing to a page the page starts with same where the last page is left,, react-router-dom scroll
+- explore other categories component is misseing from every page
+- maybe change the heading of related priduct base on which page they are
 
 # Defects
-- login with email and passsword should be enabled
-- when a order is completed than reduce the quantity of all the ordered products by the quanty they are bought
-- add a message that selling fast or something when stock is less than 5
-- one backspaceing in otp inputs,,two digits are getting erased
-- serch bar on admin make it full length and hide other things when clicked
-- table header is not stciky in admin
+- add onscroll animations on homepage
+- remove the faded yellow and purple filler 
 
 
 # TODO
+- admin table heading should be sticky for mobile
 - also check responsiveness betwwen 768-992
 - clear unneccsary stuff
 
 # Wouldn't hurt to have (least priority)
-
+- when a order is completed than reduce the quantity of all the ordered products by the quanty they are bought
 - add the part where user can add items to cart without logging in,,use cookies to store cart items
 - there can be a cicrle or whatever button for feedback at the bottom right asking for feedback for users overall experienece
 - add the new images in banner
@@ -67,6 +74,8 @@ NOTE :::the issue that without internet you are not abke to acces db,,,setup the
 - can add on hover cart show cart items with two option of view cart and checkout oprtion (there is sample layout url also below somewhere)
 - table heading in admin can be sticky
 - fix admin filter
+- login with phone can be possible, but forsbase only provides 10 logins perday, 
+- one backspaceing in otp inputs,,two digits are getting erased
 - instead of showing toast message that"product is removed from cart or added" ,,add fhe product name
 - can chnage toast design for user side( can make it more elegant)
 - recipt url get expirewd after a period , maybe the recipt can be copied to a canvas or img and store in server(in testmode its not worth it to go through this much trouble)

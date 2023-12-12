@@ -4,9 +4,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 
-import RealtedProducts from './RealtedProducts';
+import RelatedProducts from './RelatedProducts';
 import SignInToContinue from './SignInToContinue';
-import BagLoader from './BagLoader';
+import BagLoader from './loaders/BagLoader';
 
 import { setUserDetails } from './redux/userSlice';
 import { invokeToast } from './redux/toastSlice';
@@ -100,7 +100,7 @@ const Cart = () => {
     const flattenedUniqueCartItems = uniqueCartItems.flat();
     console.log('flattened', flattenedUniqueCartItems)
     let resp;
-    return fetch('/api/updateCart', {
+    return fetch('/api/user/updatecart', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -210,7 +210,7 @@ const Cart = () => {
   const removeFromCart = (productId) => {
     inProgressLoader(dispatch, true)
     let resp;
-    fetch(`/api/removefromcart`, {
+    fetch(`/api/user/removefromcart`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -243,7 +243,7 @@ const Cart = () => {
   const movetowishlist = (productId) => {
     inProgressLoader(dispatch, true)
     let resp;
-    fetch(`/api/movetowishlist`, {
+    fetch(`/api/user/movetowishlist`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -273,7 +273,7 @@ const Cart = () => {
   function createCheckoutSession(priceObj) {
     let resp;
     inProgressLoader(dispatch, true)
-    fetch(`/create-checkout-session`, {
+    fetch(`api/user/create-checkout-session`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -487,7 +487,7 @@ const Cart = () => {
           <SignInToContinue />
       }
 
-      <RealtedProducts />
+      <RelatedProducts title="You may also like" />
 
     </>
   )

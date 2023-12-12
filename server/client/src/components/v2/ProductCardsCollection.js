@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
-import img1 from './../../assets/images/newImg/products/bluePhone.png'
-import headphone1 from './../../assets/images/newImg/collections/headphone1.webp'
 import headphone2 from "./../../assets/images/newImg/collections/headphone2.webp";
-import iphone3 from "./../../assets/images/newImg/collections/iphone3.png";
-// import iphone5 from "./../../assets/images/newImg/collections/iphone5.png";
-
-
-import cart3d from "./../../assets/images/newImg/collections/3dCart.png";
-import storeDoor from "./../../assets/images/newImg/collections/storeDoor.png";
+import iphone5 from "./../../assets/images/newImg/collections/iphone5.png";
 
 import wearables1 from "./../../assets/images/newImg/collections/wearables1.jpg";
 import wearables2 from "./../../assets/images/newImg/collections/wearables2.jpg";
+
+import img1 from './../../assets/images/newImg/products/bluePhone.png'
+import headphone1 from './../../assets/images/newImg/collections/headphone1.webp'
+import cart3d from "./../../assets/images/newImg/collections/3dCart.png";
+import storeDoor from "./../../assets/images/newImg/collections/storeDoor.png";
+import fridaySale from "./../../assets/images/newImg/collections/friday-sale.jpg";
+import superSale from "./../../assets/images/newImg/collections/super-sale.jpg";
+
 
 //curated prodcuts image
 import controller from "./../../assets/images/newImg/collections/controller.png";
@@ -68,7 +69,7 @@ const ProductCardsCollection = () => {
 
   //RIPPLE--------------
   function createRipple(event) {
-    //add position relative and overflow hidden on whichever element you want this effect
+    //add position relative and overflow hidden on whichever element you want this effect and call this function on click
     const button = event.currentTarget;
 
     const circle = document.createElement("span");
@@ -94,16 +95,6 @@ const ProductCardsCollection = () => {
   return (
     <>
 
-      {/* PRODUCT 5 */}
-      {/* <button className='button5' onClick={createRipple}>Ripple</button> */}
-      {/* PRODUCT 5 */}
-
-
-
-
-      {/* ipads,dslr,xbox,drones, */}
-
-
       {/* <!-- Product 1 --> */}
       <div className='container bx gapBtw'>
         <div className='row'>
@@ -119,6 +110,7 @@ const ProductCardsCollection = () => {
                       <div className="product_details">
                         <h4 className="title">Electronics</h4>
                         <p className="discription">Laptops, Tablets, VR headsets, Gaming consoles, Television, Computers, Camera etc</p>
+                        <p className="pricing"><span className="offer">UPTO 40% OFF</span></p>
                         {/* <p className="pricing">₹824 <span className="price_original">₹4000</span> <span className="offer"> 79% OFF</span></p>
               <p className="other">inclusive of all taxes</p> */}
                       </div>
@@ -137,8 +129,7 @@ const ProductCardsCollection = () => {
                       <div className="product_details">
                         <h4 className="title">Home Appliances</h4>
                         <p className="discription">Refrigerator, Microwave, Vaccum cleaner, Air conditioner, Washing machine etc</p>
-                        {/* <p className="pricing"><span className="offer">UPTO 60% OFF</span></p>
-              <p className="other">inclusive of all taxes</p> */}
+                        <p className="pricing"><span className="offer">UPTO 60% OFF</span></p>
                       </div>
                     </div>
                   </div>
@@ -153,8 +144,7 @@ const ProductCardsCollection = () => {
                       <div className="product_details">
                         <h4 className="title">Wearable Devices</h4>
                         <p className="discription">Smartwatches, Earbuds, Headphones etc</p>
-                        {/* <p className="pricing">₹824 <span className="price_original">₹4000</span> <span className="offer"> 79% OFF</span></p>
-              <p className="other">inclusive of all taxes</p> */}
+                        <p className="pricing"><span className="offer">UPTO 50% OFF</span></p>
                       </div>
                     </div>
                   </div>
@@ -167,9 +157,7 @@ const ProductCardsCollection = () => {
       </div>
       {/* <!-- Product 1 --> */}
 
-
-
-      <nav className="menu position-relative gapBtw">
+      <div className="menu position-relative gapBtw">
         <div className="menu__item">
           <div className="marquee">
             <div className="marquee__inner">
@@ -180,7 +168,7 @@ const ProductCardsCollection = () => {
             </div>
           </div>
         </div>
-      </nav>
+      </div>
 
       <div className='storedoor mt-2'>
         <div className='text'>All-in-one store <br />for all of your Electronic needs</div>
@@ -192,7 +180,16 @@ const ProductCardsCollection = () => {
         {/* <!-- Wrapper Section --> */}
         <section className="section wrapper wrapper-section py-3">
           <div className="container wrapper-column">
-            <div className="wrapper-figure">
+            <div
+              className="wrapper-figure"
+              data-aos="fade-up"
+              data-aos-offset="200"
+              data-aos-delay="50"
+              data-aos-duration="1000"
+              data-aos-easing="ease-in-out"
+              data-aos-mirror="true"
+              data-aos-once="false"
+              data-aos-anchor-placement="top-center">
               <img
                 src={controller}
                 // src="https://i.ibb.co/3msVHYZ/sneaker-image.png"
@@ -258,8 +255,8 @@ const ProductCardsCollection = () => {
             <p>Xbox Game Pass Ultimate Xbox Live Gold and over 100 high-quality
               console and PC games. Play together with friends and discover your
               next favorite game.</p>
-            <a href="/#" className="xbox-btn">
-              Join Now <i className="fas fa-chevron-right"></i>
+            <a href="/category/xbox" className="xbox-btn">
+              Explore Now <i className="fas fa-chevron-right"></i>
             </a>
           </div>
         </section>
@@ -268,8 +265,75 @@ const ProductCardsCollection = () => {
 
 
 
+      {/* <div style={{ background: "var(--red)" }}>
+        <div className='headphone-filler container align-items-center d-flex justify-content-between gapBtw'>
+          <div className="filler-content text-light">
+            <section className='text-dark fw-400 fs-3'>New Arrival</section>
+            <h2 className='fw-light' style={{ letterSpacing: "8px" }}><i className='fa fa-headphones-alt me-2'></i>PREMIUM SOUND</h2>
 
-      {/* <spline-viewer className="spline-player"  loading-anim url="https://prod.spline.design/XGRNABqigI-vYLoP/scene.splinecode"></spline-viewer> */}
+            <div style={{ background: 'linear-gradient(to top, #7c0b7c, #de41de)', paddingLeft: "4px" }}>
+              <ul className='ps-3' style={{ background: "var(--red)" }}>
+                <li>
+                  Surround sound experience
+                </li>
+                <li>Noise reduction</li>
+                <li>Noise isolation</li>
+              </ul>
+            </div>
+
+            <span style={{ color: "var(--yellow)" }}>Like You, We Love Music </span>
+            <span>
+              And we believe a Headphone is more than just an instrument for sound. It’s the key to a mind-blowing moment of emotion, bringing you closer to your favourite artist, and yourself.
+            </span>
+
+            <div className='my-2'>
+              <a href="/category/headphones" className="xbox-btn" style={{ border: "3px solid #000", background: "inherit" }} target="_blank">
+                Explore more
+                <i className="fas fa-chevron-right"></i>
+              </a>
+            </div>
+          </div>
+          <spline-viewer className="spline-player"  loading-anim url="https://prod.spline.design/XGRNABqigI-vYLoP/scene.splinecode"></spline-viewer>
+        </div>
+      </div> */}
+
+      
+
+
+
+
+      <div style={{ background: "#141414" }} >
+        <div className='headphone-filler container align-items-center d-flex flex-row-reverse justify-content-between gapBtw'>
+          <div className="filler-content text-light">
+            <section className='text-dark fw-400 fs-3'>New Arrival</section>
+            <h2 className='fw-light' style={{ letterSpacing: "8px" }}><i className='fa-brands fa-apple me-2'></i>INTRODUCING iPHONE</h2>
+
+            <div style={{ background: 'linear-gradient(to top, #7c0b7c, #de41de)', paddingLeft: "4px" }} className='rounded'>
+              <ul className='p-2 ps-3'>
+                <li>
+                  12MP 260p camera
+                </li>
+                <li>6GB RAM Apple A15 Bionic</li>
+                <li>4373mAh Li-ion</li>
+              </ul>
+            </div>
+
+            <span style={{ color: "var(--yellow)" }}>A magical way to interact with your iPhone. </span>
+            <span>
+              A vital safety feature designed to save lives. An innovative 12MP camera Main camera. And a display that's up to 2x brighter in the sun. All powered by the ultimate smartphone chip.
+            </span>
+
+            <div className='my-2'>
+              <a href="/category/headphones" className="xbox-btn hover-y" style={{ border: "3px solid #fff", background: "inherit" }} target="_blank">
+                Explore more
+                <i className="fas fa-chevron-right"></i>
+              </a>
+            </div>
+          </div>
+          <img src={iphone5} alt="" width="40%" />
+        </div>
+      </div>
+
 
 
 
@@ -311,15 +375,15 @@ const ProductCardsCollection = () => {
           <div className='col-12'>
             <div className='row'>
               <div className='col-md-6 col-lg-6'>
-                <div className='card2 card h-100'>
-                  <div style={{ background: "#fff", height: "100%", minHeight: "275px", objectFit: "cover", display: "grid", placeItems: "center" }}>
+                <div className='card2 filler-img card h-100'>
+                  <div style={{ height: "100%", minHeight: "275px", objectFit: "cover", display: "grid", placeItems: "center" }}>
                     <img src={wearables1} className="card-img-top" style={{ height: "-webkit-fill-available" }} alt="..." />
                   </div>
                 </div>
               </div>
               <div className='col-md-6 col-lg-6'>
-                <div className='card2 card h-100'>
-                  <div style={{ background: "#fff", height: "100%", minHeight: "275px", objectFit: "cover", display: "grid", placeItems: "center" }}>
+                <div className='card2 filler-img card h-100'>
+                  <div style={{ height: "100%", minHeight: "275px", objectFit: "cover", display: "grid", placeItems: "center" }}>
                     <img src={wearables2} className="card-img-top" alt="..." />
                   </div>
                 </div>
@@ -327,7 +391,7 @@ const ProductCardsCollection = () => {
             </div>
           </div>
         </div>
-        <section class="gapBtw theLine" style={{ width: "80%", height: "1px", background: "#d6d6d6", textAlign: "center",marginRight: "auto",marginLeft:"auto" }}></section>
+        <section class="gapBtw theLine" style={{ width: "80%", height: "1px", background: "#d6d6d6", textAlign: "center", marginRight: "auto", marginLeft: "auto" }}></section>
       </div>
       {/* filler images */}
 
@@ -357,43 +421,42 @@ const ProductCardsCollection = () => {
 
 
 
-      <div class="bg-danger ">
+      <div style={{ background: "var(--red)" }}>
         <div className='headphone-filler container align-items-center d-flex justify-content-between gapBtw'>
-            <div className="filler-content text-light">
-              <section className='text-dark fw-400 fs-3'>New Arrival</section>
-              <h2 className='fw-light' style={{letterSpacing:"8px"}}><i className='fa fa-headphones-alt me-2'></i>PREMIUM SOUND</h2>
+          <div className="filler-content text-light">
+            <section className='text-dark fw-400 fs-3'>New Arrival</section>
+            <h2 className='fw-light' style={{ letterSpacing: "8px" }}><i className='fa fa-headphones-alt me-2'></i>PREMIUM SOUND</h2>
 
-           <div style={{ background: 'linear-gradient(to top, #7c0b7c, #de41de)', paddingLeft: "4px"}}>
-            <ul className='bg-danger ps-3'>
-              <li>
-                Surround sound experience
-              </li>
-              <li>Noise reduction</li>
-              <li>Noise isolation</li>
-            </ul>
-            </div>   
+            <div style={{ background: 'linear-gradient(to top, #7c0b7c, #de41de)', paddingLeft: "4px" }}>
+              <ul className='ps-3' style={{ background: "var(--red)" }}>
+                <li>
+                  Surround sound experience
+                </li>
+                <li>Noise reduction</li>
+                <li>Noise isolation</li>
+              </ul>
+            </div>
 
-              <span style={{color: "var(--yellow)"}}>Like You, We Love Music </span> 
-              <span>
-                And we believe a Headphone is more than just an instrument for sound. It’s the key to a mind-blowing moment of emotion, bringing you closer to your favourite artist, and yourself.
-              </span> 
-            
+            <span style={{ color: "var(--yellow)" }}>Like You, We Love Music </span>
+            <span>
+              And we believe a Headphone is more than just an instrument for sound. It’s the key to a mind-blowing moment of emotion, bringing you closer to your favourite artist, and yourself.
+            </span>
+
             <div className='my-2'>
-              <a href="/#" className="xbox-btn" target="_blank">
+              <a href="/category/headphones" className="xbox-btn" style={{ border: "3px solid #000", background: "inherit" }} target="_blank">
                 Explore more
                 <i className="fas fa-chevron-right"></i>
               </a>
             </div>
-            </div>
-            <img src={headphone2} alt="" width="50%" />
-          </div> 
           </div>
+          <img src={headphone2} alt="" width="50%" />
+        </div>
+      </div>
 
 
 
 
       {/* PRODUCT 2 */}
-
       <div className='container gapBtw blackCards'>
         <h1 style={{ color: "#151515", fontFamily: "monospace" }} className='gapBtw text-center'>Curated just for YOU</h1>
         <div className='row m0'>
@@ -402,7 +465,7 @@ const ProductCardsCollection = () => {
               {
                 Object.keys(curatedProducts).map(key => {
                   return (
-                    <div className='col-md-6 col-lg-4'>
+                    <div className='col-md-6 col-lg-4 d-flex justify-content-center my-3'>
                       <div class='cardN' data-category={key}>
                         <img
                           src={curatedProducts[key].displayImage || curatedProducts[key].image}
@@ -437,9 +500,6 @@ const ProductCardsCollection = () => {
         </div>
         <section className='gapBtw theLine' style={{ width: "80%", height: "1px", background: "#d6d6d6", textAlign: "center" }}></section>
       </div>
-
-
-
       {/* PRODUCT 2 */}
 
 
@@ -459,7 +519,7 @@ const ProductCardsCollection = () => {
           </div>
           <div className="right">
             <div className="img">
-              <img alt='' src={products?.[4].image} />
+              <img alt='' src={products?.[4].image} width="72%" />
               <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fsebastien-compagne.fr%2Fwebsite%2Fzpg%2Farcheologeek%2F1990_-_apple_mac_classic_II.png&f=1&nofb=1" alt='..' />
             </div>
             <ul>
@@ -475,40 +535,6 @@ const ProductCardsCollection = () => {
       {/* MACINTOX BANNER */}
 
 
-      {/* PRODUCT 9 */}
-      {/* <div className="product-card">
-        <div className="badge-pc">New Product</div>
-        <div className="product-tumb">
-            <img src="https://cdn-icons-png.flaticon.com/512/2806/2806251.png" alt=''/>
-        </div>
-        <div className="product-details">
-            <span className="product-catagory">T-Shirt</span>
-            <h4><a href="/#">New T-Shirt For Man</a></h4>
-            <p>New Import T-Shirt For Man Very Rare Collection, If You Want Order Right Now</p>
-            <div className="product-bottom-details">
-                <div className="product-price"><small>$15.10</small>$7.99</div>
-                <div className="product-links">
-                    <a href="/#"><i className="fa fa-heart"></i></a>
-                    <a href="/#"><i className="fa fa-shopping-cart"></i></a>
-                </div>
-            </div>
-        </div>
-    </div> */}
-      {/* PRODUCT 9 */}
-
-
-      {/* <div>
-        Shop by category
-      </div> */}
-
-      {/* <SliderComponent/> */}
-
-
-
-
-
-
-
 
 
       {/* try adding word flip things on all these letters from hyperplexed */}
@@ -518,26 +544,7 @@ const ProductCardsCollection = () => {
 
 
 
-      <div className='text-stroke-container d-none'>
-        <div className='scrolldown slow1'>
-          {Array.from(Array(30).keys()).map(x => {
-            return (<h1 key={x} className='text-stroke-style'>KYGOSKYRUS</h1>)
-          })}
-        </div>
 
-        <div className='scrolldown slow3'>
-          {Array.from(Array(30).keys()).map(x => {
-            return (<h1 key={x} className='te'>KYGOSKYRUS</h1>)
-          })}
-        </div>
-
-        <div className='scrolldown slow2'>
-          {Array.from(Array(30).keys()).map(x => {
-            return (<h1 key={x} className='te'>KYGOSKYRUS</h1>)
-          })}
-        </div>
-
-      </div>
 
 
     </>

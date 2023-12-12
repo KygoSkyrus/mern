@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 
-import BagLoader from './BagLoader';
+import BagLoader from './loaders/BagLoader';
+import RelatedProducts from './RelatedProducts';
 import { debouncedApi, inProgressLoader } from './Utility';
 import { updatewishlist } from './Utility';
 
@@ -46,8 +47,8 @@ const Category = () => {
                                         <div className='col-md-6 col-lg-4'>
                                             <div className='card2 card'>
                                                 {i + 1 === randomNum && <div className="card-tag">New Product</div>}
-                                                {x.stock===0 && <div className="card-tag">Out of stock</div>}
-                                                <div style={{ background: "#fff", height: "100%", minHeight: "275px", objectFit: "cover", display: "grid", placeItems: "center" }} className={x.stock===0?'grayscale':''}>
+                                                {x.stock === 0 && <div className="card-tag">Out of stock</div>}
+                                                <div style={{ background: "#fff", height: "100%", minHeight: "275px", objectFit: "cover", display: "grid", placeItems: "center" }} className={x.stock === 0 ? 'grayscale' : ''}>
                                                     <img src={x.image} className="card-img-top" alt="..." />
                                                 </div>
                                                 <div className="card-body border-none p-0">
@@ -76,8 +77,8 @@ const Category = () => {
                                                         </div>
                                                         <div className="product-links">
                                                             <span onClick={() => updatewishlist(x._id, dispatch)} title={wishlistItems?.includes(x._id) ? "Remove from wishlist" : "Add to wishlist"}><i class={`fa fa-heart ${wishlistItems?.includes(x._id) && "text-danger"}`}></i></span>
-                                                          
-                                                            <button onClick={() => addToCart(x._id)} disabled={x.stock===0?true:false} className={x.stock===0?'notAllowed':''}><i className="fa fa-shopping-cart"></i></button>
+
+                                                            <button onClick={() => addToCart(x._id)} disabled={x.stock === 0 ? true : false} className={x.stock === 0 ? 'notAllowed' : ''}><i className="fa fa-shopping-cart"></i></button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -92,7 +93,7 @@ const Category = () => {
                 :
                 <BagLoader />
             }
-            <div>Explore our other categories</div>
+            <RelatedProducts title="Our Top Categories Product" />
         </>
     )
 }

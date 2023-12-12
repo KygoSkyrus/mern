@@ -18,8 +18,9 @@ import Admin from './components/v2/Admin';
 import TheFront from './components/v2/TheFront';
 
 import Toast from './components/v2/Toast';
-import AdminLogin from './components/v2/Admin/AdminLogin';
-import Loader from './components/v2/Loader';
+import Loader from './components/v2/loaders/Loader';
+
+import ScrollToTop from './ScrollToTop.js';//takes you to the top on page routing
 
 function App() {
 
@@ -113,6 +114,7 @@ const firebaseApp = initializeApp(firebaseConfig);
 
   return (
     <BrowserRouter>
+     <ScrollToTop />
       <div className="App">
         <SignIn firebaseApp={firebaseApp} />
 

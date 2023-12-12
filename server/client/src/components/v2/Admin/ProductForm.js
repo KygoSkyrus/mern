@@ -115,7 +115,7 @@ const ProductForm = (props) => {
                 img = productData.image;
             }
         } else {
-            apiURL = "/api/admin/addproducts";
+            apiURL = "/api/admin/addproduct";
         }
 
         // NOTE::(UPDATE:::ITS WORKING NOW)TRY CHECKING WITH MULTIPLE IMAGES,,maybe bcz if internet is not working...image is troubling//also when edited is done,,then its giving cannot remoeve child from node errror on clearform function///last image from newly added image is being left behind
