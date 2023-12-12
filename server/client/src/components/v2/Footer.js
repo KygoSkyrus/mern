@@ -126,7 +126,7 @@ const Footer = () => {
 							<div className="col-12 text-center">
 								<p className="mb-0 t-blue sm-text">
 									<i className="fa-sharp fa-regular fa-copyright"></i> 2023, Shopp-itt. Designed by
-									<span className="t-link t-link--primary text-light">&nbsp;DHEERAJ GUPTA&nbsp;</span>
+									<span className="t-link t-link--primary text-light" style={{whiteSpace: "nowrap"}}>&nbsp;DHEERAJ GUPTA&nbsp;</span>
 									. All Rights Reserved.
 								</p>
 							</div>

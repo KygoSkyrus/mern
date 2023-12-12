@@ -100,7 +100,8 @@ const Homepage = () => {
       </div>   
 
       {/* <!-- Product 1 --> */}
-      <div className='container bx gapBtw'>
+      <div className='container bx gapBtw' data-aos="fade-up"
+              data-aos-duration="500">
         <div className='row'>
           <div className='col-12'>
             <div className='row'>
@@ -161,7 +162,8 @@ const Homepage = () => {
       </div>
       {/* <!-- Product 1 --> */}
 
-      <div className="menu position-relative gapBtw">
+      <div className="menu position-relative gapBtw" data-aos="flip-up"
+              data-aos-duration="500">
         <div className="menu__item">
           <div className="marquee">
             <div className="marquee__inner">
@@ -187,7 +189,7 @@ const Homepage = () => {
             <div
               className="wrapper-figure"
               data-aos="fade-right"
-              data-aos-duration="1500"
+              data-aos-duration="1000"
               // data-aos-offset="200"
               // data-aos-delay="50"
               // data-aos-easing="ease-in-out"
@@ -200,7 +202,8 @@ const Homepage = () => {
                 // src="https://i.ibb.co/3msVHYZ/sneaker-image.png"
                 className="wrapper-image" loading="lazy" alt="Sneaker" />
             </div>
-            <div className="wrapper-content">
+            <div className="wrapper-content" data-aos="fade-left"
+              data-aos-duration="1000">
               <div className="wrapper-inform">
                 <span className="badge badge-darken">Controller</span>
                 <h1 className="heading-sm font-bold text-dark">GoGear Pro Wireless Gamepad</h1>
@@ -233,8 +236,8 @@ const Homepage = () => {
                 </div> */}
               </div>
               <div className="wrapper-action">
-                <Link to="/category/controllers"><button className="btn btn-darken">Buy now</button></Link>
-                <button className="btn btn-neutral">
+                <Link to="/category/controllers"><button className="shoppittBtn">Buy now</button></Link>
+                <button className="shoppittBtnR">
                   <i className="fa fa-heart"></i>
                 </button>
               </div>
@@ -260,7 +263,7 @@ const Homepage = () => {
             <p>Xbox Game Pass Ultimate Xbox Live Gold and over 100 high-quality
               console and PC games. Play together with friends and discover your
               next favorite game.</p>
-            <a href="/category/xbox" className="xbox-btn">
+            <a href="/category/xbox" className="xbox-btn hover-y">
               Explore Now <i className="fas fa-chevron-right"></i>
             </a>
           </div>
@@ -335,7 +338,7 @@ const Homepage = () => {
               </a>
             </div>
           </div>
-          <img src={iphone5} alt="" width="40%" />
+          <img src={iphone5} alt="" width="40%" data-aos="fade-up" data-aos-duration="1000" />
         </div>
       </div>
 
@@ -351,7 +354,7 @@ const Homepage = () => {
             <div className='row'>
               {trendingProducts?.map((x,i) => {
                 return (
-                  <div className='col-md-6 col-lg-4' key={i}>
+                  <div className='col-md-6 col-lg-4' key={i} data-aos="fade-up" data-aos-duration="1000">
                     <div className="mini-card mdc-elevation--z4" >
                       <div className="media-image mdc-card__media mdc-card__media--square" style={{ backgroundImage: `url(${x.image[0]})` }}>
                         <div className="mdc-card__media-content">
@@ -379,14 +382,14 @@ const Homepage = () => {
         <div className='row'>
           <div className='col-12'>
             <div className='row'>
-              <div className='col-md-6 col-lg-6'>
+              <div className='col-md-6 col-lg-6' data-aos="flip-up" data-aos-duration="2000" data-aos-delay="300">
                 <div className='card2 filler-img card h-100'>
                   <div style={{ height: "100%", minHeight: "275px", objectFit: "cover", display: "grid", placeItems: "center" }}>
                     <img src={wearables1} className="card-img-top" style={{ height: "-webkit-fill-available" }} alt="..." />
                   </div>
                 </div>
               </div>
-              <div className='col-md-6 col-lg-6'>
+              <div className='col-md-6 col-lg-6' data-aos="flip-down" data-aos-duration="2000"  data-aos-delay="300">
                 <div className='card2 filler-img card h-100'>
                   <div style={{ height: "100%", minHeight: "275px", objectFit: "cover", display: "grid", placeItems: "center" }}>
                     <img src={wearables2} className="card-img-top" alt="..." />
@@ -428,7 +431,8 @@ const Homepage = () => {
 
       <div style={{ background: "var(--red)" }}>
         <div className='headphone-filler container align-items-center d-flex justify-content-between gapBtw'>
-          <div className="filler-content text-light">
+          <div className="filler-content text-light" data-aos="fade-right"
+              data-aos-duration="1000">
             <section className='text-dark fw-400 fs-3'>New Arrival</section>
             <h2 className='fw-light' style={{ letterSpacing: "8px" }}><i className='fa fa-headphones-alt me-2'></i>PREMIUM SOUND</h2>
 
@@ -454,7 +458,7 @@ const Homepage = () => {
               </a>
             </div>
           </div>
-          <img src={headphone2} alt="" width="50%" />
+          <img src={headphone2} alt="" width="50%" data-aos="fade-left" data-aos-duration="1000" />
         </div>
       </div>
 

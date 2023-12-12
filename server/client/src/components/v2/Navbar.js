@@ -222,7 +222,7 @@ const Navbar = () => {
 
               <li className="nav-item">
 
-                <div className="position-relative">
+                <div className="position-relative px-2">
                   <input
                     type="search"
                     className="nav-link "
@@ -368,28 +368,33 @@ const Navbar = () => {
                   aria-labelledby="profileDropdown"
                 >
                   <li className="">
-                    <Link className="dropdown-item gap-2 d-flex" to="/user">
+                    <Link className="dropdown-item gap-2 d-flex align-items-center" to="/user">
+                      {/* <i className="fa fa-user"></i> */}
                       Account
                     </Link>
                   </li>
                   <li className="">
-                    <Link className="dropdown-item gap-2 d-flex" to="/wishlist">
-                      Wishlist
+                    <Link className="dropdown-item gap-2 d-flex align-items-center" to="/wishlist">
+                    {/* <i className="fa fa-heart"></i> */}
+                    Wishlist
                     </Link>
                   </li>
                   <li className="">
-                    <Link className="dropdown-item gap-2 d-flex" to="/orders">
-                      Orders
+                    <Link className="dropdown-item gap-2 d-flex align-items-center" to="/orders">
+                    {/* <i className="fas fa-box-open"></i> */}
+                    Orders
                     </Link>
                   </li>
                   <li className="">
-                <Link to="/admin/dashboard" className="dropdown-item gap-2 d-flex">
+                <Link to="/admin/dashboard" className="dropdown-item gap-2 d-flex align-items-center">
+                  {/* <i className="fa fa-hat-cowboy"></i> */}
                   Admin
                 </Link>
               </li>
                   <li className="">
-                    <span className="dropdown-item gap-2 d-flex pointer" onClick={()=>signOut(dispatch)}>
-                      Log out
+                    <span className="dropdown-item gap-2 d-flex pointer  align-items-center" onClick={()=>signOut(dispatch)}>
+                    {/* <i className="fa fa-sign-out-alt"></i> */}
+                    Sign out
                     </span>
                   </li>
                 </ul>

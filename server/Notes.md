@@ -52,9 +52,10 @@ NOTE :::the issue that without internet you are not abke to acces db,,,setup the
 - on routing to a page the page starts with same where the last page is left,, react-router-dom scroll
 - explore other categories component is misseing from every page
 - maybe change the heading of related priduct base on which page they are
+- add onscroll animations on homepage
 
 # Defects
-- add onscroll animations on homepage
+- add the profile image instad of prfole on both admin and user side
 - remove the faded yellow and purple filler 
 
 
