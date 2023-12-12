@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
-import { goWithGoogle, signinAPI, defaultAvatar } from './Utility'
+import { goWithGoogle, signinAPI, defaultAvatar, inProgressLoader } from './Utility'
 import { invokeToast } from './redux/toastSlice';
 
 const SignInForm = ({ userCredentials, setUserCredentials, title, description, toggleText, signInOrSignUp, toggleSignInOrSignUp, btnText }) => {
@@ -14,14 +14,16 @@ const SignInForm = ({ userCredentials, setUserCredentials, title, description, t
     const auth = getAuth();
 
     function handleClick() {
+        console.log('handleclick',signInOrSignUp)
         if (signInOrSignUp === "signup") {
             createUserAccountFirebase()
-        } else if (signInOrSignUp === "signup") {
+        } else if (signInOrSignUp === "signin") {
             loginUserFirebase()
         }
     }
 
     function createUserAccountFirebase() {
+        inProgressLoader(dispatch,true)
         // console.log('eee', userCredentials,userCredentials?.username?.trim().length)
         let name = userCredentials?.username?.trim();
 
@@ -55,6 +57,7 @@ const SignInForm = ({ userCredentials, setUserCredentials, title, description, t
                 console.log('user cred', user)
 
                 signinAPI('signup', user?.email, firstname, lastname, defaultAvatar, dispatch)
+                inProgressLoader(dispatch,false)
                 navigate('/user');//sending user to user page for filling out other details
                 setUserCredentials({ email: '', password: '', username: '' })
             })
@@ -63,6 +66,7 @@ const SignInForm = ({ userCredentials, setUserCredentials, title, description, t
                 const errorMessage = error.message;
                 console.log('error', errorCode, errorMessage)
                 // document.getElementById('closeSignin').click()//closing the modal
+                inProgressLoader(dispatch,false)
                 setUserCredentials({ email: '', password: '', username: '' })
                 let errMsg = errorMessage;
                 if (errorCode === 'auth/email-already-in-use') errMsg = "User already exists!!! Try Signing in instead"
@@ -71,7 +75,7 @@ const SignInForm = ({ userCredentials, setUserCredentials, title, description, t
     }
 
     function loginUserFirebase() {
-
+              inProgressLoader(dispatch,true)
         signInWithEmailAndPassword(auth, userCredentials?.email, userCredentials?.password)
             .then(
                 (response) => {
@@ -80,6 +84,7 @@ const SignInForm = ({ userCredentials, setUserCredentials, title, description, t
                     const user = response.user;
 
                     signinAPI('signin', user?.email, "", "", user?.photoURL, dispatch)
+                    inProgressLoader(dispatch,false)
                     navigate('/user');//sending user to user page for filling out other details
                     setUserCredentials({ email: '', password: '', username: '' })
                     // setemail('')
@@ -93,6 +98,7 @@ const SignInForm = ({ userCredentials, setUserCredentials, title, description, t
                 // document.getElementById('closeSignin').click()//closing the modal
                 // setemail('')
                 // setpassword('')
+                inProgressLoader(dispatch,false)
                 setUserCredentials({ email: '', password: '', username: '' })
                 dispatch(invokeToast({ isSuccess: false, message: "Authentication Failed, Invalid email/password" }))
             });

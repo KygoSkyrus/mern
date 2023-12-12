@@ -206,7 +206,7 @@ export const signinAPI = (val, email, firstname, lastname, photo, dispatch, navi
         })
         .then(res => {
             console.log("res.user", res.user)
-
+            document.getElementById('closeSignin').click()//closing the modal
             if (resp.status === 200) {
                 dispatch(invokeToast({ isSuccess: true, message: res.message }))
             } else {
@@ -222,9 +222,9 @@ export const signinAPI = (val, email, firstname, lastname, photo, dispatch, navi
                 // console.log('navigate -1')
                     dispatch(setAdminAuthStatus({ value: res.is_user_logged_in }))
                     navigate(`/admin/${route}`)//navigating to requested route
-            } else {
-                document.getElementById('closeSignin').click()//closing the modal
-            }
+            } //else {
+                // document.getElementById('closeSignin').click()//closing the modal
+            //}
         })
 }
 
