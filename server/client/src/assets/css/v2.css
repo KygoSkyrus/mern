@@ -739,7 +739,16 @@ input[type="number"] {
 .signin .modal-content {
   min-height: 75vh;
 }
-
+.signin #closeSignin{
+  width: fit-content;
+  position: absolute;
+  right: 0px;
+  width: 22px;
+  height: 22px;
+  border-bottom-left-radius: 9px;
+  background: var(--yellow);
+  z-index: 3;
+}
 .continue-with span {
   background: white;
   position: relative;
@@ -2603,7 +2612,10 @@ main {
   }
   .signin .modal-content {
     min-height: unset;
-    width: 90w !important;
+    width: 90vw !important;
+  }
+  .signin #closeSignin{
+    display: inline !important;
   }
   .signin .modal-body {
     flex-direction: column !important;

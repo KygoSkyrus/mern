@@ -142,7 +142,7 @@ const SignIn = ({ firebaseApp }) => {
         <div className="modal fade signin" id="exampleModalToggle" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-dialog-centered w-75">
                 <div className="modal-content " style={{ width: "80vw" }}>
-                    <button type="button" id='closeSignin' className="btn-close d-none" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" id='closeSignin' className="d-none" data-bs-dismiss="modal" aria-label="Close"><i className='fa fa-times'></i></button>
 
                     <div className="modal-body d-flex flex-row p-0 position-relative">
                         <div className='w-50 signin-img d-flex bg-dark' style={{ zIndex: 2 }}>
