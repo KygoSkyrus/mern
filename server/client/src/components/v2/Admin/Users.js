@@ -103,7 +103,7 @@ const Users = () => {
                                                     {x.orders.length}
                                                 </td>
 
-                                                <td className="align-middle text-center">
+                                                <td className="align-middle text-center dateStr">
                                                     {getDateStr(x.createdAt)}
                                                 </td>
                                             </tr>

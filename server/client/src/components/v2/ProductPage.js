@@ -55,7 +55,7 @@ const ProductPage = () => {
                 product.length === 0 ?
                     <div className='d-flex flex-column align-items-center justify-content-center h70 no-item-block'>
                         <div>
-                            <img src={noProd} alt='' width={'100%'} style={{ width: "200px", mixBlendMode: "darken" }} />
+                            <img src={noProd} alt='shoppitt' width={'100%'} style={{ width: "200px", mixBlendMode: "darken" }} />
                         </div>
                         <h5 className='text-dark'>Ooops!!! Something went wrong</h5>
                         <span className='text-center'>
@@ -72,12 +72,12 @@ const ProductPage = () => {
                                         <div className='additional-images row col-md-2'>
                                             {product[0].image.map((x, i) => {
                                                 return (
-                                                    <img src={x} alt="" class={`optional-img img-fluid w-100 t-minw-215 pointer  ${i === 0 && "selected-border"}`} onClick={e => setImage(e)} />
+                                                    <img src={x} alt="shoppitt" class={`optional-img img-fluid w-100 t-minw-215 pointer  ${i === 0 && "selected-border"}`} onClick={e => setImage(e)} />
                                                 )
                                             })}
                                         </div>
                                         <div className='col-md-9'>
-                                            <img src={product[0].image[0]} ref={prodImage} alt="" className="img-fluid w-100 t-minw-215" />
+                                            <img src={product[0].image[0]} ref={prodImage} alt="shoppitt" className="img-fluid w-100 t-minw-215" />
                                         </div>
                                     </div>
                                 </div>

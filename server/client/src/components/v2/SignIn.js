@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 import { invokeToast } from './redux/toastSlice';
-import { goWithGoogle, signinAPI,defaultAvatar } from './Utility';
+import { goWithGoogle, signinAPI, defaultAvatar } from './Utility';
 import loginImg from "./../../assets/images/login-cover.svg"
 import SignInForm from './SignInForm';
 
@@ -12,7 +12,7 @@ const SignIn = ({ firebaseApp }) => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const [userCredentials, setUserCredentials] = useState({ email: '', password: '',username:'' });
+    const [userCredentials, setUserCredentials] = useState({ email: '', password: '', username: '' });
     const [phone, setphone] = useState();
     const [otp, setOtp] = useState(["", "", "", "", "", ""])
 
@@ -136,7 +136,7 @@ const SignIn = ({ firebaseApp }) => {
 
 
 
-    
+
 
     return (
         <div className="modal fade signin" id="exampleModalToggle" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -146,32 +146,32 @@ const SignIn = ({ firebaseApp }) => {
 
                     <div className="modal-body d-flex flex-row p-0 position-relative">
                         <div className='w-50 signin-img d-flex bg-dark' style={{ zIndex: 2 }}>
-                            <img src={loginImg} alt='' />
+                            <img src={loginImg} alt='shoppitt' />
                         </div>
                         <div className='w-50 forms-holder' >
                             <div className='signup-form d-flex justify-content-center align-items-center flex-column h-100' >
-                            <SignInForm 
-                                title="Create an account"
-                                description="Enter your email below to create your account"
-                                btnText="Create account"
-                                toggleText='Exsiting user? Signin'
-                                signInOrSignUp="signup"
-                                toggleSignInOrSignUp="signin"
-                                userCredentials={userCredentials}
-                                setUserCredentials={setUserCredentials}
+                                <SignInForm
+                                    title="Create an account"
+                                    description="Enter your email below to create your account"
+                                    btnText="Create account"
+                                    toggleText='Exsiting user? Signin'
+                                    signInOrSignUp="signup"
+                                    toggleSignInOrSignUp="signin"
+                                    userCredentials={userCredentials}
+                                    setUserCredentials={setUserCredentials}
                                 />
                             </div>
 
                             <div className={`signin-form d-flex justify-content-center align-items-center flex-column h-100 ${window.outerWidth < 768 && 'd-none'}`} >
-                            <SignInForm 
-                                title="SignIn to your account"
-                                description="Enter your email and password to signin to your account"
-                                btnText="Sign In"
-                                toggleText='New user? Create an account'
-                                signInOrSignUp="signin"
-                                toggleSignInOrSignUp="signup"
-                                userCredentials={userCredentials}
-                                setUserCredentials={setUserCredentials}
+                                <SignInForm
+                                    title="SignIn to your account"
+                                    description="Enter your email and password to signin to your account"
+                                    btnText="Sign In"
+                                    toggleText='New user? Create an account'
+                                    signInOrSignUp="signin"
+                                    toggleSignInOrSignUp="signup"
+                                    userCredentials={userCredentials}
+                                    setUserCredentials={setUserCredentials}
                                 />
                                 {/* <h5 className='text-dark'>SignIn to your account</h5>
                                 <section className='text-center'>Enter your email and password to signin to your account</section>

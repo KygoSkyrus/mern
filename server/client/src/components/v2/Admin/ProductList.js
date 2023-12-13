@@ -2,10 +2,11 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { setProductFormVisibility, setProductFormTitle, setProductForm } from '../redux/productFormSlice'
+import { isProductUpdated } from '../redux/productSlice';
 import { setLoaderVisibility } from '../redux/loaderSlice';
 import { invokeToast } from '../redux/toastSlice';
 
-const Product = ({ details,areLastTwoRow }) => {
+const Product = ({ details, areLastTwoRow }) => {
     const productFormVisibility = useSelector(state => state.productForm.visibility)// modal's visibility
     const dispatch = useDispatch()
 
@@ -17,13 +18,13 @@ const Product = ({ details,areLastTwoRow }) => {
 
     //on hover the product image preview
     const showImagePreview = (e) => {
-        const previewElemm=e.target.nextElementSibling;
-        const bgElem =e.target.parentElement.querySelector('.bg-img-preview');
+        const previewElemm = e.target.nextElementSibling;
+        const bgElem = e.target.parentElement.querySelector('.bg-img-preview');
 
         previewElemm.style.backgroundImage = e.target.style['background-image']//placing the same image to the hover preview
         previewElemm.classList.add('display-block')
         bgElem.classList.add('display-block')
-        if(areLastTwoRow){
+        if (areLastTwoRow) {
             previewElemm.classList.add('bottom100')
             bgElem.classList.add('bottom100')
         }
@@ -52,14 +53,14 @@ const Product = ({ details,areLastTwoRow }) => {
             .then(data => {
                 dispatch(setLoaderVisibility({ loader: false }))//loader turned off
                 if (resp.status === 200) {
-                    dispatch(invokeToast({isSuccess:true,message:data.message}))
+                    dispatch(invokeToast({ isSuccess: true, message: data.message }))
                 } else {
-                    dispatch(invokeToast({isSuccess:false,message:data.message}))
+                    dispatch(invokeToast({ isSuccess: false, message: data.message }))
                 }
             })
     }
 
-    function deleteProduct(id){
+    function deleteProduct(id) {
         dispatch(setLoaderVisibility({ loader: true }))
         let resp;
         fetch("/api/admin/deleteproduct", {
@@ -76,9 +77,10 @@ const Product = ({ details,areLastTwoRow }) => {
             .then(data => {
                 dispatch(setLoaderVisibility({ loader: false }))
                 if (resp.status === 200) {
-                    dispatch(invokeToast({isSuccess:true,message:data.message}))
+                    dispatch(invokeToast({ isSuccess: true, message: data.message }))
+                    dispatch(isProductUpdated({ updateProduct: true }))//reloading the product list to show updated list
                 } else {
-                    dispatch(invokeToast({isSuccess:false,message:data.message}))
+                    dispatch(invokeToast({ isSuccess: false, message: data.message }))
                 }
             })
     }
@@ -99,7 +101,7 @@ const Product = ({ details,areLastTwoRow }) => {
                 </label>
             </td> */}
 
-            <td className="align-middle">
+            <td className="align-middle ellipsis">
                 <i className="fa fa-circle fa-fw me-2 text-indigo"></i>
                 <span className="text-dark pb-0">
                     {details.name}
@@ -161,7 +163,7 @@ const Product = ({ details,areLastTwoRow }) => {
                         <ul className="overflow-auto list-unstyled mb-0 vstack" style={{ height: "200px", gap: "1px" }}>
                             <li>
                                 <a className="dropdown-item d-flex py-2" href="/#" data-bs-toggle="button">
-                                    <img className="avatar-sm rounded-pill me-3" src="https://randomuser.me/api/portraits/women/65.jpg" alt="" />
+                                    <img className="avatar-sm rounded-pill me-3" src="https://randomuser.me/api/portraits/women/65.jpg" alt="shoppitt" />
                                     <span className="flex-grow-1 align-self-center me-5">Rakesh Maraiop</span>
                                 </a>
                             </li>
@@ -226,8 +228,8 @@ const Product = ({ details,areLastTwoRow }) => {
                         </li>
                         <li><hr className="dropdown-divider" /></li> */}
                         <li>
-                            <button type="button" className="dropdown-item gap-2 d-flex" data-bs-toggle="modal" data-bs-target="#modalDanger" disabled>
-                                <i className="fa fa-trash fa-fw me-2 opacity-50 align-self-center" onClick={()=>deleteProduct(details._id)}></i> Delete
+                            <button type="button" className="dropdown-item gap-2 d-flex pointer" onClick={() => deleteProduct(details._id)}>
+                                <i className="fa fa-trash fa-fw me-2 opacity-50 align-self-center"></i> Delete
                             </button>
                         </li>
                     </ul>

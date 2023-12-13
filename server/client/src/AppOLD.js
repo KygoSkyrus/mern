@@ -24,20 +24,20 @@ function App() {
     if (props.show === true) {
       return (
         <>
-        <ToastContainer  className="p-3 mt-5 tst">
-              <Toast onClose={() => setShow(false)} show={show} delay={3000} autohide bg="danger" >
-                <Toast.Header>
-                  <img
-                    src=""
-                    className="rounded me-2"
-                    alt=""
-                  />
-                  <strong className="me-auto">Shopp-itt</strong>
-                  <small className="text-muted">just now</small>
-                </Toast.Header>
-                <Toast.Body className="text-light">{props.itemName}, has been aded to your cart.</Toast.Body>
-              </Toast>
-            </ToastContainer>
+          <ToastContainer className="p-3 mt-5 tst">
+            <Toast onClose={() => setShow(false)} show={show} delay={3000} autohide bg="danger" >
+              <Toast.Header>
+                <img
+                  src=""
+                  className="rounded me-2"
+                  alt="shoppitt"
+                />
+                <strong className="me-auto">Shopp-itt</strong>
+                <small className="text-muted">just now</small>
+              </Toast.Header>
+              <Toast.Body className="text-light">{props.itemName}, has been aded to your cart.</Toast.Body>
+            </Toast>
+          </ToastContainer>
         </>
       );
     } else return null
@@ -56,11 +56,11 @@ function App() {
     }
 
     //to show toast only on the main page but not on the cart
-    if(window.location.href==="http://localhost:3000/"){
+    if (window.location.href === "http://localhost:3000/") {
       setitemName(a.name);//this is for the toast, to show name of the product
       setShow(true);//related to toast
     }
-    
+
   }
 
   //to decrease the item from cart
@@ -82,7 +82,7 @@ function App() {
   const [cartData, setcartData] = useState();
   const [tPrice, settPrice] = useState();
   //callback function to cart to get the data from there and send to orders
-  const callbck=(data,totalprice)=>{
+  const callbck = (data, totalprice) => {
     setcartData(data);
     settPrice(totalprice);
   }
@@ -105,13 +105,13 @@ function App() {
         </Route>
 
         <Route path="/cart" component={Cart}>
-          <Cart onAdd={onAdd} onRemove={onRemove} clear={clear} data={data} callback={callbck}/>
+          <Cart onAdd={onAdd} onRemove={onRemove} clear={clear} data={data} callback={callbck} />
         </Route>
 
         {/**the mess ends */}
 
         <Route path="/orders" component={Orders}>
-          <Orders data={cartData} totalprice={tPrice}/>
+          <Orders data={cartData} totalprice={tPrice} />
         </Route>
 
 

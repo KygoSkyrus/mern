@@ -22,7 +22,7 @@ const Order = () => {
   const [order, setOrder] = useState()
   const [showLoader, setShowLoader] = useState(true)
 
-  console.log("orderId", orderId, showLoader,userLoggedIn)
+  console.log("orderId", orderId, showLoader, userLoggedIn)
 
 
   useEffect(() => {
@@ -52,7 +52,7 @@ const Order = () => {
                   setOrder(res.order)
                 } else {
                   // invokeToast(dispatch,false,res.message)
-                  dispatch(invokeToast({isSuccess:false,message:res.message}))
+                  dispatch(invokeToast({ isSuccess: false, message: res.message }))
                 }
               })
           }
@@ -62,7 +62,7 @@ const Order = () => {
           console.log('not 2000')
           //create an utility function whcih will updated these three state abd pass theese values (this is repeated on almost every api)
           // invokeToast(dispatch,false,res.message)
-          dispatch(invokeToast({isSuccess:false,message:res.message}))
+          dispatch(invokeToast({ isSuccess: false, message: res.message }))
         }
 
       })
@@ -134,7 +134,7 @@ const Order = () => {
                                       <div className='col-md-2 oi-img'>
                                         <Link className='d-flex flex-wrap order-lis-imgs' to={`/product/${x.productId}`}>
                                           <div >
-                                            <img src={x.image} alt='' className='img-fluidt-minw-215' />
+                                            <img src={x.image} alt='shoppitt' className='img-fluidt-minw-215' />
                                           </div>
                                         </Link>
                                       </div>
@@ -216,7 +216,7 @@ const Order = () => {
               :
               <div className='d-flex flex-column align-items-center justify-content-center mb-5 h70 no-item-block'>
                 <div>
-                  <img src={noOrder} alt='' className='no-item-img' />
+                  <img src={noOrder} alt='shoppitt' className='no-item-img' />
                 </div>
                 <h5 className='text-dark'>Ooops!!! Incorrect Order ID</h5>
                 <span className='text-center'>

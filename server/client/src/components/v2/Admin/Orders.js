@@ -44,12 +44,12 @@ const Orders = () => {
     useEffect(() => {
         let searchedOrder = allOrders?.filter(x => {
             return (
-                findSubString(x.user.firstname,searchedQuery) ||
-                findSubString(x.user.lastname,searchedQuery) ||
-                findSubString(x.user.email,searchedQuery) ||
-                findSubString(x.orderId,searchedQuery) ||
-                findSubString(x.payment_status,searchedQuery) ||
-                findSubString(x.status,searchedQuery)
+                findSubString(x.user.firstname, searchedQuery) ||
+                findSubString(x.user.lastname, searchedQuery) ||
+                findSubString(x.user.email, searchedQuery) ||
+                findSubString(x.orderId, searchedQuery) ||
+                findSubString(x.payment_status, searchedQuery) ||
+                findSubString(x.status, searchedQuery)
             )
         })
         setOrders(searchedOrder)
@@ -104,7 +104,7 @@ const Orders = () => {
                                                     </div>
                                                 </th>
 
-                                                <td className="align-middle">
+                                                <td className="align-middle ellipsis">
                                                     <i className="fa fa-circle fa-fw me-2 text-indigo"></i>
                                                     <span className="text-dark pb-0">
                                                         {x.orderId}
@@ -170,7 +170,7 @@ const Orders = () => {
                                                     </div>
                                                 </td>
 
-                                                <td className="align-middle text-center small">
+                                                <td className="align-middle text-center small dateStr">
                                                     {getDateStr(x.createdAt)}
                                                 </td>
                                             </tr>

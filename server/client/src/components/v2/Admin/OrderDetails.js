@@ -6,20 +6,34 @@ import { getFullDateStr, formatInINR } from '../Utility'
 const OrderDetails = (props) => {
 
   const order = props.details
-  const closeProductContainer = (e) => {
+  const closeProductContainer = (e, triggerClose) => {
+    if (triggerClose) {
+      props.setSDetailsVisibility(false)
+      return
+    }
     if (e.target !== document.querySelector('.orderDetails')) {
       props.setSDetailsVisibility(false)
     }
   }
-  console.log('orderrr',order)
+  console.log('orderrr', order)
 
-  
+
   return (
-    <div className='activeProductContainer' style={{ placeItems: "center" }} onClick={e => closeProductContainer(e)}>
+    <div className='activeProductContainer admin_orderDetail' style={{ placeItems: "center" }} onClick={e => closeProductContainer(e)}>
       <div className='bg-white h-100 rounded-1 orderDetails p-3'>
 
+        <div className="text-end closeBtn d-none">
+          <span
+            onClick={(e) => closeProductContainer(e, true)}
+            className="btn btn-light cursor-pointer" >
+            <i
+              className="fas fa-times">
+            </i>
+          </span>
+        </div>
+
         <div className='container mt-3 mb-5'>
-          <div className='d-flex justify-content-between p-2 px-3 mb-4 border-bottom rounded-1'>
+          <div className='d-flex justify-content-between p-2 px-3 mb-4 border-bottom rounded-1 orderHead'>
             <div className='d-flex align-items-center'>
               <h6 className='d-inline text-black mb-0'>Order #{order.orderId}</h6>
               <section className="bg-body border p-1 px-3 rounded ms-3">
@@ -45,7 +59,7 @@ const OrderDetails = (props) => {
                           </div>
                         </div>
                       </div>
-                      <div className="col-md-6">
+                      <div className="col-md-6 oi-other-heading">
                         <div className='row d-flex justify-content-between'>
                           <div className="col-md-2 ">
                             <h6>
@@ -69,17 +83,17 @@ const OrderDetails = (props) => {
                     {order?.products?.map((x, i) => {
                       return (
                         <>
-                          <div key={x._id} className='row  align-items-center' >
+                          <div key={x._id} className='row  align-items-center oi' >
                             <div className="col-md-6">
-                              <div className='row justify-content-center align-items-center'>
-                                <div className='col-md-2 '>
+                              <div className='row justify-content-center align-items-center oi-top'>
+                                <div className='col-md-2 oi-img'>
                                   <Link className='d-flex flex-wrap order-lis-imgs' to={`/product/${x.productId}`}>
                                     <div >
-                                      <img src={x.image} alt='' className='img-fluidt-minw-215' />
+                                      <img src={x.image} alt='shoppitt' className='img-fluidt-minw-215' />
                                     </div>
                                   </Link>
                                 </div>
-                                <Link className="col-md-6" to={`/product/${x.productId}`} >
+                                <Link className="col-md-6 oi-name" to={`/product/${x.productId}`} >
                                   {x.name}
                                 </Link>
                               </div>
@@ -87,7 +101,7 @@ const OrderDetails = (props) => {
 
                             <div className="col-md-6">
                               <div className='d-flex flex-column justify-content-between h-100'>
-                                <div className='row d-flex justify-content-between'>
+                                <div className='row d-flex justify-content-between oi-details'>
                                   <div className="col-md-2">
                                     <div className='d-flex align-items-end flex-column' style={{ width: "fit-content", margin: "auto" }}>
                                       <span className=''>{formatInINR.format(x.price)}</span>
@@ -97,7 +111,7 @@ const OrderDetails = (props) => {
                                     <span className=''>{x.quantity}</span>
                                   </div>
 
-                                  <div className="col-md-2 text-center">
+                                  <div className="col-md-2 text-center oi-total">
                                     <div className='d-flex align-items-end flex-column' style={{ width: "fit-content", margin: "auto" }}>
                                       <span className=''>{formatInINR.format((x.quantity * Math.floor(x.price - x.discount * x.price / 100)))}</span>
                                     </div>
@@ -148,9 +162,9 @@ const OrderDetails = (props) => {
                       <section className='text-end d-grid pb-1'>
                         <span style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }} className=" align-items-center d-flex justify-content-between" title={order?.user.line1}>
                           <i className='fa fa-location-pin me-2'></i>
-                          {order?.user?.address?.house} 
+                          {order?.user?.address?.house}
                         </span>
-                        <span style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}  title={order?.user.line1}>{order?.user?.address?.street}</span>
+                        <span style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }} title={order?.user.line1}>{order?.user?.address?.street}</span>
                         <span>{order?.user?.address?.city}, {order?.user?.address?.pincode}</span>
                         <span>{order?.user?.address?.state},</span>
                         <span>India</span>

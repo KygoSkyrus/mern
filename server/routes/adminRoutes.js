@@ -30,7 +30,7 @@ router.post('/editproduct', editProduct)
 
 router.post('/addcategory', addCategory)
 
-router.get('/deleteproduct', deleteProduct)
+router.post('/deleteproduct', deleteProduct)
 
 
 module.exports= router

@@ -308,7 +308,7 @@ const Cart = () => {
             (cartItems?.length > 0 ?
               <div className='container cart-page my-5'>
                 <h6 className='text-center my-5 d-flex justify-content-center align-items-center'>My Cart
-                  <img alt='' className='ms-2' src={theBagLogo} width="20px" />
+                  <img alt='shoppitt' className='ms-2' src={theBagLogo} width="20px" />
                 </h6>
                 <div className="row ">
                   <div className="col-lg-9 t-mb-30 mb-lg-0 theSection" >
@@ -352,7 +352,7 @@ const Cart = () => {
                                 <div key={x._id} className='row  p-2 ci'>
                                   <div className="col-md-2 ci-img">
                                     <div className='d-flex justify-content-center'>
-                                      <img src={x.image} alt='' className='img-fluidt-minw-215' style={{ maxHeight: "100px" }} />
+                                      <img src={x.image} alt='shoppitt' className='img-fluidt-minw-215' style={{ maxHeight: "100px" }} />
                                     </div>
                                   </div>
 
@@ -471,7 +471,7 @@ const Cart = () => {
               :
               <div className='d-flex flex-column align-items-center no-item-block'>
                 <div>
-                  <img src={emptyCartImg} alt='' className='no-item-img cart-img' />
+                  <img src={emptyCartImg} alt='shoppitt' className='no-item-img cart-img' />
                 </div>
                 <h5 className='text-dark'>Your cart is empty</h5>
                 <span className='text-center'>

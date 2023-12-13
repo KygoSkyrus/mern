@@ -103,7 +103,7 @@ const Wishlist = () => {
                                 <div key={x._id} className='row  p-2 wi'>
                                   <div className="col-md-2 wi-img">
                                     <div className='d-flex justify-content-center'>
-                                      <img src={x.image} alt='' className={`img-fluidt-minw-215 ${x.stock === 0 ? 'grayscale' : ''}`} style={{ maxHeight: "80px" }} />
+                                      <img src={x.image} alt='shoppitt' className={`img-fluidt-minw-215 ${x.stock === 0 ? 'grayscale' : ''}`} style={{ maxHeight: "80px" }} />
                                     </div>
                                   </div>
 
@@ -174,7 +174,7 @@ const Wishlist = () => {
             :
             <div className='d-flex flex-column align-items-center no-item-block'>
               <div className='d-flex justify-content-center align-items-center'>
-                <img src={wishlistImg} className='no-data-img' alt='' />
+                <img src={wishlistImg} className='no-data-img' alt='shoppitt' />
               </div>
               <h5 className='text-dark mt-2'>Your wishlist is empty</h5>
               <span className='text-center'>

@@ -32,9 +32,9 @@ const Navbar = () => {
   function handleNavBar(val) {
     const toggler = document.querySelector('.navbar-toggler')
     const isNavExpanded = toggler?.getAttribute('aria-expanded')
-    const overlay=document.querySelector('.navbar-overlay')
+    const overlay = document.querySelector('.navbar-overlay')
 
-    isNavExpanded==="true"? overlay.classList.remove('display-none'): overlay.classList.add('display-none')
+    isNavExpanded === "true" ? overlay.classList.remove('display-none') : overlay.classList.add('display-none')
     if (val) toggler.click() //when overlay is clicked
   }
 
@@ -237,7 +237,7 @@ const Navbar = () => {
                       return (
                         <section className="dropdown-item" key={x._id} onClick={() => hideSearched()}>
                           <Link to={`/product/${x._id}`}>
-                            <img className="me-3" src={x.image} alt="" height="50px" width="55px" />
+                            <img className="me-3" src={x.image} alt="shoppitt" height="50px" width="55px" />
                           </Link>
                           <Link to={`/product/${x._id}`}>
                             <span>{x.name}</span>
@@ -342,7 +342,7 @@ const Navbar = () => {
                 <Link to="/cart" className="nav-link">
                   {/* <i className='fa fa-shopping-cart'></i> */}
                   {/* if the cart value is zero than dont show badge */}
-                  <img src={theBagLogo} alt="" height="19.7px" />
+                  <img src={theBagLogo} alt="shoppitt" height="19.7px" />
                   {/* <span>Cart</span> */}
                   {cartTotalQuantity !== 0 && <Badge />}
                 </Link>
@@ -375,26 +375,26 @@ const Navbar = () => {
                   </li>
                   <li className="">
                     <Link className="dropdown-item gap-2 d-flex align-items-center" to="/wishlist">
-                    {/* <i className="fa fa-heart"></i> */}
-                    Wishlist
+                      {/* <i className="fa fa-heart"></i> */}
+                      Wishlist
                     </Link>
                   </li>
                   <li className="">
                     <Link className="dropdown-item gap-2 d-flex align-items-center" to="/orders">
-                    {/* <i className="fas fa-box-open"></i> */}
-                    Orders
+                      {/* <i className="fas fa-box-open"></i> */}
+                      Orders
                     </Link>
                   </li>
                   <li className="">
-                <Link to="/admin/dashboard" className="dropdown-item gap-2 d-flex align-items-center">
-                  {/* <i className="fa fa-hat-cowboy"></i> */}
-                  Admin
-                </Link>
-              </li>
+                    <Link to="/admin/dashboard" className="dropdown-item gap-2 d-flex align-items-center">
+                      {/* <i className="fa fa-hat-cowboy"></i> */}
+                      Admin
+                    </Link>
+                  </li>
                   <li className="">
-                    <span className="dropdown-item gap-2 d-flex pointer  align-items-center" onClick={()=>signOut(dispatch)}>
-                    {/* <i className="fa fa-sign-out-alt"></i> */}
-                    Sign out
+                    <span className="dropdown-item gap-2 d-flex pointer  align-items-center" onClick={() => signOut(dispatch)}>
+                      {/* <i className="fa fa-sign-out-alt"></i> */}
+                      Sign out
                     </span>
                   </li>
                 </ul>

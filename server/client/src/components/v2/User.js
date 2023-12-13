@@ -96,7 +96,7 @@ const User = () => {
     }, [userDetail])//when the data gets loaded in store
 
 
-   
+
 
     function showAvatarEditBtn(val) {
         const editBtn = document.querySelector('.avatar-edit-btn');
@@ -107,8 +107,8 @@ const User = () => {
         }
     }
 
-    function setUserAvatar(){
-        document.querySelector('.userAvatar').src=selectedAvatar
+    function setUserAvatar() {
+        document.querySelector('.userAvatar').src = selectedAvatar
         document.getElementById('closeAvatarModal').click()
     }
 
@@ -128,7 +128,7 @@ const User = () => {
                                 <div className='row'>
                                     <div className='col-md-9 m-auto text-center'>
                                         <div className='avatar-container position-relative d-flex justify-content-center' onMouseEnter={e => showAvatarEditBtn(true)} onMouseLeave={e => showAvatarEditBtn(false)}>
-                                            <img src={userDetail?.avtar} alt="" className="userAvatar img-fluid t-minw-215 rounded-circle" style={{ maxHeight: "223px", width: "223px" }} />
+                                            <img src={userDetail?.avtar} alt="shoppitt" className="userAvatar img-fluid t-minw-215 rounded-circle" style={{ maxHeight: "223px", width: "223px" }} />
                                             <div className='avatar-edit-btn' data-bs-toggle="modal" href="#avatarModal">
                                                 <i className='fa fa-edit fa-2x'></i>
                                             </div>
@@ -225,10 +225,10 @@ const User = () => {
                                     <div className="modal-body">
                                         <div className='d-flex justify-content-center flex-wrap' style={{ zIndex: 2, gap: "10px" }}>
                                             {Array.from(Array(20).keys()).map((x, i) => {
-                                                return <img src={getAvatarUrl(i + 1)} alt='' width='50px' onClick={e => setSelectedAvatar(e.target.src)} className={`${getAvatarUrl(i + 1) === selectedAvatar ? 'slectedAvatar' : ''}`} />
+                                                return <img src={getAvatarUrl(i + 1)} alt='shoppitt' width='50px' onClick={e => setSelectedAvatar(e.target.src)} className={`${getAvatarUrl(i + 1) === selectedAvatar ? 'slectedAvatar' : ''}`} />
                                             })}
                                             <button className='btn btn-outline-info w-100 m-2 mt-4'
-                                              onClick={() => setUserAvatar()}
+                                                onClick={() => setUserAvatar()}
                                             >Select Avatar</button>
                                         </div>
                                     </div>

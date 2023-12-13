@@ -2,6 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { categoryArray, topPicksArray, socialArray } from './Utility'
 
+import footerLogoBag from './../../assets/images/footerLogoBag.png'
+import footerLogoText from './../../assets/images/footerLogoText.png'
+
 const Footer = () => {
 
 	return (
@@ -13,8 +16,10 @@ const Footer = () => {
 							<div className="col-md-6 t-mb-30 mb-md-0 px-3">
 								<div className="brand mx-auto mr-md-auto ml-md-0">
 									<Link to="" className="t-link">
+										<img src={footerLogoBag} alt='shoppitt' width="35px" height="48px" />
+										<img src={footerLogoText} alt='shoppitt' width="128px" style={{ filter: "invert(1)", height: "48px" }} />
 										{/* <section className="logo"></section> */}
-										<h6>SHOPP-ITT</h6>
+										{/* <h6>SHOPP-ITT</h6> */}
 									</Link>
 								</div>
 							</div>
@@ -68,7 +73,7 @@ const Footer = () => {
 							<div className="col-md-4 col-lg-2 t-mb-30 mb-lg-0">
 								<h5 className="t-blue mt-0 text-capitalize">categories</h5>
 								<ul className="list">
-									{categoryArray?.map((x,i) => {
+									{categoryArray?.map((x, i) => {
 										return (
 											<li className="t-mb-10" key={i}>
 												<Link to="" className="t-link text-capitalize t-link--light sm-text">
@@ -82,7 +87,7 @@ const Footer = () => {
 							<div className="col-md-4 col-lg-2 t-mb-30 mb-lg-0">
 								<h5 className="t-blue mt-0 text-capitalize">top picks</h5>
 								<ul className="list" id="footerCat">
-									{topPicksArray.map((x,i) => {
+									{topPicksArray.map((x, i) => {
 										return (
 											<li className="t-mb-10" key={i} >
 												<Link to={`/category/${x}`} className="t-link text-capitalize t-link--light sm-text" target='_blank'>
@@ -104,7 +109,7 @@ const Footer = () => {
 							<div className="col-md-6 col-lg-3 t-mb-30 mb-lg-0">
 								<h5 className="t-blue mt-0 text-capitalize">follow us</h5>
 								<ul className="list d-flex follow mt-3">
-									{socialArray.map((x,i) => {
+									{socialArray.map((x, i) => {
 										return (
 											<li key={i}>
 												<Link to="" className="t-follow-link">
@@ -126,7 +131,7 @@ const Footer = () => {
 							<div className="col-12 text-center">
 								<p className="mb-0 t-blue sm-text">
 									<i className="fa-sharp fa-regular fa-copyright"></i> 2023, Shopp-itt. Designed by
-									<span className="t-link t-link--primary text-light" style={{whiteSpace: "nowrap"}}>&nbsp;DHEERAJ GUPTA&nbsp;</span>
+									<span className="t-link t-link--primary text-light" style={{ whiteSpace: "nowrap" }}>&nbsp;DHEERAJ GUPTA&nbsp;</span>
 									. All Rights Reserved.
 								</p>
 							</div>

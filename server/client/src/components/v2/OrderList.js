@@ -38,7 +38,7 @@ const OrderList = () => {
         } else {
           console.log('not 2000')
           // invokeToast(dispatch,false,res.message)
-          dispatch(invokeToast({isSuccess:false,message:res.message}))
+          dispatch(invokeToast({ isSuccess: false, message: res.message }))
         }
       })
   }, [])
@@ -116,7 +116,7 @@ const OrderList = () => {
                                               } else {
                                                 if (i < 3)
                                                   return (<div className={x.products.length === 1 && `ifOne`}>
-                                                    <img src={y.image} alt='' className='img-fluidt-minw-215' />
+                                                    <img src={y.image} alt='shoppitt' className='img-fluidt-minw-215' />
                                                   </div>)
                                               }
                                             })}
@@ -181,7 +181,7 @@ const OrderList = () => {
                 :
                 <div className='d-flex flex-column align-items-center justify-content-center no-item-block'>
                   <div>
-                    <img src={noOrder} alt='' width={'100%'} className='no-item-img' />
+                    <img src={noOrder} alt='shoppitt' width={'100%'} className='no-item-img' />
                   </div>
                   <h5 className='text-dark'>Ooops!!! No order found</h5>
                   <span className='text-center'>

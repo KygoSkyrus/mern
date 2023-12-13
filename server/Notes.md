@@ -53,11 +53,16 @@ NOTE :::the issue that without internet you are not abke to acces db,,,setup the
 - explore other categories component is misseing from every page
 - maybe change the heading of related priduct base on which page they are
 - add onscroll animations on homepage
+- delte btn for products
 
 # Defects
 - add the profile image instad of prfole on both admin and user side
+- remove darkmode 
+- add close btn for sighnnin in user
+- signin form is messed in mobile for user
+- signin does not workin admin
+- whenever isuserloggedin gets false ,,route out user to loginm (put it in useeefect)
 - remove the faded yellow and purple filler 
-
 
 # TODO
 - admin table heading should be sticky for mobile

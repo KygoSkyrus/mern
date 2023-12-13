@@ -26,16 +26,16 @@ function App() {
 
 
   //FIREBASE_________________________________
-const firebaseConfig = {
-  apiKey: "AIzaSyD356cys4X2N0DHboL4T8MZCDR1BuN2n88",
-  authDomain: "shopp-itt.firebaseapp.com",
-  projectId: "shopp-itt",
-  storageBucket: "shopp-itt.appspot.com",
-  messagingSenderId: "500784370915",
-  appId: "1:500784370915:web:5433a992ab3e3229daa1d6",
-  measurementId: "G-DVFRLB25DQ"
-};
-const firebaseApp = initializeApp(firebaseConfig);
+  const firebaseConfig = {
+    apiKey: "AIzaSyD356cys4X2N0DHboL4T8MZCDR1BuN2n88",
+    authDomain: "shopp-itt.firebaseapp.com",
+    projectId: "shopp-itt",
+    storageBucket: "shopp-itt.appspot.com",
+    messagingSenderId: "500784370915",
+    appId: "1:500784370915:web:5433a992ab3e3229daa1d6",
+    measurementId: "G-DVFRLB25DQ"
+  };
+  const firebaseApp = initializeApp(firebaseConfig);
   //FIREBASE_________________________________
 
 
@@ -53,7 +53,7 @@ const firebaseApp = initializeApp(firebaseConfig);
   //               <img
   //                 src=""
   //                 className="rounded me-2"
-  //                 alt=""
+  //                 alt="shoppitt"
   //               />
   //               <strong className="me-auto">Shopp-itt</strong>
   //               <small className="text-muted">just now</small>
@@ -114,7 +114,7 @@ const firebaseApp = initializeApp(firebaseConfig);
 
   return (
     <BrowserRouter>
-     <ScrollToTop />
+      <ScrollToTop />
       <div className="App">
         <SignIn firebaseApp={firebaseApp} />
 
@@ -125,7 +125,7 @@ const firebaseApp = initializeApp(firebaseConfig);
           <Route path="/admin/*" exact element={<Admin firebaseApp={firebaseApp} />} />
         </Routes>
 
-        <Loader/>
+        <Loader />
       </div>
     </BrowserRouter>
   );

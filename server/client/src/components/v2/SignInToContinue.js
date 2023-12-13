@@ -6,7 +6,7 @@ const SignInToContinue = () => {
         <div className='container my-5'>
             <div className='d-flex flex-column align-items-center m-auto' style={{ width: "fit-content" }}>
 
-                <div><img src={LoginImg} alt='' />
+                <div><img src={LoginImg} alt='shoppitt' />
                 </div>
                 <h5 className='text-dark'>You are not logged in</h5>
                 <span className='text-center'>
