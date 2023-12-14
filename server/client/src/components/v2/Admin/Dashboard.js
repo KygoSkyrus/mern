@@ -1,13 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import Product from './ProductList'
 import Nav from './Nav'
 import Header from './Header'
+import Product from './ProductList'
 import BagLoader from '../loaders/BagLoader'
 
-import { isProductUpdated } from '../redux/productSlice'
 import { findSubString } from '../Utility'
+import { isProductUpdated } from '../redux/productSlice'
 
 let allProducts;
 const Dashboard = () => {
@@ -18,7 +19,6 @@ const Dashboard = () => {
     const isUpdated = useSelector(state => state.product.isProductUpdated)
 
     useEffect(() => {
-        console.log('ue in hp')
         fetch('/api/getproducts', {
             method: "GET",
             headers: { "Content-Type": "application/json" },
@@ -44,19 +44,16 @@ const Dashboard = () => {
     return (
         <>
             <Nav />
-
             <div >
                 <Header heading="Products" icon="fa-shopping-bag" setSearchedQuery={setSearchedQuery} />
                 {/* <Filters/> */}
-
                 {products ?
                     <div className="container-fluid px-0 admin-table-grid">
                         <div className="table-responsive-md">
-                            <table className="table table-hover mt-2">
-                                <thead className="border-bottom">
+                            <table className="table table-hover">
+                                <thead className="border-bottom bg-body">
                                     <tr>
                                         <th scope="col" width="50"></th>
-                                        {/* <th scope="col" width="30"></th> */}
                                         <th scope="col" className="small fw-normal">Product</th>
                                         <th scope="col" className="small fw-normal">Category</th>
                                         <th scope="col" className="small fw-normal">Price</th>
@@ -69,9 +66,9 @@ const Dashboard = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {products?.map((x,i)=> {
+                                    {products?.map((x, i) => {
                                         return (
-                                            <Product details={x} key={i} areLastTwoRow={i>=products?.length-2} />
+                                            <Product details={x} key={i} areLastTwoRow={i >= products?.length - 2} />
                                         )
                                     })}
                                 </tbody>
@@ -85,10 +82,6 @@ const Dashboard = () => {
                 }
 
             </div>
-
-            {/* {visibility && <Modal />} */}
-            {/* <Loader/> */}
-
         </>
     )
 

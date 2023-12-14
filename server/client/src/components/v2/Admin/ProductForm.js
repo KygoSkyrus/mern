@@ -1,12 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable array-callback-return */
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid';
 import { getStorage, ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 
-import { setProductFormVisibility, clearProductForm } from '../redux/productFormSlice'
+import { invokeToast } from '../redux/toastSlice';
 import { setLoaderVisibility } from '../redux/loaderSlice';
 import { isProductUpdated } from '../redux/productSlice';
-import { invokeToast } from '../redux/toastSlice';
+import { setProductFormVisibility, clearProductForm } from '../redux/productFormSlice'
 
 const ProductForm = (props) => {
 
@@ -15,12 +17,10 @@ const ProductForm = (props) => {
     const [productData, setProductData] = React.useState({})
     const title = useSelector(state => state.productForm.title)
     const productState = useSelector(state => state.productForm.productData)
-    // console.log('pddd', productState, title)
 
     const storage = getStorage(props.firebaseApp);
 
     useEffect(() => {
-        console.log('------productState----', productState)
         setProductData(productState)//setting the inputs with selected product details on edit
         fetch('/api/getcategory')
             .then(res => res.json())
@@ -28,31 +28,20 @@ const ProductForm = (props) => {
                 setCategories(res.filter(item => item.subCategory.length === 0))
             })
     }, [])
-    console.log('resss', categories)
 
     const closeProductFormContainer = () => {
         dispatch(setProductFormVisibility({ visibility: false }));
     }
 
     async function sendData(e) {
-        e.preventDefault()//this stops page to refresh if the form submission is used with type submit button
-
+        e.preventDefault();
         dispatch(setLoaderVisibility({ loader: true }))
 
-        console.log('pd', productData, productData.image.length, productState)
-
         let tempArr = [];
-        //when images are chnaged (will run for : newProduct/editProduct)
+        //when images are changed (will run for : newProduct/editProduct)
         if (productData.image !== productState.image) {
-
-            console.log('insite upload', typeof (productData.image), typeof (productState.image))
-
-
-            for(let index=0;index<productData.image.length;index++){
-                console.log(index + ": ", productData.image[index])
-
+            for (let index = 0; index < productData.image.length; index++) {
                 let imageRef = ref(storage, "shoppitt/" + uuidv4());
-
                 const uploadTask = uploadBytesResumable(imageRef, productData.image[index]);
                 uploadTask.on('state_changed',
                     (snapshot) => {
@@ -73,38 +62,31 @@ const ProductForm = (props) => {
                     async () => {
                         await getDownloadURL(uploadTask.snapshot.ref)
                             .then((downloadURL) => {
-                                console.log('File available at', downloadURL);
                                 tempArr.push(downloadURL)
                                 if (index === productData.image.length - 1 && downloadURL) addProductAPI(tempArr)
-                            });      
-                        console.log('---------------------------------->>>>>>>>>>>>>>>>>')
+                            });
                     }
                 );
             }
         } else {
-            //when images are not chnaged (will run for : editProduct) ONLY [bcz newproduct doest fire unless image is slected]
-            console.log('no new images are there')
+            //when images are not changed (will run for : editProduct) ONLY [bcz newproduct doesn't fire unless image is slected]
             if (JSON.stringify(productData) !== JSON.stringify(productState)) {
                 //when things other than images are changed
-                console.log('----------------------caalomg apo')
-                closeProductFormContainer()//closing modal
-                addProductAPI(undefined)
+                closeProductFormContainer();//closing modal
+                addProductAPI(undefined);
             } else {
                 //nothing changed
-                dispatch(clearProductForm())//clearing form
-                closeProductFormContainer()//closing modal
+                dispatch(clearProductForm());//clearing form
+                closeProductFormContainer();//closing modal
 
-                dispatch(setLoaderVisibility({ loader: false }))
-                // invokeToast(dispatch,true,`No changes were made`)
-                dispatch(invokeToast({isSuccess:true,message:'No changes were made'}))
+                dispatch(setLoaderVisibility({ loader: false }));
+                dispatch(invokeToast({ isSuccess: true, message: 'No changes were made' }));
             }
 
         }
-        //we should avoid using url,, just use a template to show product and send data when its clicked
     }
 
     function addProductAPI(image) {
-
         let apiURL;
         let img = image;//for add product
         if (title === "Edit product") {
@@ -141,21 +123,16 @@ const ProductForm = (props) => {
             })
             .then(data => {
                 dispatch(setLoaderVisibility({ loader: false }))
-                closeProductFormContainer()//closing modal
+                closeProductFormContainer();//closing modal
 
                 if (resp.status === 200) {
-                    console.log('dm',data.message)
-                    // invokeToast(dispatch,true,data.message)
-                    dispatch(invokeToast({isSuccess:true,message:data.message}))
-                    //also to do thta you need to store the all the product in redux and then the edited product can be updated there
+                    dispatch(invokeToast({ isSuccess: true, message: data.message }))
                     dispatch(isProductUpdated({ updateProduct: true }))//reloading the product list to show updated list
                 } else {
-                    // invokeToast(dispatch,false,data.message)
-                    dispatch(invokeToast({isSuccess:false,message:data.message}))
+                    dispatch(invokeToast({ isSuccess: false, message: data.message }))
                 }
             })
             .catch(err => console.log(err))
-
     }
 
     const handleInputChange = (e) => {
@@ -170,12 +147,10 @@ const ProductForm = (props) => {
     }
 
     function setDynamicLabel(e) {
-        //you can write the logic to create the object url and store it in array state wihich will update the image holder like in edit componnent
-        // console.log('setdynmaic')
         let imageHolder = document.getElementById('imageHolder')
         imageHolder.innerHTML = "";
         if (title === "Edit product") {
-            //re add the exiting image here
+            //re-add the exiting image here
             productState.image?.map(x => {
                 let div = document.createElement('div')
                 div.classList.add('displayimg')
@@ -193,13 +168,11 @@ const ProductForm = (props) => {
                     imageHolder.appendChild(div)
                 })
             }
-            setProductData({ ...productData, [e.target.name]: e.target.files })//this is needed for new product as this goes to send data where the image is uploaded to firrstore but in edit this is messing up with displa img
+            setProductData({ ...productData, [e.target.name]: e.target.files })
         } else {
             document.getElementById("dynamicLabel").innerHTML = "Choose a file…"
         }
-        // console.log('SETDYNAM END')
     }
-    // ADD PRODUCT--------------------------------------
 
     return (
         <>
@@ -212,11 +185,9 @@ const ProductForm = (props) => {
                         <div className="text-right pointer closeBtn">
                             <div className="actions">
                                 <span
-                                    onClick={()=>closeProductFormContainer()}
+                                    onClick={() => closeProductFormContainer()}
                                     className="action-item cursor-pointer" >
-                                    <i
-                                        className="fas fa-times">
-                                    </i>
+                                    <i className="fas fa-times"></i>
                                 </span>
                             </div>
                         </div>
@@ -231,11 +202,6 @@ const ProductForm = (props) => {
                                     <input type="text" className="form-control" name="name" id="name"
                                         value={productData?.name} autoComplete="off" placeholder="product name" onChange={e => settingUrl(e)} required />
                                 </div>
-                                <div className="form-group">
-                                    {/* <label htmlFor="url" className="font-weight-600">Product Url</label> */}
-                                    <input type="hidden" className="form-control" name="url" id="url"
-                                        autoComplete="off" placeholder="Product URL" required />
-                                </div>
 
                                 <div className="form-group">
                                     <label htmlFor="price" className="font-weight-600">Price</label>
@@ -249,12 +215,6 @@ const ProductForm = (props) => {
                                         id="description" rows="4" style={{ height: "unset" }} required value={productData?.description} onChange={e => handleInputChange(e)}></textarea>
                                 </div>
 
-                                {/* <div className="form-group">
-                                    <label htmlFor="category" className="font-weight-600">Category</label>
-                                    <input type='text' name="category" placeholder="category" className="form-control"
-                                        id="category" required value={productData?.category} onChange={e => handleInputChange(e)} />
-                                </div> */}
-                                {/* Dropdown category */}
                                 <div className="form-group">
                                     <label htmlFor="category" className="font-weight-600">Category</label>
                                     <select className="form-control basic-single pointer" name="category" id="category" value={productData?.category} onChange={e => handleInputChange(e)} required >
@@ -278,11 +238,12 @@ const ProductForm = (props) => {
                                         <span id='dynamicLabel'>Choose a file…</span>
                                     </label>
                                     <div id="imageHolder" >
-                                        {title === "Edit product" ? productState?.image?.map(item => {
+                                        {title === "Edit product" &&
+                                        productState?.image?.map(item => {
                                             return (
                                                 <div className='displayimg' style={{ backgroundImage: `url(${item})` }}></div>
                                             )
-                                        }) : ""}
+                                        })}
                                     </div>
                                 </div>
 
@@ -298,7 +259,7 @@ const ProductForm = (props) => {
                                         id="stock" required value={productData?.stock} onChange={e => handleInputChange(e)} />
                                 </div>
 
-                                {/* this should not be here as admin should not put rrating or reviews,, */}
+                                {/* this should not be here as admin should not put rating or reviews */}
                                 {/* <div className="form-group">
                                         <label htmlFor="rating" className="font-weight-600">Ratings</label>
                                         <input type='number' name="rating" placeholder="rating" className="form-control"

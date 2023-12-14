@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-
 import { getFullDateStr, formatInINR } from '../Utility'
 
 const OrderDetails = (props) => {
@@ -15,8 +14,6 @@ const OrderDetails = (props) => {
       props.setSDetailsVisibility(false)
     }
   }
-  console.log('orderrr', order)
-
 
   return (
     <div className='activeProductContainer admin_orderDetail' style={{ placeItems: "center" }} onClick={e => closeProductContainer(e)}>

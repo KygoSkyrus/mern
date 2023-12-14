@@ -14,6 +14,8 @@ const Navbar = () => {
   const dispatch = useDispatch()
   const isUserLoggedIn = useSelector((state) => state.user.isUserLoggedIn);
   const cart = useSelector((state) => state.user.user.cart);
+  const user = useSelector((state) => state.user.user);
+
 
   let cartTotalQuantity = 0;
   cart?.map((x) => {
@@ -353,16 +355,15 @@ const Navbar = () => {
                 </Link>
               </li> */}
               <li className="nav-item position-relative dropdown">
-                <button
-                  type="button"
-                  // className="nav-link" id="dropdownCategory" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside"
-                  className="nav-link dropdown-toggle"
-                  id="profileDropdown"
-                  data-mdb-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Profile
-                </button>
+                {isUserLoggedIn && window.outerWidth > 992 ?
+                  <img src={user.avtar} alt="" width="36px" id="profileDropdown"
+                    data-mdb-toggle="dropdown"
+                    aria-expanded="false" className="dropdown-toggle ms-3 pointer shadow-sm rounded-circle" />
+                  :
+                  <button type="button" className="nav-link dropdown-toggle" id="profileDropdown" data-mdb-toggle="dropdown" aria-expanded="false">
+                    Profile
+                  </button>
+                }
                 <ul
                   className="dropdown-menu shadow-sm profileDropdownUL"
                   aria-labelledby="profileDropdown"

@@ -1,10 +1,12 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import OrderDetails from './OrderDetails';
 import Nav from './Nav';
 import Header from './Header';
+import OrderDetails from './OrderDetails';
 import BagLoader from '../loaders/BagLoader'
 
 import { invokeToast } from '../redux/toastSlice';
@@ -13,16 +15,11 @@ import { findSubString, formatInINRwoSign, getDateStr } from './../Utility'
 let allOrders;
 const Orders = () => {
 
-    const [orders, setOrders] = useState()
     const dispatch = useDispatch()
-    const userDetail = useSelector(state => state.user.user)
-    const userLoggedIn = useSelector(state => state.user.isUserLoggedIn)
+    const [orders, setOrders] = useState()
     const [searchedQuery, setSearchedQuery] = useState()
-    console.log('is loggedin', userLoggedIn, userDetail)
-
-
-    const [detailsVisibility, setSDetailsVisibility] = useState(false)
     const [details, setDetails] = useState()
+    const [detailsVisibility, setSDetailsVisibility] = useState(false)
 
     useEffect(() => {
         let resp;
@@ -75,8 +72,8 @@ const Orders = () => {
                 {orders ?
                     <div className="container-fluid px-0 admin-table-grid">
                         <div className="table-responsive-md">
-                            <table className="table table-hover mt-2">
-                                <thead className="border-bottom">
+                            <table className="table table-hover">
+                                <thead className="border-bottom bg-body">
                                     <tr>
                                         <th scope="col" width="50"></th>
                                         {/* <th scope="col" width="30"></th> */}

@@ -6,8 +6,8 @@ import { setProductFormVisibility } from '../redux/productFormSlice'
 
 const Modal = () => {
 
-    const productFormVisibility = useSelector(state => state.productForm.visibility)
     const dispatch = useDispatch()
+    const productFormVisibility = useSelector(state => state.productForm.visibility)
 
     const closeProductFormContainer = (e) => {
         if (e.target !== document.querySelector('.productForm')) {

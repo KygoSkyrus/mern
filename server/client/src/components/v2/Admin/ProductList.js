@@ -1,14 +1,15 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { setProductFormVisibility, setProductFormTitle, setProductForm } from '../redux/productFormSlice'
-import { isProductUpdated } from '../redux/productSlice';
-import { setLoaderVisibility } from '../redux/loaderSlice';
 import { invokeToast } from '../redux/toastSlice';
+import { setLoaderVisibility } from '../redux/loaderSlice';
+import { isProductUpdated } from '../redux/productSlice';
+import { setProductFormVisibility, setProductFormTitle, setProductForm } from '../redux/productFormSlice'
 
 const Product = ({ details, areLastTwoRow }) => {
-    const productFormVisibility = useSelector(state => state.productForm.visibility)// modal's visibility
+
     const dispatch = useDispatch()
+    const productFormVisibility = useSelector(state => state.productForm.visibility)// modal's visibility
 
     const handlEditProduct = (product) => {
         dispatch(setProductForm(product)) //setting the product form with currently selected product for editing
@@ -16,7 +17,7 @@ const Product = ({ details, areLastTwoRow }) => {
         dispatch(setProductFormTitle({ title: "Edit product" })) // setting modal's title
     };
 
-    //on hover the product image preview
+    //product image preview on hover 
     const showImagePreview = (e) => {
         const previewElemm = e.target.nextElementSibling;
         const bgElem = e.target.parentElement.querySelector('.bg-img-preview');
@@ -29,6 +30,7 @@ const Product = ({ details, areLastTwoRow }) => {
             bgElem.classList.add('bottom100')
         }
     }
+
     const hideImagePreview = (e) => {
         e.target.nextElementSibling.classList.remove('display-block')
         e.target.parentElement.querySelector('.bg-img-preview').classList.remove('display-block')//hiding the image backgorund
@@ -89,7 +91,6 @@ const Product = ({ details, areLastTwoRow }) => {
         <tr key={details._id}>
             <th scope="row" className="align-middle">
                 <div className='text-center'>
-                    {/* <input className="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="..." /> */}
                     <i className="fa fa-edit font-weight-100 pointer" onClick={() => handlEditProduct(details)}></i>
                 </div>
             </th>

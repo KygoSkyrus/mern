@@ -1,6 +1,4 @@
 .adminContainer {
-  /* height: 100vh;
-  overflow: hidden; */
   width: 100%;
   overflow: auto;
 }
@@ -13,7 +11,6 @@
   width: 100vw;
   height: 100vh;
   font-family: "Poppins", sans-serif;
-  /* position: fixed; */
   display: flex;
 }
 
@@ -373,8 +370,8 @@ a.nav-icons.active::before {
 }
 .admin-table-grid table thead {
   position: sticky;
-  top: 60.5px;
-  background: #fafafa;
+  top: 61.5px;
+  background: var(--bg-white-custom);
   z-index: 5;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
 }
@@ -511,7 +508,7 @@ label {
   background: rgb(167, 167, 167);
   border-radius: 10px;
 }
-.dateStr{
+.dateStr {
   white-space: nowrap;
 }
 /******************** ORDER DETAILS *************************/
@@ -537,7 +534,6 @@ label {
   border-radius: 50px;
   cursor: pointer;
   transition: 0.2s;
-
   /* for smaller size of icon */
   /* transform: scale(0.2);
   position: absolute;
@@ -639,7 +635,7 @@ label {
     display: flex;
     justify-content: center;
   }
-  .admin_orderDetail .closeBtn{
+  .admin_orderDetail .closeBtn {
     display: block !important;
   }
   .admin_orderDetail .orderDetails {

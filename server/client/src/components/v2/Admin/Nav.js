@@ -2,19 +2,17 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { setProductFormVisibility, setProductFormTitle } from '../redux/productFormSlice'
 import { clearProductForm } from '../redux/productFormSlice'
+import { setProductFormVisibility, setProductFormTitle } from '../redux/productFormSlice'
 
 const Nav = () => {
 
   const adminNavRef = useRef();
   const dispatch = useDispatch();
-
   const productFormVisibility = useSelector(state => state.productForm.visibility)
   const [isSidebarHidden, setIsSidebarHidden] = useState(true)
 
   useEffect(() => {
-    // getSidebarWorking()
     handleSelectedOption()
   }, [])
 
@@ -26,32 +24,15 @@ const Nav = () => {
     }
   };
 
-
-  //   function getSidebarWorking() {
-  //      const btnToggler = document.querySelector(".btn-trapezoid-outline");
-  //     // const navbar = document.querySelector(".sidebar");
-  //     const menuItem = document.querySelectorAll(".menu-item");
-
-  //     btnToggler.addEventListener('click', () => {
-  //         navbar.classList.toggle('active');
-  //         menuItem?.forEach(x => { x.classList.toggle('pl'); x.classList.toggle('w') })
-  //     });
-  // }
-
   function handleSelectedOption(e) {
     let currentOption;
-
     switch (window.location.href) {
-
       case window.location.origin + "/admin/dashboard": common("dashboard")
         break;
-
       case window.location.origin + "/admin/users": common("users")
         break;
-
       case window.location.origin + "/admin/orders": common("orders")
         break;
-
       default:
         break;
     }
@@ -71,9 +52,7 @@ const Nav = () => {
     })
   }
 
-
   const hideShowSidebar = (e) => {
-    console.log('jfjdf', document.querySelector('.admin-table-grid'))
     if (e.currentTarget.dataset.ishidden === "true") {
       adminNavRef.current.classList.remove('hideSidebar');//hiding side navbar
       e.currentTarget.childNodes.forEach(x => {
@@ -85,7 +64,6 @@ const Nav = () => {
     } else {
       adminNavRef.current.classList.add('hideSidebar');
       e.currentTarget.childNodes.forEach(x => {
-        // x.style.transform = "unset"
         x.style.transform = x.classList.contains("upper") ? "rotate(-18deg) translateY(1.5px)" : "rotate(18deg) translateY(-1.5px)"
       })
       document.querySelectorAll('.admin-table-grid').forEach(x => {
@@ -97,7 +75,6 @@ const Nav = () => {
 
   return (
     <>
-
       <div className='d-flex align-items-center admin-nav hideSidebar' ref={adminNavRef}>
 
         <div className="btn-trapezoid-outline" onClick={e => handleSelectedOption(e)} >
@@ -123,8 +100,6 @@ const Nav = () => {
           <div className='lower'></div>
         </div>
       </div>
-
-
     </>
   )
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
@@ -6,9 +6,11 @@ import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, createUserWithEmailA
 import { goWithGoogle, signinAPI, defaultAvatar, inProgressLoader } from './Utility'
 import { invokeToast } from './redux/toastSlice';
 
-const SignInForm = ({ userCredentials, setUserCredentials, title, description, toggleText, signInOrSignUp, toggleSignInOrSignUp, btnText }) => {
+const SignInForm = ({  title, description, toggleText, signInOrSignUp, switchTo, btnText }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    
+    const [userCredentials, setUserCredentials] = useState({ email: '', password: '', username: '' });
 
 
     const auth = getAuth();
@@ -139,7 +141,7 @@ const SignInForm = ({ userCredentials, setUserCredentials, title, description, t
             <input type="password" className="form-control" id="password1" name="password" placeholder="Password*" value={userCredentials?.password} onChange={(e) => setUserCredentials({ ...userCredentials, password: e.target.value })} />
             <button className='btn btn-outline-warning w-100 my-2' onClick={() => handleClick()}>{btnText}</button>
 
-            <section className='my-3 text-end w-100 pointer' onClick={() => toggleSignIn(toggleSignInOrSignUp)}>{toggleText}</section>
+            <section className='my-3 text-end w-100 pointer' onClick={() => toggleSignIn(switchTo)}>{toggleText}</section>
             <section className='continue-with position-relative w-100 text-center'>
                 <span >OR CONTINUE WITH</span>
                 <section></section>

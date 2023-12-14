@@ -1,7 +1,7 @@
 //firebase
 import { initializeApp } from 'firebase/app';
 import { getStorage, ref, uploadBytes, getDownloadURL, uploadBytesResumable } from "firebase/storage";
-import {v4 as uuidv4} from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 const firebaseConfig = {
     apiKey: process.env.apiKey,
     authDomain: "shopp-itt.firebaseapp.com",
@@ -88,19 +88,19 @@ Array.from('image list from input').forEach(async (x, index) => {
     );
 
 
-    return(
+    return (
 
         <div className='progressOverlay'>
-        <div className='d-flex flex-column align-items-center'>
-            <section className='progressBar'>
-                <section id='progress'></section>
-            </section>
-            <div className='imagePreview my-2'>
-                <img id='ok' src={"okayIcon"} alt="done" />
+            <div className='d-flex flex-column align-items-center'>
+                <section className='progressBar'>
+                    <section id='progress'></section>
+                </section>
+                <div className='imagePreview my-2'>
+                    <img id='ok' src={"okayIcon"} alt="done" />
+                </div>
+                <section className='imgName'></section>
             </div>
-            <section className='imgName'></section>
         </div>
-    </div>
     )
 
 

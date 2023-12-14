@@ -5,11 +5,9 @@ import Users from './Users.js'
 import BagLoader from '../loaders/BagLoader'
 
 const PrivateRoute = ({ isAuthSuccess, route }) => {
-    console.log('isAuthSuccess', isAuthSuccess, route)
 
     if (isAuthSuccess === null) {
-        // Still loading, show a loader or any loading indicator
-        return <BagLoader />;
+        return <BagLoader /> // still loading
     }
     if (isAuthSuccess) {
         if (route === "dashboard") return <Dashboard />

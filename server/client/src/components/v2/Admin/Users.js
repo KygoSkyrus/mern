@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -13,10 +14,6 @@ const Users = () => {
     const dispatch = useDispatch()
     const [users, setUsers] = useState()
     const [searchedQuery, setSearchedQuery] = useState()
-    const userDetail = useSelector(state => state.user.user)
-    const userLoggedIn = useSelector(state => state.user.isUserLoggedIn)
-    console.log('is loggedin', userLoggedIn, userDetail)
-
 
     useEffect(() => {
         let resp;
@@ -38,9 +35,9 @@ const Users = () => {
     useEffect(() => {
         let searchedUser = allUsers?.filter(x => {
             return (
-                findSubString(x.firstname,searchedQuery) ||
-                findSubString(x.lastname,searchedQuery) ||
-                findSubString(x.email,searchedQuery)
+                findSubString(x.firstname, searchedQuery) ||
+                findSubString(x.lastname, searchedQuery) ||
+                findSubString(x.email, searchedQuery)
             )
         })
         setUsers(searchedUser)
@@ -49,15 +46,13 @@ const Users = () => {
     return (
         <>
             <Nav />
-
             <div >
                 <Header heading="Users" icon="fa-user" setSearchedQuery={setSearchedQuery} />
-
                 {users ?
                     <div className="container-fluid px-0 admin-table-grid">
                         <div className="table-responsive-md">
-                            <table className="table table-hover mt-2">
-                                <thead className="border-bottom">
+                            <table className="table table-hover">
+                                <thead className="border-bottom bg-body">
                                     <tr>
                                         <th scope="col" width="50"></th>
                                         <th scope="col" width="30"></th>
@@ -75,7 +70,6 @@ const Users = () => {
                                             <tr key={x._id}>
                                                 <th scope="row" className="align-middle">
                                                     <div className='text-center'>
-                                                        {/* <input className="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="..." /> */}
                                                         {/* <i className="fa fa-expand small text-body pointer"></i> */}
                                                         <i className="fa fa-circle fa-fw me-2 text-indigo"></i>
                                                     </div>
@@ -84,7 +78,6 @@ const Users = () => {
                                                 <td className="ps-3 align-middle text-center text-capitalize">
                                                     <div className="align-items-center avatars__item bg-white d-flex justify-content-center pointer text-secondary"
                                                         style={{ background: `url(${x.avtar})`, backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat", }}></div>
-
                                                 </td>
 
                                                 <td className="ps-3 align-middle text-center text-capitalize">
