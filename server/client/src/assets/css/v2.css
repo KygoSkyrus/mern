@@ -125,6 +125,9 @@
 .clr-red {
   color: var(--red) !important;
 }
+.clr-yellow{
+  color: var(--yellow) !important;
+}
 
 .font-weight-100 {
   font-weight: 100;
@@ -998,6 +1001,7 @@ input[type="number"]::-webkit-outer-spin-button {
   font-style: oblique;
   color: rgb(228, 228, 228);
   font-weight: 900;
+  margin-left: 30px;
 }
 .storedoor .doorImg {
   width: 250px;
@@ -1012,7 +1016,7 @@ input[type="number"]::-webkit-outer-spin-button {
 /* CART Banner */
 .cartBanner {
   height: 400px;
-  background: linear-gradient(0deg, #ffb300, #fff8e100);
+  background: linear-gradient(274deg, #ffb300, #ffc836);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1023,6 +1027,8 @@ input[type="number"]::-webkit-outer-spin-button {
   font-style: oblique;
   color: rgb(255, 255, 255);
   font-weight: 900;
+  text-shadow: -2px 3px 5px #4b4444;
+  margin-left: 30px;
 }
 .cartBanner .cartImg {
   width: 250px;
@@ -1040,6 +1046,16 @@ input[type="number"]::-webkit-outer-spin-button {
   /* box-shadow: var(--shadow-medium) !important; */
   background-color: inherit;
   padding-bottom: 25px;
+}
+.card2 > div{
+  overflow: hidden;
+}
+.card2 > div img{
+  cursor: pointer;
+  transition: var(--transition);
+}
+.card2 > div img:hover{
+  transform: scale(1.07);
 }
 .card2.withborder {
   border: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
@@ -2067,60 +2083,58 @@ main {
 }
 /* XBOX */
 
-/* MACINTOSH */
+/* Laptop Banner */
 .page {
   height: 70vh;
   position: relative;
   background-color: #f1f4e3;
+  overflow: hidden;
 }
 .page .right {
   background-color: #e38931;
+  background-color: var(--yellow);
   position: absolute;
   width: 55vw;
   height: 100%;
   right: 0;
   border-radius: 100% 0 0 0;
 }
+.page .left{
+  position: absolute;
+  left: 7%;
+  top: 50%;
+  transform: translate(0, -50%);
+}
 .page h1 {
   font-family: "Red Hat Mono", monospace;
   color: #534935;
-  position: absolute;
-  top: 40%;
-  left: 10%;
-  transform: translate(-10%, -40%);
   width: 350px;
   font-size: 3rem;
 }
 .page-text {
   font-family: "Red Hat Mono", monospace;
   color: #534935;
-  position: absolute;
-  top: 58%;
-  left: 7%;
-  transform: translate(0%, -58%);
   font-size: 12px;
 }
 .page button {
-  position: absolute;
-  top: 65%;
-  left: 5%;
-  transform: translate(-5%, -65%);
-  border-radius: 15px;
-  background-color: #e38931;
-  width: 125px;
-  height: 35px;
-  color: white;
-  border-style: none;
+  color: var(--yellow);
+  font-weight: 500;
+  font-size: 20px;
+  background: inherit;
+  padding: 4px 32px;
+  border: 3px solid var(--yellow);
+  transition: var(--transition);
 }
 .page button:hover {
-  box-shadow: 0 5px 15px #e38931;
-  cursor: pointer;
+  /* box-shadow: 0 5px 15px #e38931; */
+  color: #534935;
 }
 .page .right img {
   position: absolute;
   top: 15%;
   left: 5%;
-  height: 20rem;
+  min-width: 300px;
+  /* height: 20rem; */
   transform: translate(-5%, -5%);
   transform: rotate(-20deg);
 }
@@ -2143,7 +2157,7 @@ main {
   font-size: 10px;
 }
 
-/* MACINTOSH */
+/* Laptop Banner */
 
 /* horizontal strip animation */
 .menu {
@@ -2287,6 +2301,31 @@ main {
   }
   /* HEADPHONE-FILLER */
 
+  /* Laptop Banner */
+  .page .right{
+    width: 100vw;
+    height: 65%;
+    right: 0;
+    bottom: 0;
+  }
+  .page .left{
+    padding: 32px;
+    position: static;
+    transform: unset;
+  }
+  .page .left h1,
+  .page .left button,
+  .page .left .page-text{
+    position: static;
+    transform: unset;
+  }
+  .page .left h1{
+    font-family: unset;
+    font-size: 1.9rem;
+    width: fit-content;
+  }
+  /* Laptop Banner */
+
   /* black cards */
   .blackCards {
     display: block;
@@ -2298,6 +2337,23 @@ main {
     display: none !important;
   }
   /* black cards */
+
+  /* CART ABNNER */
+  .cartBanner{
+    flex-direction: column-reverse;
+    justify-content: space-evenly;
+  }
+  .cartBanner .cartImg {
+    width: 200px;
+    height: 225px;
+  }
+  .cartBanner .text {
+    font-size: 25px;
+    margin-left: unset;
+    text-align: center;
+    text-shadow: 0px 1px 5px #4b4444;
+  }
+  /* CART ABNNER */
 
   /* SLICK SLIDER */
   .slick-arrow {
@@ -2772,9 +2828,14 @@ main {
   /* store door */
   .storedoor {
     height: 310px;
+    flex-direction: column-reverse;
+    justify-content: space-evenly;
   }
   .storedoor .text {
     font-size: 20px;
+    margin-bottom: 30px;
+    text-align: center;
+    margin-left: unset;
   }
   /* store door */
 
@@ -2817,6 +2878,9 @@ main {
     padding-right: calc(var(--bs-gutter-x) * 0.25);
     padding-left: calc(var(--bs-gutter-x) * 0.25);
   }
+  .page .right ul{
+    display: none;
+  }
 }
 @media (min-width: 992px) {
   .no-item-img.cart-img {
@@ -2830,6 +2894,20 @@ main {
 @media (max-width: 992px) {
   #profileDropdown {
     margin-left: 0 !important ;
+  }
+  .bx1{
+    transform: unset;
+  }
+  .bx3{
+    transform: unset;
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 768px) and (min-width: 499px) {
+  .page .right img {
+    position: absolute;
+    top: -22%;
   }
 }
 /* ---------------RESPONSIVE------------------------------------------------------------------------- */

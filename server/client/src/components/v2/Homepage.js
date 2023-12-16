@@ -9,6 +9,7 @@ import headphone2 from "./../../assets/images/newImg/collections/headphone2.webp
 import iphone5 from "./../../assets/images/newImg/collections/iphone5.png";
 import wearables1 from "./../../assets/images/newImg/collections/wearables1.jpg";
 import wearables2 from "./../../assets/images/newImg/collections/wearables2.jpg";
+import laptop from "./../../assets/images/newImg/products/apptablet_a5640c96-4b53-4c9c-b483-aa0f8a2c2e3c9fcc.png";
 //curated prodcuts image
 import controller from "./../../assets/images/newImg/collections/controller.png";
 import xbox from "./../../assets/images/newImg/collections/xbox.png";
@@ -175,8 +176,8 @@ const Homepage = () => {
 
 
       <div className='storedoor mt-2'>
-        <div className='text'>All-in-one store <br />for all of your Electronic needs</div>
-        <div className='doorImg'></div>
+        <div className='text'>All-in-one <span style={{whiteSpace:"nowrap"}}>Store <i className='fa fa-store'></i></span> <br />for all of your <span className='clr-yellow'>Electronic </span>needs</div>
+        <div className='doorImg bag-container'></div>
       </div>
 
 
@@ -238,7 +239,7 @@ const Homepage = () => {
 
 
       <div className='cartBanner mt-2'>
-        <div className='text'>Shop on SHOPP ITT <br />with exclusive deals and offers</div>
+        <div className='text'>Shop on SHOPP ITT <br />with exclusive deals <i className='fa fa-money-check-alt'></i> and offers</div>
         <div className='cartImg'></div>
       </div>
 
@@ -357,6 +358,32 @@ const Homepage = () => {
       {/* PRODUCT 4 */}
 
 
+      {/* LAPTOP BANNER */}
+      <div className="gapBtw" style={{marginBottom:"120px"}}>
+        <div className="page">
+          <div className="left">
+            <h1>Get yourself a yoga Laptop</h1>
+            <p className='page-text'>Lenovo's remarkable new personal computer</p>
+            <button>See it in action</button>
+
+          </div>
+          <div className="right">
+            <div className="img">
+              <img alt='shoppitt' src={laptop} width="72%" />
+            </div>
+            <ul>
+              <li>Instagram</li>
+              <li>-</li>
+              <li>Facebook</li>
+              <li>-</li>
+              <li>Twitter</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      {/* LAPTOP BANNER */}
+
+
       {/* filler images */}
       <div className='container bx category-page my-5'>
         <div className='row'>
@@ -472,33 +499,6 @@ const Homepage = () => {
         <section className='gapBtw theLine' style={{ width: "80%", height: "1px", background: "#d6d6d6", textAlign: "center" }}></section>
       </div>
       {/* PRODUCT 2 */}
-
-
-      {/* LAPTOP BANNER */}
-      {/* <div className="container gapBtw">
-        <div className="page">
-          <div className="left">
-            <h1>Get yourself a yoga Laptop</h1>
-            <p className='page-text'>Lenovo's remarkable new personal computer</p>
-            <button>See it in action</button>
-
-          </div>
-          <div className="right">
-            <div className="img">
-              <img alt='shoppitt' src={products?.[4].image} width="72%" />
-              <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fsebastien-compagne.fr%2Fwebsite%2Fzpg%2Farcheologeek%2F1990_-_apple_mac_classic_II.png&f=1&nofb=1" alt='..' />
-            </div>
-            <ul>
-              <li>Instagram</li>
-              <li>-</li>
-              <li>Facebook</li>
-              <li>-</li>
-              <li>Twitter</li>
-            </ul>
-          </div>
-        </div>
-      </div> */}
-      {/* LAPTOP BANNER */}
     </>
   )
 }

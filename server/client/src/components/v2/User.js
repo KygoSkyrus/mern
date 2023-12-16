@@ -86,7 +86,7 @@ const User = () => {
                                 <div className='row'>
                                     <div className='col-md-9 m-auto text-center'>
                                         <div className='avatar-container position-relative d-flex justify-content-center' onMouseEnter={e => showAvatarEditBtn(true)} onMouseLeave={e => showAvatarEditBtn(false)}>
-                                            <img src={userDetail?.avtar} alt="shoppitt" className="userAvatar img-fluid t-minw-215 rounded-circle" style={{ maxHeight: "223px", width: "223px" }} />
+                                            <img src={userDetail?.avtar} alt="shoppitt" className="userAvatar t-minw-215 rounded-circle" style={{ maxHeight: "223px", width: "223px" }} />
                                             <div className='avatar-edit-btn' data-bs-toggle="modal" href="#avatarModal">
                                                 <i className='fa fa-edit fa-2x'></i>
                                             </div>

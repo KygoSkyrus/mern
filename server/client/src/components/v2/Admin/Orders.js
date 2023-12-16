@@ -31,6 +31,7 @@ const Orders = () => {
             .then(res => {
                 if (resp.status === 200) {
                     setOrders(res.data)
+                    console.log('resdd',res.data)
                     allOrders = res.data;
                 } else {
                     dispatch(invokeToast({ isSuccess: false, message: res.message }))

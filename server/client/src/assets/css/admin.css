@@ -394,6 +394,10 @@ a.nav-icons.active::before {
   box-shadow: 0 0 12px #353333;
   overflow: auto;
   transition: 0.3s all;
+  /* Glashmorphism */
+  background: rgb(0 0 0 / 40%);
+  -webkit-backdrop-filter: blur(10px) brightness(150%);
+  backdrop-filter: blur(2px) brightness(100%);
 }
 .activeProductContainer {
   right: 0;
