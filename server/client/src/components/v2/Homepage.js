@@ -1,3 +1,5 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -21,7 +23,6 @@ import dslr from "./../../assets/images/newImg/collections/dslr.png";
 
 const Homepage = () => {
 
-  const [products, setProducts] = useState()
   const [trendingProducts, setTrendingProducts] = useState([])
   const [curatedProducts, setCuratedProducts] = useState({})
 
@@ -47,7 +48,6 @@ const Homepage = () => {
     })
       .then(res => res.json())
       .then(data => {
-        console.log('products', data)
         let prodArr = []
         data?.map((item, i) => {
           if (i < 6) prodArr.push(item);
@@ -61,43 +61,39 @@ const Homepage = () => {
           })
         })
         setTrendingProducts(prodArr)
-        setProducts(data)//save this data in redux
       })
   }, [])
 
   //RIPPLE--------------
-  function createRipple(event) {
-    //add position relative and overflow hidden on whichever element you want this effect and call this function on click
-    const button = event.currentTarget;
+  // function createRipple(event) {
+  //   //add position relative and overflow hidden on whichever element you want this effect and call this function on click
+  //   const button = event.currentTarget;
 
-    const circle = document.createElement("span");
-    const diameter = Math.max(button.clientWidth, button.clientHeight);
-    const radius = diameter / 2;
+  //   const circle = document.createElement("span");
+  //   const diameter = Math.max(button.clientWidth, button.clientHeight);
+  //   const radius = diameter / 2;
 
-    circle.style.width = circle.style.height = `${diameter}px`;
-    circle.style.left = `${event.clientX - button.offsetLeft - radius}px`;
-    circle.style.top = `${event.clientY - button.offsetTop - radius}px`;
-    circle.classList.add("ripple");
+  //   circle.style.width = circle.style.height = `${diameter}px`;
+  //   circle.style.left = `${event.clientX - button.offsetLeft - radius}px`;
+  //   circle.style.top = `${event.clientY - button.offsetTop - radius}px`;
+  //   circle.classList.add("ripple");
 
-    const ripple = button.getElementsByClassName("ripple")[0];
+  //   const ripple = button.getElementsByClassName("ripple")[0];
 
-    if (ripple) {
-      ripple.remove();
-    }
+  //   if (ripple) {
+  //     ripple.remove();
+  //   }
 
-    button.appendChild(circle);
-  }
+  //   button.appendChild(circle);
+  // }
   //RIPPLE--------------
-
-
-
-
 
   return (
     <>
       <div className='mb-5'>
         <BannerSlider />
       </div>
+
 
       {/* <!-- Product 1 --> */}
       <div className='container bx gapBtw' data-aos="fade-up"
@@ -117,7 +113,7 @@ const Homepage = () => {
                         <p className="discription">Laptops, Tablets, VR headsets, Gaming consoles, Television, Computers, Camera etc</p>
                         <p className="pricing"><span className="offer">UPTO 40% OFF</span></p>
                         {/* <p className="pricing">₹824 <span className="price_original">₹4000</span> <span className="offer"> 79% OFF</span></p>
-              <p className="other">inclusive of all taxes</p> */}
+                        <p className="other">inclusive of all taxes</p> */}
                       </div>
                     </div>
                   </div>
@@ -162,6 +158,7 @@ const Homepage = () => {
       </div>
       {/* <!-- Product 1 --> */}
 
+
       <div className="menu position-relative gapBtw" data-aos="flip-up"
         data-aos-duration="500">
         <div className="menu__item">
@@ -176,10 +173,12 @@ const Homepage = () => {
         </div>
       </div>
 
+
       <div className='storedoor mt-2'>
         <div className='text'>All-in-one store <br />for all of your Electronic needs</div>
         <div className='doorImg'></div>
       </div>
+
 
       {/* PRODUCT 7 */}
       <main className="main gapBtw">
@@ -199,7 +198,6 @@ const Homepage = () => {
             >
               <img
                 src={controller}
-                // src="https://i.ibb.co/3msVHYZ/sneaker-image.png"
                 className="wrapper-image" loading="lazy" alt="Sneaker" />
             </div>
             <div className="wrapper-content" data-aos="fade-left"
@@ -225,15 +223,6 @@ const Homepage = () => {
                     <li className="sizes-item"><section></section></li>
                   </ul>
                 </div>
-                {/* <div className="sizes">
-                  <span className="text-md font-semi text-dark">Sizes:</span>
-                  <ul className="sizes-list p-0">
-                    <li className="sizes-item is-select">37</li>
-                    <li className="sizes-item">38</li>
-                    <li className="sizes-item">39</li>
-                    <li className="sizes-item">40</li>
-                  </ul>
-                </div> */}
               </div>
               <div className="wrapper-action">
                 <Link to="/category/controllers"><button className="shoppittBtn">Buy now</button></Link>
@@ -246,7 +235,6 @@ const Homepage = () => {
         </section>
       </main>
       {/* PRODUCT 7 */}
-
 
 
       <div className='cartBanner mt-2'>
@@ -270,7 +258,6 @@ const Homepage = () => {
         </section>
       </div>
       {/* XBOX AD */}
-
 
 
       {/* <div style={{ background: "var(--red)" }}>
@@ -306,10 +293,6 @@ const Homepage = () => {
       </div> */}
 
 
-
-
-
-
       <div style={{ background: "#141414" }} >
         <div className='headphone-filler container align-items-center d-flex flex-row-reverse justify-content-between gapBtw'>
           <div className="filler-content text-light">
@@ -341,9 +324,6 @@ const Homepage = () => {
           <img src={iphone5} alt="shoppitt" width="40%" data-aos="fade-up" data-aos-duration="1000" />
         </div>
       </div>
-
-
-
 
 
       {/* PRODUCT 4 */}
@@ -404,7 +384,6 @@ const Homepage = () => {
       {/* filler images */}
 
 
-
       {/* PRODUCT 3 */}
       {/* <div className="container">
 
@@ -425,8 +404,6 @@ const Homepage = () => {
 
       </div> */}
       {/* PRODUCT 3 */}
-
-
 
 
       <div style={{ background: "var(--red)" }}>
@@ -463,8 +440,6 @@ const Homepage = () => {
       </div>
 
 
-
-
       {/* PRODUCT 2 */}
       <div className='container gapBtw blackCards'>
         <h1 style={{ color: "#151515", fontFamily: "monospace" }} className='gapBtw text-center'>Curated just for YOU</h1>
@@ -480,20 +455,7 @@ const Homepage = () => {
                           src={curatedProducts[key].displayImage || curatedProducts[key].image}
                           className='card__img' alt='shoppitt' />
                         <h2 className='card__title'>{curatedProducts[key].displayName}</h2>
-                        <div className='card__content'>
-                          {/* <div className='card__sizeContainer'>
-                          <p className='card__sizeTitle'>Size:</p>
-                          <span className='card__sizeNumber'>7</span>
-                          <span className='card__sizeNumber'>8</span>
-                          <span className='card__sizeNumber'>9</span>
-                          <span className='card__sizeNumber'>10</span>
-                        </div>
-                        <div className='card__colorContainer'>
-                          <p className='card__colorTitle'>Color:</p>
-                          <span className='card__colorCircle' style={{ backgroundColor: '#9bdc28' }}></span>
-                          <span className='card__colorCircle' style={{ backgroundColor: '#03a9f4' }}></span>
-                          <span className='card__colorCircle' style={{ backgroundColor: '#e91e63' }}></span>
-                        </div> */}
+                        <div className='card__content'>                     
                           <div className='card__discount'>
                             <button className='btn btn-outline-warning text-light'>{curatedProducts[key].discount}% discount</button>
                           </div>
@@ -512,12 +474,7 @@ const Homepage = () => {
       {/* PRODUCT 2 */}
 
 
-
-
-
-
-
-      {/* MACINTOX BANNER */}
+      {/* LAPTOP BANNER */}
       {/* <div className="container gapBtw">
         <div className="page">
           <div className="left">
@@ -541,22 +498,7 @@ const Homepage = () => {
           </div>
         </div>
       </div> */}
-      {/* MACINTOX BANNER */}
-
-
-
-
-      {/* try adding word flip things on all these letters from hyperplexed */}
-      {/* <div className='textclip-container'>
-        <div className='textClip'>jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd jdadjsdja njfdsj nklsdfkn adgsnlkald nkadfsf'lkd ndfasns/l asknsjd </div>
-      </div> */}
-
-
-
-
-
-
-
+      {/* LAPTOP BANNER */}
     </>
   )
 }

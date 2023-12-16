@@ -12,5 +12,4 @@ export const loaderSlice = createSlice({
 	},
 });
 export const { setLoaderVisibility } = loaderSlice.actions;
-
 export const loaderReducer = loaderSlice.reducer;

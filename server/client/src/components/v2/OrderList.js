@@ -1,3 +1,5 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,20 +8,17 @@ import SignInToContinue from './SignInToContinue';
 import BagLoader from './loaders/BagLoader';
 
 import noOrder from "./../../assets/images/newImg/collections/noOrder.svg"
-import { invokeToast } from './redux/toastSlice';
 import { getDateStr } from './Utility';
 import { formatInINRwoSign } from './Utility';
+import { invokeToast } from './redux/toastSlice';
 
 const OrderList = () => {
 
-  const [orders, setOrders] = useState()
   const dispatch = useDispatch()
+  const [orders, setOrders] = useState()
   const userDetail = useSelector(state => state.user.user)
   const userLoggedIn = useSelector(state => state.user.isUserLoggedIn)
   const [showLoader, setShowLoader] = useState(true)
-  console.log('is loggedin', userLoggedIn, userDetail)
-
-  //BUG: after loggin in it just dont show orders but the loader
 
   useEffect(() => {
     let resp;
@@ -31,19 +30,12 @@ const OrderList = () => {
       .then(res => {
         setShowLoader(false)
         if (resp.status === 200) {
-          console.log('2000')
-          console.log('order list reponse', res)
           setOrders(res.user.orders)
-          //dispatch(setUserDetails({ user: res.user }))
         } else {
-          console.log('not 2000')
-          // invokeToast(dispatch,false,res.message)
           dispatch(invokeToast({ isSuccess: false, message: res.message }))
         }
       })
   }, [])
-
-
 
   return (
     <>
@@ -100,7 +92,6 @@ const OrderList = () => {
                                   </div>
                                 </div>
                               </div>
-
                             </div>
                             {orders?.map((x, i) => {
                               return (
@@ -115,9 +106,11 @@ const OrderList = () => {
                                                 return (<span className=''>+{x.products.length - 3}</span>)
                                               } else {
                                                 if (i < 3)
-                                                  return (<div className={x.products.length === 1 && `ifOne`}>
-                                                    <img src={y.image} alt='shoppitt' className='img-fluidt-minw-215' />
-                                                  </div>)
+                                                  return (
+                                                    <div className={x.products.length === 1 && `ifOne`}>
+                                                      <img src={y.image} alt='shoppitt' className='img-fluidt-minw-215' />
+                                                    </div>
+                                                  )
                                               }
                                             })}
                                           </Link>
@@ -129,6 +122,7 @@ const OrderList = () => {
                                     <div className="col-md-8 oli-details-container">
                                       <div className='d-flex flex-column justify-content-between h-100'>
                                         <div className='row d-flex justify-content-between oli-details'>
+                                          
                                           <div className="col-md-2">
                                             <Link className='d-flex align-items-end flex-column' to={`/orders/${x.orderId}`} style={{ width: "fit-content", margin: "auto" }}>
                                               <section>
@@ -137,6 +131,7 @@ const OrderList = () => {
                                               </section>
                                             </Link>
                                           </div>
+
                                           <div className="col-md-2 text-center">
                                             {x.payment_status === "paid" ? <span className='text-success'>Paid</span>
                                               : <span className='text-danger'>Failed</span>}
@@ -148,34 +143,20 @@ const OrderList = () => {
 
                                           <div className="col-md-2 ">
                                             <section className='text-end'>{getDateStr(x.createdAt)}</section>
-
-                                            {/* <div className='d-flex justify-content-end mt-2 ' style={{ marginRight: "-41px" }}>
-                                      <u><span
-                                        className='me-4 pointer'>Remove <i className="fa fa-trash fa-sm "></i></span></u>
-                                    </div> */}
                                           </div>
 
                                         </div>
-
                                       </div>
                                     </div>
-
                                   </div>
-                                  <div className='d-flex justify-content-end mb-3 border-bottom pb-3 oli-divider'>
-                                    {/* <u><span
-                              // onClick={() => removeFromCart(x._id)} 
-                              className='me-4 pointer'>Remove <i className="fa fa-trash fa-sm"></i></span></u> */}
-                                  </div>
+                                  <div className='d-flex justify-content-end mb-3 border-bottom pb-3 oli-divider'></div>
                                 </>
                               )
                             })}
-
                           </div>
                         </div>
                       </div>
-
                     </div>
-
                   </div>
                 </div>
                 :

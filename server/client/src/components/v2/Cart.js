@@ -4,16 +4,15 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 
+import BagLoader from './loaders/BagLoader';
 import RelatedProducts from './RelatedProducts';
 import SignInToContinue from './SignInToContinue';
-import BagLoader from './loaders/BagLoader';
 
-import { setUserDetails } from './redux/userSlice';
 import { invokeToast } from './redux/toastSlice';
-import { formatInINR, inProgressLoader } from './Utility';
-import { formatInINRwoSign } from './Utility';
-import emptyCartImg from "./../../assets/images/newImg/collections/add-to-cart-animate.svg"
+import { formatInINR, inProgressLoader, formatInINRwoSign, apiCall } from './Utility';
 import theBagLogo from "./../../assets/images/thebaglogo.png";
+import emptyCartImg from "./../../assets/images/newImg/collections/add-to-cart-animate.svg"
+import { isUserLoggedIn, setUserDetails } from './redux/userSlice';
 
 
 const Cart = () => {
@@ -24,7 +23,6 @@ const Cart = () => {
   const wishlistItems = useSelector(state => state.user.user.wishlist)
   const cartItems = useSelector(state => state.user.user.cartProducts)
   const cart = useSelector(state => state.user.user.cart)
-  console.log('cartItems', cartItems)
 
   const subtotal = React.useRef()
   const shippingCharge = React.useRef()
@@ -36,8 +34,8 @@ const Cart = () => {
   lineRefs.current = cartItems?.map((_, i) => React.createRef()); //creating multiple ref for every product
   totalAmtRefs.current = cartItems?.map((_, i) => React.createRef()); //creating multiple ref for every product
 
-  let tempObj = {};
   //getting the relevant quantity of items
+  let tempObj = {};
   cart.map(x => {
     tempObj[x.productId] = x.quantity
   })
@@ -45,12 +43,12 @@ const Cart = () => {
   let priceObj = {}
   priceObj.productTotal = {}//has id:price*quantity
   priceObj.productList = {}//has product details; id:{name,price,quantity}
-  //to store total amount on inital load and later updated on every update
+
+  //to store total amount on initial load and later updated on every update
   let sub = 0;
   cartItems?.map(x => {
     priceObj.productTotal[x._id] = tempObj[x._id] * Math.floor(x.price - x.discount * x.price / 100)//product total
     sub += tempObj[x._id] * Math.floor(x.price - x.discount * x.price / 100)
-    //console.log('nan', sub)
 
     //product details
     priceObj.productList[x._id] = {}
@@ -65,16 +63,9 @@ const Cart = () => {
   priceObj.shipping = 99;
   priceObj.tax = Math.round(sub * 0.1);//tax
   priceObj.grandTotal = sub + (sub < 1999 ? 99 : 0) + Math.round(sub * 0.1)//grandtotal
-  console.log('priceObj', priceObj)
-
-  // const dataField=useRef();
-  // if(dataField.current) dataField.current.value=priceObj
 
 
-  //debouce and debug--------------------------------------------
-  // Simulated API function to update cart item quantities
   function updateCartItemQuantities(cartItems) {
-    console.log('ccc', cartItems)
     const uniqueCartItems = [];
     const seenProductIds = new Set();
 
@@ -96,35 +87,9 @@ const Cart = () => {
       }
     });
 
-    // Step 2: Create a new array with unique cart items
+    //Creating a new array with unique cart items
     const flattenedUniqueCartItems = uniqueCartItems.flat();
-    console.log('flattened', flattenedUniqueCartItems)
-    let resp;
-    return fetch('/api/user/updatecart', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(flattenedUniqueCartItems),
-    })
-      .then(response => response.json())
-      .then(response => {
-        resp = response;
-        return response.json()
-      })
-      .then(data => {
-        console.log('Updating cart item quantities on the server:', data);
-        inProgressLoader(dispatch, false)
-        if (resp.status === 200) {
-          // invokeToast(dispatch, true, data.message)
-          dispatch(invokeToast({ isSuccess: true, message: data.message }))
-
-        } else {
-          // invokeToast(dispatch, false, data.message)
-          dispatch(invokeToast({ isSuccess: false, message: data.message }))
-
-        }
-      })
+    apiCall(dispatch,'/api/user/updatecart',flattenedUniqueCartItems)
   }
 
   // Debounce function to delay API calls by a specified time
@@ -155,11 +120,9 @@ const Cart = () => {
   // Function to update cart item quantities on the server using debouncing and batching
   const debouncedBatchedUpdate = batch(debounce(updateCartItemQuantities, 100), 500);//wait period is reduced as the multiple click wont be an issue due to inProgressLoader
 
-  //NOTE:::: have to take care of object when item is removed from cart or moved to wishlist
-
   function updateQuantity(productId, val, i, price, discount) {
     inProgressLoader(dispatch, true)
-
+    
     const newQuantity = eval(`${parseInt(lineRefs.current[i].current.dataset.quantity)} ${val} ${1}`);
 
     if (!newQuantity <= 0) {
@@ -167,7 +130,6 @@ const Cart = () => {
       lineRefs.current[i].current.innerText = formatInINRwoSign.format(newQuantity);//for showing in ui
       lineRefs.current[i].current.dataset.quantity = newQuantity;//for keeping record for further updates
       priceObj.productList[productId].quantity = newQuantity//updating quantiy in product details
-
 
       //updating total price of product in priceobj and ui (price*quantity)
       priceObj.productTotal[productId] = newQuantity * Math.floor(price - discount * price / 100)
@@ -195,80 +157,23 @@ const Cart = () => {
       grandTotal.current.innerText = formatInINRwoSign.format(total + 99 + Math.round(total * 0.1))
       priceObj.grandTotal = total + 99 + Math.round(total * 0.1)
 
-      //un comment this is you r using form to create checkout session
+      //uncomment this if you use form to create checkout session
       // document.querySelector('[name=priceObj]').value = JSON.stringify(priceObj)//update the input with priceobj
 
-
-      console.log('priceObj in up', priceObj)
-      // Trigger the batched update in the background
+      // Triggers the batched update in the background
       debouncedBatchedUpdate({ productId, quantity: newQuantity, upOrDown: val })
     }
   }
 
-
-
   const removeFromCart = (productId) => {
     inProgressLoader(dispatch, true)
-    let resp;
-    fetch(`/api/user/removefromcart`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        productId
-      }),
-    })
-      .then(response => {
-        resp = response;
-        return response.json()
-      })
-      .then(res => {
-        console.log('resp', resp)
-        inProgressLoader(dispatch, false)
-        if (resp.status === 200) {
-          console.log('2000')
-          console.log('updated user object', res.user)
-          // invokeToast(dispatch, true, res.message)
-          dispatch(invokeToast({ isSuccess: true, message: res.message }))
-          dispatch(setUserDetails({ user: res.user }))
-        } else {
-          console.log('not 2000')
-          // invokeToast(dispatch, false, res.message)
-          dispatch(invokeToast({ isSuccess: false, message: res.message }))
-        }
-        console.log('remove from cart response', res)
-        //also update the user from here too or elese the result wont be seen immediately
-      })
+    apiCall(dispatch,'/api/user/removefromcart',{productId})
   }
 
   const movetowishlist = (productId) => {
     inProgressLoader(dispatch, true)
-    let resp;
-    fetch(`/api/user/movetowishlist`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        productId
-      }),
-    })
-      .then(response => {
-        resp = response;
-        return response.json()
-      })
-      .then(res => {
-        console.log('resp', resp)
-        inProgressLoader(dispatch, false)
-        if (resp.status === 200) {
-          dispatch(invokeToast({ isSuccess: true, message: res.message }))
-          dispatch(setUserDetails({ user: res.user }))
-        } else {
-          dispatch(invokeToast({ isSuccess: false, message: res.message }))
-        }
-        console.log('movetowishlist response', res)
-        //also update the user from here too or elese the result wont be seen immediately
-      })
+    apiCall(dispatch,'/api/user/movetowishlist',{productId})
   }
-
-
 
   function createCheckoutSession(priceObj) {
     let resp;
@@ -286,17 +191,13 @@ const Cart = () => {
       })
       .then(res => {
         inProgressLoader(dispatch, false)
-        console.log('resp', resp)
         if (resp.status === 200) {
           window.location.href = res.url;
         } else {
-          // invokeToast(dispatch, false, res.message)
           dispatch(invokeToast({ isSuccess: false, message: res.message }))
         }
       })
   }
-
-
 
   return (
     <>
@@ -334,7 +235,6 @@ const Cart = () => {
                                     <h6>
                                       Quantity
                                     </h6>
-
                                   </div>
                                   <div className="col-md-2">
                                     <h6>
@@ -429,9 +329,6 @@ const Cart = () => {
                           <span>Subtotal <i className="fa fa-question-circle fa-sm" aria-hidden="true"></i>
                           </span>
                           <span ref={subtotal}>
-                            {/* {Object.keys(priceObj).reduce((x,a)=>{
-                        return priceObj[x]+priceObj[a]
-                      })} */}
                             {formatInINR.format(sub)}
                           </span>
                         </div>
@@ -453,9 +350,7 @@ const Cart = () => {
                           <span ref={grandTotal} className='fw-bolder'>{formatInINR.format(sub + 99 + Math.round(sub * 0.1))}</span>
                         </div>
 
-                        {/* <form
-                      action="/create-checkout-session" method="POST"
-                      > */}
+                        {/* <form action="/create-checkout-session" method="POST"> */}
                         {/* <input type="hidden" name='priceObj' value={JSON.stringify(priceObj)} /> */}
                         <button id='checkoutBtn' className='btn w-100 my-2' style={{ border: "1px solid rgb(0 0 0 / 16%)", background: "#ebebeb", borderTop: "0" }}
                           //  type="submit"
@@ -488,7 +383,6 @@ const Cart = () => {
       }
 
       <RelatedProducts title="You may also like" />
-
     </>
   )
 }

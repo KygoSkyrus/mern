@@ -11,25 +11,17 @@ router.use(cookieParser());
 router.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf } }));
 dotenv.config({ path: './env/config.env' });
 
-//Schema
 const USER = require('../models/user');
 
-const publicRoutes=require('./publicRoutes')
-const adminRoutes=require('./adminRoutes')
-const userRoutes=require('./userRoutes')
+const publicRoutes = require('./publicRoutes')
+const adminRoutes = require('./adminRoutes')
+const userRoutes = require('./userRoutes')
 
-
-
-
-
-/*********************************** USER ***********************************/
-//check if this api is needed to be called every time as every route has authentication  middleware //also make every route return user object maybe it will fullfilll this route's ojective completely
 
 router.post('/api/signup', async (req, res) => {
 
     const { firstname, lastname, email, photo } = req.body;
     //need to handle more details when there is other method of signing up other than google
-console.log('firstname, lastname, email, photo',firstname, lastname, email, photo)
     try {
         const userExist = await USER.findOne({ email: email });
 
@@ -57,7 +49,6 @@ router.post('/api/signin', async (req, res) => {
 
     try {
         const { email, isAdminLogin } = req.body;
-        console.log('isAdminLogin', isAdminLogin)
         const user = await USER.findOne({ email: email }).populate('cartProducts');
 
         if (user) {
@@ -91,14 +82,8 @@ router.post('/api/signin', async (req, res) => {
     }
 })
 
-
-/*********************************** USER ***********************************/
-
-
-
-router.use('/api',publicRoutes);
-router.use('/api/user',userRoutes);
-router.use('/api/admin',adminRoutes);
-
+router.use('/api', publicRoutes);
+router.use('/api/user', userRoutes);
+router.use('/api/admin', adminRoutes);
 
 module.exports = router;

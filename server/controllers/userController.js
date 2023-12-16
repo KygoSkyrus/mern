@@ -1,10 +1,9 @@
-//Schema
 const USER = require('../models/user');
 const PRODUCT = require('../models/product')
 const ORDER = require('./../models/orders')
 
 
-const getUserInfo= async (req, res) => {
+const getUserInfo = async (req, res) => {
     try {
         res.status(200).json({ message: 'Access granted.', is_user_logged_in: true, user: req.user });
     } catch (error) {
@@ -12,22 +11,22 @@ const getUserInfo= async (req, res) => {
     }
 }
 
-const signMeOut =async (req, res) => {
+const signMeOut = async (req, res) => {
     try {
         res.clearCookie('jwt')
-        res.status(200).json({ message: "Logged out successfully!!!" ,is_user_logged_in: false})
+        res.status(200).json({ message: "Logged out successfully!!!", is_user_logged_in: false })
     } catch (error) {
-        res.status(500).json({ message: 'Internal server error',is_user_logged_in: true });
+        res.status(500).json({ message: 'Internal server error', is_user_logged_in: true });
     }
 }
 
 const updateAddress = async (req, res) => {
     try {
-        const { address,firstname,lastname,avtar } = req.body;
+        const { address, firstname, lastname, avtar } = req.body;
 
         let updatedUser = await USER.findByIdAndUpdate(
             req.user._id,
-            { address: address,firstname:firstname,lastname:lastname,avtar:avtar, phone: (req.user.phone !== address.phone) ? address.phone : req.user.phone },
+            { address: address, firstname: firstname, lastname: lastname, avtar: avtar, phone: (req.user.phone !== address.phone) ? address.phone : req.user.phone },
             { new: true }
         ).populate('cartProducts');
         res.status(200).json({ message: 'User details updated.', user: updatedUser });
@@ -37,9 +36,7 @@ const updateAddress = async (req, res) => {
     }
 }
 
-
-/*********************************** CART ***********************************/
-const addToCart=async (req, res) => {
+const addToCart = async (req, res) => {
 
     try {
         const { productId } = req.body;
@@ -62,7 +59,7 @@ const addToCart=async (req, res) => {
     }
 }
 
-const updateCart= async (req, res) => {
+const updateCart = async (req, res) => {
 
     try {
         const cartItems = req.body;
@@ -81,7 +78,7 @@ const updateCart= async (req, res) => {
             { $set: { cart: theCart } }
         );
 
-        const populatedDoc = await USER.findById(req.user._id)//.populate('cartProducts');//cartitems may not be needed here to populate
+        const populatedDoc = await USER.findById(req.user._id).populate('cartProducts');
         res.status(200).json({ message: 'Quantity updated', user: populatedDoc });
     } catch (err) {
         console.log(err)
@@ -90,36 +87,33 @@ const updateCart= async (req, res) => {
 }
 
 const removeFromCart = async (req, res) => {
-
     try {
         const { productId } = req.body;
-        const updatedUser = await USER.findByIdAndUpdate(
-            req.user._id,
-            { $pull: { cart: { productId } } },
-            { new: true }
-        ).populate('cartProducts');
-
-        res.status(200).json({ message: 'Product removed from cart.', user: updatedUser });
+        if (productId) {
+            const updatedUser = await USER.findByIdAndUpdate(
+                req.user._id,
+                { $pull: { cart: { productId } } },
+                { new: true }
+            ).populate('cartProducts');
+            res.status(200).json({ message: 'Product removed from cart.', user: updatedUser });
+        } else {
+            throw console.error();
+        }
     } catch (error) {
-        console.error('Error removing product from cart:', error);
+        console.error(error);
         res.status(500).json({ message: 'Internal server error' });
     }
 }
 
-const getCartItems =async (req, res) => {
+const getCartItems = async (req, res) => {
     try {
         res.status(200).json({ message: 'Access granted.', cartItems: req.user.cartProducts });
     } catch (error) {
         res.status(500).json({ message: 'Internal server error' });
     }
 }
-/*********************************** CART ***********************************/
 
-
-
-/*********************************** WISHLIST ***********************************/
-//adding and removing from wishlist
-const updateWishlist=async (req, res) => {
+const updateWishlist = async (req, res) => {
 
     try {
         const { productId } = req.body;
@@ -151,26 +145,30 @@ const updateWishlist=async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 }
-//remove from cart and add to wishlist
+
 const moveToWishlist = async (req, res) => {
 
     try {
         const { productId } = req.body;
-        const updatedUser = await USER.findByIdAndUpdate(
-            req.user._id,
-            {
-                $pull: { cart: { productId } },//removing from cart
-                $push: { wishlist: productId },//adding to wishlist
-            },
-            { new: true }
-        ).populate('cartProducts');
-
-        res.status(200).json({ message: 'Product moved to wishlist', user: updatedUser });
+        if (productId) {
+            const updatedUser = await USER.findByIdAndUpdate(
+                req.user._id,
+                {
+                    $pull: { cart: { productId } },//removing from cart
+                    $push: { wishlist: productId },//adding to wishlist
+                },
+                { new: true }
+            ).populate('cartProducts');
+            res.status(200).json({ message: 'Product moved to wishlist', user: updatedUser });
+        } else {
+            throw console.error();
+        }
     } catch (error) {
         res.status(500).json({ message: 'Internal server error' });
     }
 }
-const getWishlistItems=async (req, res) => {
+
+const getWishlistItems = async (req, res) => {
 
     const { ids } = req.body
     try {
@@ -180,11 +178,8 @@ const getWishlistItems=async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 }
-/*********************************** WISHLIST ***********************************/
 
-
-/*********************************** ORDER ***********************************/
-const getOrders= async (req, res) => {
+const getOrders = async (req, res) => {
 
     const { orderId } = req.query
     try {
@@ -201,27 +196,16 @@ const getOrders= async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 }
-/*********************************** ORDER ***********************************/
 
-
-/*********************************** CHECKOUT  ***********************************/
-//NOTE::: DONT LET USER ADD MORE THAN 50 ITEMS AS IT WOULD BREAK THE STRIPE,,metadata object can only have 50 keys(which are products in our case),show user a warning that we dont support bulk order at the moment ,out of 50, 3 keys reserved 
-
-//card for failing : 4000 0000 0000 0119
-const createCheckoutSession= async (req, res) => {
+//NOTE::: DONT LET USER ADD MORE THAN 50 ITEMS AS IT WOULD BREAK THE STRIPE, metadata object can only have 50 keys(which are products in our case),show user a warning that we dont support bulk order at the moment ,out of 50, 3 keys reserved 
+const createCheckoutSession = async (req, res) => {
 
     let line_items = []
     const orderId = uuidv4()
     let productList = {}//for metadata
 
-    console.log('req.body.priceObj--', req.body.priceObj)
-
     try {
         const data = JSON.parse(req.body.priceObj)
-        //meta data has 5 keys for orders details and rest 47 for products
-        //maybe we wont need these five to be store in metadat as the session object will be created right here
-        // productList.orderId = orderId
-        // productList.userId = req.user._id
 
         if (data.grandTotal > 999999) {
             return res.status(500).json({ message: 'ShoppItt does not support bulk order currently.' });
@@ -231,24 +215,6 @@ const createCheckoutSession= async (req, res) => {
         productList.shipping = data.shipping
         productList.total = data.grandTotal
 
-        // const taxRate = await stripe.taxRates.create({
-        //     display_name: 'Shipping',
-        //     description: 'Shipping charges',
-        //     percentage: data.shipping,
-        //     jurisdiction: 'DE',
-        //     inclusive: false,
-        //   });
-
-        // const shippingRate = await stripe.shippingRates.create({
-        //     display_name: 'Shipping',
-        //     type: 'fixed_amount',
-        //     fixed_amount: {
-        //         amount: 9900,
-        //         currency: 'inr',
-        //     },
-        // });
-        // console.log('ttaxxxx------------',shippingRate.id)
-
         Object.keys(data.productList).forEach(x => {
             let prod = {}
 
@@ -257,14 +223,12 @@ const createCheckoutSession= async (req, res) => {
             prod.price_data.product_data = {}
             prod.price_data.product_data.name = data.productList[x].name
             if (data.grandTotal < 999999) {
-                // prod.price_data.unit_amount = data.productList[x].price * 100
                 if (data.productList[x].discount) {
                     prod.price_data.unit_amount = Math.floor(data.productList[x].price * data.productList[x].discount / 100) * 100;
                 } else {
                     prod.price_data.unit_amount = data.productList[x].price * 100;
                 }
             } else {
-                // prod.price_data.unit_amount = data.productList[x].price
                 if (data.productList[x].discount) {
 
                     prod.price_data.unit_amount = Math.floor(data.productList[x].price * data.productList[x].discount / 100)
@@ -279,7 +243,6 @@ const createCheckoutSession= async (req, res) => {
             prod.adjustable_quantity.minimum = 1
             prod.adjustable_quantity.maximum = 99
 
-            //txr_1OHhX4SJDEVNzqXlTmp6QliB
             prod.tax_rates = [process.env.TAX_RATE_ID]
 
             line_items.push(prod);
@@ -291,10 +254,8 @@ const createCheckoutSession= async (req, res) => {
             productList[x].price = data.productList[x].price
             productList[x].quantity = data.productList[x].quantity
             productList[x].discount = data.productList[x].discount
-            productList[x] = JSON.stringify(productList[x])//metadata only supports key value(only string) that's why its stringified
+            productList[x] = JSON.stringify(productList[x])//metadata only supports key value(only string)
         })
-
-        console.log('product LIST-----------------------', line_items)
 
         const session = await stripe.checkout.sessions.create({
             line_items,
@@ -310,7 +271,6 @@ const createCheckoutSession= async (req, res) => {
             }]
         });
 
-        console.log('session', session)
         if (session) {
             await USER.findByIdAndUpdate(
                 req.user._id,
@@ -319,21 +279,21 @@ const createCheckoutSession= async (req, res) => {
                         checkoutSession: {
                             sessionId: session.id,
                             orderId: orderId
+                            //metadata content could have been saved to db in order to eliminate metadata dependency(as it can only have upto 50 keys)
                         }
                     }
                 },
                 { new: true }
             )
-            // res.redirect(303, session.url);
             res.status(200).json({ url: session.url });
         }
     } catch (error) {
-        console.error('something went wrong', error);
+        console.error(error);
         res.status(500).json({ message: 'Internal server error' });
     }
 }
 
-const getCheckoutSession= async (req, res) => {
+const getCheckoutSession = async (req, res) => {
 
     const { orderId } = req.query
     try {
@@ -342,16 +302,12 @@ const getCheckoutSession= async (req, res) => {
         const session = await stripe.checkout.sessions.retrieve(checkoutSession.sessionId);
 
         if (session?.payment_status === 'paid') {
-
             //retrieving the payment intent
             const paymentIntent = await stripe.paymentIntents.retrieve(
                 session.payment_intent
             );
-            // console.log('payment_intent', paymentIntent)
 
             let metadata = session.metadata
-            // console.log('session', session)
-            // console.log('metadata', metadata)
             let order = {}
             order.orderId = orderId
             order.tax = metadata.tax
@@ -363,7 +319,7 @@ const getCheckoutSession= async (req, res) => {
             prodArray = []
             Object.keys(metadata).forEach(x => {
                 if (
-                    x !== "tax" && x !== "total" && x !== "shipping" && typeof metadata[x] === "string" // Checks if the value is a string
+                    x !== "tax" && x !== "total" && x !== "shipping" && typeof metadata[x] === "string"
                 ) {
                     let tempObj = {}
                     const productData = JSON.parse(metadata[x]);//parsing the product details from metadata
@@ -373,7 +329,7 @@ const getCheckoutSession= async (req, res) => {
                     tempObj.quantity = productData.quantity
                     tempObj.discount = productData.discount
                     tempObj.price = productData.price
-                    order.products.push(tempObj)//to insert in user collection
+                    order.products.push(tempObj)//to insert in USER collection
                     prodArray.push(tempObj)//to insert in ORDER collection
                 }
             })
@@ -384,7 +340,6 @@ const getCheckoutSession= async (req, res) => {
                 { $push: { orders: order } },
                 { new: true }
             )
-            // console.log('updatedyuser', updatedUser)
 
             const theOrder = new ORDER({
                 orderId: orderId,
@@ -402,7 +357,7 @@ const getCheckoutSession= async (req, res) => {
                     console.log('saved order', response)
                 })
                 .catch(err => {
-                    console.log("errror-", err)
+                    console.log(err)
                     res.status(500).json({ message: 'Internal server error' });
                 })
 
@@ -414,6 +369,5 @@ const getCheckoutSession= async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 }
-/*********************************** CHECKOUT  ***********************************/
 
-module.exports={getUserInfo,signMeOut,updateAddress,addToCart,updateCart,removeFromCart,getCartItems,updateWishlist,moveToWishlist,getWishlistItems,getOrders,createCheckoutSession,getCheckoutSession}
+module.exports = { getUserInfo, signMeOut, updateAddress, addToCart, updateCart, removeFromCart, getCartItems, updateWishlist, moveToWishlist, getWishlistItems, getOrders, createCheckoutSession, getCheckoutSession }

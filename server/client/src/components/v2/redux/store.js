@@ -1,18 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { productFormReducer } from './productFormSlice';
-import { productReducer } from './productSlice';
 import { userReducer } from './userSlice';
 import { toastReducer } from './toastSlice';
 import { loaderReducer } from './loaderSlice';
+import { productReducer } from './productSlice';
+import { productFormReducer } from './productFormSlice';
 
 const store = configureStore({
   reducer: {
-    productForm: productFormReducer,
-    product: productReducer,
     user: userReducer,
-    loader:loaderReducer,
     toast: toastReducer,
+    loader:loaderReducer,
+    product: productReducer,
+    productForm: productFormReducer,
   }
 })
 export default store; 

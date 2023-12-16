@@ -1,29 +1,24 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 
-import SignInToContinue from './SignInToContinue';
 import BagLoader from './loaders/BagLoader';
+import SignInToContinue from './SignInToContinue';
 
 import { invokeToast } from './redux/toastSlice';
 import { formatInINR, getFullDateStr } from './Utility';
 import noOrder from "./../../assets/images/newImg/collections/noOrder.svg"
 
-
-
 const Order = () => {
 
-  const { orderId } = useParams()
   const dispatch = useDispatch()
-
-  const userDetail = useSelector(state => state.user.user)
-  const userLoggedIn = useSelector(state => state.user.isUserLoggedIn)
+  const { orderId } = useParams()
 
   const [order, setOrder] = useState()
   const [showLoader, setShowLoader] = useState(true)
-
-  console.log("orderId", orderId, showLoader, userLoggedIn)
-
+  const userDetail = useSelector(state => state.user.user)
+  const userLoggedIn = useSelector(state => state.user.isUserLoggedIn)
 
   useEffect(() => {
     let resp;
@@ -35,12 +30,11 @@ const Order = () => {
       .then(res => {
         setShowLoader(false)
         if (resp.status === 200) {
-          console.log('the order', res.order)
           if (res.order) {
             setOrder(res.order)
           } else {
             let status;
-            //this api looks for checkoutsession and save the order is not saved in db and returns the order
+            //this api looks for checkout-session and save the order if not saved in db and returns the order
             fetch(`/api/user/getcheckoutsession?orderId=${orderId}`)
               .then(response => {
                 status = response.status
@@ -48,28 +42,18 @@ const Order = () => {
               })
               .then(res => {
                 if (status === 200) {
-                  console.log('checkout sessio', res)
                   setOrder(res.order)
                 } else {
-                  // invokeToast(dispatch,false,res.message)
                   dispatch(invokeToast({ isSuccess: false, message: res.message }))
                 }
               })
           }
-          //dispatch(setUserDetails({ user: res.user }))
         } else {
           setOrder(undefined)
-          console.log('not 2000')
-          //create an utility function whcih will updated these three state abd pass theese values (this is repeated on almost every api)
-          // invokeToast(dispatch,false,res.message)
           dispatch(invokeToast({ isSuccess: false, message: res.message }))
         }
-
       })
   }, [])
-
-
-
 
   return (
     <>

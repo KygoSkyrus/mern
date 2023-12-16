@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -5,10 +6,9 @@ import BagLoader from './loaders/BagLoader';
 import SignInToContinue from './SignInToContinue';
 
 import { invokeToast } from './redux/toastSlice';
-import { isUserLoggedIn, setUserDetails } from './redux/userSlice';
-import { getAvatarUrl, inProgressLoader, signOut } from './Utility';
+import { setUserDetails } from './redux/userSlice';
+import { apiCall, getAvatarUrl, inProgressLoader, signOut } from './Utility';
 import { data, states } from '../../assets/state-city';
-
 
 const User = () => {
 
@@ -20,23 +20,22 @@ const User = () => {
     const [address, setAddress] = useState({ house: "", street: '', city: '', pincode: '', state: '', country: '', phone: '' })
     const [selectedAvatar, setSelectedAvatar] = useState('')
 
+    useEffect(() => {
+        if (userDetail) {
+            setUser({ ...user, email: userDetail.email, photo: userDetail.avtar, firstname: userDetail.firstname, lastname: userDetail.lastname })
+            setName({ firstname: userDetail.firstname, lastname: userDetail.lastname })
+            setSelectedAvatar(userDetail.avtar)
+            setAddress({ house: userDetail.address?.house, street: userDetail.address?.street, state: userDetail.address?.state, city: userDetail.address?.city, pincode: userDetail.address?.pincode, phone: userDetail.phone })
+        } else {
+            setUser(undefined)
+        }
+
+    }, [userDetail])//when the data gets loaded in store
 
     const updateAddress = () => {
-        console.log('address---', address)
-        console.log('userDetail', userDetail)
 
         let existingAddress = JSON.parse(JSON.stringify(userDetail.address))
         existingAddress.phone = userDetail.phone
-        // existingAddress.phone = userDetail.phone? userDetail.phone : ""
-
-        // console.log('before',  
-        // address.house,existingAddress.house +"\n"+
-        // address.street,existingAddress.street +"\n"+
-        // address.city,existingAddress.city +"\n"+
-        // address.pincode,existingAddress.pincode +"\n"+
-        // address.state,existingAddress.state +"\n"+
-        // address.phone,existingAddress.phone +"\n"
-        // )
 
         if (
             address.house !== existingAddress.house ||
@@ -50,69 +49,28 @@ const User = () => {
             selectedAvatar !== userDetail.avtar
         ) {
             inProgressLoader(dispatch, true)
-            let resp;
-            fetch('/api/user/updateaddress', {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    firstname: name.firstname,
-                    lastname: name.lastname,
-                    avtar: selectedAvatar,
-                    address,
-                }),
-            })
-                .then(response => {
-                    resp = response;
-                    return response.json()
-                })
-                .then(res => {
-                    inProgressLoader(dispatch, false)
-                    console.log('update address response', res)
-                    if (resp.status === 200) {
-                        dispatch(setUserDetails({ user: res.user }))//clearing user details
-                        dispatch(invokeToast({ isSuccess: true, message: res.message }))
-                    } else {
-                        dispatch(invokeToast({ isSuccess: false, message: res.message }))
-                    }
-                })
+            let bodyData={
+                firstname: name.firstname,
+                lastname: name.lastname,
+                avtar: selectedAvatar,
+                address,
+            }
+            apiCall(dispatch,'/api/user/updateaddress',bodyData)
         } else {
             dispatch(invokeToast({ isSuccess: false, message: "No changes are made" }))
         }
 
     }
 
-
-    useEffect(() => {
-        if (userDetail) {
-            setUser({ ...user, email: userDetail.email, photo: userDetail.avtar, firstname: userDetail.firstname, lastname: userDetail.lastname })
-            setName({ firstname: userDetail.firstname, lastname: userDetail.lastname })
-            setSelectedAvatar(userDetail.avtar)
-            setAddress({ house: userDetail.address?.house, street: userDetail.address?.street, state: userDetail.address?.state, city: userDetail.address?.city, pincode: userDetail.address?.pincode, phone: userDetail.phone })
-            console.log(user)
-        } else {
-            setUser(undefined)
-        }
-
-    }, [userDetail])//when the data gets loaded in store
-
-
-
-
     function showAvatarEditBtn(val) {
         const editBtn = document.querySelector('.avatar-edit-btn');
-        if (val) {
-            editBtn.classList.remove('d-none')
-        } else {
-            editBtn.classList.add('d-none')
-        }
+        val ? editBtn.classList.remove('d-none') : editBtn.classList.add('d-none');
     }
 
     function setUserAvatar() {
         document.querySelector('.userAvatar').src = selectedAvatar
         document.getElementById('closeAvatarModal').click()
     }
-
-
 
     return (
         <>
@@ -137,7 +95,6 @@ const User = () => {
                                         <button className={`w-100 signout-btn ${window.outerWidth > 768 && " btn btn-outline-danger"}`} onClick={() => signOut(dispatch)}>{window.outerWidth > 768 ? "Sign out" : <i className='fa fa-sign-out-alt'></i>}</button>
                                     </div>
                                 </div>
-
                             </div>
 
                             <div className="col-md-8 pe-5" >
@@ -160,9 +117,9 @@ const User = () => {
                                         <input type="number" name='phone' className="form-control" id="inputPhone" value={address.phone} onChange={e => setAddress({ ...address, phone: e.target.value })} />
                                     </div>
                                     {/* <div className="col-md-6">
-                        <label for="inputPassword4" className="form-label">Password</label>
-                        <input type="password" className="form-control" id="inputPassword4" />
-                    </div> */}
+                                           <label for="inputPassword4" className="form-label">Password</label>
+                                           <input type="password" className="form-control" id="inputPassword4" />
+                                    </div> */}
                                     <div className="col-6">
                                         <label for="inputAddress" className="form-label">House/Apartment</label>
                                         <input type="text" name='house' className="form-control" id="inputAddress" placeholder="" value={address.house} onChange={e => setAddress({ ...address, house: e.target.value })} />
@@ -201,14 +158,6 @@ const User = () => {
                                         <label for="inputZip" className="form-label">Country</label>
                                         <input type="text" value="India" name='country' className="form-control" id="inputZip" style={{ cursor: "not-allowed" }} />
                                     </div>
-                                    {/* <div className="col-12">
-                        <div className="form-check">
-                            <input className="form-check-input" type="checkbox" id="gridCheck" />
-                            <label className="form-check-label" for="gridCheck">
-                                Check me out
-                            </label>
-                        </div>
-                    </div> */}
                                     <div className="col-12">
                                         <button type="button" className="btn btn-outline-warning w-100" onClick={() => updateAddress()} >Update</button>
                                     </div>
@@ -237,11 +186,9 @@ const User = () => {
                         </div>
 
                     </div>
-
                     :
                     <SignInToContinue />
             }
-
         </>
     )
 }

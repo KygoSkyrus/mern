@@ -126,7 +126,7 @@ const userSchema = new Schema({
 
 
 //mongoose virtual to minimize performance overhead created by frequently calling populate
-//technincally mongose virtual dont work on field with array so it will create another field and populate them
+//technincally mongose virtual don't work on field with array so it will create another field and populate them
 userSchema.virtual('cartProducts', {
     ref: 'PRODUCT',
     localField: 'cart.productId',

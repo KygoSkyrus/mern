@@ -17,13 +17,13 @@ export const toastSlice = createSlice({
 		setToastStatus: (state, action) => {
 			state.isSuccess = action.payload.isSuccess
 		},
-		invokeToast:(state,action)=>{
+		invokeToast: (state, action) => {
 			state.toast = true
 			state.isSuccess = action.payload.isSuccess
 			state.toastContent = action.payload.message
 		}
 	},
 });
-export const { toastVisibility, setToastContent, setToastStatus, invokeToast } = toastSlice.actions;
 
+export const { toastVisibility, setToastContent, setToastStatus, invokeToast } = toastSlice.actions;
 export const toastReducer = toastSlice.reducer;

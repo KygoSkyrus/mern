@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 const USER = require('../models/user');
 
-
 const authenticateAdmin = async (req, res, next) => {
     const token = req.cookies.jwt;
     if (!token)
@@ -21,7 +20,6 @@ const authenticateAdmin = async (req, res, next) => {
     next();
 };
 
-
 const authenticateUser = async (req, res, next) => {
     const token = req.cookies.jwt;
     if (!token)
@@ -35,10 +33,9 @@ const authenticateUser = async (req, res, next) => {
         return res.status(404).json({ message: 'User not found.' });
     }
 
-    // console.log('uueueue', user)
     req.user = user;
     next();
 };
 
 
-module.exports={authenticateAdmin,authenticateUser}
+module.exports = { authenticateAdmin, authenticateUser }

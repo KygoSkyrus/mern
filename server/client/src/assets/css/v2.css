@@ -206,23 +206,6 @@ img {
 }
 /***************************** basics COMMON *********************************************/
 
-.textclip-container {
-  height: 70vh;
-  background-color: #1d2a3a;
-  display: grid;
-  place-items: center;
-}
-.textClip {
-  font-size: 8px;
-  line-height: 10px;
-  background: url("./../images/newImg/collections/iphone5.png") fixed center
-    no-repeat;
-  /* background: url("./../images/thebaglogo.png") center no-repeat; */
-  background-size: contain;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: rgba(255, 255, 255, 0.1);
-}
 
 /*********************************************** LOADER ************************************************* */
 .loader {

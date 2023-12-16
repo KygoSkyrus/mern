@@ -139,13 +139,6 @@ const ProductForm = (props) => {
         setProductData({ ...productData, [e.target.name]: e.target.value })
     }
 
-    function settingUrl(e) {
-        let title = e.target.value;
-        let str = title.replace(/\s+/g, "-").toLowerCase();
-        document.getElementById("url").value = str;
-        setProductData({ ...productData, [e.target.name]: e.target.value, url: str })
-    }
-
     function setDynamicLabel(e) {
         let imageHolder = document.getElementById('imageHolder')
         imageHolder.innerHTML = "";
@@ -200,7 +193,7 @@ const ProductForm = (props) => {
                                 <div className="form-group">
                                     <label htmlFor="name" className="font-weight-600">Product name</label>
                                     <input type="text" className="form-control" name="name" id="name"
-                                        value={productData?.name} autoComplete="off" placeholder="product name" onChange={e => settingUrl(e)} required />
+                                        value={productData?.name} autoComplete="off" placeholder="product name" onChange={e => handleInputChange(e)} required />
                                 </div>
 
                                 <div className="form-group">

@@ -7,7 +7,6 @@ const dotenv = require('dotenv');
 dotenv.config({ path: './env/config.env' });
 app.use(express.json());
 
-
 const db = process.env.dbURI;
 const port = process.env.PORT || 4000;
 

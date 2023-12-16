@@ -56,7 +56,7 @@ const orderSchema = new Schema({
     line2: String,
     city: String,
     postal_code: String,
-    state:String,
+    state: String,
     country: String,
   },
   status: {

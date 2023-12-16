@@ -1,8 +1,7 @@
-//Schema
 const PRODUCT = require('../models/product')
 const CATEGORY = require('../models/category')
 
-const getProducts= async (req, res) => {
+const getProducts = async (req, res) => {
 
     const { limit } = req.query
     await PRODUCT.find({}).limit(limit)
@@ -15,14 +14,12 @@ const getProducts= async (req, res) => {
         })
 }
 
-const getProdByCategory= async (req, res) => {
+const getProdByCategory = async (req, res) => {
 
     const { category } = req.query
-    // console.log('categoryID', category)
-
     PRODUCT.find({ category: category })
         .then(response => {
-            response=response.filter(x=>x.visibility)
+            response = response.filter(x => x.visibility)
             res.send({ products: response })
         })
         .catch(err => {
@@ -31,13 +28,12 @@ const getProdByCategory= async (req, res) => {
 
 }
 
-const getProdById= async (req, res) => {
+const getProdById = async (req, res) => {
 
     const { prodId } = req.query
-
     PRODUCT.find({ _id: prodId })
         .then(response => {
-            response=response.filter(x=>x.visibility)
+            response = response.filter(x => x.visibility)
             res.send({ product: response })
         })
         .catch(err => {
@@ -46,7 +42,7 @@ const getProdById= async (req, res) => {
 
 }
 
-const getCategory= async (req, res) => {
+const getCategory = async (req, res) => {
 
     await CATEGORY.find({})
         .then(response => {
@@ -59,7 +55,7 @@ const getCategory= async (req, res) => {
 
 }
 
-const searchProd=async (req, res) => {
+const searchProd = async (req, res) => {
     const { value } = req.body;
 
     try {
@@ -74,5 +70,4 @@ const searchProd=async (req, res) => {
     }
 }
 
-
-module.exports={getProducts,getProdByCategory,getProdById,getCategory,searchProd}
+module.exports = { getProducts, getProdByCategory, getProdById, getCategory, searchProd }

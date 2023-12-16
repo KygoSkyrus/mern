@@ -1,34 +1,29 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 
-import { isUserLoggedIn, setAdminAuthStatus } from './redux/userSlice.js';
-
 import './../../assets/css/admin.css'
 import PrivateRoute from './Admin/PrivateRoute.js';
 import AdminLogin from './Admin/AdminLogin.js';
-import Error from './Error.js';
 import Modal from './Admin/Modal.js';
+import Error from './Error.js';
+
+import { setAdminAuthStatus } from './redux/userSlice.js';
 
 const Admin = () => {
 
     const dispatch = useDispatch();
-    // const [isAuthSuccess, setIsAuthSuccess] = useState(null)//can chnage it with the reduct state 
-    const isAuthSuccess = useSelector(state => state.user.isAdminAuthSuccess)//using this may break stuff, 
+    const isAuthSuccess = useSelector(state => state.user.isAdminAuthSuccess)
     const productFormVisibility = useSelector(state => state.productForm.visibility)// modal's visibility 
 
-    console.log('visibility', productFormVisibility)
-    //ONLY let this function run if the user is admin
     useEffect(() => {
         fetch('/api/admin/authentication')
             .then(res => res.json())
             .then(res => {
-                console.log('reee', res.is_user_logged_in)
-                // setIsAuthSuccess(res.is_user_logged_in)
                 dispatch(setAdminAuthStatus({ value: res.is_user_logged_in }))
             })
     }, [isAuthSuccess])
-
 
     return (
         <>

@@ -1,15 +1,11 @@
-# Defects
-- whenever isuserloggedin gets false ,,route out user to loginm (put it in useeefect)
-
 # TODO
-- admin table heading should be sticky for mobile
 - also check responsiveness betwwen 768-992
-- clear unneccsary stuff
 
 # Wouldn't hurt to have (least priority)
 - when a order is completed than reduce the quantity of all the ordered products by the quanty they are bought
 - add the part where user can add items to cart without logging in,,use cookies to store cart items
 - there can be a cicrle or whatever button for feedback at the bottom right asking for feedback for users overall experienece
+- admin table heading should be sticky for mobile
 - add the new images in banner
 - currently the categoyr page is breaking the Link chaain an reloading the appp
 - add product from button and header is not looking good

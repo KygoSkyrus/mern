@@ -4,6 +4,7 @@ const initialState = {
     catSubcatRelation: {},
     isProductUpdated: false,
     isSearchBarHidden: false,
+    productList: null,
 }
 
 export const productSlice = createSlice({
@@ -18,10 +19,13 @@ export const productSlice = createSlice({
         },
         hideSearchBar: (state, action) => {
             state.isSearchBarHidden = action.payload.value
+        },
+        setProductList: (state, action) => {
+            state.productList = action.payload.value
         }
     }
 })
 
 
-export const { setCatSubcatRelation, isProductUpdated, hideSearchBar } = productSlice.actions;
+export const { setCatSubcatRelation, isProductUpdated, hideSearchBar, setProductList } = productSlice.actions;
 export const productReducer = productSlice.reducer

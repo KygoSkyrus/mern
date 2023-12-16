@@ -1,19 +1,20 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react'
 import { Route, Routes } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 
 import Navbar from "./Navbar"
 import Homepage from "./Homepage"
-import Footer from './Footer';
 import Category from './Category';
 import ProductPage from './ProductPage';
-import Cart from './Cart';
 import User from './User';
+import Cart from './Cart';
 import Wishlist from './Wishlist';
 import Order from './Order';
 import OrderList from './OrderList';
+import Footer from './Footer';
 import Error from './Error';
-import getUser from './Utility';
+import { getUser } from './Utility';
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -22,20 +23,13 @@ const TheFront = ({ dl }) => {
 
     const dispatch = useDispatch()
 
-
     useEffect(() => {
         getUser(dispatch)
     }, [])
 
-    ///inside this set the user state,,and this state will be put in store and from navbar and wherre ever user loggedin isneeded than get that user
-    
-
-
-
     return (
         <>
             <Navbar />
-
             {/* <div className='bag-container'>
                 <div style={{ position: "relative" }}>
                     <div className='bag'>
@@ -44,7 +38,6 @@ const TheFront = ({ dl }) => {
                 </div>
                 <div className='glass'></div>
             </div> */}
-
             <Routes>
                 <Route path="/" exact element={<Homepage />} />
                 <Route path="/category/:categoryId" exact element={<Category />} />
@@ -58,7 +51,6 @@ const TheFront = ({ dl }) => {
             </Routes>
 
             <Footer />
-
         </>
     )
 }

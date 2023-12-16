@@ -5,10 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import BagLoader from './loaders/BagLoader';
 import RelatedProducts from './RelatedProducts';
-import { debouncedApi, inProgressLoader } from './Utility';
 import { updatewishlist } from './Utility';
+import { debouncedApi, inProgressLoader } from './Utility';
 
 const Category = () => {
+
     const { categoryId } = useParams()
     const [products, setProducts] = useState()
     const [randomNum, setRandomNum] = useState()
@@ -16,15 +17,12 @@ const Category = () => {
     const dispatch = useDispatch()
     const wishlistItems = useSelector(state => state.user.user.wishlist)
 
-    console.log('in cat', categoryId)
     useEffect(() => {
         fetch(`/api/getprodbycategory/?category=${categoryId}`)
             .then(response => response.json())
             .then(res => {
-                console.log('response', res.products)
                 setProducts(res.products)
                 setRandomNum(Math.floor(Math.random() * (res.products?.length - 1 + 1)) + 1)
-                console.log('ran', Math.floor(Math.random() * (res.products?.length - 1 + 1)) + 1)
             })
 
     }, [])
@@ -52,7 +50,6 @@ const Category = () => {
                                                     <img src={x.image} className="card-img-top" alt="..." />
                                                 </div>
                                                 <div className="card-body border-none p-0">
-                                                    {/* this is not needed the caegory,,instead at the top show the whole heirarchy */}
                                                     <section className='product-catagory'>{x.category}</section>
                                                     <h4 className='title' title={x.name}><a href={`/product/${x._id}`}>{x.name}</a></h4>
                                                     <div className="product-bottom-details">
@@ -97,14 +94,11 @@ const Category = () => {
         </>
     )
 }
-
-//   <div className='rating-stars'>
-//                                             <i className="fa-solid fa-star" aria-hidden="true"></i>
-//                                             <i className="fa-solid fa-star" aria-hidden="true"></i>
-//                                             <i className="fa-solid fa-star" aria-hidden="true"></i>
-//                                             <i className="fa-solid fa-star-half-stroke"></i>
-//                                             <i className="far fa-star" aria-hidden="true"></i>
-//                                         </div> 
-
-
+// {/* <div className='rating-stars'>
+//     <i className="fa-solid fa-star" aria-hidden="true"></i>
+//     <i className="fa-solid fa-star" aria-hidden="true"></i>
+//     <i className="fa-solid fa-star" aria-hidden="true"></i>
+//     <i className="fa-solid fa-star-half-stroke"></i>
+//     <i className="far fa-star" aria-hidden="true"></i>
+// </div> */}
 export default Category

@@ -1,22 +1,19 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
-import { goWithGoogle, signinAPI, defaultAvatar, inProgressLoader } from './Utility'
 import { invokeToast } from './redux/toastSlice';
+import { goWithGoogle, signinAPI, defaultAvatar, inProgressLoader } from './Utility'
 
-const SignInForm = ({  title, description, toggleText, signInOrSignUp, switchTo, btnText }) => {
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
-    
-    const [userCredentials, setUserCredentials] = useState({ email: '', password: '', username: '' });
-
+const SignInForm = ({ title, description, toggleText, signInOrSignUp, switchTo, btnText }) => {
 
     const auth = getAuth();
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const [userCredentials, setUserCredentials] = useState({ email: '', password: '', username: '' });
 
     function handleClick() {
-        console.log('handleclick',signInOrSignUp)
         if (signInOrSignUp === "signup") {
             createUserAccountFirebase()
         } else if (signInOrSignUp === "signin") {
@@ -25,20 +22,16 @@ const SignInForm = ({  title, description, toggleText, signInOrSignUp, switchTo,
     }
 
     function createUserAccountFirebase() {
-        // console.log('eee', userCredentials,userCredentials?.username?.trim().length)
         let name = userCredentials?.username?.trim();
-        
+
         if (name?.length === 0 || userCredentials?.email.length === 0 || userCredentials?.password.length === 0) {
             dispatch(invokeToast({ isSuccess: false, message: 'Name is a mandatory field, Enter your name to proceed further' }))
             setUserCredentials({ ...userCredentials, username: '' })
             return;
         }
-        // console.log('ccc', name)
-        inProgressLoader(dispatch,true)
-        
-        name = name.split(' ')
+        inProgressLoader(dispatch, true)
 
-        // console.log('splitted name', name)
+        name = name.split(' ')
         let firstname = '';
         let lastname = '';
         for (const str of name) {
@@ -50,57 +43,38 @@ const SignInForm = ({  title, description, toggleText, signInOrSignUp, switchTo,
             }
         }
 
-        console.log('fname', firstname, lastname)
-
         createUserWithEmailAndPassword(auth, userCredentials?.email, userCredentials?.password)
             .then((response) => {
                 // Signed up 
                 const user = response.user;
-                console.log('user cred', user)
-
                 signinAPI('signup', user?.email, firstname, lastname, defaultAvatar, dispatch)
-                inProgressLoader(dispatch,false)
+                inProgressLoader(dispatch, false)
                 navigate('/user');//sending user to user page for filling out other details
                 setUserCredentials({ email: '', password: '', username: '' })
             })
             .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log('error', errorCode, errorMessage)
-                // document.getElementById('closeSignin').click()//closing the modal
-                inProgressLoader(dispatch,false)
+                inProgressLoader(dispatch, false)
                 setUserCredentials({ email: '', password: '', username: '' })
-                let errMsg = errorMessage;
-                if (errorCode === 'auth/email-already-in-use') errMsg = "User already exists!!! Try Signing in instead"
+                let errMsg = error.message;
+                if (error.code === 'auth/email-already-in-use') errMsg = "User already exists!!! Try Signing in instead"
                 dispatch(invokeToast({ isSuccess: false, message: errMsg }))
             });
     }
 
     function loginUserFirebase() {
-              inProgressLoader(dispatch,true)
+        inProgressLoader(dispatch, true)
         signInWithEmailAndPassword(auth, userCredentials?.email, userCredentials?.password)
             .then(
                 (response) => {
-                    console.log('signinresss', response, response?.user?.email)
-                    //   navigate("/home");
                     const user = response.user;
-
                     signinAPI('signin', user?.email, "", "", user?.photoURL, dispatch)
-                    inProgressLoader(dispatch,false)
-                    navigate('/user');//sending user to user page for filling out other details
+                    inProgressLoader(dispatch, false)
+                    // navigate('/user');//sending user to user page for filling out other details
                     setUserCredentials({ email: '', password: '', username: '' })
-                    // setemail('')
-                    // setpassword('')
                 }
             )
             .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log('error', errorCode, errorMessage)
-                // document.getElementById('closeSignin').click()//closing the modal
-                // setemail('')
-                // setpassword('')
-                inProgressLoader(dispatch,false)
+                inProgressLoader(dispatch, false)
                 setUserCredentials({ email: '', password: '', username: '' })
                 dispatch(invokeToast({ isSuccess: false, message: "Authentication Failed, Invalid email/password" }))
             });

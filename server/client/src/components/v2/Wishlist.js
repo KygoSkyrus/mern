@@ -1,28 +1,27 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 
 import BagLoader from './loaders/BagLoader';
 import SignInToContinue from './SignInToContinue';
+import RelatedProducts from './RelatedProducts';
 
 import { invokeToast } from './redux/toastSlice';
 import { debouncedApi, inProgressLoader, updatewishlist } from './Utility';
 import wishlistImg from "./../../assets/images/newImg/collections/wishlistImg.gif"
-import RelatedProducts from './RelatedProducts';
 
 const Wishlist = () => {
 
   const dispatch = useDispatch()
-  const wishlistItems = useSelector(state => state.user.user.wishlist)
   const userDetail = useSelector(state => state.user.user)
   const userLoggedIn = useSelector(state => state.user.isUserLoggedIn)
+  const wishlistItems = useSelector(state => state.user.user.wishlist)
   const [products, setProducts] = useState()
 
   useEffect(() => {
-    console.log(wishlistItems, userLoggedIn)
     let resp;
     if (wishlistItems.length > 0) {
-      console.log('333')
       fetch('/api/user/getwishlistitems', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -38,12 +37,10 @@ const Wishlist = () => {
           if (resp.status === 200) {
             setProducts(res.items)
           } else {
-            // invokeToast(dispatch,false,res.message)
             dispatch(invokeToast({ isSuccess: false, message: res.message }))
           }
         })
     }
-
   }, [wishlistItems])
 
 
@@ -147,7 +144,6 @@ const Wishlist = () => {
                                               onClick={() => updatewishlist(x._id, dispatch)}
                                               className='me-4 pointer'>Remove <i className="fa fa-trash fa-sm "></i></span></u>
                                           </div>
-                                          {/* <button className="btn btn-danger ms-2 rounded-pill text-light"><i className="fa fa-trash fa-sm"></i></button> */}
                                         </div>
 
                                       </div>
@@ -188,7 +184,6 @@ const Wishlist = () => {
       }
 
       <RelatedProducts title="You may also like" />
-
     </>
   )
 }

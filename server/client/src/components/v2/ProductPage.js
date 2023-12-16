@@ -2,35 +2,30 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 
-import { debouncedApi, inProgressLoader } from './Utility';
-import { updatewishlist } from './Utility';
+import { updatewishlist, debouncedApi, inProgressLoader } from './Utility';
 
-import noProd from './../../assets/images/newImg/collections/product-not-found.jpg'
 import RelatedProducts from './RelatedProducts'
 import BagLoader from './loaders/BagLoader';
+import noProd from './../../assets/images/newImg/collections/product-not-found.jpg'
 
 const ProductPage = () => {
 
+    const dispatch = useDispatch()
     const { productId } = useParams()
     const prodImage = useRef()
-    const dispatch = useDispatch()
     const [product, setProduct] = useState()
     const wishlistItems = useSelector(state => state.user.user.wishlist)
     const catSubcatRelation = useSelector(state => state.product.catSubcatRelation)
-    console.log('catSubcatRelation', catSubcatRelation)
 
     useEffect(() => {
         fetch(`/api/getprodbyid/?prodId=${productId}`)
             .then(response => response.json())
             .then(res => {
-                console.log('response', res.product[0])
                 setProduct(res.product)
             })
-        // console.log('product id', productId,catSubcatRelation[product[0]?.category])
     }, [productId])
 
     const setImage = (e) => {
-        console.log('setimga', e.target.src)
         e.target.classList.add('selected-border')
         prodImage.current.src = e.target.src
 
@@ -44,10 +39,8 @@ const ProductPage = () => {
 
     const addToCart = (productId) => {
         inProgressLoader(dispatch, true)
-        debouncedApi(productId, dispatch)//since we have added an overlay while the api fetches, we dont need to debounce api
-        //thats the reason debounce wait time is decreased to almost nothing
+        debouncedApi(productId, dispatch)//since we have added an overlay while the api fetches, we dont need to debounce api, (thats the reason debounce wait time is decreased to almost nothing)
     }
-
 
     return (
         <>

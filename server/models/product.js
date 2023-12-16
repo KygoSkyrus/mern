@@ -35,7 +35,7 @@ const productSchema = new Schema({
     type: Number,
     default: 0,
   },
-  visibility:{
+  visibility: {
     type: Boolean,
     default: true,
   },
@@ -50,14 +50,6 @@ const productSchema = new Schema({
       type: Number,
     },
   }],
-},{collection:"products"});
-
-// const orderSchema = new mongoose.Schema({
-//   user: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: 'User',
-//     required: true,
-//   },
-//   orderItems: [{
+}, { collection: "products" });
 
 module.exports = mongoose.model('PRODUCT', productSchema); 

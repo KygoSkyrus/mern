@@ -74,19 +74,6 @@ const BannerSlider = () => {
             </div>
             <img src={headphone1} alt="shoppitt" width="100%" />
           </div>
-          {/* <div className="slide slide1">
-            <div className="xbox-content text-light">
-              <h2>Start Your Audiophile Journey Here</h2>
-              <p>
-              <span>Like You, We Love Music</span> And we believe a Headphone is more than just an instrument for sound. It’s the key to a mind-blowing moment of emotion, bringing you closer to your favourite artist, and yourself.
-              </p>
-              <a href="/#" className="xbox-btn" target="blank">
-                Join Now
-                <i className="fas fa-chevron-right"></i>
-              </a>
-            </div>
-            <img src={headphone2} alt="shoppitt" width="100%" />
-          </div> */}
           <div className="slide slide4">
             <div className="xbox-content text-light">
               <h2>
@@ -141,19 +128,6 @@ const BannerSlider = () => {
             </div>
             <img src={xbox} alt="shoppitt" width="100%" />
           </div>
-
-          {/* <div>
-            <div className="slide slide1"></div>
-          </div>
-          <div>
-            <div className="slide slide2"></div>
-          </div>
-          <div>
-            <div className="slide slide3"></div>
-          </div>
-          <div>
-            <div className="slide slide4"></div>
-          </div> */}
         </Slider>
       </div>
     </>

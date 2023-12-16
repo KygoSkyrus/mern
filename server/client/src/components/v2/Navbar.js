@@ -1,10 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable array-callback-return */
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
+import { debounce, signOut } from "./Utility";
 import { setCatSubcatRelation } from "./redux/productSlice";
 import theBagLogo from "./../../assets/images/thebaglogo.png";
-import { signOut } from "./Utility";
 
 const Navbar = () => {
   const [categories, setCategories] = useState();
@@ -15,6 +17,33 @@ const Navbar = () => {
   const isUserLoggedIn = useSelector((state) => state.user.isUserLoggedIn);
   const cart = useSelector((state) => state.user.user.cart);
   const user = useSelector((state) => state.user.user);
+
+  useEffect(() => {
+    fetch("/api/getcategory")
+      .then((response) => response.json())
+      .then((res) => {
+        setCategories(res);
+        let tempArray = [];
+        res?.map((x) => {
+          tempArray.push(x.name.toLowerCase());
+        });
+
+        let catSubcatRelation = {}
+        res?.map((x) => {
+          if (x.subCategory.length > 0) {
+            x.subCategory.map((y, i) => {
+              catSubcatRelation[y] = x.name;
+              if (tempArray.includes(y.toLowerCase())) {
+                tempArray.splice(tempArray.indexOf(y.toLowerCase()), 1); //removing subcat from main list
+              }
+            });
+            tempArray.splice(tempArray.indexOf(x.name.toLowerCase()), 1); //finally removing the parent category after subcat is removed
+          }
+        });
+        dispatch(setCatSubcatRelation({ val: catSubcatRelation }))//dispatching child parent relation to be used on product page and in navigation hierarchy
+        setChildWithoutParent([...childWithoutParent, ...tempArray]);
+      });
+  }, []);
 
 
   let cartTotalQuantity = 0;
@@ -30,7 +59,6 @@ const Navbar = () => {
     );
   };
 
-
   function handleNavBar(val) {
     const toggler = document.querySelector('.navbar-toggler')
     const isNavExpanded = toggler?.getAttribute('aria-expanded')
@@ -40,45 +68,6 @@ const Navbar = () => {
     if (val) toggler.click() //when overlay is clicked
   }
 
-
-  useEffect(() => {
-    fetch("/api/getcategory")
-      .then((response) => response.json())
-      .then((res) => {
-        // console.log("res", res);
-        setCategories(res);
-        // let tempObject = {}
-        let tempArray = [];
-        res?.map((x) => {
-          // tempObject[x.name.toLowerCase()] = x._id//bcz some of categories are capitalized
-          tempArray.push(x.name.toLowerCase());
-        });
-
-        //total - 59
-        //with parent - 34
-        //without parent - 11 (total categories with product - 45)
-        // parent category - 14
-        //this can be moved to down in jsx
-        let catSubcatRelation = {}
-        res?.map((x) => {
-          if (x.subCategory.length > 0) {
-            x.subCategory.map((y, i) => {
-              catSubcatRelation[y] = x.name;
-              if (tempArray.includes(y.toLowerCase())) {
-                tempArray.splice(tempArray.indexOf(y.toLowerCase()), 1); //removing subcat from main list
-              }
-            });
-            tempArray.splice(tempArray.indexOf(x.name.toLowerCase()), 1); //finally removing the parent category after subcat is removed
-          }
-        });
-        // console.log("s", tempArray, catSubcatRelation);
-        dispatch(setCatSubcatRelation({ val: catSubcatRelation }))//dispatch child parent relation to use on product page and in navifgation queue where ever reqjired
-
-        setChildWithoutParent([...childWithoutParent, ...tempArray]);
-      });
-  }, []);
-
-  //can put this in usememo
   const populateSubCategory = (e) => {
     let childCategoryElem = document.querySelector(".child-category");
 
@@ -90,7 +79,6 @@ const Navbar = () => {
     categories[e.target.dataset.index]?.subCategory?.map((x) => {
       let li = document.createElement("li");
       let a = document.createElement("a");
-      // console.log("fff", x.toLowerCase());
       a.href = `/category/${x}`;
       a.innerHTML = x;
       a.classList.add("dropdown-item", "gap-2", "d-flex");
@@ -110,8 +98,6 @@ const Navbar = () => {
   };
 
   function searchApi(cartItems) {
-    console.log("value", cartItems);
-
     if (cartItems.value !== " ") {
       return fetch("/api/searchprod", {
         method: "POST",
@@ -122,56 +108,39 @@ const Navbar = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("query response", data);
           setSearchedItems(data)
           document.querySelector('.search-overlay').classList.remove('display-none')//puts the overlay
-
-
           document.querySelector('.custom-loader').classList.add('display-none')
           if (data.length === 0) {
             document.querySelector('.no-item')?.classList.remove('display-none')
           }
         })
         .catch((error) => {
-          console.error("Failed to query server:", error);
           throw error; // Rethrow the error for error handling in the calling code
         });
     }
   }
 
-  // Debounce function to delay API calls by a specified time
-  function debounce(func, wait) {
-    let timeout;
-    return function (...args) {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        func.apply(this, args);
-      }, wait);
-    };
-  }
-
   const debounceQuery = debounce(searchApi, 1500);
 
   const handleChange = (e) => {
-    console.log("handleChange", e.target.value);
-
     //fixing root height
-    document.getElementById('root').style.height = "100vh"
-    document.getElementById('root').style.overflow = "hidden"
+    const root = document.getElementById('root')
+    root.style.height = "100vh"
+    root.style.overflow = "hidden"
 
     document.getElementById('searchdropdown').classList.remove('display-none')//mnake serch result visible
     document.querySelector('.search-overlay').classList.remove('display-none')//adding the overlay
 
-    setSearchedItems(undefined)//setting the list to none so that it wont show previous resut wile typing
+    setSearchedItems(undefined)//setting the list to none so that it wont show previous result while typing
     document.querySelector('.custom-loader').classList.remove('display-none')//showing loader while typing
     document.querySelector('.no-item')?.classList.add('display-none')//hiding no item message while typing
 
     debounceQuery({ value: e.target.value });
   };
 
-
   function hideSearched(e) {
-    document.querySelector('[type="search"]').value = "";//clearing the input on focus out//NOT WORKING
+    document.querySelector('[type="search"]').value = "";//clearing the input on focus out
     document.getElementById('searchdropdown').classList.toggle('display-none')//hiding the dropdown
     document.querySelector('.search-overlay').classList.add('display-none')//removing the overlay
     const root = document.getElementById('root')
@@ -223,14 +192,12 @@ const Navbar = () => {
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 justify-content-end w-100 ">
 
               <li className="nav-item">
-
                 <div className="position-relative px-2">
                   <input
                     type="search"
                     className="nav-link "
                     placeholder="search in shopp-itt"
                     onChange={(e) => handleChange(e)}
-                  //onBlur={e => hideSearched(e)}
                   />
 
                   <div className="search-dropdown display-none" id="searchdropdown">
@@ -252,7 +219,6 @@ const Navbar = () => {
                     <div className="custom-loader display-none"></div>
                   </div>
                 </div>
-
               </li>
 
               <li className="nav-item position-relative dropdown">
@@ -326,6 +292,7 @@ const Navbar = () => {
                   </ul>
                 </div>
               </li>
+
               {!isUserLoggedIn && (
                 <li className="nav-item">
                   <a
@@ -342,18 +309,11 @@ const Navbar = () => {
 
               <li className="nav-item position-relative">
                 <Link to="/cart" className="nav-link">
-                  {/* <i className='fa fa-shopping-cart'></i> */}
-                  {/* if the cart value is zero than dont show badge */}
                   <img src={theBagLogo} alt="shoppitt" height="19.7px" />
-                  {/* <span>Cart</span> */}
                   {cartTotalQuantity !== 0 && <Badge />}
                 </Link>
               </li>
-              {/* <li className="nav-item ">
-                <Link to="/orders" className="nav-link">
-                  Orders
-                </Link>
-              </li> */}
+
               <li className="nav-item position-relative dropdown">
                 {isUserLoggedIn && window.outerWidth > 992 ?
                   <img src={user.avtar} alt="" width="36px" id="profileDropdown"
@@ -399,19 +359,13 @@ const Navbar = () => {
                     </span>
                   </li>
                 </ul>
-                {/* <Link to="/user" className="nav-link">
-                  <span>Profile</span>
-                  <i className='fa fa-user'></i>
-                </Link> */}
               </li>
             </ul>
           </div>
         </div>
       </nav>
-      <div className="search-overlay display-none" onClick={() => hideSearched()}></div>
-
-      <div className="navbar-overlay display-none" onClick={() => handleNavBar(true)}></div>
-
+      <div className="search-overlay display-none" onClick={() => hideSearched()}></div>{/* when serchInput is opened */}
+      <div className="navbar-overlay display-none" onClick={() => handleNavBar(true)}></div>{/* when Navbar is expanded */}
     </>
   );
 };
