@@ -1,3 +1,0 @@
--defecet
-- user profile pic is npt sowhing in admin order and user page
-- try adding new downloaded imag in banner

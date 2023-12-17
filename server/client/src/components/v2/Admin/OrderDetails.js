@@ -138,9 +138,8 @@ const OrderDetails = (props) => {
 
                     <div className='my-2 px-3 '>
                       <section className='d-flex justify-content-between border-bottom align-items-center pb-2'>
-                        <div className="align-items-center avatars__item bg-white d-flex justify-content-center pointer text-secondary"
-                          style={{ background: `url(${order?.user.avtar})`, backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat", borderColor: "#fff" }}></div>
-                        <span className='text-capitalize'>{order?.user.firstname} {order?.user.lastname}</span>
+                        {/* <div className="align-items-center avatars__item bg-white d-flex justify-content-center pointer text-secondary"style={{ background: `url(${order?.user.avtar})`, backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat", borderColor: "#fff" }}></div> */}
+                        <img src={order?.user.avtar} alt='' className="align-items-center avatars__item bg-white d-flex justify-content-center pointer text-secondary"/>                        <span className='text-capitalize'>{order?.user.firstname} {order?.user.lastname}</span>
                       </section>
                     </div>
 

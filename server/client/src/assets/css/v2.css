@@ -207,6 +207,9 @@ img {
 .shoppittBtnR:hover {
   color: var(--red);
 }
+.overflow_hidden{
+  overflow: hidden !important;
+}
 /***************************** basics COMMON *********************************************/
 
 
@@ -1016,7 +1019,8 @@ input[type="number"]::-webkit-outer-spin-button {
 /* CART Banner */
 .cartBanner {
   height: 400px;
-  background: linear-gradient(274deg, #ffb300, #ffc836);
+  /* background: linear-gradient(274deg, #ffb300, #ffc836); */
+  background: linear-gradient(268deg, #d6d6d600, #ffc836);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1037,6 +1041,9 @@ input[type="number"]::-webkit-outer-spin-button {
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
+}
+.cartBanner img{
+  mix-blend-mode: multiply;
 }
 /* CART Banner */
 
@@ -1202,7 +1209,24 @@ input[type="number"]::-webkit-outer-spin-button {
 /* .slick-dots {
   bottom: -5px !important;
 } */
-
+.relatedProducts .slick-dots {
+  background: #bebebe52;
+  width: fit-content;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);  border-radius: 28px;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  display: flex !important;
+  padding: 0 10px;
+}
+.relatedProducts .slick-dots li{
+  width: 6px !important;
+}
+.slick-dots li button:before{
+  width: 6px !important;
+}
 /*-------------------------- products --------------------------*/
 
 /* PRODUCT PAGE */
@@ -2273,6 +2297,8 @@ main {
     width: 100%;
     padding-right: 0.5rem;
     padding-left: 0.5rem;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
   }
   .categoryListsHolder {
     position: static;
@@ -2689,6 +2715,11 @@ main {
     position: relative;
     border-radius: 0.375rem;
     box-shadow: var(--shadow-medium) !important;
+    overflow: auto;
+    max-height: 50vh;
+  }
+  .dropdownCategoryUL{
+    max-width: unset;
   }
   .withoutParentUl {
     padding-bottom: 0;
@@ -2704,7 +2735,7 @@ main {
   .dropdown:hover > .child-category-m {
     display: block !important;
     width: 100%;
-    /* box-shadow: var(--shadow-small) !important; */
+    box-shadow: unset !important;
   }
   .parentCategoryList .grtrArrow {
     top: 14px;
@@ -2880,6 +2911,15 @@ main {
   }
   .page .right ul{
     display: none;
+  }
+  .cartBanner img{
+    width: 100%;
+  }
+  .toastContainer{
+    max-width: 315px;
+  }
+  .toastContainer.active{
+    right: 10px;
   }
 }
 @media (min-width: 992px) {

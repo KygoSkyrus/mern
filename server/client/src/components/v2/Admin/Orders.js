@@ -31,7 +31,6 @@ const Orders = () => {
             .then(res => {
                 if (resp.status === 200) {
                     setOrders(res.data)
-                    console.log('resdd',res.data)
                     allOrders = res.data;
                 } else {
                     dispatch(invokeToast({ isSuccess: false, message: res.message }))
@@ -160,8 +159,9 @@ const Orders = () => {
                                                 <td className="align-middle text-capitalize text-end">
                                                     <div className="btn-group">
                                                         <button type="button" className="me-3 btn btn-badge border-0 rounded-pill text-decoration-none p-0 d-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" style={{ height: "26px !important", width: "26px !important" }}>
-                                                            <div className="avatars__item pointer me-0"
-                                                                style={{ background: `url(${x.user.avtar})`, backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat", }}></div>&nbsp;
+                                                            {/* <div className="avatars__item pointer me-0"
+                                                                style={{ background: `url(${x.user.avtar})`, backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat", }}></div> */}
+                                                            <img src={x.user?.avtar} alt='' width="30px" height="30px" className="avatars__item pointer me-0" />&nbsp;
                                                             <span className='small'>{x.user?.firstname}</span>&nbsp;
                                                             <span className='small'>{x.user?.lastname}</span>
                                                         </button>

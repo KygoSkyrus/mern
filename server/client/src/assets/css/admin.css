@@ -413,7 +413,7 @@ a.nav-icons.active::before {
 }
 .productForm {
   width: 50vw;
-  background-color: #00000080;
+  background-color: #000000b3;
   color: #fff;
   box-shadow: 0 0 12px #000000b5;
   position: absolute;
@@ -619,6 +619,7 @@ label {
     height: 96%;
     top: 2%;
     right: 2%;
+    background-color: #000000c9;
   }
 
   /* Orders */

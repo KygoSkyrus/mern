@@ -16,11 +16,12 @@ import xbox from "./../../assets/images/newImg/collections/xbox.png";
 import dslr from "./../../assets/images/newImg/collections/dslr.png";
 // import img1 from './../../assets/images/newImg/products/bluePhone.png'
 // import headphone1 from './../../assets/images/newImg/collections/headphone1.webp'
-// import cart3d from "./../../assets/images/newImg/collections/3dCart.png";
-// import storeDoor from "./../../assets/images/newImg/collections/storeDoor.png";
 // import fridaySale from "./../../assets/images/newImg/collections/friday-sale.jpg";
 // import superSale from "./../../assets/images/newImg/collections/super-sale.jpg";
 
+// import sale1 from "./../../assets/images/sale1.jpg"
+import sale2 from "./../../assets/images/sale2.jpg"
+// import sale3 from "./../../assets/images/sale3.jpg"
 
 const Homepage = () => {
 
@@ -97,7 +98,7 @@ const Homepage = () => {
 
 
       {/* <!-- Product 1 --> */}
-      <div className='container bx gapBtw' data-aos="fade-up"
+      <div className='container bx gapBtw' data-aos="fade-up overflow_hidden"
         data-aos-duration="500">
         <div className='row'>
           <div className='col-12'>
@@ -160,7 +161,7 @@ const Homepage = () => {
       {/* <!-- Product 1 --> */}
 
 
-      <div className="menu position-relative gapBtw" data-aos="flip-up"
+      <div className="menu position-relative gapBtw" data-aos="flip-up overflow_hidden"
         data-aos-duration="500">
         <div className="menu__item">
           <div className="marquee">
@@ -176,7 +177,7 @@ const Homepage = () => {
 
 
       <div className='storedoor mt-2'>
-        <div className='text'>All-in-one <span style={{whiteSpace:"nowrap"}}>Store <i className='fa fa-store'></i></span> <br />for all of your <span className='clr-yellow'>Electronic </span>needs</div>
+        <div className='text'>All-in-one <span style={{ whiteSpace: "nowrap" }}>Store <i className='fa fa-store'></i></span> <br />for all of your <span className='clr-yellow'>Electronic </span>needs</div>
         <div className='doorImg bag-container'></div>
       </div>
 
@@ -238,9 +239,10 @@ const Homepage = () => {
       {/* PRODUCT 7 */}
 
 
-      <div className='cartBanner mt-2'>
+      <div className='cartBanner mt-2 overflow_hidden'>
         <div className='text'>Shop on SHOPP ITT <br />with exclusive deals <i className='fa fa-money-check-alt'></i> and offers</div>
-        <div className='cartImg'></div>
+        <img src={sale2} alt='' width="50%" data-aos="zoom-in" data-aos-duration="500" />
+        {/* <div className='cartImg'></div> */}
       </div>
 
 
@@ -294,7 +296,7 @@ const Homepage = () => {
       </div> */}
 
 
-      <div style={{ background: "#141414" }} >
+      <div style={{ background: "#141414" }} className='overflow_hidden' >
         <div className='headphone-filler container align-items-center d-flex flex-row-reverse justify-content-between gapBtw'>
           <div className="filler-content text-light">
             <section className='text-dark fw-400 fs-3'>New Arrival</section>
@@ -328,7 +330,7 @@ const Homepage = () => {
 
 
       {/* PRODUCT 4 */}
-      <div className='container gapBtw blackCards'>
+      <div className='container gapBtw blackCards overflow_hidden'>
         <h1 style={{ color: "#151515", fontFamily: "monospace" }} className='gapBtw text-center'>Trending Gadgets</h1>
         <div className='row m0'>
           <div className='col-12'>
@@ -359,7 +361,7 @@ const Homepage = () => {
 
 
       {/* LAPTOP BANNER */}
-      <div className="gapBtw" style={{marginBottom:"120px"}}>
+      <div className="gapBtw overflow_hidden" style={{ marginBottom: "120px" }}>
         <div className="page">
           <div className="left">
             <h1>Get yourself a yoga Laptop</h1>
@@ -368,7 +370,7 @@ const Homepage = () => {
 
           </div>
           <div className="right">
-            <div className="img">
+            <div className="img" data-aos="slide-left" data-aos-duration="1000">
               <img alt='shoppitt' src={laptop} width="72%" />
             </div>
             <ul>
@@ -385,7 +387,7 @@ const Homepage = () => {
 
 
       {/* filler images */}
-      <div className='container bx category-page my-5'>
+      <div className='container bx category-page my-5 overflow_hidden'>
         <div className='row'>
           <div className='col-12'>
             <div className='row'>
@@ -433,7 +435,7 @@ const Homepage = () => {
       {/* PRODUCT 3 */}
 
 
-      <div style={{ background: "var(--red)" }}>
+      <div style={{ background: "var(--red)" }} className='overflow_hidden'>
         <div className='headphone-filler container align-items-center d-flex justify-content-between gapBtw'>
           <div className="filler-content text-light" data-aos="fade-right"
             data-aos-duration="1000">
@@ -468,7 +470,7 @@ const Homepage = () => {
 
 
       {/* PRODUCT 2 */}
-      <div className='container gapBtw blackCards'>
+      <div className='container gapBtw blackCards overflow_hidden'>
         <h1 style={{ color: "#151515", fontFamily: "monospace" }} className='gapBtw text-center'>Curated just for YOU</h1>
         <div className='row m0'>
           <div className='col-12'>
@@ -476,13 +478,13 @@ const Homepage = () => {
               {
                 Object.keys(curatedProducts).map((key, i) => {
                   return (
-                    <div className='col-md-6 col-lg-4 d-flex justify-content-center my-3' key={i}>
+                    <div className='col-md-6 col-lg-4 d-flex justify-content-center my-3' key={i}  data-aos="zoom-in-up" data-aos-duration="1000">
                       <div className='cardN' data-category={key}>
                         <img
                           src={curatedProducts[key].displayImage || curatedProducts[key].image}
                           className='card__img' alt='shoppitt' />
                         <h2 className='card__title'>{curatedProducts[key].displayName}</h2>
-                        <div className='card__content'>                     
+                        <div className='card__content'>
                           <div className='card__discount'>
                             <button className='btn btn-outline-warning text-light'>{curatedProducts[key].discount}% discount</button>
                           </div>

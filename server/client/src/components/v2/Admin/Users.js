@@ -76,8 +76,9 @@ const Users = () => {
                                                 </th>
 
                                                 <td className="ps-3 align-middle text-center text-capitalize">
-                                                    <div className="align-items-center avatars__item bg-white d-flex justify-content-center pointer text-secondary"
-                                                        style={{ background: `url(${x.avtar})`, backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat", }}></div>
+                                                    {/* <div className="align-items-center avatars__item bg-white d-flex justify-content-center pointer text-secondary"
+                                                        style={{ background: `url(${x.avtar})`, backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat", }}></div> */}
+                                                        <img src={x.avtar} alt='' width="30px" height="30px" className="align-items-center avatars__item bg-white d-flex justify-content-center pointer text-secondary" />
                                                 </td>
 
                                                 <td className="ps-3 align-middle text-center text-capitalize">

@@ -86,6 +86,7 @@ const Navbar = () => {
 
       if (window.outerWidth < 992) {
         ul.appendChild(li)
+        childCategoryElem.classList.add('d-none')
       } else {
         childCategoryElem.appendChild(li);
       }
@@ -192,10 +193,10 @@ const Navbar = () => {
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 justify-content-end w-100 ">
 
               <li className="nav-item">
-                <div className="position-relative px-2">
+                <div className="position-relative">
                   <input
                     type="search"
-                    className="nav-link "
+                    className="nav-link mx-2"
                     placeholder="search in shopp-itt"
                     onChange={(e) => handleChange(e)}
                   />
@@ -329,19 +330,19 @@ const Navbar = () => {
                   aria-labelledby="profileDropdown"
                 >
                   <li className="">
-                    <Link className="dropdown-item gap-2 d-flex align-items-center" to="/user">
+                    <Link className="dropdown-item gap-2 d-flex align-items-center" to="/user" onClick={() => window.outerWidth < 992 && handleNavBar(true)}>
                       {/* <i className="fa fa-user"></i> */}
                       Account
                     </Link>
                   </li>
                   <li className="">
-                    <Link className="dropdown-item gap-2 d-flex align-items-center" to="/wishlist">
+                    <Link className="dropdown-item gap-2 d-flex align-items-center" to="/wishlist" onClick={() => window.outerWidth < 992 && handleNavBar(true)}>
                       {/* <i className="fa fa-heart"></i> */}
                       Wishlist
                     </Link>
                   </li>
                   <li className="">
-                    <Link className="dropdown-item gap-2 d-flex align-items-center" to="/orders">
+                    <Link className="dropdown-item gap-2 d-flex align-items-center" to="/orders" onClick={() => window.outerWidth < 992 && handleNavBar(true)}>
                       {/* <i className="fas fa-box-open"></i> */}
                       Orders
                     </Link>
@@ -352,12 +353,14 @@ const Navbar = () => {
                       Admin
                     </Link>
                   </li>
-                  <li className="">
-                    <span className="dropdown-item gap-2 d-flex pointer  align-items-center" onClick={() => signOut(dispatch)}>
-                      {/* <i className="fa fa-sign-out-alt"></i> */}
-                      Sign out
-                    </span>
-                  </li>
+                  {isUserLoggedIn &&
+                    <li className="">
+                      <span className="dropdown-item gap-2 d-flex pointer  align-items-center" onClick={() => signOut(dispatch)}>
+                        {/* <i className="fa fa-sign-out-alt"></i> */}
+                        Sign out
+                      </span>
+                    </li>
+                  }
                 </ul>
               </li>
             </ul>

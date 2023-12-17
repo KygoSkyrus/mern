@@ -21,7 +21,7 @@ const SignIn = () => {
                                     title="Create an account"
                                     description="Enter your email below to create your account"
                                     btnText="Create account"
-                                    toggleText='Exsiting user? Signin'
+                                    toggleText='Exsiting user? SignIn'
                                     signInOrSignUp="signup"
                                     switchTo="signin"
                                 />
@@ -30,7 +30,7 @@ const SignIn = () => {
                             <div className={`signin-form d-flex justify-content-center align-items-center flex-column h-100`} >
                                 <SignInForm
                                     title="SignIn to your account"
-                                    description="Enter your email and password to signin to your account"
+                                    description="Enter your email and password to sign in to your account"
                                     btnText="Sign In"
                                     toggleText='New user? Create an account'
                                     signInOrSignUp="signin"
