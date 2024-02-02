@@ -523,6 +523,11 @@ label {
   width: 100vw;
   background: white;
 }
+.admin-login .toast{
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+}
 
 /******************** Dark mode *************************/
 .toggle {

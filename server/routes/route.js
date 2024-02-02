@@ -49,28 +49,32 @@ router.post('/api/signin', async (req, res) => {
 
     try {
         const { email, isAdminLogin } = req.body;
+
+        console.log('email, isAdminLogin ',email, isAdminLogin )
+
         const user = await USER.findOne({ email: email }).populate('cartProducts');
 
         if (user) {
             if (isAdminLogin) {
-                if (user.role !== "admin" && user.email !== process.env.ADMIN_ID) {
+                console.log('user.role !== "admin" && user.email !== process.env.ADMIN_ID--',user.role  ,user.email, process.env.ADMIN_ID)
+                if ((user.role !== "admin" && user.email !== process.env.ADMIN_ID) && (user.role !== "guest" && user.email !== process.env.GUEST_USER)) {                
                     return res.status(404).json({ message: 'Access denied!!!', is_user_logged_in: false });
                 } else {
-                    const { token } = await user.generateAuthToken();
-                    res.cookie('jwt', token, {
-                        expires: new Date(Date.now() + 10800000),
-                        httpOnly: true,
-                        secure: process.env.NODE_ENV !== "development",
-                    });
-                    return res.status(200).json({ message: "Admin logged in successfully", is_user_logged_in: true, user });
+                    await setCookie()                 
+                    return res.status(200).json({ message: `${user.role === "guest"? 'Guest': 'Admin'} logged in successfully`, is_user_logged_in: true, user });
                 }
             }
-            const { token } = await user.generateAuthToken();
-            res.cookie('jwt', token, {
-                expires: new Date(Date.now() + 10800000),
-                httpOnly: true,
-                secure: process.env.NODE_ENV !== "development",
-            });
+            
+            async function setCookie(){
+                const { token } = await user.generateAuthToken();
+                res.cookie('jwt', token, {
+                    expires: new Date(Date.now() + 10800000),
+                    httpOnly: true,
+                    secure: process.env.NODE_ENV !== "development",
+                });
+            }
+
+            await setCookie()
 
             res.status(200).json({ message: "User logged in successfully", is_user_logged_in: true, user });
         } else {

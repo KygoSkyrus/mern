@@ -12,7 +12,7 @@ const authenticateAdmin = async (req, res, next) => {
         return res.status(404).json({ message: 'User not found.', is_user_logged_in: false });
     }
 
-    if (user.role !== "admin" && user.email !== process.env.ADMIN_ID) {
+    if ((user.role !== "admin" && user.email !== process.env.ADMIN_ID) && (user.role !== "guest" && user.email !== process.env.GUEST_USER)) {
         return res.status(404).json({ message: 'Authentication failed!!!', is_user_logged_in: false });
     }
 

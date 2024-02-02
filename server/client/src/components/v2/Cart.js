@@ -89,7 +89,7 @@ const Cart = () => {
 
     //Creating a new array with unique cart items
     const flattenedUniqueCartItems = uniqueCartItems.flat();
-    apiCall(dispatch,'/api/user/updatecart',flattenedUniqueCartItems)
+    apiCall(dispatch, '/api/user/updatecart', flattenedUniqueCartItems)
   }
 
   // Debounce function to delay API calls by a specified time
@@ -122,7 +122,7 @@ const Cart = () => {
 
   function updateQuantity(productId, val, i, price, discount) {
     inProgressLoader(dispatch, true)
-    
+
     const newQuantity = eval(`${parseInt(lineRefs.current[i].current.dataset.quantity)} ${val} ${1}`);
 
     if (!newQuantity <= 0) {
@@ -167,12 +167,12 @@ const Cart = () => {
 
   const removeFromCart = (productId) => {
     inProgressLoader(dispatch, true)
-    apiCall(dispatch,'/api/user/removefromcart',{productId})
+    apiCall(dispatch, '/api/user/removefromcart', { productId })
   }
 
   const movetowishlist = (productId) => {
     inProgressLoader(dispatch, true)
-    apiCall(dispatch,'/api/user/movetowishlist',{productId})
+    apiCall(dispatch, '/api/user/movetowishlist', { productId })
   }
 
   function createCheckoutSession(priceObj) {
@@ -352,12 +352,21 @@ const Cart = () => {
 
                         {/* <form action="/create-checkout-session" method="POST"> */}
                         {/* <input type="hidden" name='priceObj' value={JSON.stringify(priceObj)} /> */}
-                        <button id='checkoutBtn' className='btn w-100 my-2' style={{ border: "1px solid rgb(0 0 0 / 16%)", background: "#ebebeb", borderTop: "0" }}
+                        <button id='checkoutBtn' className='btn w-100 my-2 shadow-sm' style={{ border: "1px solid rgb(0 0 0 / 16%)", background: "#ebebeb", borderTop: "0", borderBottom: "3px solid #c5c5c5" }}
                           //  type="submit"
                           onClick={() => createCheckoutSession(JSON.stringify(priceObj))}
                         >Checkout</button>
                         {/* </form> */}
                         {/* <button className='btn w-100 my-2' style={{ border: "1px solid rgb(0 0 0 / 16%)", background: "#ebebeb", borderTop: "0" }} onClick={()=>handleCheckout()}>Checkout</button> */}
+                        <div class="toast bg-warning show mt-4 shadow-sm" >
+                          <div class="toast-header">
+                            <img src={theBagLogo} class="rounded me-2" width="20px" alt="" />
+                            <strong class="me-auto">Shopp-itt</strong>
+                          </div>
+                          <div class="toast-body text-center text-dark">
+                            Use card number <b>4242 4242 4242 4242</b> for a successful payment
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
