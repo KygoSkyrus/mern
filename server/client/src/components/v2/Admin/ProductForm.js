@@ -17,6 +17,7 @@ const ProductForm = (props) => {
     const [productData, setProductData] = React.useState({})
     const title = useSelector(state => state.productForm.title)
     const productState = useSelector(state => state.productForm.productData)
+    const user = useSelector(state => state.user.user)
 
     const storage = getStorage(props.firebaseApp);
 
@@ -35,54 +36,58 @@ const ProductForm = (props) => {
 
     async function sendData(e) {
         e.preventDefault();
-        dispatch(setLoaderVisibility({ loader: true }))
+        if (user?.role !== "guest") {
+            dispatch(setLoaderVisibility({ loader: true }))
 
-        let tempArr = [];
-        //when images are changed (will run for : newProduct/editProduct)
-        if (productData.image !== productState.image) {
-            for (let index = 0; index < productData.image.length; index++) {
-                let imageRef = ref(storage, "shoppitt/" + uuidv4());
-                const uploadTask = uploadBytesResumable(imageRef, productData.image[index]);
-                uploadTask.on('state_changed',
-                    (snapshot) => {
-                        switch (snapshot.state) {
-                            case 'paused':
-                                console.log('Upload is paused');
-                                break;
-                            case 'running':
-                                console.log('Upload is running');
-                                break;
-                            default: console.log('');
-                                break
+            let tempArr = [];
+            //when images are changed (will run for : newProduct/editProduct)
+            if (productData.image !== productState.image) {
+                for (let index = 0; index < productData.image.length; index++) {
+                    let imageRef = ref(storage, "shoppitt/" + uuidv4());
+                    const uploadTask = uploadBytesResumable(imageRef, productData.image[index]);
+                    uploadTask.on('state_changed',
+                        (snapshot) => {
+                            switch (snapshot.state) {
+                                case 'paused':
+                                    console.log('Upload is paused');
+                                    break;
+                                case 'running':
+                                    console.log('Upload is running');
+                                    break;
+                                default: console.log('');
+                                    break
+                            }
+                        },
+                        (error) => {
+                            console.log(error)
+                        },
+                        async () => {
+                            await getDownloadURL(uploadTask.snapshot.ref)
+                                .then((downloadURL) => {
+                                    tempArr.push(downloadURL)
+                                    if (index === productData.image.length - 1 && downloadURL) addProductAPI(tempArr)
+                                });
                         }
-                    },
-                    (error) => {
-                        console.log(error)
-                    },
-                    async () => {
-                        await getDownloadURL(uploadTask.snapshot.ref)
-                            .then((downloadURL) => {
-                                tempArr.push(downloadURL)
-                                if (index === productData.image.length - 1 && downloadURL) addProductAPI(tempArr)
-                            });
-                    }
-                );
-            }
-        } else {
-            //when images are not changed (will run for : editProduct) ONLY [bcz newproduct doesn't fire unless image is slected]
-            if (JSON.stringify(productData) !== JSON.stringify(productState)) {
-                //when things other than images are changed
-                closeProductFormContainer();//closing modal
-                addProductAPI(undefined);
+                    );
+                }
             } else {
-                //nothing changed
-                dispatch(clearProductForm());//clearing form
-                closeProductFormContainer();//closing modal
+                //when images are not changed (will run for : editProduct) ONLY [bcz newproduct doesn't fire unless image is slected]
+                if (JSON.stringify(productData) !== JSON.stringify(productState)) {
+                    //when things other than images are changed
+                    closeProductFormContainer();//closing modal
+                    addProductAPI(undefined);
+                } else {
+                    //nothing changed
+                    dispatch(clearProductForm());//clearing form
+                    closeProductFormContainer();//closing modal
 
-                dispatch(setLoaderVisibility({ loader: false }));
-                dispatch(invokeToast({ isSuccess: true, message: 'No changes were made' }));
+                    dispatch(setLoaderVisibility({ loader: false }));
+                    dispatch(invokeToast({ isSuccess: true, message: 'No changes were made' }));
+                }
+
             }
-
+        }else{
+            dispatch(invokeToast({ isSuccess: false, message: 'Guest user does not have rights to perform this actions' }));
         }
     }
 
@@ -232,11 +237,11 @@ const ProductForm = (props) => {
                                     </label>
                                     <div id="imageHolder" >
                                         {title === "Edit product" &&
-                                        productState?.image?.map(item => {
-                                            return (
-                                                <div className='displayimg' style={{ backgroundImage: `url(${item})` }}></div>
-                                            )
-                                        })}
+                                            productState?.image?.map(item => {
+                                                return (
+                                                    <div className='displayimg' style={{ backgroundImage: `url(${item})` }}></div>
+                                                )
+                                            })}
                                     </div>
                                 </div>
 

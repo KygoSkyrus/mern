@@ -162,10 +162,22 @@ export const signinAPI = (val, email, firstname, lastname, photo, dispatch, navi
         })
 }
 
-export function signOut(dispatch) {
+export function getTotalDocNum(endpoint,state) {
+    fetch(`/api/${endpoint}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+    })
+        .then(res => res.json())
+        .then(res => {
+            console.log('num', res)
+            state(res.totalCount)
+        })
+}
+
+export function signOut(dispatch,acc='user',isAdmin=false) {
     inProgressLoader(dispatch, true)
     let resp;
-    fetch('/api/user/signmeout')
+    fetch(`/api/${acc}/signmeout?isAdmin=${isAdmin}`)
         .then(response => {
             resp = response;
             return response.json()

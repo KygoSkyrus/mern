@@ -11,15 +11,6 @@ const getUserInfo = async (req, res) => {
     }
 }
 
-const signMeOut = async (req, res) => {
-    try {
-        res.clearCookie('jwt')
-        res.status(200).json({ message: "Logged out successfully!!!", is_user_logged_in: false })
-    } catch (error) {
-        res.status(500).json({ message: 'Internal server error', is_user_logged_in: true });
-    }
-}
-
 const updateAddress = async (req, res) => {
     try {
         const { address, firstname, lastname, avtar } = req.body;
@@ -181,7 +172,7 @@ const getWishlistItems = async (req, res) => {
 
 const getOrders = async (req, res) => {
 
-    const { orderId } = req.query
+    const { orderId } = req.query;
     try {
 
         let response = await USER.findOne({ _id: req.user._id }, { orders: 1, _id: 0 })
@@ -370,4 +361,4 @@ const getCheckoutSession = async (req, res) => {
     }
 }
 
-module.exports = { getUserInfo, signMeOut, updateAddress, addToCart, updateCart, removeFromCart, getCartItems, updateWishlist, moveToWishlist, getWishlistItems, getOrders, createCheckoutSession, getCheckoutSession }
+module.exports = { getUserInfo, updateAddress, addToCart, updateCart, removeFromCart, getCartItems, updateWishlist, moveToWishlist, getWishlistItems, getOrders, createCheckoutSession, getCheckoutSession }

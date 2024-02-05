@@ -1,10 +1,11 @@
 import React from 'react'
 import { signOut } from '../Utility'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Header = ({ heading, icon, setSearchedQuery }) => {
 
     const dispatch = useDispatch()
+    const user = useSelector(state => state.user.user)
 
     const showSearchInput = () => {
         setSearchedQuery('')
@@ -17,9 +18,11 @@ const Header = ({ heading, icon, setSearchedQuery }) => {
         searchIcon.classList.toggle('fa-times');
         searchIcon.classList.toggle('ms-2');
         searchBtn.classList.toggle('rounded-circle');
+        searchBtn.classList.toggle('p-0');
 
         //hiding header content on mobile view
         // document.querySelector('.darkMode-btn').classList.toggle('d-none500');
+        document.querySelector('.guestM').classList.toggle('d-none500');
         document.querySelector('.headerName').classList.toggle('d-none500');
         document.querySelector('.dash-header').classList.toggle('d-flexon500');
         searchInput.classList.toggle('w-100on500');
@@ -34,6 +37,15 @@ const Header = ({ heading, icon, setSearchedQuery }) => {
                 </h6>
                 <i className={`fa-solid ${icon}`}></i>
             </div>
+
+            {user?.role === "guest" &&
+                <div class="toast show bg-warning shadow-sm guestM">
+                    <div class="toast-body text-center">
+                        <b>Guest Mode</b>
+                    </div>
+                </div>
+            }
+
             <div className="d-flex h-stack gap-1 position-relative">
 
                 {/* Dark Mode */}
@@ -61,12 +73,12 @@ const Header = ({ heading, icon, setSearchedQuery }) => {
                         <i className="fas fa-bars"></i>
                     </a> */}
 
-                <button className="btn btn-light btn-sm rounded-circle text-secondary searchBtn d-flex align-items-center " >
+                <button className="btn btn-light btn-sm rounded-circle text-secondary p-0 searchBtn d-flex align-items-center " >
                     <input type='text' id='searchInput' className='searchInput rounded-1' onChange={(e) => setSearchedQuery(e.target.value)} />
                     <i onClick={() => showSearchInput()} className="fas fa-search" title=""></i>
                 </button>
 
-                <button className="btn btn-light btn-sm rounded-circle text-secondary" title="Sign out" data-bs-original-title="logout" onClick={() => signOut(dispatch)}>
+                <button className="btn btn-light btn-sm rounded-circle text-secondary" title="Sign out" data-bs-original-title="logout" onClick={() => signOut(dispatch, 'admin', true)}>
                     <i className="fa fa-sign-out-alt"></i>
                 </button>
 

@@ -49,13 +49,13 @@ const User = () => {
             selectedAvatar !== userDetail.avtar
         ) {
             inProgressLoader(dispatch, true)
-            let bodyData={
+            let bodyData = {
                 firstname: name.firstname,
                 lastname: name.lastname,
                 avtar: selectedAvatar,
                 address,
             }
-            apiCall(dispatch,'/api/user/updateaddress',bodyData)
+            apiCall(dispatch, '/api/user/updateaddress', bodyData)
         } else {
             dispatch(invokeToast({ isSuccess: false, message: "No changes are made" }))
         }
@@ -102,11 +102,11 @@ const User = () => {
                                 <form className="row g-3" >
                                     <div className="col-md-6">
                                         <label for="inputFirstName" className="form-label">First name</label>
-                                        <input type="text" value={name?.firstname} onChange={e => setName({ ...name, firstname: e.target.value })} className="form-control" id="inputFirstName" />
+                                        <input type="text" value={name?.firstname} onChange={e => setName({ ...name, firstname: e.target.value })} className="form-control" id="inputFirstName" onKeyUp={(e) => e.key === "Enter" && document.getElementById('inputLastName').focus()} />
                                     </div>
                                     <div className="col-md-6">
                                         <label for="inputLastName" className="form-label">Last name</label>
-                                        <input type="text" value={name?.lastname} onChange={e => setName({ ...name, lastname: e.target.value })} className="form-control" id="inputLastName" />
+                                        <input type="text" value={name?.lastname} onChange={e => setName({ ...name, lastname: e.target.value })} className="form-control" id="inputLastName" onKeyUp={(e) => e.key === "Enter" && document.getElementById('inputPhone').focus()} />
                                     </div>
                                     <div className="col-md-6">
                                         <label for="inputEmail" className="form-label">Email</label>
@@ -114,7 +114,7 @@ const User = () => {
                                     </div>
                                     <div className="col-md-6">
                                         <label for="inputPhone" className="form-label">Phone</label>
-                                        <input type="number" name='phone' className="form-control" id="inputPhone" value={address.phone} onChange={e => setAddress({ ...address, phone: e.target.value })} />
+                                        <input type="number" name='phone' className="form-control" id="inputPhone" value={address.phone} onChange={e => setAddress({ ...address, phone: e.target.value })} onKeyUp={(e) => e.key === "Enter" && document.getElementById('inputHouse').focus()} />
                                     </div>
                                     {/* <div className="col-md-6">
                                            <label for="inputPassword4" className="form-label">Password</label>
@@ -122,15 +122,15 @@ const User = () => {
                                     </div> */}
                                     <div className="col-6">
                                         <label for="inputAddress" className="form-label">House/Apartment</label>
-                                        <input type="text" name='house' className="form-control" id="inputAddress" placeholder="" value={address.house} onChange={e => setAddress({ ...address, house: e.target.value })} />
+                                        <input type="text" name='house' className="form-control" id="inputHouse" placeholder="" value={address.house} onChange={e => setAddress({ ...address, house: e.target.value })} onKeyUp={(e) => e.key === "Enter" && document.getElementById('inputStreet').focus()} />
                                     </div>
                                     <div className="col-6">
                                         <label for="inputAddress" className="form-label">Street/Locality</label>
-                                        <input type="text" name='street' className="form-control" id="inputAddress" placeholder="" value={address.street} onChange={e => setAddress({ ...address, street: e.target.value })} />
+                                        <input type="text" name='street' className="form-control" id="inputStreet" placeholder="" value={address.street} onChange={e => setAddress({ ...address, street: e.target.value })} onKeyUp={(e) => e.key === "Enter" && document.getElementById('inputState').focus()} />
                                     </div>
                                     <div className="col-md-4">
                                         <label for="inputState" className="form-label">State</label>
-                                        <select id="inputState" className="form-select" name='state' value={address.state} onChange={e => setAddress({ ...address, state: e.target.value })}>
+                                        <select id="inputState" className="form-select" name='state' value={address.state} onChange={e => setAddress({ ...address, state: e.target.value })} >
                                             <option selected>Select state</option>
                                             {states.map((x, i) => {
                                                 return (
