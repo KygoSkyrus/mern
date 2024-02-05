@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const USER = require('../models/user');
 
 const authenticateAdmin = async (req, res, next) => {
-    const token = req.cookies.jwt;
+    const token = req.cookies.ajwt;
     if (!token)
         return res.status(401).json({ message: 'Session expired', is_user_logged_in: false });
 
@@ -17,6 +17,15 @@ const authenticateAdmin = async (req, res, next) => {
     }
 
     req.user = user;//this may not be needed for admin
+    next();
+};
+
+const checkAcessRights = async (req, res, next) => {
+    const endpoint =  req.url.split('?')[0];
+    console.log('hdfbds, re',endpoint, req.user?.role)
+    if (req.user?.role === "guest" && (endpoint !== "/getorders" && endpoint !== "/getusers" && endpoint !== "/signmeout")) {
+        return res.status(403).json({ message: 'Guest user does not have rights to perform this actions', is_user_logged_in: true, user: req.user });
+    }
     next();
 };
 
@@ -38,4 +47,4 @@ const authenticateUser = async (req, res, next) => {
 };
 
 
-module.exports = { authenticateAdmin, authenticateUser }
+module.exports = { authenticateAdmin, authenticateUser, checkAcessRights }

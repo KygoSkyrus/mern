@@ -51,7 +51,7 @@ const AdminLogin = () => {
             <img src={adminHat} alt='shoppitt' style={{ width: "30px", transform: "translate(-36px, 8px) rotate(-22deg)" }} />
             {/* <img alt='shoppitt' className='mb-1' src={theBagLogo} width="20px" /> */}
             <section className='theLogo fw-bold'>SHOPP ITT</section>
-            <section style={{ letterSpacing: "3px", lineHeight: "10px",fontSize: "10px",color: "#a7a7a7"}}>Admin</section>
+            <section style={{ letterSpacing: "3px", lineHeight: "10px", fontSize: "10px", color: "#a7a7a7" }}>Admin</section>
           </div>
 
           <div className="panel">
@@ -65,6 +65,7 @@ const AdminLogin = () => {
                   placeholder="Email"
                   value={userCredentials?.email}
                   onChange={(e) => setUserCredentials({ ...userCredentials, email: e.target.value })}
+                  onKeyUp={(e) => e.key === "Enter" && document.getElementById('passWord').focus()}
                 />
               </div>
               <div className="form-group">
@@ -76,6 +77,7 @@ const AdminLogin = () => {
                   placeholder="Password"
                   value={userCredentials?.password}
                   onChange={(e) => setUserCredentials({ ...userCredentials, password: e.target.value })}
+                  onKeyUp={(e) => e.key === "Enter" && loginUserFirebase()}
                 />
               </div>
 
@@ -94,15 +96,24 @@ const AdminLogin = () => {
         </div>
       </div>
 
-      <div class="toast bg-warning show mt-4 shadow-sm" >
-                          <div class="toast-header">
-                            <img src={theBagLogo} class="rounded me-2" width="20px" alt="" />
-                            <strong class="me-auto">Shopp-itt</strong>
-                          </div>
-                          <div class="toast-body text-center text-dark">
-                            Use card number <b>4242 4242 4242 4242</b> for a successful payment
-                          </div>
-              </div>
+      <div className="toast bg-warning show mt-4 shadow-sm" role="alert" aria-live="assertive" aria-atomic="true">
+        <div className="toast-header">
+          <img src={theBagLogo} className="rounded me-2" width="20px" alt="" />
+          <strong className="me-auto">Shopp-itt</strong>
+          <button type="button" className="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div className="toast-body text-center text-dark">
+          Use <b>Guest Admin credentials</b> to explore admin panel
+          <section>
+            <b>Email: </b>
+            <span className='pointer' onClick={e => navigator?.clipboard.writeText(e.target.innerText)}>guestuser@email.com</span>
+          </section>
+          <section>
+            <b>Password: </b>
+            <span className='pointer' onClick={e => navigator?.clipboard.writeText(e.target.innerText)}>guest#7</span>
+          </section>
+        </div>
+      </div>
 
     </div>
   )

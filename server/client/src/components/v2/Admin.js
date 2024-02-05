@@ -9,7 +9,7 @@ import AdminLogin from './Admin/AdminLogin.js';
 import Modal from './Admin/Modal.js';
 import Error from './Error.js';
 
-import { setAdminAuthStatus } from './redux/userSlice.js';
+import { setAdminAuthStatus, setUserDetails } from './redux/userSlice.js';
 
 const Admin = () => {
 
@@ -22,6 +22,8 @@ const Admin = () => {
             .then(res => res.json())
             .then(res => {
                 dispatch(setAdminAuthStatus({ value: res.is_user_logged_in }))
+                if(res.user) 
+                  dispatch(setUserDetails({ user: res.user }))
             })
     }, [isAuthSuccess])
 
