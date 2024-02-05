@@ -12,7 +12,6 @@ import { invokeToast } from './redux/toastSlice';
 import { formatInINR, inProgressLoader, formatInINRwoSign, apiCall } from './Utility';
 import theBagLogo from "./../../assets/images/thebaglogo.png";
 import emptyCartImg from "./../../assets/images/newImg/collections/add-to-cart-animate.svg"
-import { isUserLoggedIn, setUserDetails } from './redux/userSlice';
 
 
 const Cart = () => {
@@ -358,7 +357,7 @@ const Cart = () => {
                         >Checkout</button>
                         {/* </form> */}
                         {/* <button className='btn w-100 my-2' style={{ border: "1px solid rgb(0 0 0 / 16%)", background: "#ebebeb", borderTop: "0" }} onClick={()=>handleCheckout()}>Checkout</button> */}
-                        <div class="toast bg-warning show mt-4 shadow-sm" >
+                        <div class="toast bg-warning show mt-4 m-auto shadow-sm" >
                           <div class="toast-header">
                             <img src={theBagLogo} class="rounded me-2" width="20px" alt="" />
                             <strong class="me-auto">Shopp-itt</strong>
