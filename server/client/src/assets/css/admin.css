@@ -246,6 +246,14 @@ a.nav-icons.active::before {
   top: 0;
   z-index: 3;
 }
+.dash-header .toast {
+  position: absolute;
+  top: 8px;
+  width: 150px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #363636;
+}
 .searchInput {
   width: 0px;
   padding: 0;
@@ -265,6 +273,9 @@ a.nav-icons.active::before {
 }
 .btn-light:hover {
   background-color: #f8f9fa !important;
+}
+.searchBtn i{
+  padding: var(--bs-btn-padding-y) var(--bs-btn-padding-x);
 }
 /* HEADER */
 
@@ -376,6 +387,19 @@ a.nav-icons.active::before {
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
 }
 /******************** DASHBOARD *************************/
+
+/* table pagination */
+.page-link {
+  color: unset !important;
+  cursor: pointer;
+}
+.active > .page-link,
+.page-link.active {
+  color: #fff !important;
+  background-color: #f7bf47 !important;
+  border-color: #f7bf47 !important;
+}
+/* table pagination */
 
 /******************** PRODUCT FORM MODAL *************************/
 .editProductContainer,
@@ -523,7 +547,7 @@ label {
   width: 100vw;
   background: white;
 }
-.admin-login .toast{
+.admin-login .toast {
   position: absolute;
   right: 12px;
   bottom: 12px;
