@@ -7,8 +7,9 @@ import Header from './Header'
 import Product from './ProductList'
 import BagLoader from '../loaders/BagLoader'
 
-import { findSubString } from '../Utility'
+import { findSubString, getTotalDocNum, inProgressLoader } from '../Utility'
 import { isProductUpdated } from '../redux/productSlice'
+import Pagination from './Pagination'
 
 let allProducts;
 const Dashboard = () => {
@@ -16,22 +17,16 @@ const Dashboard = () => {
     const dispatch = useDispatch()
     const [searchedQuery, setSearchedQuery] = useState()
     const [products, setProducts] = useState(false) //to set products fetched from server
+    const [pageNumber, setPageNumber] = useState(1); // pagination
+    const [totalDocsCount, setTotalDocsCount] = useState(null); // pagination
     const isUpdated = useSelector(state => state.product.isProductUpdated)
 
     useEffect(() => {
-        fetch('/api/getproducts', {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-        })
-            .then(res => res.json())
-            .then(data => {
-                setProducts(data)//save this data in redux
-                allProducts = data;
-                dispatch(isProductUpdated({ updateProduct: false }))//setting to false after reloading the product list
-            })
-    }, [isUpdated])
+        fetchProducts();
+    }, [isUpdated, pageNumber])
 
     useEffect(() => {
+        getTotalDocNum('gettotalproductscount', setTotalDocsCount); // for pagination
         let searchedProd = allProducts?.filter(x => {
             return (
                 findSubString(x.name, searchedQuery) ||
@@ -40,6 +35,23 @@ const Dashboard = () => {
         })
         setProducts(searchedProd)
     }, [searchedQuery])
+
+    function fetchProducts() {
+        if (products) {
+            inProgressLoader(dispatch, true)
+        }
+        fetch(`/api/getproducts?limit=10&page=${pageNumber}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+        })
+            .then(res => res.json())
+            .then(data => {
+                inProgressLoader(dispatch, false)
+                setProducts(data)//save this data in redux
+                allProducts = data;
+                dispatch(isProductUpdated({ updateProduct: false }))//setting to false after reloading the product list
+            })
+    }
 
     return (
         <>
@@ -74,6 +86,12 @@ const Dashboard = () => {
                                 </tbody>
                             </table>
                         </div>
+
+                        <Pagination
+                           pageNumber={pageNumber} 
+                           setPageNumber={setPageNumber}
+                           totalDocsCount={totalDocsCount}
+                        />
                     </div>
                     :
                     <div style={{ height: "calc(100vh - 63px)" }}>

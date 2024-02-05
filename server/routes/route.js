@@ -50,31 +50,32 @@ router.post('/api/signin', async (req, res) => {
     try {
         const { email, isAdminLogin } = req.body;
 
-        console.log('email, isAdminLogin ',email, isAdminLogin )
-
         const user = await USER.findOne({ email: email }).populate('cartProducts');
 
         if (user) {
             if (isAdminLogin) {
-                console.log('user.role !== "admin" && user.email !== process.env.ADMIN_ID--',user.role  ,user.email, process.env.ADMIN_ID)
-                if ((user.role !== "admin" && user.email !== process.env.ADMIN_ID) && (user.role !== "guest" && user.email !== process.env.GUEST_USER)) {                
+                if ((user.role !== "admin" && user.email !== process.env.ADMIN_ID) && (user.role !== "guest" && user.email !== process.env.GUEST_USER)) {
                     return res.status(404).json({ message: 'Access denied!!!', is_user_logged_in: false });
                 } else {
-                    await setCookie()                 
-                    return res.status(200).json({ message: `${user.role === "guest"? 'Guest': 'Admin'} logged in successfully`, is_user_logged_in: true, user });
+                    await setCookie('ajwt', 7200000)
+                    return res.status(200).json({ message: `${user.role === "guest" ? 'Guest' : 'Admin'} logged in successfully`, is_user_logged_in: true, user });
                 }
             }
-            
-            async function setCookie(){
+
+            if (email === process.env.GUEST_USER) {
+                return res.status(404).json({ message: 'Invalid credentials', is_user_logged_in: false });
+            }
+
+            async function setCookie(val, validTill) {
                 const { token } = await user.generateAuthToken();
-                res.cookie('jwt', token, {
-                    expires: new Date(Date.now() + 10800000),
+                res.cookie(val, token, {
+                    expires: new Date(Date.now() + validTill),
                     httpOnly: true,
                     secure: process.env.NODE_ENV !== "development",
                 });
             }
 
-            await setCookie()
+            await setCookie('jwt', 10800000)
 
             res.status(200).json({ message: "User logged in successfully", is_user_logged_in: true, user });
         } else {

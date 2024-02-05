@@ -10,7 +10,8 @@ import OrderDetails from './OrderDetails';
 import BagLoader from '../loaders/BagLoader'
 
 import { invokeToast } from '../redux/toastSlice';
-import { findSubString, formatInINRwoSign, getDateStr } from './../Utility'
+import { findSubString, formatInINRwoSign, getDateStr, getTotalDocNum, inProgressLoader } from './../Utility'
+import Pagination from './Pagination';
 
 let allOrders;
 const Orders = () => {
@@ -20,25 +21,15 @@ const Orders = () => {
     const [searchedQuery, setSearchedQuery] = useState()
     const [details, setDetails] = useState()
     const [detailsVisibility, setSDetailsVisibility] = useState(false)
+    const [pageNumber, setPageNumber] = useState(1); // pagination
+    const [totalDocsCount, setTotalDocsCount] = useState(null); // pagination
 
     useEffect(() => {
-        let resp;
-        fetch(`/api/admin/getorders`)
-            .then(response => {
-                resp = response
-                return response.json()
-            })
-            .then(res => {
-                if (resp.status === 200) {
-                    setOrders(res.data)
-                    allOrders = res.data;
-                } else {
-                    dispatch(invokeToast({ isSuccess: false, message: res.message }))
-                }
-            })
+        fetchOrders();
     }, [])
 
     useEffect(() => {
+        getTotalDocNum('gettotalorderscount', setTotalDocsCount); // for pagination
         let searchedOrder = allOrders?.filter(x => {
             return (
                 findSubString(x.user.firstname, searchedQuery) ||
@@ -53,7 +44,26 @@ const Orders = () => {
     }, [searchedQuery])
 
 
-
+    function fetchOrders() {
+        if (orders) {
+            inProgressLoader(dispatch, true)
+        }
+        let resp;
+        fetch(`/api/admin/getorders?limit=10&page=${pageNumber}`)
+            .then(response => {
+                resp = response
+                return response.json()
+            })
+            .then(res => {
+                inProgressLoader(dispatch, false)
+                if (resp.status === 200) {
+                    setOrders(res.data)
+                    allOrders = res.data;
+                } else {
+                    dispatch(invokeToast({ isSuccess: false, message: res.message }))
+                }
+            })
+    }
 
     const orderDetails = (x) => {
         setSDetailsVisibility(true)
@@ -156,9 +166,9 @@ const Orders = () => {
                                                     <Link to={`${x.receiptUrl}`}>Invoice</Link>
                                                 </td>
 
-                                                <td className="align-middle text-capitalize text-end">
+                                                <td className="align-middle text-capitalize ps-5">
                                                     <div className="btn-group">
-                                                        <button type="button" className="me-3 btn btn-badge border-0 rounded-pill text-decoration-none p-0 d-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" style={{ height: "26px !important", width: "26px !important" }}>
+                                                        <button type="button" className="btn btn-badge border-0 rounded-pill text-decoration-none p-0 d-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" style={{ height: "26px !important", width: "26px !important" }}>
                                                             {/* <div className="avatars__item pointer me-0"
                                                                 style={{ background: `url(${x.user.avtar})`, backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat", }}></div> */}
                                                             <img src={x.user?.avtar} alt='' width="30px" height="30px" className="avatars__item pointer me-0" />&nbsp;
@@ -177,6 +187,11 @@ const Orders = () => {
                                 </tbody>
                             </table>
                         </div>
+                        <Pagination
+                            pageNumber={pageNumber}
+                            setPageNumber={setPageNumber}
+                            totalDocsCount={totalDocsCount}
+                        />
                     </div>
                     :
                     <div style={{ height: "calc(100vh - 63px)" }}>

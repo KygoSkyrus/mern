@@ -156,11 +156,11 @@ const OrderDetails = (props) => {
                     <div className='my-2 px-3'>
                       <section className='text-end'><b>Address</b></section>
                       <section className='text-end d-grid pb-1'>
-                        <span style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }} className=" align-items-center d-flex justify-content-between" title={order?.user.line1}>
+                        <span style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }} className=" align-items-center d-flex justify-content-between" title={order?.user.address?.house}>
                           <i className='fa fa-location-pin me-2'></i>
                           {order?.user?.address?.house}
                         </span>
-                        <span style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }} title={order?.user.line1}>{order?.user?.address?.street}</span>
+                        <span style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }} title={order?.user.address?.street}>{order?.user?.address?.street}</span>
                         <span>{order?.user?.address?.city}, {order?.user?.address?.pincode}</span>
                         <span>{order?.user?.address?.state},</span>
                         <span>India</span>

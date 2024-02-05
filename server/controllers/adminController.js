@@ -1,21 +1,35 @@
 const USER = require('../models/user');
-const PRODUCT = require('../models/product')
-const CATEGORY = require('../models/category')
-const ORDER = require('./../models/orders')
+const PRODUCT = require('../models/product');
+const CATEGORY = require('../models/category');
+const ORDER = require('./../models/orders');
+const dummyOrders = require('../dummy/dummyOrders');
+const dummyUsers = require('../dummy/dummyUsers');
 
 const authentication = async (req, res) => {
-    res.status(200).json({ message: "Admin Authentication Successfull!!!", is_user_logged_in: true })
+    res.status(200).json({ message: "Admin Authentication Successfull!!!", is_user_logged_in: true, user: req.user })
 }
 
 const getOrders = async (req, res) => {
     try {
-        ORDER.find({}).populate('user')
-            .then(response => {
-                return res.status(200).json({ data: response, is_user_logged_in: true });
+        if (req.user?.role === "guest") {
+            console.log('isndie gieys')
+            return res.status(200).json({ data: dummyOrders, is_user_logged_in: true });
+        } else {
+            const { limit, page } = req.query;
+            ORDER.find({})
+                .skip((page - 1) * limit)
+                .limit(limit)
+                .populate({
+                path: 'user',
+                select: ['firstname', 'lastname', 'email', 'avtar', 'phone', 'address']
             })
-            .catch(err => {
-                console.log(err)
-            })
+                .then(response => {
+                    return res.status(200).json({ data: response, is_user_logged_in: true });
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        }
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
@@ -24,13 +38,30 @@ const getOrders = async (req, res) => {
 
 const getUsers = async (req, res) => {
     try {
-        USER.find({})
-            .then(response => {
-                return res.status(200).json({ data: response, is_user_logged_in: true });
-            })
-            .catch(err => {
-                console.log(err)
-            })
+        if (req.user?.role === "guest") {
+            return res.status(200).json({ data: dummyUsers, is_user_logged_in: true });
+        } else {
+            // USER.find({}, { firstname: 1, lastname: 1, email: 1, avtar: 1, orders: 1, createdAt: 1, _id: 1 })
+            USER.aggregate([ //to fetch only necessary data
+                {
+                  $project: {
+                    _id: 1,
+                    email: 1,
+                    firstname: 1, 
+                    lastname: 1, 
+                    avtar: 1, 
+                    ordersSize: { $cond: { if: { $isArray: "$orders" }, then: { $size: "$orders" }, else: 0 } },
+                    createdAt: 1,
+                  }
+                }
+              ])
+                .then(response => {
+                    return res.status(200).json({ data: response, is_user_logged_in: true });
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        }
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
@@ -38,8 +69,8 @@ const getUsers = async (req, res) => {
 }
 
 const setProductVisibility = async (req, res) => {
-    const details = req.body;
     try {
+        const details = req.body;
         let result = await PRODUCT.findOneAndUpdate({ _id: details.id }, { visibility: details.visibility }, { new: true })
         if (result) {
             return res.status(200).json({ message: `Product visibility has been turned ${details.visibility ? "off" : "on"}` });
@@ -51,32 +82,30 @@ const setProductVisibility = async (req, res) => {
 }
 
 const addProduct = async (req, res) => {
-
-    const { name, price, description, category, image, stock } = req.body;
-    const product = new PRODUCT({
-        name: name,
-        price: price,
-        description: description,
-        category: category,
-        image: image,
-        stock: stock,
-    })
-
-    product.save()
-        .then(response => {
-            res.status(200).json({ message: `Product has been added` });
+    try {
+        const { name, price, description, category, image, stock } = req.body;
+        const product = new PRODUCT({
+            name: name,
+            price: price,
+            description: description,
+            category: category,
+            image: image,
+            stock: stock,
         })
-        .catch(err => {
-            console.log(err)
-            res.status(500).json({ message: "Product couldn't be added. Something went wrong" });
-        })
+
+        await product.save()
+        return res.status(200).json({ message: `Product has been added` });
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: "Product couldn't be added. Something went wrong" });
+    }
 }
 
 const editProduct = async (req, res) => {
-
-    const { name, price, description, category, image, stock, discount, id } = req.body;
-
     try {
+        const { name, price, description, category, image, stock, discount, id } = req.body;
+
         const result = await PRODUCT.findOneAndUpdate({ _id: id }, { $set: { name, price, description, category, image, stock, discount } }, { new: true })
         if (result) {
             res.status(200).json({ message: `Product has been edited` });
@@ -88,29 +117,25 @@ const editProduct = async (req, res) => {
 }
 
 const addCategory = async (req, res) => {
-
-    const { name, subCategory } = req.body;
-
-    const catagory = new CATEGORY({
-        name: name,
-        subCategory: subCategory
-    })
-
-    catagory.save()
-        .then(response => {
-            res.send({ data: true });
+    try {
+        const { name, subCategory } = req.body;
+        const catagory = new CATEGORY({
+            name: name,
+            subCategory: subCategory
         })
-        .catch(err => {
-            console.log(err)
-            res.send({ data: false });
-        })
+
+        await catagory.save()
+        return res.send({ data: true });
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "Internal server error. Something went wrong" });
+    }
 }
 
 const deleteProduct = async (req, res) => {
-
-    const { id } = req.body;
-
     try {
+        const { id } = req.body;
         let result = await PRODUCT.deleteOne({ _id: id })
         if (result.deletedCount > 0) {
             res.status(200).json({ message: "Product deleted successfully" });

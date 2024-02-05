@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 
 import { invokeToast } from '../redux/toastSlice';
-import { findSubString, getDateStr } from './../Utility';
+import { findSubString, getDateStr, getTotalDocNum, inProgressLoader } from './../Utility';
 import Nav from './Nav';
 import BagLoader from '../loaders/BagLoader'
 import Header from './Header';
+import Pagination from './Pagination';
 
 let allUsers;
 const Users = () => {
@@ -14,25 +15,15 @@ const Users = () => {
     const dispatch = useDispatch()
     const [users, setUsers] = useState()
     const [searchedQuery, setSearchedQuery] = useState()
+    const [pageNumber, setPageNumber] = useState(1); // pagination
+    const [totalDocsCount, setTotalDocsCount] = useState(null); // pagination
 
     useEffect(() => {
-        let resp;
-        fetch(`/api/admin/getusers`)
-            .then(response => {
-                resp = response
-                return response.json()
-            })
-            .then(res => {
-                if (resp.status === 200) {
-                    setUsers(res.data)
-                    allUsers = res.data;
-                } else {
-                    dispatch(invokeToast({ isSuccess: false, message: res.message }))
-                }
-            })
+        fetchUsers();
     }, [])
 
     useEffect(() => {
+        getTotalDocNum('gettotaluserscount', setTotalDocsCount); // for pagination
         let searchedUser = allUsers?.filter(x => {
             return (
                 findSubString(x.firstname, searchedQuery) ||
@@ -42,6 +33,27 @@ const Users = () => {
         })
         setUsers(searchedUser)
     }, [searchedQuery])
+
+    function fetchUsers() {
+        if (users) {
+            inProgressLoader(dispatch, true)
+        }
+        let resp;
+        fetch(`/api/admin/getusers`)
+            .then(response => {
+                resp = response
+                return response.json()
+            })
+            .then(res => {
+                inProgressLoader(dispatch, false)
+                if (resp.status === 200) {
+                    setUsers(res.data)
+                    allUsers = res.data;
+                } else {
+                    dispatch(invokeToast({ isSuccess: false, message: res.message }))
+                }
+            })
+    }
 
     return (
         <>
@@ -78,7 +90,7 @@ const Users = () => {
                                                 <td className="ps-3 align-middle text-center text-capitalize">
                                                     {/* <div className="align-items-center avatars__item bg-white d-flex justify-content-center pointer text-secondary"
                                                         style={{ background: `url(${x.avtar})`, backgroundSize: "contain", backgroundPosition: "center", backgroundRepeat: "no-repeat", }}></div> */}
-                                                        <img src={x.avtar} alt='' width="30px" height="30px" className="align-items-center avatars__item bg-white d-flex justify-content-center pointer text-secondary" />
+                                                    <img src={x.avtar} alt='' width="30px" height="30px" className="align-items-center avatars__item bg-white d-flex justify-content-center pointer text-secondary" />
                                                 </td>
 
                                                 <td className="ps-3 align-middle text-center text-capitalize">
@@ -86,7 +98,7 @@ const Users = () => {
                                                 </td>
 
                                                 <td className="align-middle text-center text-capitalize">
-                                                    {x.lastname}
+                                                    {x?.lastname ? x.lastname : "-"}
                                                 </td>
 
                                                 <td className="align-middle text-center" >
@@ -94,11 +106,11 @@ const Users = () => {
                                                 </td>
 
                                                 <td className="align-middle text-center" >
-                                                    {x.orders.length}
+                                                    {x.ordersSize}
                                                 </td>
 
-                                                <td className="align-middle text-center dateStr">
-                                                    {getDateStr(x.createdAt)}
+                                                <td className="align-middle text-center small dateStr">
+                                                    {x?.createdAt ? getDateStr(x.createdAt) : "-"}
                                                 </td>
                                             </tr>
                                         )
@@ -106,6 +118,12 @@ const Users = () => {
                                 </tbody>
                             </table>
                         </div>
+
+                        <Pagination
+                           pageNumber={pageNumber} 
+                           setPageNumber={setPageNumber}
+                           totalDocsCount={totalDocsCount}
+                        />
                     </div>
                     :
                     <div style={{ height: "calc(100vh - 63px)" }}>

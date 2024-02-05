@@ -6,7 +6,7 @@ const RealtedProducts = ({ title }) => {
   const [products, setProductList] = useState()
 
   useEffect(() => {
-    fetch('/api/getproducts?limit=30', {
+    fetch('/api/getproducts?limit=30&page=1', {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })

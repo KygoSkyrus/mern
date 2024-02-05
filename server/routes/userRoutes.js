@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express('router');
 
-const {authenticateUser}=require('../middleware/authentication')
-const {getUserInfo,signMeOut,updateAddress,addToCart,updateCart,removeFromCart,getCartItems,updateWishlist,moveToWishlist,getWishlistItems,getOrders,createCheckoutSession,getCheckoutSession}=require('./../controllers/userController')
+const { authenticateUser } = require('../middleware/authentication')
+const { getUserInfo, updateAddress, addToCart, updateCart, removeFromCart, getCartItems, updateWishlist, moveToWishlist, getWishlistItems, getOrders, createCheckoutSession, getCheckoutSession } = require('./../controllers/userController')
+const { signMeOut } = require('./../controllers/publicController')
 
 router.use(authenticateUser)
 
@@ -36,4 +37,4 @@ router.get('/getorders', getOrders)
 router.post('/create-checkout-session', createCheckoutSession);
 router.get('/getcheckoutsession', getCheckoutSession)
 
-module.exports=router
+module.exports = router
