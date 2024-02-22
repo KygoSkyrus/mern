@@ -9,6 +9,7 @@ Shopp-Itt includes a comprehensive admin panel with various [features](#admin_fe
 
 [comment]: add_badges,_screenshots_gifs_details_about_app__THINGS_THAT_CAN_BEIMPLEMENTED_WRITE_THE_IN_CONTRIBUTE_LIKE_COMMENT_FEATURE
 [comment]: add_firebase_info,setup_refreence
+[comment]: evolved_FROM:https://shopp-itt.onrender.com
 
 
 ### Features
@@ -35,7 +36,7 @@ Shopp-Itt includes a comprehensive admin panel with various [features](#admin_fe
 
   - **Guest mode**: 
     - Guest mode is introduced to let users explore the admin panel.
-    - *NOTE*:  Guest user has `view only` permission in admin panel that's why user won't be able to perform any of the above mentioned admin actions.
+    - *NOTE*: Guest user has `view only` permission in admin panel that's why user won't be able to perform any of the above mentioned admin actions.
 
 
 
@@ -62,11 +63,8 @@ Follow these steps to set up Shopp-Itt locally:
 
 1. Clone or download the repository and go to the server from root folder
 2. Install dependencies for the server and client:
-  - Go to _server_ folder
-```bash
-cd server
-```
-- for server run this command from the _server_ folder and for client run the command from the _client_ folder in _server_
+
+- for server run this command from the _root_ folder and for client run the command from the _client_ folder
 
 ```bash
 npm install
@@ -77,9 +75,10 @@ npm install
 5. Start the server and client:
 
 ```bash
-cd server
+# to start server
 npm run dev
 
+# to start client
 cd ../client
 npm run start
 ```
@@ -92,7 +91,7 @@ npm run start
 
 ### Contributing 🤝
 
-Contributions to Shopp-Itt are welcome! Please follow the guidelines in the [CONTRIBUTING.md](https://github.com/KygoSkyrus/mern/blob/master/CONTRIBUTING.md) file.
+Contributions to Shopp-Itt are welcome! Please follow the guidelines in the [CONTRIBUTING.md](https://github.com/KygoSkyrus/mern/blob/v2/CONTRIBUTING.md) file.
 Feel free to check [issue page](https://github.com/KygoSkyrus/mern/issues)
 
 ### Show your support
@@ -105,11 +104,10 @@ Give a ⭐ if this project helped you!
 
 
 ### License
-[MIT License](https://github.com/KygoSkyrus/mern/blob/master/LICENSE) © Shopp-Itt
+[MIT License](https://github.com/KygoSkyrus/mern/blob/v2/LICENSE) © Shopp-Itt
 
 
 ### Demo
+![Preview](https://github.com/KygoSkyrus/mern/blob/v2/shoppitt-preview.gif)
 
-![Preview](https://github.com/KygoSkyrus/mern/blob/master/shoppitt-preview.gif)
-
-> Live at [Shopp-Itt by Dheeraj Gupta](https://shoppitt.onrender.com/)
+> Live at [Shopp-Itt by Dheeraj Gupta](https://shoppitt.onrender.com)
